@@ -1,0 +1,18 @@
+\begin{center}
+    \begin{tikzpicture}[scale=0.7]
+        % Ejes
+        \draw[thick,->] (-2,0) -- (4,0) node[right] {\small $x$};
+        \draw[thick,->] (0,-3) -- (0,4) node[above] {\small $y$};
+
+        % Conjunto de rectas paralelas
+        \draw[thick] (-2,0) -- (1,3) node[right] {\small $2x - 3y = d$};
+        \draw[thick] (-1,-2) -- (3,2) node[right] {\small $2x - 3y = c$};
+
+        \draw[thick] (-1,4) -- (4,-1) node[right] {\small $x + 4y = b$};
+        \draw[thick] (-1,2) -- (3,-2) node[right] {\small $x + 4y = a$};
+
+        % Región sombreada
+        \fill[pattern=north east lines, pattern color=black, opacity=0.5]
+        (0.5,2.5) -- (2,1) -- (1,0) -- (-0.5,1.5) -- cycle;
+    \end{tikzpicture}
+\end{center}

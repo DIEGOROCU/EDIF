@@ -1,0 +1,69 @@
+\section*{Introducción y Estructura del Curso}
+
+En este curso daremos un salto cualitativo respecto a la teoría básica de Ecuaciones Diferenciales Ordinarias (EDOS). Trabajaremos con problemas de valor inicial (Problemas de Cauchy) definidos por funciones vectoriales de la forma:
+\[
+    f : I \times \mathbb{R}^n \to \mathbb{R}^n
+\]
+donde $I = [\alpha, \beta]$ es un intervalo compacto temporal y $f$ es, como mínimo, una función continua. El estudio de estas ecuaciones se dividirá en tres grandes bloques fundamentales:
+
+% ---------------------------------------------------------
+\subsection*{Parte I: Teoría de Cauchy-Lipschitz (Existencia y Unicidad)}
+En esta primera parte buscaremos el ``escenario ideal''. Estudiaremos el problema de Cauchy general:
+\[
+    \begin{cases}
+        u'(t) = f(t, u(t)) \\
+        u(t_0) = u_0
+    \end{cases}
+\]
+Si la función $f$ cumple la condición de Lipschitz global uniformemente en $t \in I$, es decir, si existe $L > 0$ tal que:
+\[
+    \| f(t, u) - f(t, v) \| \leq L \| u - v \| \quad \forall t \in I, \; \forall u, v \in \mathbb{R}^n
+\]
+entonces el teorema de Cauchy-Lipschitz nos asegura que el problema tiene una \textbf{única solución global}. A diferencia de los sistemas lineales, al ser $f$ general (posiblemente no lineal), el espacio de soluciones ya no formará un espacio vectorial, lo que nos obligará a usar nuevas herramientas topológicas.
+
+En la práctica, la condición global es muy restrictiva. Por ello, la verdadera potencia de la teoría de Cauchy-Lipschitz radica en su versión \textbf{local}: si la condición se cumple solo en una bola alrededor del dato inicial, obtendremos una \textbf{única solución local}. A partir de ahí, abordaremos preguntas clave: ¿Hasta dónde podemos extender esta solución en el tiempo? Construiremos la \textbf{solución maximal} y veremos que, por lo general, una solución se puede prolongar para todo tiempo a menos que sufra una ``explosión'' (\textit{blow-up}) y tienda a infinito en un tiempo finito.
+
+Para aplicar esto de forma práctica, demostraremos que todo sistema de clase $C^1$:
+\[
+    \begin{cases}
+        u_1' = f_1(t, u_1, \ldots, u_n) \\
+        \vdots \\
+        u_n' = f_n(t, u_1, \ldots, u_n)
+    \end{cases}
+\]
+(donde las derivadas parciales $\frac{\partial f_i}{\partial u_j}$ son continuas) es automáticamente localmente Lipschitziano y, por tanto, goza de existencia y unicidad local.
+
+% ---------------------------------------------------------
+\subsection*{Parte II: Teoría de Peano (Existencia sin Unicidad)}
+¿Qué ocurre si la función pierde regularidad y es \textbf{solamente continua}? Aquí nos olvidamos de la condición de Lipschitz y entramos en el territorio del \textbf{Teorema de Peano}. Este resultado nos garantiza que el problema de Cauchy sigue teniendo \textbf{al menos una solución local}, pero pagamos un precio muy alto: \textbf{perdemos la unicidad}.
+
+El ejemplo clásico que motivará esta sección es el sistema escalar:
+\[
+    \begin{cases}
+        u' = u^q \quad (0 < q < 1) \\
+        u(0) = 0
+    \end{cases}
+\]
+Dado que la derivada $q u^{q-1}$ no está acotada ni es continua en $u=0$, la teoría de Cauchy-Lipschitz colapsa y aparecen infinitas soluciones que nacen del mismo punto.
+
+Para construir soluciones bajo condiciones tan débiles, recurriremos al \textbf{Teorema de Ascoli-Arzelà}, una poderosa herramienta de compacidad que nos permitirá extraer soluciones a partir de aproximaciones sucesivas. Además, estudiaremos la prolongabilidad de estas soluciones maximales y veremos el \textbf{Teorema de Kamke}, el cual asegura que si $f$ es continua y globalmente acotada, entonces las soluciones del problema de Cauchy no pueden explotar y, por tanto, son globales.
+
+% ---------------------------------------------------------
+\subsection*{Parte III: Sistemas Dinámicos y Análisis Cualitativo}
+En la última parte del curso cambiaremos de filosofía. Si no podemos resolver la ecuación explícitamente (lo cual es lo habitual), ¿podemos al menos predecir su comportamiento futuro? Estudiaremos sistemas dinámicos, centrándonos en el límite cuando el tiempo tiende a infinito ($t \to \infty$) para saber hacia dónde se dirige el estado $(u(t), v(t))$.
+
+Haremos especial énfasis en \textbf{sistemas planos} (autónomos en dimensión 2):
+\[
+    \begin{cases}
+        u' = f(u,v) \\
+        v' = g(u,v) 
+    \end{cases} \quad \text{con datos iniciales } u(0) = u_0, \; v(0) = v_0
+\]
+Clasificaremos estos sistemas en dos grandes familias:
+\begin{itemize}
+    \item \textbf{Sistemas Conservativos:} Aquellos en los que existe una función integral primera o Hamiltoniano $H : \mathbb{R}^2 \to \mathbb{R}$ tal que $H(u(t), v(t))$ permanece constante a lo largo de las trayectorias (la ``energía'' se conserva). En este contexto, haremos breves incursiones a ecuaciones espaciales y en derivadas parciales, estudiando operadores como el Laplaciano o la divergencia:
+    \[
+        \Delta u = f(u), \quad \text{o bien} \quad \sum_{j=1}^n \frac{\partial u}{\partial x_j} = f(u)
+    \]
+    \item \textbf{Sistemas No Conservativos:} Requerirán técnicas más avanzadas para estudiar hacia dónde converge el sistema. Introduciremos los conceptos de \textbf{Estabilidad} y funciones de \textbf{Lyapunov} (que actúan como generalizaciones de la energía que se disipa con el tiempo), además de técnicas de \textbf{linealización} para estudiar el sistema cerca de sus puntos de equilibrio aproximándolo a un sistema lineal.
+\end{itemize}

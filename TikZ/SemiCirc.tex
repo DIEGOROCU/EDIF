@@ -1,0 +1,14 @@
+\begin{center}
+    \begin{tikzpicture}
+        % Axes
+        \draw[->] (-1.5, 0) -- (1.5, 0) node[right]{$x$}; % x-axis
+        \draw[->] (0, -0.5) -- (0, 1.5) node[above]{$y$}; % y-axis
+
+        % Upper semicircle (centered at origin)
+        \draw (1, 0) arc[start angle=0, end angle=180, radius=1];
+        \node at (0, 1) [above right]{$1$};
+
+        % Label
+        \node at (1.2, 1.2) {$C$};
+    \end{tikzpicture}
+\end{center}

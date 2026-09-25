@@ -1,0 +1,31 @@
+\definecolor{ccqqqq}{rgb}{0.8,0,0}
+\definecolor{ududff}{rgb}{0.30196078431372547,0.30196078431372547,1}
+\definecolor{qqwuqq}{rgb}{0,0.39215686274509803,0}
+
+\begin{center}
+    \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
+        \begin{axis}[
+                x=1cm,y=1cm,
+                axis lines=middle,
+                xmin=-2,
+                xmax=3.5,
+                ymin=-0.6805806893374612,
+                ymax=3.6,
+                xtick={-2.5,-2,...,4.5},
+                ytick={-0.5,0,...,4.5},
+                xticklabels=\empty, % Remove x-axis labels
+                yticklabels=\empty % Remove y-axis labels
+            ]
+            \clip(-2.9040233036492373,-0.6805806893374612) rectangle (4.931567305660256,4.6842052156427245);
+            \draw[line width=0.75pt,color=qqwuqq,smooth,samples=100,domain=-2.9040233036492373:4.931567305660256] plot(\x,{sin(((\x))*180/pi)+1.5});
+            \draw[line width=0.75pt,color=ccqqqq,smooth,samples=100,domain=-2.9040233036492373:4.931567305660256] plot(\x,{sqrt(3)/2*(\x)+1/2-(3.141592653589793*sqrt(3))/12+1.5});
+            \draw [->,line width=0.75pt] (0.5,2) -- (-0.15030877559829892,2.71444);
+            \begin{scriptsize}
+                \draw[color=qqwuqq] (0.7,1.7) node {$\gamma(t)$};
+                \draw [fill=ududff] (0.5,2) circle (1pt);
+                \draw[color=ccqqqq] (2.5,3) node {$\gamma'(t)$};
+                \draw[color=black] (-0.7, 2.291892925953723) node {$\vec{F}(\gamma(t))$};
+            \end{scriptsize}
+        \end{axis}
+    \end{tikzpicture}
+\end{center}

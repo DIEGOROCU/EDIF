@@ -1,0 +1,317 @@
+# Análisis de Funciones de Variable Compleja
+
+Apuntes completos de la asignatura **Análisis de Funciones de Variable Compleja** de 3º del Doble Grado en Matemáticas e Ingeniería Informática de la Universidad Complutense de Madrid (UCM), impartida por **María del Pilar Cembranos Díaz**.
+
+## 📝 Sobre estos apuntes
+
+Estos apuntes han sido elaborados por **Pau Frangi Mahiques**, **Diego Rodríguez Cubero** y **Jaime Nieto Petinal**, estudiantes de 3º del Doble Grado en Matemáticas e Ingeniería Informática, con el objetivo de ofrecer un material claro, cohesionado y útil para el estudio de la asignatura.
+
+El contenido está basado en las clases de la profesora María del Pilar Cembranos Díaz, a quien agradecemos su dedicación y claridad expositiva.
+
+### Propósito
+
+El documento está organizado para acompañar el progreso del curso: comienza con los fundamentos (números complejos, plano extendido y proyección estereográfica), continúa con derivación e integración complejas, teoremas fundamentales (Cauchy y consecuencias), series y funciones notables, transformaciones de Möbius, comportamiento local y global de funciones holomorfas, ceros y singularidades, el teorema de los residuos y sus aplicaciones, funciones meromorfas y funciones armónicas. Se incluyen asimismo ejercicios seleccionados y exámenes resueltos, así como material gráfico y esquemas realizados con TikZ para apoyar la intuición geométrica.
+
+Nuestro propósito es doble:
+- **Facilitar la preparación continuada** de la asignatura mediante una exposición sistemática, con resultados claramente enunciados y, cuando procede, demostraciones o esbozos de demostración
+- **Servir como referencia rápida** para técnicas de cálculo habituales (integrales, series de potencias y de Laurent, cómputo de residuos, transformaciones conformes, etc.)
+
+Aunque hemos procurado la máxima precisión, este material puede contener erratas u omisiones.
+
+## 📚 Índice de Contenidos
+
+### 📖 Teoría
+
+1. **[Los números complejos, el plano extendido y la proyección estereográfica](Theory/1%20-%20Los%20números%20complejos,%20el%20plano%20extendido%20y%20la%20proyección%20estereográfica.tex)**
+   - Definición y propiedades algebraicas de los números complejos
+   - Representación geométrica: módulo, argumento y forma polar
+   - El plano extendido $\mathbb{C}_\infty$ y el punto del infinito
+   - Proyección estereográfica: mapeo entre la esfera de Riemann y el plano complejo
+   - Coordenadas esféricas y cilíndricas con visualizaciones TikZ
+
+2. **[Funciones integrables en varias variables](Theory/2%20-%20Funciones%20integrables%20en%20varias%20variables.tex)**
+   - Funciones Riemann-integrables en $\mathbb{R}^n$
+   - Teorema de Fubini para integración iterada
+   - Cambio de variables y el Jacobiano
+   - Dominios de integración y conjuntos medibles
+
+3. **[Derivación de funciones complejas](Theory/3%20-%20Derivación%20de%20funciones%20complejas.tex)**
+   - Derivada compleja y su interpretación geométrica
+   - Condiciones de Cauchy-Riemann (forma rectangular y polar)
+   - Funciones holomorfas y analíticas
+   - Operador de Laplace y funciones armónicas
+   - Propiedades de las funciones holomorfas
+
+4. **[Series de números complejos](Theory/4%20-%20Series%20de%20números%20complejos.tex)**
+   - Convergencia absoluta y condicional de series complejas
+   - Criterios de convergencia (razón, raíz, comparación, integral)
+   - Series de potencias y radio de convergencia
+   - Desarrollos de Taylor y Laurent
+   - Teorema de Abel
+
+5. **[Funciones notables](Theory/5%20-%20Funciones%20notables.tex)**
+   - Función exponencial compleja $e^z$ y sus propiedades
+   - Funciones trigonométricas: $\sin z$, $\cos z$, $\tan z$
+   - Funciones hiperbólicas: $\sinh z$, $\cosh z$, $\tanh z$
+   - Función logaritmo complejo y sus ramas
+   - Potencias complejas y determinación de valores principales
+
+6. **[Transformada de Möbius](Theory/6%20-%20Transformada%20de%20Möbius.tex)**
+   - Aplicaciones conformes y preservación de ángulos
+   - Curvas en $\mathbb{C}$ y su parametrización
+   - Transformaciones de Möbius (funciones lineales fraccionarias)
+   - Propiedades geométricas: preservación de circunferencias y rectas
+   - Razón doble y grupo de transformaciones
+   - Clasificación de transformaciones de Möbius
+   - Aplicaciones al estudio de dominios
+
+7. **[Integración compleja](Theory/7%20-%20Integración%20compleja.tex)**
+   - Integral de funciones complejas de variable real
+   - Caminos y curvas rectificables en el plano complejo
+   - Integral de línea de funciones complejas
+   - Desigualdad M-L (estimación de integrales)
+   - Primitivas de funciones holomorfas
+   - Teorema fundamental del cálculo complejo
+   - Independencia del camino en dominios simplemente conexos
+
+8. **[Teorema de Cauchy](Theory/8%20-%20Teorema%20de%20Cauchy.tex)**
+   - Teorema de Cauchy-Goursat para triángulos (demostración completa)
+   - Teorema de Cauchy para dominios convexos
+   - Existencia de primitivas en conjuntos convexos
+   - Teorema de Cauchy en dominios simplemente conexos
+   - Aplicaciones: cálculo de integrales en circunferencias concéntricas
+   - Diagramas TikZ ilustrativos de la subdivisión de triángulos
+
+9. **[Teoremas varios](Theory/9%20-%20Teoremas%20varios.tex)**
+   - Fórmula integral de Cauchy
+   - Derivadas de funciones holomorfas mediante integrales
+   - Teorema de Morera
+   - Principio del módulo máximo
+   - Lema de Schwarz
+   - Teorema de la aplicación de Riemann
+
+10. **[La función índice](Theory/10%20-%20La%20función%20índice.tex)**
+    - Definición de la función índice de una curva
+    - Propiedades del índice
+    - Versión general de la fórmula integral de Cauchy
+    - Aplicaciones al cálculo de integrales
+    - Índice de curvas cerradas respecto a un punto
+
+11. **[Ceros de funciones holomorfas](Theory/11%20-%20Ceros%20de%20funciones%20holomorfas.tex)**
+    - Definición de ceros aislados
+    - Orden de un cero
+    - Caracterización de ceros mediante series de Taylor
+    - Teorema del cero aislado
+    - Principio de identidad para funciones holomorfas
+    - Conjuntos de ceros de funciones holomorfas
+
+12. **[Comportamiento local de una función holomorfa](Theory/12%20-%20Comportamiento%20local%20de%20una%20función%20holomorfa.tex)**
+    - Derivada logarítmica de una función holomorfa
+    - Conteo de ceros mediante integrales
+    - Teorema de Rouché
+    - Aplicaciones: teorema fundamental del álgebra
+    - Comportamiento local cerca de puntos críticos
+
+13. **[Singularidades aisladas](Theory/13%20-%20Singularidades%20aisladas.tex)**
+    - Definición de singularidad aislada
+    - Clasificación: singularidades evitables, polos y singularidades esenciales
+    - Series de Laurent en el entorno de singularidades
+    - Caracterización de polos mediante límites
+    - Orden de un polo
+    - Teorema de Casorati-Weierstrass (comportamiento en singularidades esenciales)
+
+14. **[Teorema de los residuos](Theory/14%20-%20Teorema%20de%20los%20residuos.tex)**
+    - Definición de residuo de una función en una singularidad
+    - Cálculo de residuos en polos de orden $n$
+    - Teorema de los residuos
+    - Aplicaciones al cálculo de integrales reales:
+      - Integrales trigonométricas $\int_0^{2\pi} R(\cos\theta, \sin\theta)\,d\theta$
+      - Integrales impropias $\int_{-\infty}^{\infty} f(x)\,dx$
+      - Integrales con funciones trigonométricas
+    - Lema de Jordan
+    - Principio del argumento
+
+15. **[Funciones meromorfas](Theory/15%20-%20Funciones%20meromorfas.tex)**
+    - Definición de función meromorfa
+    - Ejemplos: funciones racionales, $\tan z$, $\cot z$
+    - Propiedades de funciones meromorfas
+    - Cocientes de funciones holomorfas
+    - Teorema de factorización
+    - Extensión al plano extendido $\mathbb{C}_\infty$
+
+16. **[Funciones armónicas](Theory/16%20-%20Funciones%20armónicas.tex)**
+    - Ecuación de Laplace: $\Delta u = u_{xx} + u_{yy} = 0$
+    - Funciones armónicas y funciones holomorfas
+    - Conjugado armónico
+    - Principio del máximo para funciones armónicas
+    - Problema de Dirichlet
+    - Fórmula integral de Poisson
+    - Teorema del valor medio
+    - Aplicaciones físicas: flujo de calor, potencial electrostático
+
+### 📝 Ejercicios Resueltos
+
+- **[Hoja 1](Exercises/Hoja1.tex)** - Números complejos y geometría
+  - Operaciones con complejos en forma cartesiana y polar
+  - Raíces n-ésimas y resolución de ecuaciones
+  - Lugares geométricos en el plano complejo
+  
+- **[Hoja 2](Exercises/Hoja2.tex)** - Funciones complejas y derivabilidad
+  - Condiciones de Cauchy-Riemann
+  - Funciones holomorfas y armónicas
+  - Aplicaciones de la derivada compleja
+
+- **[Hoja 3](Exercises/Hoja3.tex)** - Series y convergencia
+  - Criterios de convergencia de series complejas
+  - Radio de convergencia de series de potencias
+  - Desarrollos en serie de Taylor
+
+- **[Hoja 4](Exercises/Hoja4.tex)** - Funciones elementales
+  - Función exponencial y logarítmica
+  - Funciones trigonométricas e hiperbólicas
+  - Potencias complejas
+
+- **[Hoja 5](Exercises/Hoja5.tex)** - Transformaciones de Möbius
+  - Cálculo de transformaciones de Möbius
+  - Preservación de circunferencias
+  - Razón doble y clasificación
+
+- **[Hoja 6](Exercises/Hoja6.tex)** - Integración compleja
+  - Integrales de línea
+  - Cálculo de integrales en caminos
+  - Aplicaciones del teorema de Cauchy
+
+- **[Hoja 7](Exercises/Hoja7.tex)** - Teorema de Cauchy y fórmula integral
+  - Aplicaciones de la fórmula integral de Cauchy
+  - Cálculo de derivadas mediante integrales
+  - Teorema de Morera
+
+- **[Hoja 8](Exercises/Hoja8.tex)** - Series de Laurent y singularidades
+  - Desarrollo en series de Laurent
+  - Clasificación de singularidades
+  - Cálculo de residuos
+
+- **[Hoja 9](Exercises/Hoja9.tex)** - Teorema de los residuos
+  - Aplicaciones del teorema de los residuos
+  - Cálculo de integrales reales
+  - Teorema de Rouché
+
+- **[Hoja 10](Exercises/Hoja10.tex)** - Funciones meromorfas
+  - Estudio de funciones meromorfas
+  - Ceros y polos
+  - Aplicaciones
+
+- **[Hoja 11](Exercises/Hoja11.tex)** - Funciones armónicas
+  - Ecuación de Laplace
+  - Conjugado armónico
+  - Problema de Dirichlet
+
+### 📋 Exámenes
+
+- **[Exámenes Resueltos](Exams/Examenes%20Resueltos.tex)** - Colección completa de exámenes de años anteriores con soluciones detalladas paso a paso
+
+### 📎 Apéndices
+
+- **[Criterios de convergencia de series](Appendix/Criterios%20de%20convergencia%20de%20series.tex)** - Resumen completo de criterios de convergencia (razón, raíz, comparación, integral, Leibniz, etc.) con ejemplos y aplicaciones
+- **[Material complementario](Appendix/Appendix.tex)** - Referencias adicionales, resultados auxiliares y tablas de consulta rápida
+- **[Agradecimientos](Appendix/Agradecimientos.tex)** - Reconocimientos y referencias
+
+### 🎨 Diagramas TikZ
+
+El repositorio incluye numerosos diagramas profesionales realizados con TikZ en la carpeta [TikZ/](TikZ/):
+- Coordenadas cilíndricas y esféricas
+- Caminos y curvas en el plano complejo
+- Triángulos y regiones de integración
+- Representaciones geométricas de conceptos complejos
+- Proyección estereográfica
+- Transformaciones conformes
+
+## 🎯 Características
+
+- ✅ **Demostraciones completas y rigurosas** de todos los teoremas principales
+- ✅ **Diagramas TikZ profesionales** para visualización geométrica e intuición
+- ✅ **Ejemplos trabajados** que ilustran la teoría y técnicas de cálculo
+- ✅ **11 hojas de ejercicios resueltos** paso a paso con explicaciones detalladas
+- ✅ **Exámenes de años anteriores resueltos** para preparación efectiva
+- ✅ **Referencias cruzadas** entre secciones para facilitar la navegación
+- ✅ **Formato LaTeX profesional** listo para compilar con todas las dependencias
+- ✅ **Material complementario** con criterios de convergencia y resultados auxiliares
+- ✅ **Cobertura completa** del temario: desde fundamentos hasta funciones armónicas
+
+## 🔧 Compilación
+
+Para compilar el documento principal:
+
+```bash
+pdflatex main.tex
+```
+
+El documento requiere los paquetes estándar de LaTeX para matemáticas avanzadas, TikZ para gráficos, y algunos paquetes adicionales de formato que están especificados en [Preamble/Preamble.tex](Preamble/Preamble.tex).
+
+## 🤝 Colaboración
+
+Estos apuntes reflejan la materia cursada y quedan finalizados conforme al curso ya completado. Sin embargo, **invitamos encarecidamente a los estudiantes que cursen la asignatura en el futuro a ampliar, mejorar o complementar estos apuntes**. Cualquier corrección, propuesta o contribución será bienvenida.
+
+### Cómo contribuir
+
+Puedes colaborar de las siguientes maneras:
+
+1. **Contacto directo** mediante nuestros perfiles de GitHub
+2. **Correo electrónico**:
+   - Diego Rodríguez Cubero: [diegorocux3x@gmail.com](mailto:diegorocux3x@gmail.com)
+   - Pau Frangi Mahiques: [pau.frangi@gmail.com](mailto:pau.frangi@gmail.com)
+   - Jaime Nieto Petinal: [jaimenietopetinal1@gmail.com](mailto:jaimenietopetinal1@gmail.com)
+3. **Abrir una incidencia** (*issue*) en el repositorio
+4. **Enviar una contribución** (*pull request*) con tus mejoras
+
+Agradecemos de antemano toda colaboración que ayude a hacer estos apuntes más claros, completos y útiles para la comunidad, ya sea:
+- Puliendo detalles y corrigiendo erratas
+- Añadiendo contenido relevante teórico
+- Aportando nuevos ejemplos resueltos
+- Contribuyendo ejercicios adicionales
+- Incorporando exámenes resueltos de años posteriores
+- Mejorando el material gráfico y diagramas
+
+## 👥 Autores
+
+- **Pau Frangi Mahiques** - Estudiante de 3º Doble Grado en Matemáticas e Ingeniería Informática (UCM)
+- **Diego Rodríguez Cubero** - Estudiante de 3º Doble Grado en Matemáticas e Ingeniería Informática (UCM)
+- **Jaime Nieto Petinal** - Estudiante de 3º Doble Grado en Matemáticas e Ingeniería Informática (UCM)
+
+## 🙏 Agradecimientos
+
+Agradecemos especialmente a **María del Pilar Cembranos Díaz**, profesora de la asignatura, por su dedicación, claridad expositiva y excelente labor docente que ha hecho posible la elaboración de estos apuntes.
+
+## 📄 Licencia
+
+Este material está disponible para uso educativo. Si utilizas estos apuntes, te agradeceríamos que cites a los autores y a la profesora que impartió la asignatura.
+
+---
+
+**Universidad Complutense de Madrid (UCM)**  
+Facultad de Ciencias Matemáticas  
+Doble Grado en Matemáticas e Ingeniería Informática  
+Curso 2024-2025
+
+## 🔧 Compilación
+
+Para compilar los apuntes completos, ejecuta:
+
+```bash
+pdflatex main.tex
+pdflatex main.tex  # Segunda vez para referencias cruzadas
+```
+
+## 📊 Estado del Proyecto
+
+**Progreso actual:** Temario Completado.
+
+---
+
+**Autores:** Pau Frangi, Diego Rodríguez  y Jaime Nieto Petinal.
+
+**Curso:** 2024-2025 | 3º Matemáticas UCM  
+
+**Profesora:** María del Pilar Cembranos Díaz
+
+**Licencia:** Este material está disponible para uso académico. Si encuentras útiles estos apuntes, considera dar una ⭐ al repositorio.
