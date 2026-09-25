@@ -1688,3 +1688,181 @@ Como $g$ conserva las propiedades de regularidad de $f$ (continuidad y condició
     \]
     con parámetros $\lambda > 0$ (tasa de crecimiento intrínseco) y $a > 0$ (tasa de competencia interespecífica). Este es un problema donde la función $f(t, u) = \lambda u - a u^2$ es localmente Lipschitziana respecto a $u$, lo que nos permite aplicar la teoría desarrollada para estudiar tanto el comportamiento futuro de la población como su historia pasada.
 }
+
+\ejemplo{
+        Veamos ahora un ejemplo del problema generalizado Volterra-Lotka, que describe la interacción entre dos especies: una presa y un depredador. El sistema de ecuaciones diferenciales está dado por:
+        \[
+            P =
+            \begin{cases}
+                u'(t) = \lambda (t) u - a(t) u^2 - b(t) u v \\
+                v'(t) = \mu (t) v - d(t) v^2 - c(t) u v \\
+                u(0) = u_0 \in \mathbb{R}, \quad v(0) = v_0 \in \mathbb{R}
+            \end{cases}
+            \, 
+            \quad
+            \lambda, \mu, a, b, c, d \in C([0, +\infty), \mathbb{R})
+        \]
+        Teniendo por tanto $J=[0, +\infty)$, $\Omega = \mathbb{R}^2$ y $t_0 = 0$. La función vectorial $f(t, u, v)$ que define el sistema es:
+        \[
+            f(t, u, v) = 
+            \begin{pmatrix}
+                \lambda (t) u - a(t) u^2 - b(t) u v \\
+                \mu (t) v - d(t) v^2 - c(t) u v
+            \end{pmatrix}
+        \]
+        Que es continua, calculemos sus derivadas:
+        \[
+            D_{(u,v)} f(t, u, v) =
+            \begin{pmatrix}
+                \lambda (t) - 2 a(t) u - b(t) v & - b(t) u \\
+                - c(t) v & \mu (t) - 2 d(t) v - c(t) u
+            \end{pmatrix}
+        \]
+        Como todos los coeficientes son funciones continuas en $J \times \Omega$, por lo que según el corolario del teorema de Cauchy-Lipschitz, $f$ es localmente Lipschitziana respecto a $(u, v) \in \Omega$ uniformemente en subintervalos compactos de $J$ de la forma $[0, M]$ con $M > 0$. \\
+
+        No es globalmente Lipschitziana ya que podemos ver que las derivadas parciales no están acotadas:
+        \[
+            \| \frac{f_1}{\partial v} \| = 
+            | - b(t) u | = 
+            |b(t)| |u| \leq
+            \| b(t) \|_\infty R
+        \]
+        Pero como no podemos garantizar que $\| b(t) \|_\infty$ sea finito para todo $t \in [0, +\infty)$, la función no es globalmente Lipschitziana (aunque sí está acotada en cualquier intervalo compacto de tiempo, por continuidad). FInalmente:
+        
+        \begin{enumerate}
+            \item Por el teorema de Cauchy--Lipschitz, como $f$ es continua y localmente Lipschitziana respecto a $(u,v)$, el PVI admite una única solución local que satisface $(u(0),v(0))=(u_0,v_0)$.
+            \item Por el teorema de unicidad global, la solución es única allá donde esté definida.
+            \item Por el teorema de existencia de soluciones maximales, esta solución única se prolonga a una solución maximal $(I,u,v)$.
+            \item Por el 2º teorema fundamental, $I = [0, T_{max})$ para algún $T_{max} \leq \infty$, y además $\varlimsup_{t \nearrow T_{max}} ( |u(t)| + |v(t)| ) = +\infty$ si $T_{max} < \infty$.
+        \end{enumerate}
+}
+
+\ejemplo{
+        Veamos ahora el ejemplo del sistema de Kolmogorov, que describe el caso de competición. El sistema está dado por:
+        \[
+            P =
+            \begin{cases}
+                u'(t) = (\lambda -au -bv) u \\
+                v'(t) = (\mu - du - cv) v \\
+                u(0) = u_0 \in \mathbb{R}, \quad v(0) = v_0 \in \mathbb{R}
+            \end{cases}
+            \,
+            \quad
+            \lambda, \mu, a, b, c, d \in \mathbb{R}
+        \]
+        Teniendo por tanto $J=[0, +\infty)$, $\Omega = \mathbb{R}^2$ y $t_0 = 0$. Ahora podemos escribirlo así:
+        \[
+        \begin{cases}
+            A(t) = \lambda (t) - a(t) u (t) - b(t) v(t) \\
+            B(t) = \mu (t) - d(t) u (t) - c(t) v(t)
+        \end{cases}
+        \implies
+        P =
+        \begin{cases}
+            u'(t) = A(t) u(t) \\
+            v'(t) = B(t) v(t)
+        \end{cases}
+        \]
+        Por lo tanto las soluciones son, en $I=[t_0, T_{max})$:
+        \[
+            u(t) = u_0 \exp\left( \int_0^t A(s) ds \right), \quad
+            \begin{cases}
+                u_0 > 0 \implies u(t) > 0, \quad \forall t \in I \\
+                u_0 = 0 \implies u(t) = 0, \quad \forall t \in I \\
+                u_0 < 0 \implies u(t) < 0, \quad \forall t \in I
+            \end{cases}
+        \]
+        \[
+            v(t) = v_0 \exp\left( \int_0^t B(s) ds \right), \quad
+            \begin{cases}
+                v_0 > 0 \implies v(t) > 0, \quad \forall t \in I \\
+                v_0 = 0 \implies v(t) = 0, \quad \forall t \in I \\
+                v_0 < 0 \implies v(t) < 0, \quad \forall t \in I
+            \end{cases}
+        \]
+        Por lo tanto si se cumple que estudiamos el caso particular del problema de competición, es decir, que $u_0, v_0 > 0$, y $ a, b, c, d \geq 0$ entonces:
+        \[
+            \begin{cases}
+                u(t) > 0 \quad \forall t \in I \implies
+                A(t) \leq \lambda \quad \forall t \in I \implies
+                0 < u(t) = u_0 \exp\left( \int_0^t A(s) ds \right) \leq u_0 e^{\lambda t} \\
+                v(t) > 0 \quad \forall t \in I \implies
+                B(t) \leq \mu \quad \forall t \in I \implies
+                0 < v(t) = v_0 \exp\left( \int_0^t B(s) ds \right) \leq v_0 e^{\mu t}
+            \end{cases}
+        \]
+        Si ahora $T_{max} < +\infty$, entonces:
+        \[
+            \begin{cases}
+                u_0 e^{\lambda T_{max}} \leq u_0 e^{\max_{t \in I} \lambda t} < +\infty \\
+                v_0 e^{\mu T_{max}} \leq v_0 e^{\max_{t \in I} \mu t} < +\infty
+            \end{cases}
+        \]
+        Por lo tanto, $u, v$ estarían acotadas en $I$, y por lo tanto no se cumpliría la condición de explosión en tiempo finito, contradiciendo el 2º teorema fundamental de la teoría de Cauchy-Lipschitz. Por lo tanto, necesariamente $T_{max} = +\infty$, y la solución maximal está definida globalmente en todo el intervalo $J = [0, +\infty)$.
+
+}
+
+\ejemplo{
+    Podemos estudiar ahora un caso particular del sistema de Kolmogorov, donde $v_0 = 0 \implies v(t) = 0$, $\lambda = 0$, $a = 1$, dejando el sistema:
+    \[
+        P =
+        \begin{cases}
+            u'(t) = - u^2(t) \\
+            v'(t) = 0 \\
+            u(0) = u_0 > 0, \quad v(0) = 0
+        \end{cases}
+    \]
+    La solución de este sistema es:
+    \[
+        u^{-2} u' = - 1 \implies
+        \left( \frac{1}{u} \right)' = -1 \implies
+        \frac{1}{u(t)} = -t + \frac{1}{u_0} \implies
+        u(t) = \frac{u_0}{1 - u_0 t},
+    \]
+    Que si $u_0 > 0$, explota en tiempo finito en $T_{max} = \frac{1}{u_0}$, dejando el intervalo de solución $I = [0, \frac{1}{u_0})$. Por lo tanto, la solución maximal no está definida globalmente en todo el intervalo $J = [0, +\infty)$, y se cumple la condición de explosión en tiempo finito.
+}
+
+\ejemplo{
+    Sea ahora el problema:
+    \[
+        P =
+        \begin{cases}
+            u' = a(t) u + b(t) \frac{u^n}{1 + u^n} \\
+            u(0) = 1 > 0
+        \end{cases}
+    \]
+    Con $a, b \in C([0, +\infty), \mathbb{R})$, particularmente $a \geq 0$ y $b > 0$ $\forall t \in [0, +\infty)$, y $n \in \mathbb{N}$. Así:
+    \[
+        f(t, u) = a(t) u + b(t) \frac{u^n}{1 + u^n} \, \quad 
+        t \in [0, +\infty), \, u \in \mathbb{R} \setminus \{-1\} \implies
+        \begin{cases}
+            \Omega = (-1, +\infty) \\
+            J = [0, +\infty)
+        \end{cases}
+    \]
+    Ahora calculando su derivada:
+    \[
+        \frac{\partial f}{\partial u} = 
+        a(t) + b(t) \frac{n u^{n-1} (1 + u^n) - u^n }{(1 + u^n)^2} =
+        a(t) + b(t) \frac{n u^{n-1} + (n - 1) u^n}{(1 + u^n)^2}
+    \]
+    Que es continua en $[0, +\infty) \times \Omega$, por lo que como $u_0 = 1 \in (-1, +\infty)$, y como es localmente Lipschitziana respecto de $u$ y uniformemente en $t$ en subintervalos compactos de $J$, hay una solución máximal única $(I, u)$. \\
+
+    Nótese que si $u_0 \in (-\infty, -1)$, entonces la solución maximal estaría definida en otro intervalo hacia la izquierda. \\
+
+    De acuerdo con el tercer teorema fundamental, $I = [0, T_{max})$ con $T_{max} \leq +\infty$, y si $T_{max} < +\infty$, entonces necesariamente:
+    \[
+        \limsup_{t \nearrow T_{max}} u(t) = \infty
+        \text{ ó }
+        \lim_{n \to \infty} u(t_n) = -1 \in \partial \Omega = \{-1\}
+    \]
+
+    Ahora:
+    \[
+        f(t, u) = u' = a(t) u + b(t) \frac{u^n}{1 + u^n} = \left( a(t) + b(t) \frac{u^{n-1}}{1 + u^n} \right) u = A(t) u
+    \]
+    Por lo que podemos sacar la solución explícita:
+    \[
+        u(t) = u_0 \exp\left( \int_0^t A(s) ds \right) = \exp\left( \int_0^t a(s) + b(s) \frac{u^{n-1}(s)}{1 + u^n(s)} ds \right)
+    \]
+}
