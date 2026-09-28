@@ -1078,7 +1078,9 @@ Tras haber visto este resultado, sabemos que cualquier PVI:
 
 Bajo las condiciones generales, tiene una única solución maximal $(I^*, u^*) \in \Sigma$, que no es prolongable estrictamente a su derecha.
 
-\subsubsection{Comportamiento de la solución maximal}
+\subsection{Comportamiento de la solución maximal y teoremas fundamentales de la teoría de Cauchy-Lipschitz}
+
+\subsubsection{Primer teorema fundamental}
 
 \begin{teorema}[Primer teorema fundamental de la teoría de Cauchy-Lipschitz]
     Sean $J = [t_0, t_0 + T]$, $f \in C(J \times \mathbb{R}^N, \mathbb{R}^N)$ una función localmente Lipschitziana respecto a $u \in \mathbb{R}^N$, uniformemente en $t \in J$, $u_0 \in \mathbb{R}^N$, y sea $(I, u)$ la solución maximal del PVI:
@@ -1294,6 +1296,7 @@ Probemos ahora el teorema.
     \end{enumerate}
 \end{proof}
 
+\subsubsection{Segundo teorema fundamental}
 
 \begin{teorema}[Segundo teorema fundamental de la teoría de Cauchy-Lipschitz]
     Sean $J = [t_0, +\infty)$, $f \in C(J \times \mathbb{R}^N, \mathbb{R}^N)$ una función localmente Lipschitziana respecto a $u \in \mathbb{R}^N$, uniformemente en subintervalos compactos de $J$, y sea $(I, u)$ la solución maximal del PVI:
@@ -1395,6 +1398,7 @@ por Bolzano-Weierstrass, $\exists t_{n_m} \to t^* \in [t_0, T_{\text{max}}]$.
     \| u(t_{n_m}) \| \xrightarrow[m \to \infty]{} +\infty, \quad \limsup_{t \nearrow T_{\text{max}}} \| u(t) \| = +\infty
 \]
 
+\subsubsection{Tercer teorema fundamental}
 
 \begin{teorema} [Tercer teorema fundamental de la teoría de Cauchy-Lipschitz]
     Sean $J = [t_0, +\infty)$, $\Omega \subsetneq \mathbb{R}^N$ un conjunto abierto, $f \in C(J \times \Omega, \mathbb{R}^N)$ una función localmente Lipschitziana respecto a $u \in \Omega$, uniformemente en subintervalos compactos de $J$, y sea $(I, u)$ la solución maximal del PVI:
@@ -1533,7 +1537,9 @@ por Bolzano-Weierstrass, $\exists t_{n_m} \to t^* \in [t_0, T_{\text{max}}]$.
     \end{center}    
 }
 
-\begin{teorema}
+\subsubsection{Cuarto teorema fundamental}
+
+\begin{teorema}[Cuarto teorema fundamental de la teoría de Cauchy-Lipschitz]
     Sean $J = [t_0, t_0 + T]$, $\Omega = B_R(q)$, $f \in C(J \times \overline{\Omega}, \mathbb{R}^N)$ una función globalmente Lipschitziana respecto a $u \in \overline{\Omega}$, uniformemente en $t \in J$. Entonces para cada $u_0 \in \Omega$, el Problema de Valor Inicial (PVI):
     \[
         (P) =
@@ -1677,6 +1683,10 @@ En el instante inicial $s = t_0$, tenemos que $v(t_0) = u(t_0) = u_0$. Por lo ta
     \end{cases}
 \]
 Como $g$ conserva las propiedades de regularidad de $f$ (continuidad y condición de Lipschitz), este nuevo problema es equivalente al PVI $(P)$ original "mirando al pasado". En consecuencia, todos los teoremas de existencia, unicidad y maximalidad que hemos probado para el futuro se cumplen de manera análoga para el pasado.
+
+\subsection{Ejemplos de aplicación de la teoría}
+
+Veamos algunos ejemplos que ilustran la aplicación de los teoremas fundamentales de Cauchy-Lipschitz a problemas concretos.
 
 \ejemplo{
     Como aplicación de estos conceptos, consideremos la ecuación logística, que modela el crecimiento de una población con recursos limitados. El PVI está dado por:
@@ -1823,6 +1833,7 @@ Como $g$ conserva las propiedades de regularidad de $f$ (continuidad y condició
 }
 
 \ejemplo{
+    \textbf{1. Caso general:} \\
     Sea ahora el problema:
     \[
         P =
@@ -1846,13 +1857,13 @@ Como $g$ conserva las propiedades de regularidad de $f$ (continuidad y condició
         a(t) + b(t) \frac{n u^{n-1} (1 + u^n) - u^n }{(1 + u^n)^2} =
         a(t) + b(t) \frac{n u^{n-1} + (n - 1) u^n}{(1 + u^n)^2}
     \]
-    Que es continua en $[0, +\infty) \times \Omega$, por lo que como $u_0 = 1 \in (-1, +\infty)$, y como es localmente Lipschitziana respecto de $u$ y uniformemente en $t$ en subintervalos compactos de $J$, hay una solución máximal única $(I, u)$. \\
+    Que es continua en $[0, +\infty) \times \Omega$, por lo que como $u_0 = 1 \in (-1, +\infty)$, y como es localmente Lipschitziana respecto de $u$ y uniformemente en $t$ en subintervalos compactos de $J$, hay una solución máximal única $(I, u)$, en cualquier intevalo compacto $t \in [0, M]$ con $M > 0$. Por lo tanto, la solución maximal está definida en un intervalo $I = [0, T_{max})$ con $T_{max} \leq +\infty$, aplicando el Teorema de Cauchy-Lipschitz.
 
     Nótese que si $u_0 \in (-\infty, -1)$, entonces la solución maximal estaría definida en otro intervalo hacia la izquierda. \\
 
     De acuerdo con el tercer teorema fundamental, $I = [0, T_{max})$ con $T_{max} \leq +\infty$, y si $T_{max} < +\infty$, entonces necesariamente:
     \[
-        \limsup_{t \nearrow T_{max}} u(t) = \infty
+        \limsup_{t \nearrow T_{max}} |u(t)| = \infty
         \text{ ó }
         \lim_{n \to \infty} u(t_n) = -1 \in \partial \Omega = \{-1\}
     \]
@@ -1863,6 +1874,115 @@ Como $g$ conserva las propiedades de regularidad de $f$ (continuidad y condició
     \]
     Por lo que podemos sacar la solución explícita:
     \[
-        u(t) = u_0 \exp\left( \int_0^t A(s) ds \right) = \exp\left( \int_0^t a(s) + b(s) \frac{u^{n-1}(s)}{1 + u^n(s)} ds \right)
+        u(t) = u_0 e^{\left( \int_0^t A(s) ds \right)} = 
+        e^{\left( \int_0^t a(s) + b(s) \frac{u^{n-1}(s)}{1 + u^n(s)} ds \right)} > 0
+        \quad \forall t \in I
+    \]
+    Descartando asó la segunda posibilidad, ya que al ser la solución siempre positiva, no puede acercarse a $-1$. Además, como $a(t) \geq 0$ y $b(t) > 0$, se cumple que $u'(t) > 0$ para todo $t \in I$, por lo que la solución es estrictamente creciente. Por lo tanto, si $T_{max} < +\infty$, necesariamente:
+    \[
+        \limsup_{t \nearrow T_{max}} |u(t)| = +\infty
+    \]
+
+    \textbf{2. Casos $n=1, 2$ (Existencia global en sistemas de Kolmogorov):} \\
+    Los casos $n=1,2$ son los llamados sitemas de Kolmogorov, donde:
+    \[
+        u' = A(t) u (t) \quad t \in I = [0, T_{max})
+    \]
+    Y donde:
+    \[
+        A(t) =
+        a(t) + b(t) \frac{u^{n-1}(t)}{1 + u^n(t)} =
+        \begin{cases}
+            n = 1 \implies a(t) + b(t) \frac{1}{1 + u(t)} \leq a(t) + b(t) \\
+            n = 2 \implies a(t) + b(t) \frac{u(t)}{1 + u^2(t)} \leq a(t) + b(t)
+        \end{cases}
+    \]
+    Si ahora el tiempo $T_{max} < +\infty$, entonces:
+    \[
+        0 < u(t) = u_0 e^{\left( \int_0^t A(s) ds \right)} \leq
+        u_0 e^{\left( \int_0^t a(s) + b(s) ds \right)} \leq
+        u_0 e^{\left( \int_0^{T_{max}} a + b \text{ } ds \right)} \leq C
+    \]
+    Donde $C$ es una constante positiva, y $a, b$ son cotas superiores de $a(t)$ y $b(t)$ en el intervalo $[0, T_{max}]$. Por lo tanto, la solución estaría acotada, contradiciendo la condición de explosión en tiempo finito del tercer teorema fundamental. Por lo tanto, necesariamente $T_{max} = +\infty$, y la solución maximal está definida globalmente en todo el intervalo $J = [0, +\infty)$.\\
+
+    \textbf{3. Caso $n \geq 4$ (Explosión en tiempo finito):} \\
+    Ahora nos podemos fijar en el caso $n \geq 4$:
+    \[
+        P =
+        \begin{cases}
+            u' = a(t) u(t) + b(t) \frac{u(t)}{1 + u(t)} u^2(t) \\
+            u(0) = 1 > 0
+        \end{cases}
+    \]
+    Ahora, podemos usar la función:
+    \[
+        g(x) = \frac{x}{1 + x} \quad \text{para } x \geq 1 \implies
+        g'(x) = \frac{1}{(1 + x)^2} > 0
+    \]
+    Por lo que $g$ es estrictamente creciente, por lo que $g(x) \geq g(1) = \frac{1}{2}$ para todo $x \geq 1$. Por lo tanto, si $u(t) \geq 1$ para todo $t \in I$, entonces:
+    \[
+        u'(t) \geq a(t) u(t) + \frac{b(t)}{2} u^2(t) \quad \forall t \in I
+    \]
+
+    Y en particular, si $a(t) \geq 0$ y $b(t) > 0$, entonces:
+    \[
+        u'(t) \geq \frac{b(t)}{2} u^2(t) \quad \forall t \in I \implies
+        u' u^{-2} \geq \frac{b(t)}{2} \implies
+        \left( - u^{-1} \right)' \geq \frac{b(t)}{2} \implies
+        \left( \frac{1}{u(t)} \right)' \leq - \frac{b(t)}{2} \implies
+    \]
+    \[
+        \frac{1}{u(t)} - \frac{1}{u_0} \leq - \frac{1}{2} \int_0^t b(s) ds \implies
+        \frac{1}{u(t)} \leq 1 - \frac{1}{2} \int_0^t b(s) ds \implies
+    \]
+    \[
+        \implies
+        \boxed{
+            u(t) \geq \frac{1}{1 - \frac{1}{2} \int_0^t b(s) ds} = \frac{2}{2 - \int_0^t b(s) ds}
+        }
+    \]
+
+    Ahora por tanto debemos analizar lo que le ocurre a $\int_0^\infty b(s) ds$. Si $\inf_{t \in [0, +\infty)} b(t) = \omega > 0$, entonces debe $\exists T > 0$ tal que $\int_0^T b(s) ds = 2$, y por lo tanto la solución $u(t)$ explota en tiempo finito, con $T_{max} \leq T$. 
+}
+
+\ejemplo{
+    Veamos ahora un ejemplo de un sistema de ecuaciones diferenciales acopladas:
+    \[
+        P =
+        \begin{cases}
+            u' = |v|^p \\
+            v' = |u|^q \\
+            u(0) = 1, \quad v(0) = 1
+        \end{cases}
+        \quad p \geq q > 1
+    \]
+
+    Ahora podemos definir la función $f(t, u, v)$:
+    \[
+        f(t, u, v) =
+        \begin{pmatrix}
+            |v|^p \\
+            |u|^q
+        \end{pmatrix}
+        \quad
+        \begin{cases}
+            t \in \mathbb{R} = J \\
+            (u, v) \in \mathbb{R}^2 = \Omega
+        \end{cases}
+    \]
+    
+    Esta función es continua en $J \times \Omega$, y su matriz Jacobiana es:
+    \[
+        D_{(u, v)} f(t, u, v) =
+        \begin{pmatrix}
+            0 & p |v|^{p-1} \text{signo}(v) \\
+            q |u|^{q-1} \text{signo}(u) & 0
+        \end{pmatrix}
+    \]
+
+    Que como es continua en $(t, u, v) \in J \times \Omega$, nos garantiza que $f$ es localmente Lipschitziana respecto a $(u, v) \in \mathbb{R}^2 = \Omega$ uniformemente en $t \in \mathbb{R} = J$, que tiene una única solución maximal $(I, u, v)$ definida en un intervalo $I = [0, T_{max})$ con $T_{max} \leq +\infty$, por el teorema de Cauchy-Lipschitz. Ahora si fijamos $J = [0, +\infty)$, entonces según el 2º teorema fundamental, $I = [0, T_{max})$ con $T_{max} \leq +\infty$, y si $T_{max} < +\infty$, entonces necesariamente:
+    \[
+        \limsup_{t \nearrow T_{max}} ( |u(t)| + |v(t)| ) = +\infty
     \]
 }
+

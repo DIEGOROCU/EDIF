@@ -1,14 +1,14 @@
 ﻿---
 name: teoria-latex
-description: Instrucciones y comandos precisos para formatear apuntes de teoría y ejercicios en LaTeX, basados en la estructura estándar de Métodos Numéricos y la Plantilla de Apuntes.
+description: Instrucciones y comandos precisos para formatear apuntes de teoría y ejercicios en LaTeX, basados en el estilo personal del usuario y la Plantilla de Apuntes de la UCM.
 ---
 # Estilo de Apuntes LaTeX (Estándar UCM)
 
-Esta skill define el formato exacto para tomar apuntes de teoría y ejercicios, basado en la estructura consolidada de la asignatura de Métodos Numéricos. Debes usar **exclusivamente** estos comandos y entornos personalizados que ya están definidos en el preámbulo.
+Esta skill define el formato exacto, los comandos y el estilo de redacción para tomar apuntes de teoría y ejercicios. Se basa en el estándar y la voz del autor de la asignatura de Métodos Numéricos y Ecuaciones Algebraicas. 
 
 ## 1. Comandos de Teoría
 
-Usa estos entornos para estructurar el contenido teórico. Siempre que sea posible, añade un título descriptivo entre corchetes.
+Usa **exclusivamente** estos entornos predefinidos en el preámbulo. Siempre que sea posible, añade un título descriptivo entre corchetes.
 
 *   **Definiciones:**
     `latex
@@ -16,27 +16,25 @@ Usa estos entornos para estructurar el contenido teórico. Siempre que sea posib
         Contenido de la definición...
     \end{definición}
     `
-*   **Teoremas:**
+*   **Teoremas y Proposiciones:**
     `latex
     \begin{teorema}[Título del teorema]
         Enunciado del teorema...
     \end{teorema}
-    `
-*   **Proposiciones:**
-    `latex
+    
     \begin{proposición}[Título de la proposición]
         Enunciado de la proposición...
     \end{proposición}
     `
 *   **Demostraciones:**
-    Usa el comando \dem (no el entorno proof habitual) que envuelve automáticamente el texto.
+    Usa el entorno estándar proof. **No** uses comandos envolventes como \dem{...}.
     `latex
-    \dem{
-        Aquí va el desarrollo de la demostración...
-    }
+    \begin{proof}
+        Aquí va el desarrollo desglosado de la demostración...
+    \end{proof}
     `
 *   **Ejemplos:**
-    Usa el comando \ejemplo (crea una caja coloreada especial).
+    Usa el comando especial \ejemplo{...} que genera una caja coloreada.
     `latex
     \ejemplo{
         Aquí va el ejemplo desarrollado...
@@ -49,33 +47,44 @@ Usa estos entornos para estructurar el contenido teórico. Siempre que sea posib
     \end{observación}
     `
 
-## 2. Comandos de Ejercicios
+## 2. Jerarquía y Estructura (Sections)
 
-Para las hojas de problemas y exámenes, la plantilla cuenta con un sistema de cajas de colores que indican el estado del ejercicio.
+El texto debe fluir de forma estructurada usando la jerarquía estándar:
+*   \section{Título del Tema}: Corresponde al gran bloque o capítulo general (ej. "Extensiones de cuerpos").
+*   \subsection{Concepto Principal}: Divide el tema en los pilares fundamentales o teóricos (ej. "Conceptos básicos", "Característica", "El grado de una extensión").
+*   \subsubsection{Detalle o Teorema Clave}: Se usa para dar granularidad aislando un subconcepto o un cálculo importante. **También es obligatorio usarlo para enmarcar y darle peso a los teoremas muy importantes del curso**, asumiendo que dichos teoremas no abarquen lo suficiente como para merecer su propia \subsection directa.
 
-*   **Inicio de una Hoja de Ejercicios:**
-    Utiliza este comando para poner el título de la hoja y reiniciar automáticamente el contador de ejercicios.
+## 3. Estilo de Redacción y Rigor Matemático
+
+*   **Prosa conectiva:** No apiles definiciones y teoremas como si fuera un diccionario inconexo. Escribe siempre pequeñas frases introductorias o de transición (ej: *"Veamos algunos tipos de matrices que nos encontraremos..."*, *"Para entender su estructura, consideramos..."*).
+*   **Desglose visual (itemize):** Cuando haya múltiples propiedades, ejemplos o tipos, no uses párrafos largos de texto corrido; utiliza \begin{itemize} y destaca el término clave con \textbf{}.
+*   **Fórmulas y Ecuaciones:** 
+    *   Usa **únicamente** el modo "display" \[ ... \] para destacar ecuaciones clave o desarrollos de fórmulas.
+    *   **Estrictamente prohibido el uso de \begin{align} o \begin{align*}**. Si hay múltiples líneas, resuélvelo dentro de \[ ... \] usando saltos o separándolo en varias ecuaciones.
+    *   Usa el modo "inline" $ ... $ para variables sueltas y operaciones cortas en el propio texto.
+*   **Demostraciones sin magia:** Al rellenar una \begin{proof}, no asumas saltos lógicos. Explica explícitamente el porqué de cada paso analítico (ej: mencionar explícitamente si aplicas la hipótesis inductiva, un teorema de isomorfía, o justificar que el núcleo es cero).
+
+## 4. Comandos de Ejercicios
+
+Para las hojas de problemas y exámenes, utiliza el sistema de cajas de colores de la plantilla.
+
+*   **Inicio de Hoja:**
     `latex
     \hojaejercicio{Título de la Hoja}
     `
 *   **Estructura de un Ejercicio:**
-    Usa el comando \ejercicio{estado}{marca}{Enunciado}{Solución}.
     `latex
     \ejercicio{estado}{marca}{
-        Aquí va el enunciado del problema...
+        Enunciado del problema...
     }{
-        Aquí va el desarrollo y la solución...
+        Desarrollo y solución paso a paso...
     }
     `
-    *Parámetros importantes:*
-    *   estado: Define el color de la caja. Puede ser:
-        *   enunciado (Rojo): Ejercicio sin empezar.
-        *   medio (Naranja): Ejercicio a medias o dudoso.
-        *   esuelto (Verde): Ejercicio completado.
-    *   marca: Úsalo para destacar ejercicios importantes o de examen (por ejemplo, pon x o déjalo vacío {}).
+    *Estados posibles:* enunciado (Rojo), medio (Naranja), esuelto (Verde).
+    *Marca:* Úsalo para destacar (x) o déjalo vacío ({}).
 
-## 3. Normas Generales
+## 5. Reglas de Intervención (Modo de actuar de la IA)
 
-1.  **No inventes entornos nuevos.** Limítate a usar los bloques de arriba para mantener la coherencia visual en todos los PDF de todas las asignaturas.
-2.  **No uses \vspace ni formateos manuales** para separar teoremas o definiciones; los entornos mdframed del preámbulo ya calculan los márgenes.
-3.  Usa los comandos matemáticos estándar definidos en el preámbulo (ej. \R, \C, \Q, \N, \Z).
+1.  **Edición Aditiva:** Cuando corrijas o mejores los apuntes, actúa añadiendo explicaciones, pero **no elimines el texto original** ni borres la voz del autor.
+2.  **No inventes formatos:** No uses \vspace, \newline forzados ni inventes entornos. Los espacios los calcula el paquete mdframed.
+3.  **Consistencia de notación:** Usa los macros matemáticos predefinidos (\R, \C, \Q, \N, \Z) y respeta estrictamente cómo el autor haya llamado a sus variables en el documento.
