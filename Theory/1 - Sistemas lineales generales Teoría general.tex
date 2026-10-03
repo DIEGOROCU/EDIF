@@ -1986,3 +1986,243 @@ Veamos algunos ejemplos que ilustran la aplicación de los teoremas fundamentale
     \]
 }
 
+DESPUES DEL TEOREMA DE DEPENDENCIA LIPCHICIANA Y DEL TEOREMA DE DEPENDENCIA LIPCHICIANA CON RESPECTO DE CONDICIONES INICIALES
+
+\begin{teorema}[Teorema de dependencia Lipschitziana con respecto de $f$]
+    Sean $J = [t_0, t_0 + T]$, $f, g \in C(J \times \mathbb{R}^N, \mathbb{R}^N)$, y supongamos que $f$ y $g$ son globalmente Lipschitzianas respecto a $u \in \mathbb{R}^N$, uniformemente en $t \in J$, en cualquier bola de $\mathbb{R}^N$ y $u_0 \in \mathbb{R}^N$.\\
+
+    Sea $h \in \{ f, g \}$, denotaremos por $u(t; h)$ a la única solución del PVI:
+    \[
+        \begin{cases}
+            u'(t) = h(t, u(t)) \\
+            u(t_0) = u_0
+        \end{cases}
+    \]
+
+    Supongamos que $u(t; f)$ está definida en $[t_0, t_0 + \tau]$ con $\tau \in (0, T]$.\\
+
+    Sean además $\Gamma_f = \{ u(t; f) : t \in [t_0, t_0 + \tau] \}$ la órbita de $u(t; f)$ para $t \in [t_0, t_0 + \tau]$, $R > 0$ tal que $\Gamma_f \subset B_R(u_0)$, y sea $L$ la constante de Lipschitz de $f$ en $\overline{B}_R(u_0)$ uniformamente en $t \in [t_0, t_0 + \tau]$.\\
+
+    Entonces, $\exists \epsilon > 0$ tal que si:
+    \[
+        \| f - g \|_\infty \equiv
+        \max_{t \in J \, \| u - u_0 \| \leq R} \| f(t, u) - g(t, u) \| \leq 
+        \epsilon
+    \]
+    Entonces la solución $u(t; g)$ también está definida en $[t_0, t_0 + \tau]$, y además:
+    \[
+        \| u(t; f) - u(t; g) \| \leq 
+        \frac{e^{L \tau} - 1}{L} \| f - g \|_{\infty \, J \times \overline{B}_R(u_0)} 
+        \frac{e^{L \tau} - 1}{L} \epsilon
+        \quad \forall t \in [t_0, t_0 + \tau] \leq
+    \]
+\end{teorema}
+
+\begin{proof}
+    Antes de iniciar esta demostración, obserbese este dibujo para entender geometricamente los conceptos (donde $K_\eta$ no llega a tocar la frontera de la bola $B_R(u_0)$):
+    \begin{center}
+    \begin{tikzpicture}
+        % Definimos el centro u_0 y el radio R
+        \coordinate (u0) at (0, 0);
+        \def\R{3.5}
+
+        % 1. Dibujamos la bola B_R(u_0)
+        \draw[fill=blue!5, draw=blue!60, thick, dashed] (u0) circle (\R);
+
+        % Indicamos el radio R
+        \draw[->, >=stealth, gray, semithick] (u0) -- (330:\R) node[midway, below left] {$R$};
+
+        % Etiqueta de la bola
+        \node[blue!80!black] at (135:\R) [above right] {$B_R(u_0)$};
+
+        % Definimos el punto final de la órbita en t_0 + \tau
+        \coordinate (utau) at (2.2, 1.8);
+
+        % 2. ENTORNO K_\eta (Tubo de distancia \eta)
+        % Usamos un trazo muy grueso (line width=28pt) para generar el área alrededor de la órbita.
+        % cap=round asegura que el tubo cubra la distancia \eta formando semicírculos en los extremos.
+        \draw[line width=28pt, red!15, cap=round] (u0) .. controls (0.2, 1.5) and (1.5, 0.5) .. (utau);
+
+        % Etiqueta del entorno K_\eta
+        \node[red!60!black] at (0.2, 1.8) {$K_\eta$};
+
+        % 3. ÓRBITA \Gamma_f (Dibujada por encima del entorno)
+        \draw[->, >=stealth, thick, red] (u0) .. controls (0.2, 1.5) and (1.5, 0.5) .. (utau);
+
+        % Etiqueta de la órbita \Gamma_f
+        \node[red, font=\small] at (1.4, 0.8) [below] {$\Gamma_f$};
+
+        % 4. DIBUJAMOS LA DISTANCIA \eta
+        % 14pt es exactamente la mitad de los 28pt del grosor de la línea del entorno.
+        % Dibujamos la flecha en un punto central de la curva de forma ortogonal.
+        \draw[->, >=stealth, red!80!black, thin] (0.91, 0.97) -- ++(103:14pt) node[midway, right, inner sep=2pt, font=\scriptsize] {$\eta$};
+
+        % 5. Dibujamos y etiquetamos el centro u_0 (condición inicial u(t_0))
+        \fill (u0) circle (2pt) node[below left] {$u_0 = u(t_0)$};
+
+        % Dibujamos y etiquetamos el punto final u(t_0 + \tau)
+        \fill (utau) circle (2pt) node[right] {$u(t_0 + \tau)$};
+
+    \end{tikzpicture}
+    \end{center}
+
+    Sabemos que $\Gamma_f \subset B_R(u_0)$, por lo que su intersección con la frontera es $\Gamma_f \cap \partial B_R(u_0) = \emptyset$. Por lo tanto, tiene sentido definir:
+    \[
+        0 < dist(\Gamma_f, \partial B_R(u_0)) = 2 \eta \implies
+        \boxed{
+            \epsilon = \frac{L}{e^{L\tau} - 1} \eta
+        }
+    \]
+
+    Ahora, si $\| f - g \|_{\infty \, J \times \overline{B}_R(u_0)} \leq \epsilon$, entonces si denotamos por $u(t; g)$ a la solución del PVI con $h = g$, tenemos que $I_g = J$, $I_g = [t_0, T_{max})$ con $T_{max} \leq t_0 + T$, y además:
+    \[
+        \varlimsup_{t \nearrow T_{max}} \| u(t; g) \| = +\infty
+    \]
+    Y está definida en $[t_0, t_0 + \tau]$.\\
+
+    Ahora reduzcamos al absurdo. Supongamos que tenemos el intervalo $[t_0, T_{max})$ con $T_{max} \leq t_0 + T$, y supongamos que explota en $T_{max}$, etnonces si tomamos $t_1 \in (t_0, T_{max})$ entonces:
+    \[
+        \begin{cases}
+            u(t;g) \in B_R(u_0) \quad \forall t \in [t_0, t_1) \\
+            u(t_1;g) \in \partial B_R(u_0)
+        \end{cases}
+    \]
+
+    Ahora podemos definir:
+    \[
+        \begin{cases}
+            u_1(t) \equiv u(t; f) \\
+            u_2(t) \equiv u(t; g)
+        \end{cases}
+        \quad t \in [t_0, t_1] \implies
+        u(t; f), u(t; g) \in \overline{B}_R(u_0) \quad \forall t \in [t_0, t_1]
+    \]
+
+    Ahora aplicando el teorema de dependencia Lipschitziana abstracto tenemos que:
+    \[
+        \| u(t; f) - u(t; g) \| \leq 
+        e^{L(t - t_0)} \delta_0 + \frac{e^{L(t - t_0)} - 1}{L} (\delta_1 + \delta_2)
+    \]
+    
+    Donde:
+    \[
+        \begin{cases}
+            \delta_0 = \| u(t_0; f) - u(t_0; g) \| = \| u_0 - u_0 \| = 0 \\
+            \delta_1 = \max_{t \in [t_0, t_1]} \| u_1'(t) - f(t, u_1(t)) \| = 0 \\
+            \delta_2 = \max_{t \in [t_0, t_1]} \| u_2'(t) - f(t, u_2(t)) \|
+        \end{cases}
+    \]
+
+    Para probar la última cota aplicaremos la desigualdad triangular:
+    \[
+        \| u_2'(t) - f(t, u_2(t)) \| \leq
+        \| u_2'(t) - g(t, u_2(t)) \| + \| g(t, u_2(t)) - f(t, u_2(t)) \| =
+        \| g(t, u_2(t)) - f(t, u_2(t)) \| \leq
+    \]
+    \[  
+        \leq 
+        \| g - f \|_{\infty \, J \times \overline{B}_R(u_0)} \leq
+        \epsilon
+    \]
+
+    Dejando así la diferencia:
+    \[
+        \| u(t; f) - u(t; g) \| \leq 
+        \frac{e^{L(t - t_0)} - 1}{L} \| f - g \|_{\infty \, J \times \overline{B}_R(u_0)} \leq
+        \frac{e^{L(t - t_0)} - 1}{L} \epsilon \leq
+        \frac{e^{L \tau} - 1}{L} \underbrace{\frac{L}{e^{L\tau} - 1} \eta}_{\epsilon} =
+        \eta
+    \]
+
+    Por lo tanto, sabemos que la órbita de $g$ esta a distancia $\eta$ de la órbita de $f$, y por lo tanto:
+    \[
+        \Gamma_g \subset K_\eta = \Gamma_f + \overline{B}_\eta(0) \subset B_R(u_0)
+    \]
+
+    Por lo tanto, $u(t_1; g) \in B_R(u_0)$, contradiciendo la hipótesis de que $u(t_1; g) \in \partial B_R(u_0)$. Por lo tanto, necesariamente $T_{max} > t_0 + \tau$, y por lo tanto $u(t; g)$ está definida en $[t_0, t_0 + \tau]$, y además $u(t; g) \in \overline{B}_R(u_0) \forall t \in [t_0, t_0 + \tau]$. Por tanto, $u(t; g)$ está bien definida en el intervalo $[t_0, t_0 + \tau]$.\\
+
+    Además, se cumple la desigualdad:
+    \[
+        \| u(t; f) - u(t; g) \| \leq 
+        \frac{e^{L(t - t_0)} - 1}{L} \| f - g \|_{\infty \, J \times \overline{B}_R(u_0)} \quad \forall t \in [t_0, t_0 + \tau]
+    \]
+
+    Ahora supongamos que $g$ toca la frontera de la bola $B_R(u_0)$ en un tiempo $t_1 \in [t_0, t_0 + \tau]$, entonces:
+    \[
+        \| u(t_1; f) - u(t_1; g) \| \geq dist(\Gamma_f, \partial B_R(u_0)) = 2 \eta
+    \]
+
+    Lo cual contradice la desigualdad anterior, ya que:
+    \[
+        \| u(t_1; f) - u(t_1; g) \| \leq 
+        \frac{e^{L(t_1 - t_0)} - 1}{L} \| f - g \|_{\infty \, J \times \overline{B}_R(u_0)} \leq
+        \frac{e^{L\tau} - 1}{L} \epsilon =
+        \frac{e^{L\tau} - 1}{L} \frac{L}{e^{L\tau} - 1} \eta = 
+        \eta < 2\eta
+    \]
+
+    Así finalmente, $u(t; g)$ no puede tocar la frontera de la bola $B_R(u_0)$ en el intervalo $[t_0, t_0 + \tau]$, y por lo tanto la solución $u(t; g)$ está definida en $[t_0, t_0 + \tau]$, y además:
+    \[
+        \| u(t; f) - u(t; g) \| \leq 
+        \frac{e^{L(t - t_0)} - 1}{L} \| f - g \|_{\infty \, J \times \overline{B}_R(u_0)} \quad \forall t \in [t_0, t_0 + \tau]
+    \]
+\end{proof}
+
+\ejemplo{
+    Veamos ahora un ejemplo con el problema logístico:
+    \[
+        P =
+        \begin{cases}
+            u' = \lambda u - a u^2 \\
+            u(0) = x
+        \end{cases}
+    \]
+
+    Recordemos que este problema tenia de equilibrios $u = 0$ y $u = \frac{\lambda}{a}$, e iban de manera continua de un equilibrio al otro, pero si las condiciones iniciales eran negativas, la solución explotaba en tiempo finito, y si eran mayores a $\frac{\lambda}{a}$, la solución también explotaba en tiempo finito pero en el pasado.
+
+    \begin{center}
+    \begin{tikzpicture}[x=1.5cm, y=1.8cm] % Escala ajustada para dar espacio al eje y negativo
+        % Ejes principales
+        \draw[->, thick] (-0.2, 0) -- (6, 0) node[right] {$t$};
+        \draw[->, thick] (0, -3.5) -- (0, 2.5) node[above] {$u(t)$};
+
+        % Asíntota de la capacidad de carga (u = \lambda/a)
+        \draw[dashed, blue!80!black, thick] (0, 1) -- (5.8, 1) node[right, text=black] {$u = \frac{\lambda}{a}$ (Capacidad de carga)};
+
+        % Asíntota de inflexión (u = \lambda/2a)
+        \draw[dotted, gray, thick] (0, 0.5) -- (5.8, 0.5) node[right, text=black, font=\small] {$u = \frac{\lambda}{2a}$ (Inflexión)};
+
+        % CASO 1: u_0 < \lambda / a (Crecimiento Sigmoide)
+        \draw[thick, red, domain=0:5.6, samples=100, smooth] plot (\x, {1 / (1 + 19*exp(-\x))});
+        \fill[red] (0, 0.05) circle (1.5pt) node[above left] {Caso 1};
+        \node[red, right, font=\footnotesize] at (4.5, 0.85) {Crecimiento (Sigmoide)};
+
+        % Punto de inflexión del Caso 1
+        \fill[red!80!black] (2.944, 0.5) circle (1.5pt);
+        \node[red!80!black, below right, font=\footnotesize] at (2.944, 0.5) {$u''=0$};
+
+        % CASO 2: u_0 > \lambda / a (Superpoblación / Decrecimiento)
+        \draw[thick, green!60!black, domain=0:5.6, samples=100, smooth] plot (\x, {2 / (2 - exp(-\x))});
+        \fill[green!60!black] (0, 2) circle (1.5pt) node[left] {Caso 2};
+        \node[green!60!black, right, font=\footnotesize] at (2.5, 1.4) {Decrecimiento convexo};
+
+        % CASO 3: u_0 = \lambda / a (Equilibrio perfecto)
+        \draw[thick, blue, domain=0:5.6] plot (\x, {1});
+        \fill[blue] (0, 1) circle (1.5pt) node[above left] {Caso 3};
+
+        % CASO 4: u_0 < 0 (Explosión a -infinito en tiempo finito)
+        % Usamos \lambda=1, a=1, u_0=-0.2 -> Ecuación: -0.2 / (-0.2 + 1.2*exp(-t))
+        % El blow-up ocurre en t = ln(6) aprox 1.7917
+        % Cortamos el dibujo de la curva en t=1.54 para que no se salga de los límites de y=-3.5
+        \draw[thick, purple, domain=0:1.54, samples=100, smooth] plot (\x, {-0.2 / (-0.2 + 1.2*exp(-\x))});
+        \fill[purple] (0, -0.2) circle (1.5pt) node[left] {Caso 4};
+        \node[purple, left, font=\footnotesize] at (1.5, -2.5) {Explosión (Blow-up)};
+
+        % Asíntota vertical del blow-up (T_max)
+        \draw[dashed, purple, thick] (1.792, 0) -- (1.792, -3.5) node[below] {$T_{max}$};
+
+        % Origen
+        \node[below left] at (0,0) {$0$};
+    \end{tikzpicture}
+    \end{center}
+}
