@@ -1,90 +1,95 @@
-ï»¿---
-name: teoria-latex
-description: Instrucciones y comandos precisos para formatear apuntes de teorÃ­a y ejercicios en LaTeX, basados en el estilo personal del usuario y la Plantilla de Apuntes de la UCM.
 ---
-# Estilo de Apuntes LaTeX (EstÃ¡ndar UCM)
+name: teoria-latex
+description: Instrucciones y comandos precisos para formatear apuntes de teoría y ejercicios en LaTeX, basados en el estilo personal del usuario y la Plantilla de Apuntes de la UCM.
+---
+# Estilo de Apuntes LaTeX (Estándar UCM)
 
-Esta skill define el formato exacto, los comandos y el estilo de redacciÃ³n para tomar apuntes de teorÃ­a y ejercicios. Se basa en el estÃ¡ndar y la voz del autor de la asignatura de MÃ©todos NumÃ©ricos y Ecuaciones Algebraicas. 
+Esta skill define el formato exacto, los comandos y el estilo de redacción para tomar apuntes de teoría y ejercicios. Se basa en el estándar y la voz del autor de la asignatura de Métodos Numéricos y Ecuaciones Algebraicas. 
 
-## 1. Comandos de TeorÃ­a
+## 1. Comandos de Teoría
 
-Usa **exclusivamente** estos entornos predefinidos en el preÃ¡mbulo. Siempre que sea posible, aÃ±ade un tÃ­tulo descriptivo entre corchetes.
+Usa **exclusivamente** estos entornos predefinidos en el preámbulo. Siempre que sea posible, añade un título descriptivo entre corchetes.
 
 *   **Definiciones:**
     `latex
-    \begin{definiciÃ³n}[TÃ­tulo de la definiciÃ³n]
-        Contenido de la definiciÃ³n...
-    \end{definiciÃ³n}
+    \begin{definición}[Título de la definición]
+        Contenido de la definición...
+    \end{definición}
     `
 *   **Teoremas y Proposiciones:**
     `latex
-    \begin{teorema}[TÃ­tulo del teorema]
+    \begin{teorema}[Título del teorema]
         Enunciado del teorema...
     \end{teorema}
     
-    \begin{proposiciÃ³n}[TÃ­tulo de la proposiciÃ³n]
-        Enunciado de la proposiciÃ³n...
-    \end{proposiciÃ³n}
+    \begin{proposición}[Título de la proposición]
+        Enunciado de la proposición...
+    \end{proposición}
     `
 *   **Demostraciones:**
-    Usa el entorno estÃ¡ndar proof. **No** uses comandos envolventes como \dem{...}.
+    Usa el entorno estándar proof para demostraciones. **No** uses comandos envolventes como \dem{...}. De igual manera, **están estrictamente prohibidos** los atajos envolventes de una línea definidos en el preámbulo (\teo{}, \defi{}, \prop{}, \cor{}, \lem{}, \obs{}). Usa exclusivamente los entornos completos \begin{teorema} ... \end{teorema}, \begin{definición}, etc.
     `latex
     \begin{proof}
-        AquÃ­ va el desarrollo desglosado de la demostraciÃ³n...
+        Aquí va el desarrollo desglosado de la demostración...
     \end{proof}
     `
 *   **Ejemplos:**
     Usa el comando especial \ejemplo{...} que genera una caja coloreada.
     `latex
     \ejemplo{
-        AquÃ­ va el ejemplo desarrollado...
+        Aquí va el ejemplo desarrollado...
     }
     `
 *   **Observaciones / Notas:**
     `latex
-    \begin{observaciÃ³n}
+    \begin{observación}
         Nota aclaratoria o comentario importante...
-    \end{observaciÃ³n}
+    \end{observación}
     `
 
-## 2. JerarquÃ­a y Estructura (Sections)
+## 2. Jerarquía y Estructura (Sections)
 
-El texto debe fluir de forma estructurada usando la jerarquÃ­a estÃ¡ndar:
-*   \section{TÃ­tulo del Tema}: Corresponde al gran bloque o capÃ­tulo general (ej. "Extensiones de cuerpos").
-*   \subsection{Concepto Principal}: Divide el tema en los pilares fundamentales o teÃ³ricos (ej. "Conceptos bÃ¡sicos", "CaracterÃ­stica", "El grado de una extensiÃ³n").
-*   \subsubsection{Detalle o Teorema Clave}: Se usa para dar granularidad aislando un subconcepto o un cÃ¡lculo importante. **TambiÃ©n es obligatorio usarlo para enmarcar y darle peso a los teoremas muy importantes del curso**, asumiendo que dichos teoremas no abarquen lo suficiente como para merecer su propia \subsection directa.
+El texto debe fluir de forma estructurada usando la jerarquía estándar:
+*   \section{Título del Tema}: Corresponde al gran bloque o capítulo general (ej. "Extensiones de cuerpos").
+*   \subsection{Concepto Principal}: Divide el tema en los pilares fundamentales o teóricos (ej. "Conceptos básicos", "Característica", "El grado de una extensión").
+*   \subsubsection{Detalle o Teorema Clave}: Se usa para dar granularidad aislando un subconcepto o un cálculo importante. **También es obligatorio usarlo para enmarcar y darle peso a los teoremas muy importantes del curso**, asumiendo que dichos teoremas no abarquen lo suficiente como para merecer su propia \subsection directa.
 
-## 3. Estilo de RedacciÃ³n y Rigor MatemÃ¡tico
+## 3. Estilo de Redacción y Rigor Matemático
 
-*   **Prosa conectiva:** No apiles definiciones y teoremas como si fuera un diccionario inconexo. Escribe siempre pequeÃ±as frases introductorias o de transiciÃ³n (ej: *"Veamos algunos tipos de matrices que nos encontraremos..."*, *"Para entender su estructura, consideramos..."*).
-*   **Desglose visual (itemize):** Cuando haya mÃºltiples propiedades, ejemplos o tipos, no uses pÃ¡rrafos largos de texto corrido; utiliza \begin{itemize} y destaca el tÃ©rmino clave con \textbf{}.
-*   **FÃ³rmulas y Ecuaciones:** 
-    *   Usa **Ãºnicamente** el modo "display" \[ ... \] para destacar ecuaciones clave o desarrollos de fÃ³rmulas.
-    *   **Estrictamente prohibido el uso de \begin{align} o \begin{align*}**. Si hay mÃºltiples lÃ­neas, resuÃ©lvelo dentro de \[ ... \] usando saltos o separÃ¡ndolo en varias ecuaciones.
+*   **Prosa conectiva:** No apiles definiciones y teoremas como si fuera un diccionario inconexo. Escribe siempre pequeñas frases introductorias o de transición (ej: *"Veamos algunos tipos de matrices que nos encontraremos..."*, *"Para entender su estructura, consideramos..."*).
+*   **Desglose visual (itemize):** Cuando haya múltiples propiedades, ejemplos o tipos, no uses párrafos largos de texto corrido; utiliza \begin{itemize} y destaca el término clave con \textbf{}.
+*   **Fórmulas y Ecuaciones:** 
+    *   Usa **únicamente** el modo "display" \[ ... \] para destacar ecuaciones clave o desarrollos de fórmulas.
+    *   **Estrictamente prohibido el uso de \begin{align} o \begin{align*}**. Si hay múltiples líneas, resuélvelo dentro de \[ ... \] usando saltos o separándolo en varias ecuaciones.
     *   Usa el modo "inline" $ ... $ para variables sueltas y operaciones cortas en el propio texto.
-*   **Demostraciones sin magia:** Al rellenar una \begin{proof}, no asumas saltos lÃ³gicos. Explica explÃ­citamente el porquÃ© de cada paso analÃ­tico (ej: mencionar explÃ­citamente si aplicas la hipÃ³tesis inductiva, un teorema de isomorfÃ­a, o justificar que el nÃºcleo es cero).
+*   **Demostraciones sin magia:** Al rellenar una \begin{proof}, no asumas saltos lógicos. Explica explícitamente el porqué de cada paso analítico (ej: mencionar explícitamente si aplicas la hipótesis inductiva, un teorema de isomorfía, o justificar que el núcleo es cero).
 
 ## 4. Comandos de Ejercicios
 
-Para las hojas de problemas y exÃ¡menes, utiliza el sistema de cajas de colores de la plantilla.
+Para las hojas de problemas y exámenes, utiliza el sistema de cajas de colores de la plantilla.
 
 *   **Inicio de Hoja:**
     `latex
-    \hojaejercicio{TÃ­tulo de la Hoja}
+    \hojaejercicio{Título de la Hoja}
     `
 *   **Estructura de un Ejercicio:**
     `latex
     \ejercicio{estado}{marca}{
         Enunciado del problema...
     }{
-        Desarrollo y soluciÃ³n paso a paso...
+        Desarrollo y solución paso a paso...
     }
     `
     *Estados posibles:* enunciado (Rojo), medio (Naranja), esuelto (Verde).
-    *Marca:* Ãšsalo para destacar (x) o dÃ©jalo vacÃ­o ({}).
+    *Marca:* Úsalo para destacar (x) o déjalo vacío ({}).
 
-## 5. Reglas de IntervenciÃ³n (Modo de actuar de la IA)
+## 5. Reglas de Intervención (Modo de actuar de la IA)
 
-1.  **EdiciÃ³n Aditiva:** Cuando corrijas o mejores los apuntes, actÃºa aÃ±adiendo explicaciones, pero **no elimines el texto original** ni borres la voz del autor.
+1.  **Edición Aditiva:** Cuando corrijas o mejores los apuntes, actúa añadiendo explicaciones, pero **no elimines el texto original** ni borres la voz del autor.
 2.  **No inventes formatos:** No uses \vspace, \newline forzados ni inventes entornos. Los espacios los calcula el paquete mdframed.
-3.  **Consistencia de notaciÃ³n:** Usa los macros matemÃ¡ticos predefinidos (\R, \C, \Q, \N, \Z) y respeta estrictamente cÃ³mo el autor haya llamado a sus variables en el documento.
+3.  **Consistencia de notación:** Usa los macros matemáticos predefinidos (\R, \C, \Q, \N, \Z, \trace, \rank, \Imat, \diagmatrix) y respeta estrictamente cómo el autor haya llamado a sus variables en el documento.
+## 6. Gráficos y Esquemas (TikZ)
+
+Todos los dibujos, diagramas o esquemas que aparezcan en los apuntes deben ser transcritos utilizando exclusivamente código **TikZ**. 
+* Está estrictamente prohibido insertar imágenes externas con \includegraphics a menos que sea inevitable.
+* Asegúrate de centrar siempre los diagramas usando \begin{center} \begin{tikzpicture} ... \end{tikzpicture} \end{center}.

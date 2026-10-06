@@ -1813,359 +1813,598 @@ Veamos algunos ejemplos que ilustran la aplicación de los teoremas fundamentale
 }
 
 \ejemplo{
-    Podemos estudiar ahora un caso particular del sistema de Kolmogorov, donde $v_0 = 0 \implies v(t) = 0$, $\lambda = 0$, $a = 1$, dejando el sistema:
+    Podemos estudiar ahora un caso particular del sistema de Kolmogorov en el que $v_0=0$, de modo que $v(t)=0$, y además $\lambda=0$ y $a=1$. El sistema se reduce a
     \[
-        P =
+        P=
         \begin{cases}
-            u'(t) = - u^2(t) \\
-            v'(t) = 0 \\
-            u(0) = u_0 > 0, \quad v(0) = 0
+            u'(t)=-u^2(t),\\
+            v'(t)=0,\\
+            u(0)=u_0>0,\qquad v(0)=0.
         \end{cases}
     \]
-    La solución de este sistema es:
+    La primera ecuación es separable. Como
     \[
-        u^{-2} u' = - 1 \implies
-        \left( \frac{1}{u} \right)' = -1 \implies
-        \frac{1}{u(t)} = -t + \frac{1}{u_0} \implies
-        u(t) = \frac{u_0}{1 - u_0 t},
+        \left(\frac{1}{u(t)}\right)'=-\frac{u'(t)}{u^2(t)}=1,
     \]
-    Que si $u_0 > 0$, explota en tiempo finito en $T_{max} = \frac{1}{u_0}$, dejando el intervalo de solución $I = [0, \frac{1}{u_0})$. Por lo tanto, la solución maximal no está definida globalmente en todo el intervalo $J = [0, +\infty)$, y se cumple la condición de explosión en tiempo finito.
+    obtenemos
+    \[
+        \frac{1}{u(t)}=t+\frac{1}{u_0},
+    \]
+    y por tanto
+    \[
+        u(t)=\frac{u_0}{1+u_0t}.
+    \]
+    En particular, la solución es global hacia el futuro, pues está definida para todo $t\geq0$ y $u(t)\to0$ cuando $t\to+\infty$. Sin embargo, al mirar hacia el pasado aparece una singularidad en
+    \[
+        t=-\frac{1}{u_0},
+    \]
+    lo que proporciona un ejemplo sencillo de explosión en tiempo finito hacia atrás.
 }
 
 \ejemplo{
-    \textbf{1. Caso general:} \\
-    Sea ahora el problema:
+    Consideremos el problema
     \[
-        P =
         \begin{cases}
-            u' = a(t) u + b(t) \frac{u^n}{1 + u^n} \\
-            u(0) = 1 > 0
+            u'(t)=a(t)u(t)+b(t)\dfrac{u^n(t)}{1+u(t)},\\
+            u(0)=1,
         \end{cases}
     \]
-    Con $a, b \in C([0, +\infty), \mathbb{R})$, particularmente $a \geq 0$ y $b > 0$ $\forall t \in [0, +\infty)$, y $n \in \mathbb{N}$. Así:
+    donde
     \[
-        f(t, u) = a(t) u + b(t) \frac{u^n}{1 + u^n} \, \quad 
-        t \in [0, +\infty), \, u \in \mathbb{R} \setminus \{-1\} \implies
-        \begin{cases}
-            \Omega = (-1, +\infty) \\
-            J = [0, +\infty)
-        \end{cases}
+        a,b\in C([0,+\infty),\R),\qquad a(t)\geq0,\qquad b(t)>0,
     \]
-    Ahora calculando su derivada:
+    y $n\in\N$, $n\geq1$. Tomamos
     \[
-        \frac{\partial f}{\partial u} = 
-        a(t) + b(t) \frac{n u^{n-1} (1 + u^n) - u^n }{(1 + u^n)^2} =
-        a(t) + b(t) \frac{n u^{n-1} + (n - 1) u^n}{(1 + u^n)^2}
+        J=[0,+\infty),\qquad \Omega=(-1,+\infty),\qquad u_0=1.
     \]
-    Que es continua en $[0, +\infty) \times \Omega$, por lo que como $u_0 = 1 \in (-1, +\infty)$, y como es localmente Lipschitziana respecto de $u$ y uniformemente en $t$ en subintervalos compactos de $J$, hay una solución máximal única $(I, u)$, en cualquier intevalo compacto $t \in [0, M]$ con $M > 0$. Por lo tanto, la solución maximal está definida en un intervalo $I = [0, T_{max})$ con $T_{max} \leq +\infty$, aplicando el Teorema de Cauchy-Lipschitz.
+    El campo
+    \[
+        f(t,u)=a(t)u+b(t)\frac{u^n}{1+u}
+    \]
+    es continuo en $J\times\Omega$, y además
+    \[
+        \frac{\partial f}{\partial u}(t,u)
+        =a(t)+b(t)\frac{n u^{n-1}+(n-1)u^n}{(1+u)^2}
+    \]
+    es continua en el mismo dominio. Por tanto, $f$ es localmente Lipschitziana respecto de $u\in\Omega$, uniformemente en $t$ sobre todo subintervalo compacto de $J$. El problema admite una única solución maximal $(I,u)$.
 
-    Nótese que si $u_0 \in (-\infty, -1)$, entonces la solución maximal estaría definida en otro intervalo hacia la izquierda. \\
+    Por el tercer teorema fundamental,
+    \[
+        I=[0,T_{\max})
+    \]
+    para algún $T_{\max}\in(0,+\infty]$. Si $T_{\max}<+\infty$, entonces ocurre al menos una de las dos alternativas:
+    \begin{itemize}
+        \item $\displaystyle \limsup_{t\to T_{\max}^{-}}|u(t)|=+\infty$;
+        \item existen $t_k\to T_{\max}^{-}$ tales que $u(t_k)\to-1\in\partial\Omega$.
+    \end{itemize}
 
-    De acuerdo con el tercer teorema fundamental, $I = [0, T_{max})$ con $T_{max} \leq +\infty$, y si $T_{max} < +\infty$, entonces necesariamente:
+    La ecuación puede escribirse como
     \[
-        \limsup_{t \nearrow T_{max}} |u(t)| = \infty
-        \text{ ó }
-        \lim_{n \to \infty} u(t_n) = -1 \in \partial \Omega = \{-1\}
+        u'(t)=\left(a(t)+b(t)\frac{u^{n-1}(t)}{1+u(t)}\right)u(t).
     \]
+    En consecuencia,
+    \[
+        u(t)=u_0\exp\left(\int_0^t\left[a(s)+b(s)\frac{u^{n-1}(s)}{1+u(s)}\right]ds\right)>0
+    \]
+    para todo $t\in I$. De esta forma, la solución nunca puede aproximarse a la frontera $u=-1$. Además, como $a\geq0$, $b>0$ y $u>0$,
+    \[
+        u'(t)>0,
+    \]
+    de modo que $u$ es estrictamente creciente y, en particular,
+    \[
+        u(t)\geq u(0)=1\qquad \forall t\in I.
+    \]
+    Por ello, si $T_{\max}<+\infty$, la única posibilidad del tercer teorema fundamental es la explosión de la solución.
 
-    Ahora:
+    \textbf{Caso $n=1$ o $n=2$.} Si $n=1$, entonces
     \[
-        f(t, u) = u' = a(t) u + b(t) \frac{u^n}{1 + u^n} = \left( a(t) + b(t) \frac{u^{n-1}}{1 + u^n} \right) u = A(t) u
+        \frac{u^{n-1}}{1+u}=\frac{1}{1+u}\leq1,
     \]
-    Por lo que podemos sacar la solución explícita:
+    mientras que, si $n=2$,
     \[
-        u(t) = u_0 e^{\left( \int_0^t A(s) ds \right)} = 
-        e^{\left( \int_0^t a(s) + b(s) \frac{u^{n-1}(s)}{1 + u^n(s)} ds \right)} > 0
-        \quad \forall t \in I
+        \frac{u^{n-1}}{1+u}=\frac{u}{1+u}\leq1.
     \]
-    Descartando asó la segunda posibilidad, ya que al ser la solución siempre positiva, no puede acercarse a $-1$. Además, como $a(t) \geq 0$ y $b(t) > 0$, se cumple que $u'(t) > 0$ para todo $t \in I$, por lo que la solución es estrictamente creciente. Por lo tanto, si $T_{max} < +\infty$, necesariamente:
+    En ambos casos,
     \[
-        \limsup_{t \nearrow T_{max}} |u(t)| = +\infty
+        a(t)+b(t)\frac{u^{n-1}(t)}{1+u(t)}\leq a(t)+b(t).
     \]
+    Si supusiéramos $T_{\max}<+\infty$, la continuidad de $a$ y $b$ en el compacto $[0,T_{\max}]$ daría
+    \[
+        0<u(t)
+        \leq
+        \exp\left(\int_0^t(a(s)+b(s))ds\right)
+        \leq C
+        \qquad \forall t\in[0,T_{\max}),
+    \]
+    para cierta constante $C>0$. Esto contradice la explosión que necesariamente tendría que producirse en $T_{\max}$. Concluimos que
+    \[
+        T_{\max}=+\infty
+    \]
+    para $n=1,2$.
 
-    \textbf{2. Casos $n=1, 2$ (Existencia global en sistemas de Kolmogorov):} \\
-    Los casos $n=1,2$ son los llamados sitemas de Kolmogorov, donde:
+    \textbf{Caso $n=3$.} La ecuación toma la forma
     \[
-        u' = A(t) u (t) \quad t \in I = [0, T_{max})
+        u'(t)=a(t)u(t)+b(t)\frac{u(t)}{1+u(t)}u^2(t).
     \]
-    Y donde:
+    Consideramos
     \[
-        A(t) =
-        a(t) + b(t) \frac{u^{n-1}(t)}{1 + u^n(t)} =
-        \begin{cases}
-            n = 1 \implies a(t) + b(t) \frac{1}{1 + u(t)} \leq a(t) + b(t) \\
-            n = 2 \implies a(t) + b(t) \frac{u(t)}{1 + u^2(t)} \leq a(t) + b(t)
-        \end{cases}
+        g(x)=\frac{x}{1+x},\qquad x\geq1.
     \]
-    Si ahora el tiempo $T_{max} < +\infty$, entonces:
+    Como
     \[
-        0 < u(t) = u_0 e^{\left( \int_0^t A(s) ds \right)} \leq
-        u_0 e^{\left( \int_0^t a(s) + b(s) ds \right)} \leq
-        u_0 e^{\left( \int_0^{T_{max}} a + b \text{ } ds \right)} \leq C
+        g'(x)=\frac{1}{(1+x)^2}>0,
     \]
-    Donde $C$ es una constante positiva, y $a, b$ son cotas superiores de $a(t)$ y $b(t)$ en el intervalo $[0, T_{max}]$. Por lo tanto, la solución estaría acotada, contradiciendo la condición de explosión en tiempo finito del tercer teorema fundamental. Por lo tanto, necesariamente $T_{max} = +\infty$, y la solución maximal está definida globalmente en todo el intervalo $J = [0, +\infty)$.\\
-
-    \textbf{3. Caso $n \geq 4$ (Explosión en tiempo finito):} \\
-    Ahora nos podemos fijar en el caso $n \geq 4$:
+    la función $g$ es creciente y
     \[
-        P =
-        \begin{cases}
-            u' = a(t) u(t) + b(t) \frac{u(t)}{1 + u(t)} u^2(t) \\
-            u(0) = 1 > 0
-        \end{cases}
+        g(u(t))\geq g(1)=\frac12.
     \]
-    Ahora, podemos usar la función:
+    Por tanto,
     \[
-        g(x) = \frac{x}{1 + x} \quad \text{para } x \geq 1 \implies
-        g'(x) = \frac{1}{(1 + x)^2} > 0
+        u'(t)\geq a(t)u(t)+\frac{b(t)}{2}u^2(t)
+        \geq \frac{b(t)}{2}u^2(t).
     \]
-    Por lo que $g$ es estrictamente creciente, por lo que $g(x) \geq g(1) = \frac{1}{2}$ para todo $x \geq 1$. Por lo tanto, si $u(t) \geq 1$ para todo $t \in I$, entonces:
+    Dividiendo por $u^2(t)>0$,
     \[
-        u'(t) \geq a(t) u(t) + \frac{b(t)}{2} u^2(t) \quad \forall t \in I
+        \frac{u'(t)}{u^2(t)}\geq\frac{b(t)}{2},
     \]
-
-    Y en particular, si $a(t) \geq 0$ y $b(t) > 0$, entonces:
+    y, como
     \[
-        u'(t) \geq \frac{b(t)}{2} u^2(t) \quad \forall t \in I \implies
-        u' u^{-2} \geq \frac{b(t)}{2} \implies
-        \left( - u^{-1} \right)' \geq \frac{b(t)}{2} \implies
-        \left( \frac{1}{u(t)} \right)' \leq - \frac{b(t)}{2} \implies
+        \left(\frac{1}{u(t)}\right)'=-\frac{u'(t)}{u^2(t)},
     \]
+    resulta
     \[
-        \frac{1}{u(t)} - \frac{1}{u_0} \leq - \frac{1}{2} \int_0^t b(s) ds \implies
-        \frac{1}{u(t)} \leq 1 - \frac{1}{2} \int_0^t b(s) ds \implies
+        \left(\frac{1}{u(t)}\right)'\leq-\frac{b(t)}{2}.
     \]
+    Integrando entre $0$ y $t$,
     \[
-        \implies
-        \boxed{
-            u(t) \geq \frac{1}{1 - \frac{1}{2} \int_0^t b(s) ds} = \frac{2}{2 - \int_0^t b(s) ds}
-        }
+        \frac{1}{u(t)}\leq1-\frac12\int_0^t b(s)\,ds,
     \]
-
-    Ahora por tanto debemos analizar lo que le ocurre a $\int_0^\infty b(s) ds$. Si $\inf_{t \in [0, +\infty)} b(t) = \omega > 0$, entonces debe $\exists T > 0$ tal que $\int_0^T b(s) ds = 2$, y por lo tanto la solución $u(t)$ explota en tiempo finito, con $T_{max} \leq T$. 
+    y por consiguiente
+    \[
+        u(t)\geq\frac{1}{1-\frac12\int_0^t b(s)\,ds}
+        =\frac{2}{2-\int_0^t b(s)\,ds}.
+    \]
+    Si
+    \[
+        \int_0^{+\infty}b(s)\,ds>2,
+    \]
+    por continuidad de $t\mapsto\int_0^t b(s)\,ds$ existe $T>0$ tal que
+    \[
+        \int_0^T b(s)\,ds=2.
+    \]
+    La cota inferior anterior diverge cuando $t\to T^{-}$, por lo que la solución explota en tiempo finito y
+    \[
+        T_{\max}\leq T.
+    \]
+    En particular, esta condición se satisface si existe $\omega>0$ tal que $b(t)\geq\omega$ para todo $t\geq0$.
 }
 
 \ejemplo{
-    Veamos ahora un ejemplo de un sistema de ecuaciones diferenciales acopladas:
+    Consideremos ahora el sistema autónomo
     \[
-        P =
         \begin{cases}
-            u' = |v|^p \\
-            v' = |u|^q \\
-            u(0) = 1, \quad v(0) = 1
+            u'(t)=|v(t)|^p,\\
+            v'(t)=|u(t)|^q,\\
+            u(0)=1,\qquad v(0)=1,
         \end{cases}
-        \quad p \geq q > 1
+        \qquad p\geq q>1.
     \]
-
-    Ahora podemos definir la función $f(t, u, v)$:
+    Aquí
     \[
-        f(t, u, v) =
+        J=\R,\qquad \Omega=\R^2,
+    \]
+    y el campo viene dado por
+    \[
+        f(u,v)=
         \begin{pmatrix}
-            |v|^p \\
+            |v|^p\\
             |u|^q
-        \end{pmatrix}
-        \quad
-        \begin{cases}
-            t \in \mathbb{R} = J \\
-            (u, v) \in \mathbb{R}^2 = \Omega
-        \end{cases}
+        \end{pmatrix}.
     \]
-    
-    Esta función es continua en $J \times \Omega$, y su matriz Jacobiana es:
+    Su matriz jacobiana es
     \[
-        D_{(u, v)} f(t, u, v) =
+        Df(u,v)=
         \begin{pmatrix}
-            0 & p |v|^{p-1} \text{signo}(v) \\
-            q |u|^{q-1} \text{signo}(u) & 0
-        \end{pmatrix}
+            0 & p|v|^{p-1}\operatorname{sign}(v)\\
+            q|u|^{q-1}\operatorname{sign}(u) & 0
+        \end{pmatrix}.
+    \]
+    Como $p,q>1$, estas derivadas son continuas también sobre los ejes. Por tanto, $f$ es localmente Lipschitziana en $\R^2$ y existe una única solución maximal $(I,u,v)$.
+
+    Al restringirnos al futuro, el segundo teorema fundamental proporciona
+    \[
+        I=[0,T_{\max})
+    \]
+    para algún $T_{\max}\in(0,+\infty]$. Si $T_{\max}<+\infty$, entonces
+    \[
+        \limsup_{t\to T_{\max}^{-}}\bigl(|u(t)|+|v(t)|\bigr)=+\infty.
     \]
 
-    Que como es continua en $(t, u, v) \in J \times \Omega$, nos garantiza que $f$ es localmente Lipschitziana respecto a $(u, v) \in \mathbb{R}^2 = \Omega$ uniformemente en $t \in \mathbb{R} = J$, que tiene una única solución maximal $(I, u, v)$ definida en un intervalo $I = [0, T_{max})$ con $T_{max} \leq +\infty$, por el teorema de Cauchy-Lipschitz. Ahora si fijamos $J = [0, +\infty)$, entonces según el 2º teorema fundamental, $I = [0, T_{max})$ con $T_{max} \leq +\infty$, y si $T_{max} < +\infty$, entonces necesariamente:
-    \[
-        \limsup_{t \nearrow T_{max}} ( |u(t)| + |v(t)| ) = +\infty
-    \]
+    \begin{observación}
+        Si los segundos miembros llevaran además factores temporales continuos, por ejemplo
+        \[
+            u'=a(t)|v|^p,\qquad v'=b(t)|u|^q,
+        \]
+        la Lipschitzianidad respecto de $(u,v)$ sería uniforme en $t$ sobre subintervalos compactos de tiempo, que es precisamente la hipótesis utilizada en los teoremas de existencia y prolongación.
+    \end{observación}
 }
 
-DESPUES DEL TEOREMA DE DEPENDENCIA LIPCHICIANA Y DEL TEOREMA DE DEPENDENCIA LIPCHICIANA CON RESPECTO DE CONDICIONES INICIALES
+\subsection{Dependencia Lipschitziana de las soluciones}
 
-\begin{teorema}[Teorema de dependencia Lipschitziana con respecto de $f$]
-    Sean $J = [t_0, t_0 + T]$, $f, g \in C(J \times \mathbb{R}^N, \mathbb{R}^N)$, y supongamos que $f$ y $g$ son globalmente Lipschitzianas respecto a $u \in \mathbb{R}^N$, uniformemente en $t \in J$, en cualquier bola de $\mathbb{R}^N$ y $u_0 \in \mathbb{R}^N$.\\
+Para estudiar cómo cambia una solución al perturbar los datos iniciales o el propio campo vectorial, necesitaremos primero una forma integral del lema de Grönwall--Bellman. Esta herramienta permite transformar una desigualdad integral en una cota explícita.
 
-    Sea $h \in \{ f, g \}$, denotaremos por $u(t; h)$ a la única solución del PVI:
+\begin{lema}[Grönwall--Bellman]
+    Sea $J=[t_0,t_0+T]$ y sean $x,y,p\in C(J,\R)$ funciones no negativas. Supongamos que
     \[
-        \begin{cases}
-            u'(t) = h(t, u(t)) \\
-            u(t_0) = u_0
-        \end{cases}
+        x(t)\leq y(t)+\int_{t_0}^t p(s)x(s)\,ds
+        \qquad \forall t\in J.
     \]
-
-    Supongamos que $u(t; f)$ está definida en $[t_0, t_0 + \tau]$ con $\tau \in (0, T]$.\\
-
-    Sean además $\Gamma_f = \{ u(t; f) : t \in [t_0, t_0 + \tau] \}$ la órbita de $u(t; f)$ para $t \in [t_0, t_0 + \tau]$, $R > 0$ tal que $\Gamma_f \subset B_R(u_0)$, y sea $L$ la constante de Lipschitz de $f$ en $\overline{B}_R(u_0)$ uniformamente en $t \in [t_0, t_0 + \tau]$.\\
-
-    Entonces, $\exists \epsilon > 0$ tal que si:
+    Entonces
     \[
-        \| f - g \|_\infty \equiv
-        \max_{t \in J \, \| u - u_0 \| \leq R} \| f(t, u) - g(t, u) \| \leq 
-        \epsilon
+        x(t)\leq y(t)+\int_{t_0}^t p(s)y(s)
+        \exp\left(\int_s^t p(r)\,dr\right)ds
+        \qquad \forall t\in J.
     \]
-    Entonces la solución $u(t; g)$ también está definida en $[t_0, t_0 + \tau]$, y además:
+\end{lema}
+
+\begin{proof}
+    Definimos
     \[
-        \| u(t; f) - u(t; g) \| \leq 
-        \frac{e^{L \tau} - 1}{L} \| f - g \|_{\infty \, J \times \overline{B}_R(u_0)} 
-        \frac{e^{L \tau} - 1}{L} \epsilon
-        \quad \forall t \in [t_0, t_0 + \tau] \leq
+        z(t)=\int_{t_0}^t p(s)x(s)\,ds.
+    \]
+    Entonces $z(t_0)=0$ y
+    \[
+        z'(t)=p(t)x(t)\leq p(t)y(t)+p(t)z(t).
+    \]
+    Si
+    \[
+        P(t)=\int_{t_0}^t p(r)\,dr,
+    \]
+    al multiplicar por el factor integrante $e^{-P(t)}$ obtenemos
+    \[
+        \left(e^{-P(t)}z(t)\right)'
+        =e^{-P(t)}\bigl(z'(t)-p(t)z(t)\bigr)
+        \leq e^{-P(t)}p(t)y(t).
+    \]
+    Integrando entre $t_0$ y $t$ y usando $z(t_0)=0$,
+    \[
+        e^{-P(t)}z(t)
+        \leq
+        \int_{t_0}^t e^{-P(s)}p(s)y(s)\,ds.
+    \]
+    Por tanto,
+    \[
+        z(t)
+        \leq
+        \int_{t_0}^t p(s)y(s)e^{P(t)-P(s)}\,ds
+        =
+        \int_{t_0}^t p(s)y(s)
+        \exp\left(\int_s^t p(r)\,dr\right)ds.
+    \]
+    Finalmente, como $x(t)\leq y(t)+z(t)$, obtenemos la desigualdad anunciada.
+\end{proof}
+
+\subsubsection{Estimación abstracta de dependencia Lipschitziana}
+
+\begin{teorema}[Dependencia Lipschitziana]
+    Sea $J=[t_0,t_0+T]$, $u_0\in\R^N$, $R>0$ y
+    \[
+        f\in C\bigl(J\times\overline{B}_R(u_0),\R^N\bigr).
+    \]
+    Supongamos que existe $L>0$ tal que
+    \[
+        \|f(t,x)-f(t,y)\|\leq L\|x-y\|
+    \]
+    para cualesquiera $x,y\in\overline{B}_R(u_0)$ y $t\in J$.
+
+    Sean $u_1,u_2\in C^1\bigl(J,\overline{B}_R(u_0)\bigr)$ y definamos
+    \[
+        \delta_0=\|u_1(t_0)-u_2(t_0)\|
+    \]
+    y, para $j\in\{1,2\}$,
+    \[
+        \delta_j=
+        \max_{t\in J}\|u_j'(t)-f(t,u_j(t))\|.
+    \]
+    Entonces, para todo $t\in J$,
+    \[
+        \|u_1(t)-u_2(t)\|
+        \leq
+        e^{L(t-t_0)}\delta_0
+        +\frac{e^{L(t-t_0)}-1}{L}(\delta_1+\delta_2).
+    \]
+    En particular,
+    \[
+        \|u_1-u_2\|_{\infty,J}
+        \leq
+        e^{LT}\delta_0
+        +\frac{e^{LT}-1}{L}(\delta_1+\delta_2).
     \]
 \end{teorema}
 
 \begin{proof}
-    Antes de iniciar esta demostración, obserbese este dibujo para entender geometricamente los conceptos (donde $K_\eta$ no llega a tocar la frontera de la bola $B_R(u_0)$):
+    Para $t\in J$,
+    \[
+        u_1(t)-u_2(t)
+        =u_1(t_0)-u_2(t_0)
+        +\int_{t_0}^t\bigl(u_1'(s)-u_2'(s)\bigr)ds.
+    \]
+    Insertamos y restamos $f(s,u_1(s))$ y $f(s,u_2(s))$. Por la desigualdad triangular, la definición de $\delta_1,\delta_2$ y la hipótesis de Lipschitz,
+    \[
+        \|u_1'(s)-u_2'(s)\|
+        \leq
+        \delta_1+\delta_2+L\|u_1(s)-u_2(s)\|.
+    \]
+    Por consiguiente,
+    \[
+        \|u_1(t)-u_2(t)\|
+        \leq
+        \delta_0+(\delta_1+\delta_2)(t-t_0)
+        +\int_{t_0}^t L\|u_1(s)-u_2(s)\|\,ds.
+    \]
+    Aplicamos el lema de Grönwall--Bellman a
+    \[
+        x(t)=\|u_1(t)-u_2(t)\|,
+        \qquad
+        y(t)=\delta_0+(\delta_1+\delta_2)(t-t_0),
+        \qquad
+        p(t)=L.
+    \]
+    La fórmula del lema se simplifica a
+    \[
+        x(t)
+        \leq
+        e^{L(t-t_0)}\delta_0
+        +\frac{e^{L(t-t_0)}-1}{L}(\delta_1+\delta_2),
+    \]
+    que es la primera estimación. Tomando el máximo para $t\in J$ obtenemos la segunda.
+\end{proof}
+
+\begin{observación}
+    Si $u_1$ y $u_2$ son soluciones exactas de la misma ecuación
+    \[
+        u'=f(t,u),
+    \]
+    entonces $\delta_1=\delta_2=0$. Por tanto,
+    \[
+        \|u_1-u_2\|_{\infty,J}
+        \leq e^{LT}\|u_1(t_0)-u_2(t_0)\|.
+    \]
+    Siempre que las soluciones estén definidas en el mismo intervalo y permanezcan en la bola considerada, el operador solución
+    \[
+        S:x\longmapsto u(\cdot;t_0,x)
+    \]
+    es Lipschitziano respecto del dato inicial.
+\end{observación}
+
+\begin{observación}
+    Si $u$ resuelve $u'=f(t,u)$ y $v$ resuelve $v'=g(t,v)$ con el mismo dato inicial, y ambas trayectorias permanecen en la misma bola, entonces podemos aplicar el teorema anterior tomando como campo de referencia $f$. En ese caso
+    \[
+        \delta_0=0,\qquad \delta_1=0,
+    \]
+    mientras que
+    \[
+        \delta_2
+        =\max_{t\in J}\|g(t,v(t))-f(t,v(t))\|
+        \leq\|f-g\|_{\infty,J\times\overline{B}_R(u_0)}.
+    \]
+    De aquí se obtiene
+    \[
+        \|u-v\|_{\infty,J}
+        \leq
+        \frac{e^{LT}-1}{L}
+        \|f-g\|_{\infty,J\times\overline{B}_R(u_0)}.
+    \]
+\end{observación}
+
+\subsubsection{Dependencia respecto de las condiciones iniciales}
+
+\begin{teorema}[Dependencia Lipschitziana respecto de las condiciones iniciales]
+    Sea $J=[t_0,t_0+T]$ y sea $f\in C(J\times\R^N,\R^N)$ localmente Lipschitziana respecto de $u$, uniformemente en $t\in J$ sobre bolas acotadas.
+
+    Fijemos $x\in\R^N$ y sea $u(t;x)$ la solución maximal del problema
+    \[
+        \begin{cases}
+            u'=f(t,u),\\
+            u(t_0)=x.
+        \end{cases}
+    \]
+    Supongamos que $u(t;x)$ está definida en $[t_0,t_0+\tau]$, con $0<\tau\leq T$. Sea
+    \[
+        \Gamma_x=\{u(t;x):t\in[t_0,t_0+\tau]\}
+    \]
+    y elijamos $R>0$ de forma que
+    \[
+        \Gamma_x\subset B_R(x).
+    \]
+    Sea $L$ una constante de Lipschitz de $f$ en $\overline{B}_R(x)$, uniforme en $t\in J$.
+
+    Entonces existe $\varepsilon>0$ tal que, si $\|x-y\|<\varepsilon$, la solución $u(t;y)$ también está definida en $[t_0,t_0+\tau]$ y satisface
+    \[
+        \max_{t\in[t_0,t_0+\tau]}
+        \|u(t;x)-u(t;y)\|
+        \leq e^{L\tau}\|x-y\|.
+    \]
+\end{teorema}
+
+\begin{proof}
+    Como $\Gamma_x$ es compacta y está contenida en el abierto $B_R(x)$, su distancia a la frontera de la bola es positiva. Escribimos
+    \[
+        \operatorname{dist}(\Gamma_x,\partial B_R(x))=2\eta>0.
+    \]
+    Definimos el tubo cerrado
+    \[
+        K_\eta=\Gamma_x+\overline{B}_\eta(0)
+        =\{z\in\R^N:\operatorname{dist}(z,\Gamma_x)\leq\eta\}.
+    \]
+    Entonces
+    \[
+        K_\eta\subset B_R(x).
+    \]
+
     \begin{center}
-    \begin{tikzpicture}
-        % Definimos el centro u_0 y el radio R
-        \coordinate (u0) at (0, 0);
+    \begin{tikzpicture}[scale=0.95,>=stealth]
+        \coordinate (x0) at (0,0);
         \def\R{3.5}
+        \draw[fill=blue!4,draw=blue!65!black,thick] (x0) circle (\R);
+        \node[blue!65!black] at (-2.25,2.75) {$B_R(x)$};
+        \draw[->,gray] (x0) -- (330:\R) node[midway,below] {$R$};
 
-        % 1. Dibujamos la bola B_R(u_0)
-        \draw[fill=blue!5, draw=blue!60, thick, dashed] (u0) circle (\R);
+        \coordinate (a) at (0,0);
+        \coordinate (b) at (2.15,1.55);
+        \draw[line width=24pt,red!14,line cap=round] (a) .. controls (0.15,1.45) and (1.35,0.45) .. (b);
+        \draw[->,very thick,red!75!black] (a) .. controls (0.15,1.45) and (1.35,0.45) .. (b);
+        \node[red!70!black] at (1.45,0.55) {$\Gamma_x$};
+        \node[red!60!black] at (0.15,1.7) {$K_\eta$};
 
-        % Indicamos el radio R
-        \draw[->, >=stealth, gray, semithick] (u0) -- (330:\R) node[midway, below left] {$R$};
+        \coordinate (y0) at (0.28,-0.18);
+        \coordinate (c) at (2.25,1.25);
+        \draw[->,thick,green!55!black] (y0) .. controls (0.45,1.1) and (1.45,0.25) .. (c);
+        \node[green!45!black] at (1.8,0.15) {$\Gamma_y$};
 
-        % Etiqueta de la bola
-        \node[blue!80!black] at (135:\R) [above right] {$B_R(u_0)$};
-
-        % Definimos el punto final de la órbita en t_0 + \tau
-        \coordinate (utau) at (2.2, 1.8);
-
-        % 2. ENTORNO K_\eta (Tubo de distancia \eta)
-        % Usamos un trazo muy grueso (line width=28pt) para generar el área alrededor de la órbita.
-        % cap=round asegura que el tubo cubra la distancia \eta formando semicírculos en los extremos.
-        \draw[line width=28pt, red!15, cap=round] (u0) .. controls (0.2, 1.5) and (1.5, 0.5) .. (utau);
-
-        % Etiqueta del entorno K_\eta
-        \node[red!60!black] at (0.2, 1.8) {$K_\eta$};
-
-        % 3. ÓRBITA \Gamma_f (Dibujada por encima del entorno)
-        \draw[->, >=stealth, thick, red] (u0) .. controls (0.2, 1.5) and (1.5, 0.5) .. (utau);
-
-        % Etiqueta de la órbita \Gamma_f
-        \node[red, font=\small] at (1.4, 0.8) [below] {$\Gamma_f$};
-
-        % 4. DIBUJAMOS LA DISTANCIA \eta
-        % 14pt es exactamente la mitad de los 28pt del grosor de la línea del entorno.
-        % Dibujamos la flecha en un punto central de la curva de forma ortogonal.
-        \draw[->, >=stealth, red!80!black, thin] (0.91, 0.97) -- ++(103:14pt) node[midway, right, inner sep=2pt, font=\scriptsize] {$\eta$};
-
-        % 5. Dibujamos y etiquetamos el centro u_0 (condición inicial u(t_0))
-        \fill (u0) circle (2pt) node[below left] {$u_0 = u(t_0)$};
-
-        % Dibujamos y etiquetamos el punto final u(t_0 + \tau)
-        \fill (utau) circle (2pt) node[right] {$u(t_0 + \tau)$};
-
+        \fill (x0) circle (1.8pt) node[below left] {$x$};
+        \fill (y0) circle (1.8pt) node[below right] {$y$};
+        \draw[<->,red!75!black] (1.02,0.78) -- (1.05,1.16) node[midway,right] {$\eta$};
     \end{tikzpicture}
     \end{center}
 
-    Sabemos que $\Gamma_f \subset B_R(u_0)$, por lo que su intersección con la frontera es $\Gamma_f \cap \partial B_R(u_0) = \emptyset$. Por lo tanto, tiene sentido definir:
+    Tomamos
     \[
-        0 < dist(\Gamma_f, \partial B_R(u_0)) = 2 \eta \implies
-        \boxed{
-            \epsilon = \frac{L}{e^{L\tau} - 1} \eta
-        }
+        \varepsilon=e^{-L\tau}\eta.
     \]
-
-    Ahora, si $\| f - g \|_{\infty \, J \times \overline{B}_R(u_0)} \leq \epsilon$, entonces si denotamos por $u(t; g)$ a la solución del PVI con $h = g$, tenemos que $I_g = J$, $I_g = [t_0, T_{max})$ con $T_{max} \leq t_0 + T$, y además:
+    Sea $y$ tal que $\|x-y\|<\varepsilon$. Supongamos, por reducción al absurdo, que la solución maximal $u(t;y)$ no estuviera definida en todo $[t_0,t_0+\tau]$. Entonces, antes de su extremo maximal, la trayectoria tendría que abandonar la bola $B_R(x)$. Por continuidad existiría un primer instante $t_1<t_0+\tau$ tal que
     \[
-        \varlimsup_{t \nearrow T_{max}} \| u(t; g) \| = +\infty
+        u(t_1;y)\in\partial B_R(x)
     \]
-    Y está definida en $[t_0, t_0 + \tau]$.\\
+    y
+    \[
+        u(t;y)\in B_R(x)
+        \qquad \forall t\in[t_0,t_1).
+    \]
+    En $[t_0,t_1]$ las dos soluciones permanecen en $\overline{B}_R(x)$, por lo que la estimación abstracta, con $\delta_1=\delta_2=0$, da
+    \[
+        \|u(t;x)-u(t;y)\|
+        \leq e^{L(t-t_0)}\|x-y\|
+        <e^{L\tau}\varepsilon
+        =\eta.
+    \]
+    Así, $u(t;y)\in K_\eta\subset B_R(x)$ para todo $t\in[t_0,t_1]$, contradiciendo $u(t_1;y)\in\partial B_R(x)$. Por tanto, $u(t;y)$ existe en todo $[t_0,t_0+\tau]$.
 
-    Ahora reduzcamos al absurdo. Supongamos que tenemos el intervalo $[t_0, T_{max})$ con $T_{max} \leq t_0 + T$, y supongamos que explota en $T_{max}$, etnonces si tomamos $t_1 \in (t_0, T_{max})$ entonces:
+    Aplicando de nuevo la estimación abstracta en dicho intervalo obtenemos
+    \[
+        \max_{t\in[t_0,t_0+\tau]}
+        \|u(t;x)-u(t;y)\|
+        \leq e^{L\tau}\|x-y\|.
+    \]
+\end{proof}
+
+\subsubsection{Dependencia respecto del campo vectorial}
+
+\begin{teorema}[Dependencia Lipschitziana respecto de $f$]
+    Sea $J=[t_0,t_0+T]$ y sean $f,g\in C(J\times\R^N,\R^N)$ localmente Lipschitzianas respecto de $u$, uniformemente en $t$ sobre bolas acotadas. Fijemos $u_0\in\R^N$ y, para $h\in\{f,g\}$, denotemos por $u(t;h)$ la solución maximal de
     \[
         \begin{cases}
-            u(t;g) \in B_R(u_0) \quad \forall t \in [t_0, t_1) \\
-            u(t_1;g) \in \partial B_R(u_0)
+            u'=h(t,u),\\
+            u(t_0)=u_0.
         \end{cases}
     \]
 
-    Ahora podemos definir:
+    Supongamos que $u(t;f)$ está definida en $[t_0,t_0+\tau]$, con $0<\tau\leq T$. Sea
     \[
-        \begin{cases}
-            u_1(t) \equiv u(t; f) \\
-            u_2(t) \equiv u(t; g)
-        \end{cases}
-        \quad t \in [t_0, t_1] \implies
-        u(t; f), u(t; g) \in \overline{B}_R(u_0) \quad \forall t \in [t_0, t_1]
+        \Gamma_f=\{u(t;f):t\in[t_0,t_0+\tau]\}
+    \]
+    y elijamos $R>0$ tal que $\Gamma_f\subset B_R(u_0)$. Sea $L>0$ una constante de Lipschitz de $f$ en $\overline{B}_R(u_0)$, uniforme en $t\in J$.
+
+    Entonces existe $\varepsilon>0$ tal que, si
+    \[
+        \|f-g\|_{\infty,J\times\overline{B}_R(u_0)}<\varepsilon,
+    \]
+    la solución $u(t;g)$ también está definida en $[t_0,t_0+\tau]$ y
+    \[
+        \|u(t;f)-u(t;g)\|
+        \leq
+        \frac{e^{L(t-t_0)}-1}{L}
+        \|f-g\|_{\infty,J\times\overline{B}_R(u_0)}
+    \]
+    para todo $t\in[t_0,t_0+\tau]$.
+\end{teorema}
+
+\begin{proof}
+    Como antes, escribimos
+    \[
+        \operatorname{dist}(\Gamma_f,\partial B_R(u_0))=2\eta>0
+    \]
+    y definimos
+    \[
+        K_\eta=\Gamma_f+\overline{B}_\eta(0)\subset B_R(u_0).
+    \]
+    Elegimos
+    \[
+        \varepsilon=\frac{L\eta}{e^{L\tau}-1}.
     \]
 
-    Ahora aplicando el teorema de dependencia Lipschitziana abstracto tenemos que:
-    \[
-        \| u(t; f) - u(t; g) \| \leq 
-        e^{L(t - t_0)} \delta_0 + \frac{e^{L(t - t_0)} - 1}{L} (\delta_1 + \delta_2)
-    \]
-    
-    Donde:
-    \[
-        \begin{cases}
-            \delta_0 = \| u(t_0; f) - u(t_0; g) \| = \| u_0 - u_0 \| = 0 \\
-            \delta_1 = \max_{t \in [t_0, t_1]} \| u_1'(t) - f(t, u_1(t)) \| = 0 \\
-            \delta_2 = \max_{t \in [t_0, t_1]} \| u_2'(t) - f(t, u_2(t)) \|
-        \end{cases}
-    \]
+    \begin{center}
+    \begin{tikzpicture}[scale=0.95,>=stealth]
+        \coordinate (u0) at (0,0);
+        \def\R{3.5}
+        \draw[fill=blue!4,draw=blue!65!black,thick] (u0) circle (\R);
+        \node[blue!65!black] at (-2.2,2.75) {$B_R(u_0)$};
 
-    Para probar la última cota aplicaremos la desigualdad triangular:
-    \[
-        \| u_2'(t) - f(t, u_2(t)) \| \leq
-        \| u_2'(t) - g(t, u_2(t)) \| + \| g(t, u_2(t)) - f(t, u_2(t)) \| =
-        \| g(t, u_2(t)) - f(t, u_2(t)) \| \leq
-    \]
-    \[  
-        \leq 
-        \| g - f \|_{\infty \, J \times \overline{B}_R(u_0)} \leq
-        \epsilon
-    \]
+        \coordinate (a) at (0,0);
+        \coordinate (b) at (2.1,1.6);
+        \draw[line width=24pt,red!14,line cap=round] (a) .. controls (0.15,1.45) and (1.35,0.45) .. (b);
+        \draw[->,very thick,red!75!black] (a) .. controls (0.15,1.45) and (1.35,0.45) .. (b);
+        \node[red!70!black] at (1.4,0.55) {$\Gamma_f$};
+        \node[red!60!black] at (0.1,1.7) {$K_\eta$};
 
-    Dejando así la diferencia:
-    \[
-        \| u(t; f) - u(t; g) \| \leq 
-        \frac{e^{L(t - t_0)} - 1}{L} \| f - g \|_{\infty \, J \times \overline{B}_R(u_0)} \leq
-        \frac{e^{L(t - t_0)} - 1}{L} \epsilon \leq
-        \frac{e^{L \tau} - 1}{L} \underbrace{\frac{L}{e^{L\tau} - 1} \eta}_{\epsilon} =
-        \eta
-    \]
+        \coordinate (c) at (2.28,1.30);
+        \draw[->,thick,green!55!black] (a) .. controls (0.35,1.15) and (1.45,0.22) .. (c);
+        \node[green!45!black] at (1.85,0.12) {$\Gamma_g$};
 
-    Por lo tanto, sabemos que la órbita de $g$ esta a distancia $\eta$ de la órbita de $f$, y por lo tanto:
-    \[
-        \Gamma_g \subset K_\eta = \Gamma_f + \overline{B}_\eta(0) \subset B_R(u_0)
-    \]
+        \fill (u0) circle (1.8pt) node[below left] {$u_0$};
+        \draw[<->,red!75!black] (1.02,0.78) -- (1.05,1.16) node[midway,right] {$\eta$};
+        \draw[dashed,gray] (260:\R) arc[start angle=260,end angle=340,radius=\R];
+    \end{tikzpicture}
+    \end{center}
 
-    Por lo tanto, $u(t_1; g) \in B_R(u_0)$, contradiciendo la hipótesis de que $u(t_1; g) \in \partial B_R(u_0)$. Por lo tanto, necesariamente $T_{max} > t_0 + \tau$, y por lo tanto $u(t; g)$ está definida en $[t_0, t_0 + \tau]$, y además $u(t; g) \in \overline{B}_R(u_0) \forall t \in [t_0, t_0 + \tau]$. Por tanto, $u(t; g)$ está bien definida en el intervalo $[t_0, t_0 + \tau]$.\\
-
-    Además, se cumple la desigualdad:
+    Supongamos que
     \[
-        \| u(t; f) - u(t; g) \| \leq 
-        \frac{e^{L(t - t_0)} - 1}{L} \| f - g \|_{\infty \, J \times \overline{B}_R(u_0)} \quad \forall t \in [t_0, t_0 + \tau]
+        \|f-g\|_{\infty,J\times\overline{B}_R(u_0)}<\varepsilon
     \]
-
-    Ahora supongamos que $g$ toca la frontera de la bola $B_R(u_0)$ en un tiempo $t_1 \in [t_0, t_0 + \tau]$, entonces:
+    y, por reducción al absurdo, que $u(t;g)$ no estuviera definida en todo $[t_0,t_0+\tau]$. Como su dato inicial es $u_0\in B_R(u_0)$, antes de abandonar el dominio temporal tendría que existir un primer instante $t_1<t_0+\tau$ en el que
     \[
-        \| u(t_1; f) - u(t_1; g) \| \geq dist(\Gamma_f, \partial B_R(u_0)) = 2 \eta
+        u(t_1;g)\in\partial B_R(u_0),
     \]
+    permaneciendo $u(t;g)\in B_R(u_0)$ para $t<t_1$.
 
-    Lo cual contradice la desigualdad anterior, ya que:
+    En $[t_0,t_1]$ aplicamos el teorema abstracto tomando
     \[
-        \| u(t_1; f) - u(t_1; g) \| \leq 
-        \frac{e^{L(t_1 - t_0)} - 1}{L} \| f - g \|_{\infty \, J \times \overline{B}_R(u_0)} \leq
-        \frac{e^{L\tau} - 1}{L} \epsilon =
-        \frac{e^{L\tau} - 1}{L} \frac{L}{e^{L\tau} - 1} \eta = 
-        \eta < 2\eta
+        u_1(t)=u(t;f),\qquad u_2(t)=u(t;g).
     \]
+    Se tiene
+    \[
+        \delta_0=0,\qquad \delta_1=0,
+    \]
+    y, puesto que $u_2'=g(t,u_2)$,
+    \[
+        \delta_2
+        =\max_{t\in[t_0,t_1]}
+        \|g(t,u_2(t))-f(t,u_2(t))\|
+        \leq\|f-g\|_{\infty,J\times\overline{B}_R(u_0)}.
+    \]
+    Por tanto,
+    \[
+        \|u(t;f)-u(t;g)\|
+        \leq
+        \frac{e^{L(t-t_0)}-1}{L}
+        \|f-g\|_{\infty,J\times\overline{B}_R(u_0)}
+        <\eta
+    \]
+    para $t\in[t_0,t_1]$. Esto implica que $u(t;g)\in K_\eta\subset B_R(u_0)$, incluso en $t=t_1$, contradicción.
 
-    Así finalmente, $u(t; g)$ no puede tocar la frontera de la bola $B_R(u_0)$ en el intervalo $[t_0, t_0 + \tau]$, y por lo tanto la solución $u(t; g)$ está definida en $[t_0, t_0 + \tau]$, y además:
-    \[
-        \| u(t; f) - u(t; g) \| \leq 
-        \frac{e^{L(t - t_0)} - 1}{L} \| f - g \|_{\infty \, J \times \overline{B}_R(u_0)} \quad \forall t \in [t_0, t_0 + \tau]
-    \]
+    Así, $u(t;g)$ está definida en $[t_0,t_0+\tau]$. Aplicando la misma estimación en todo este intervalo se obtiene la desigualdad del enunciado.
+
+    REVISAR ESTA DEMOSTRACION
 \end{proof}
 
 \ejemplo{
@@ -2178,7 +2417,7 @@ DESPUES DEL TEOREMA DE DEPENDENCIA LIPCHICIANA Y DEL TEOREMA DE DEPENDENCIA LIPC
         \end{cases}
     \]
 
-    Recordemos que este problema tenia de equilibrios $u = 0$ y $u = \frac{\lambda}{a}$, e iban de manera continua de un equilibrio al otro, pero si las condiciones iniciales eran negativas, la solución explotaba en tiempo finito, y si eran mayores a $\frac{\lambda}{a}$, la solución también explotaba en tiempo finito pero en el pasado.
+    Recordemos que este problema tenía como equilibrios $u = 0$ y $u = \frac{\lambda}{a}$, e iban de manera continua de un equilibrio al otro, pero si las condiciones iniciales eran negativas, la solución explotaba en tiempo finito, y si eran mayores a $\frac{\lambda}{a}$, la solución también explotaba en tiempo finito pero en el pasado.
 
     \begin{center}
     \begin{tikzpicture}[x=1.5cm, y=1.8cm] % Escala ajustada para dar espacio al eje y negativo
