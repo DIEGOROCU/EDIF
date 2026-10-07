@@ -87,7 +87,7 @@ En la práctica, numerosas funciones de interés físico y matemático no satisf
 
 Verificar la condición de Lipschitz directamente a partir de su definición puede resultar laborioso en la práctica. El siguiente teorema proporciona un criterio analítico basado en el cálculo diferencial, el cual resulta de gran utilidad. En particular, este resultado nos permitirá deducir que toda función de clase $C^1$ satisface la condición de Lipschitz al menos a nivel local.
 
-\begin{teorema}
+\begin{teorema}[Teorema de Caracterización de funciones Lipschitzianas de clase $C^1$]
     Sean $\Omega \subset \mathbb{R}^n$ un conjunto abierto y \textbf{convexo}, y $F : \Omega \to \mathbb{R}^n$ una función de clase $C^1(\Omega, \mathbb{R}^n)$ (es decir, si $F = (F_1, \ldots, F_n)$, todas sus derivadas parciales $\frac{\partial F_i}{\partial u_j}$ existen y son continuas en $\Omega$). Entonces, las siguientes condiciones son equivalentes:
     \begin{enumerate}
         \item $F$ es globalmente Lipschitziana en $\Omega$.
@@ -2404,8 +2404,7 @@ Para estudiar cómo cambia una solución al perturbar los datos iniciales o el p
 
     Así, $u(t;g)$ está definida en $[t_0,t_0+\tau]$. Aplicando la misma estimación en todo este intervalo se obtiene la desigualdad del enunciado.
 
-    REVISAR ESTA DEMOSTRACION
-\end{proof}
+    \end{proof}
 
 \ejemplo{
     Veamos ahora un ejemplo con el problema logístico:

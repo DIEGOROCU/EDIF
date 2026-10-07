@@ -225,7 +225,7 @@
         \draw[dashed, red, thick] (0.693, -0.5) -- (0.693, 3.5) node[below right, text=black] {$\ln 2$};
         
         % Curva de la solucion
-        \draw[domain=-3:0.62, smooth, variable=\t, blue, thick] plot ({\t}, {1 / (2*exp(-\t) - 1)});
+        \draw[domain=-3:0.55, smooth, variable=\t, blue, thick] plot ({\t}, {1 / (2*exp(-\t) - 1)});
         
         % Condicion inicial
         \filldraw[black] (0,1) circle (1.5pt) node[anchor=south east] {$(0,1)$};
@@ -253,7 +253,7 @@
 }
 
 % Ejercicio 7
-\ejercicio{enunciado}{}{
+\ejercicio{resuelto}{}{
     Dados $\lambda > 0$, $\mu > 0$, $b > 0$, y $c > 0$, considera el modelo de especies competitivas:
     \[
         \begin{cases}
@@ -269,7 +269,161 @@
         \item Demuestra que $u(t) > 0$ y $v(t) > 0$ para todo $t \in I$ si $u_0 > 0$ y $v_0 > 0$.
         \item Demuestra que $I = [0, \infty)$ si $u_0 > 0$ y $v_0 > 0$.
     \end{enumerate}
-}{}
+}{
+    Este sistema se conoce como el modelo de especies competitivas de Lotka-Volterra (1926). Si una de las dos variables es nula, se reduce a la ecuación logística. Los parámetros $b$ y $c$ miden la intensidad de la competición entre las especies $u$ y $v$.
+    
+    \begin{enumerate}[label=(\alph*)]
+        \item Sean $J = \R$ y $\Omega = \R^2$. Definimos el campo vectorial asociado al sistema como:
+        \[
+            f(u,v) = \begin{pmatrix} \lambda u - u^2 - buv \\ \mu v - v^2 - cuv \end{pmatrix}
+        \]
+        Se trata de un sistema autónomo, por lo que $f$ no depende explícitamente del tiempo. Al ser las componentes polinomios, tenemos que $f \in \mathcal{C}^\infty(\R^2; \R^2)$, y de hecho es analítica. 
+        
+        Calculamos su matriz Jacobiana:
+        \[
+            D_{(u,v)} f(t,u,v) = \begin{pmatrix} \lambda - 2u - bv & -bu \\ -cv & \mu - 2v - cu \end{pmatrix} \in \mathcal{C}^\infty(\R^2; \R^{2 \times 2})
+        \]
+        Como la Jacobiana es continua, por el Corolario del Teorema de Caracterización de Funciones Lipschitzianas de clase $\mathcal{C}^1$, $f$ es localmente Lipschitziana respecto de $(u,v) \in \R^2$ (uniformemente en compactos de tiempo, aunque al ser autónoma esto es trivial). Notemos que no es globalmente Lipschitziana porque las derivadas parciales no están acotadas globalmente en $\R^2$.
+        
+        Aplicando los teoremas fundamentales:
+        \begin{enumerate}[label=\Roman*)]
+            \item Por el Teorema de Cauchy-Lipschitz Local, existe una única solución local a la derecha con el dato inicial $(u_0, v_0)$.
+            \item Por el Teorema de Unicidad Global, la solución es única en cualquier intervalo donde esté definida.
+            \item Por el Teorema de Existencia de Solución Maximal, el problema de valor inicial tiene una única solución maximal $(I, u, v)$.
+        \end{enumerate}
+        Por el Segundo Teorema Fundamental de Cauchy-Lipschitz, el intervalo maximal de existencia hacia la derecha es de la forma $I = [0, T_{\max})$. Si el tiempo de vida fuera finito ($T_{\max} < +\infty$), entonces la solución debe explotar: $\lim_{t \nearrow T_{\max}} (|u(t)| + |v(t)|) = +\infty$.
+
+        \item Vemos que ambas ecuaciones son del tipo de Kolmogorov, por lo que se pueden escribir extrayendo la variable como factor común:
+        \[
+            \begin{cases}
+                u' = A(t)u \quad \text{con } A(t) = \lambda - u(t) - bv(t) \\
+                v' = B(t)v \quad \text{con } B(t) = \mu - v(t) - cu(t)
+            \end{cases}
+        \]
+        Dado que las soluciones están definidas, $A(t)$ y $B(t)$ son continuas. Podemos integrar directamente y obtener:
+        \[
+            u(t) = u_0 e^{\int_0^t A(s) ds}, \quad v(t) = v_0 e^{\int_0^t B(s) ds}
+        \]
+        
+        Analizamos los casos particulares donde alguna de las condiciones iniciales es cero:
+        \begin{itemize}
+            \item \textbf{Si $u_0 = 0$:}
+            Sustituyendo en la expresión integral, $u(t) \equiv 0$. El sistema se reduce a la ecuación logística para la especie $v$:
+            \[
+                \begin{cases}
+                    v' = \mu v - v^2 \\
+                    v(0) = v_0
+                \end{cases}
+            \]
+            Si además $v_0 = \mu$, la solución es el equilibrio constante $v \equiv \mu$.
+            Para un $v_0 > 0$ cualquiera, es una ecuación de Bernoulli y la resolvemos con el cambio $v = z^\alpha$:
+            \[
+                \alpha z^{\alpha-1} z' = \mu z^\alpha - z^{2\alpha} \implies \alpha z' = \mu z - z^{\alpha+1}
+            \]
+            Elegimos $\alpha = -1$ para linealizarla:
+            \[
+                -z' = \mu z - 1 \implies z' + \mu z = 1
+            \]
+            La solución de esta ecuación lineal (buscando constante particular $z_p = 1/\mu$) es $z(t) = C e^{-\mu t} + \frac{1}{\mu}$. Imponiendo el dato inicial $z(0) = \frac{1}{v_0}$:
+            \[
+                C + \frac{1}{\mu} = \frac{1}{v_0} \implies C = \frac{1}{v_0} - \frac{1}{\mu} \implies z(t) = \left( \frac{1}{v_0} - \frac{1}{\mu} \right) e^{-\mu t} + \frac{1}{\mu}
+            \]
+            Deshaciendo el cambio $v(t) = \frac{1}{z(t)}$, la solución es:
+            \[
+                (u(t), v(t)) = \left( 0, \frac{1}{\left( \frac{1}{v_0} - \frac{1}{\mu} \right) e^{-\mu t} + \frac{1}{\mu}} \right)
+            \]
+            El denominador no se anula para $t \ge 0$, ya que la función exponencial es positiva y todos los sumandos son estrictamente positivos para $t>0$. De hecho, $\lim_{t \to \infty} v(t) = \mu$.
+
+            \item \textbf{Si $v_0 = 0$:}
+            Por simetría, obtenemos análogamente $v(t) \equiv 0$ y $u(t)$ sigue la misma ecuación logística (cambiando $\mu$ por $\lambda$ y $v_0$ por $u_0$):
+            \[
+                (u(t), v(t)) = \left( \frac{1}{\left( \frac{1}{u_0} - \frac{1}{\lambda} \right) e^{-\lambda t} + \frac{1}{\lambda}}, 0 \right)
+            \]
+            En este caso $\lim_{t \to \infty} u(t) = \lambda$.
+            
+            \item \textbf{Si $u_0 = 0$ y $v_0 = 0$:}
+            Es el equilibrio trivial: $(u(t), v(t)) = (0, 0)$.
+        \end{itemize}
+
+        \item Como demostramos en el apartado (b), las funciones exponenciales que multiplican a las condiciones iniciales son siempre estrictamente positivas:
+        \[
+            u(t) = u_0 e^{\int_0^t A(s) ds} > 0 \quad \text{y} \quad v(t) = v_0 e^{\int_0^t B(s) ds} > 0 \quad \forall t \in I,
+        \]
+        ya que $u_0 > 0$ y $v_0 > 0$. Esto demuestra que las trayectorias no pueden cruzar los ejes coordenados y el primer cuadrante es invariante.
+
+        \item Sabiendo que las soluciones se mantienen estrictamente positivas ($u(t) > 0, v(t) > 0$) y que los parámetros de competición son positivos ($b, c > 0$), podemos acotar las funciones $A(t)$ y $B(t)$:
+        \[
+            A(t) = \lambda - u(t) - bv(t) \le \lambda \quad \forall t \in I
+        \]
+        \[
+            B(t) = \mu - v(t) - cu(t) \le \mu \quad \forall t \in I
+        \]
+        Usando la representación integral de las soluciones y la monotonía de la exponencial:
+        \[
+            0 < u(t) = u_0 e^{\int_0^t A(s) ds} \le u_0 e^{\int_0^t \lambda ds} = u_0 e^{\lambda t}
+        \]
+        \[
+            0 < v(t) = v_0 e^{\int_0^t B(s) ds} \le v_0 e^{\int_0^t \mu ds} = v_0 e^{\mu t}
+        \]
+        
+        Procedemos por reducción al absurdo. Si el tiempo maximal fuera finito ($T_{\max} < +\infty$), entonces para todo $t \in [0, T_{\max})$, la suma de las componentes estaría acotada:
+        \[
+            |u(t)| + |v(t)| = u(t) + v(t) \le u_0 e^{\lambda t} + v_0 e^{\mu t} \le u_0 e^{\lambda T_{\max}} + v_0 e^{\mu T_{\max}} < +\infty
+        \]
+        Como la órbita se mantiene acotada al aproximarse a $T_{\max}$, la solución no explota. Pero esto contradice la explosión en tiempo finito garantizada por el Segundo Teorema Fundamental. Por tanto, el tiempo de vida maximal es infinito: $T_{\max} = +\infty \implies I = [0, +\infty)$.
+    \end{enumerate}
+
+    \vspace{0.5cm}
+    \textbf{Análisis adicional de equilibrios:} \\
+    Como complemento, calculamos los puntos de equilibrio buscando anular el campo vectorial:
+    \[
+        \begin{cases}
+            u(\lambda - u - bv) = 0 \\
+            v(\mu - v - cu) = 0
+        \end{cases}
+    \]
+    Distinguimos cuatro casos:
+    \begin{enumerate}[label=\Roman*)]
+        \item Equilibrio trivial: $u=0, v=0 \implies (0,0)$.
+        \item Solución semitrivial en $u$: $v=0 \implies \lambda - u = 0 \implies u=\lambda \implies (\lambda, 0)$. 
+        \item Solución semitrivial en $v$: $u=0 \implies \mu - v = 0 \implies v=\mu \implies (0, \mu)$.
+        \item Posible estado de coexistencia (ambas poblaciones no nulas): 
+        \[
+            \begin{cases}
+                u + bv = \lambda \\
+                cu + v = \mu
+            \end{cases}
+            \iff
+            \begin{pmatrix} 1 & b \\ c & 1 \end{pmatrix} \begin{pmatrix} u \\ v \end{pmatrix} = \begin{pmatrix} \lambda \\ \mu \end{pmatrix}
+        \]
+        Para que haya un punto de equilibrio aislado distinto del trivial, el determinante debe ser no nulo: $1 - bc \neq 0$. (El caso degenerado $bc=1$ es un problema habitual de examen). Asumiendo $bc \neq 1$, resolvemos por la regla de Cramer:
+        \[
+            u = \frac{\begin{vmatrix} \lambda & b \\ \mu & 1 \end{vmatrix}}{1 - bc} = \frac{\lambda - b\mu}{1 - bc}, \quad
+            v = \frac{\begin{vmatrix} 1 & \lambda \\ c & \mu \end{vmatrix}}{1 - bc} = \frac{\mu - c\lambda}{1 - bc}
+        \]
+        Si ambas cantidades son estrictamente positivas, el sistema posee un estado de coexistencia poblacional válido.
+    \end{enumerate}
+    
+    \begin{center}
+    \begin{tikzpicture}[scale=1.5]
+        % Ejes
+        \draw[->, thick] (-0.5,0) -- (3,0) node[right] {$u$};
+        \draw[->, thick] (0,-0.5) -- (0,3) node[above] {$v$};
+        
+        % Puntos de equilibrio
+        \filldraw[black] (0,0) circle (1.5pt) node[below left] {$(0,0)$};
+        \filldraw[blue] (2,0) circle (1.5pt) node[below right, text=blue] {$(\lambda,0)$};
+        \filldraw[blue] (0,2) circle (1.5pt) node[above left, text=blue] {$(0,\mu)$};
+        \filldraw[cyan] (1,1.5) circle (1pt) node[above=2pt, text=cyan] {$(u_0,v_0)$};
+        
+        % Lineas asintoticas
+        \draw[dashed, blue] (2, -0.2) -- (2, 2.5);
+        \draw[dashed, blue] (-0.2, 2) -- (2.5, 2);
+    \end{tikzpicture}
+    \end{center}
+    
+    Interpretación biológica: si no hay especie $v$, la dinámica de $u$ se estabiliza en su capacidad de carga $\lambda$. Si no hay especie $u$, la dinámica de $v$ se estabiliza en su capacidad de carga $\mu$.
+}
 
 % Ejercicio 8
 \ejercicio{enunciado}{}{
