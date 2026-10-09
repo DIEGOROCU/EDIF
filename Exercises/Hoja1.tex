@@ -426,7 +426,7 @@
 }
 
 % Ejercicio 8
-\ejercicio{enunciado}{}{
+\ejercicio{resuelto}{}{
     Repite el ejercicio anterior para el modelo depredador-presa, que viene dado por:
     \[
         \begin{cases}
@@ -436,10 +436,138 @@
         \quad (u(0), v(0)) = (u_0, v_0),
     \]
     donde $\lambda > 0$, $\mu > 0$, $b > 0$, $c > 0$, $u_0 \ge 0$, y $v_0 \ge 0$.
-}{}
+}{
+    Este sistema modela la interacción depredador-presa. La especie $u$ (presa) sufre por la presencia de $v$, mientras que la especie $v$ (depredador) se beneficia de $u$, lo cual se refleja en el signo positivo del coeficiente de interacción cruzada para $v$.
+    
+    \begin{enumerate}[label=(\alph*)]
+        \item Sean $J = \R$ y $\Omega = \R^2$. Definimos el campo vectorial asociado al sistema como:
+        \[
+            f(u,v) = \begin{pmatrix} \lambda u - u^2 - buv \\ \mu v - v^2 + cuv \end{pmatrix}
+        \]
+        Se trata de un sistema autónomo. Al ser sus componentes polinomios, $f \in \mathcal{C}^\infty(\R^2; \R^2)$ y es analítica. 
+        
+        Calculamos su matriz Jacobiana:
+        \[
+            D_{(u,v)} f(t,u,v) = \begin{pmatrix} \lambda - 2u - bv & -bu \\ cv & \mu - 2v + cu \end{pmatrix} \in \mathcal{C}^\infty(\R^2; \R^{2 \times 2})
+        \]
+        Por el Corolario del Teorema de Caracterización de Funciones Lipschitzianas de clase $\mathcal{C}^1$, $f$ es localmente Lipschitziana respecto de $(u,v) \in \R^2$. Al igual que en el modelo competitivo, no es globalmente Lipschitziana porque las derivadas parciales no están acotadas globalmente en todo $\R^2$.
+        
+        Aplicando los teoremas fundamentales en cascada (local, unicidad y maximalidad), concluimos directamente que el problema de valor inicial tiene una única solución maximal $(I, u, v)$. 
+        Por el Segundo Teorema Fundamental, si el intervalo maximal a la derecha es $I = [0, T_{\max})$ y el tiempo de vida fuera finito ($T_{\max} < +\infty$), entonces la solución debe explotar en norma: $\lim_{t \nearrow T_{\max}} (|u(t)| + |v(t)|) = +\infty$.
 
+        \item Ambas ecuaciones siguen siendo del tipo de Kolmogorov:
+        \[
+            \begin{cases}
+                u' = A(t)u \quad \text{con } A(t) = \lambda - u(t) - bv(t) \\
+                v' = B(t)v \quad \text{con } B(t) = \mu - v(t) + cu(t)
+            \end{cases}
+        \]
+        Integrando directamente obtenemos:
+        \[
+            u(t) = u_0 e^{\int_0^t A(s) ds}, \quad v(t) = v_0 e^{\int_0^t B(s) ds}
+        \]
+        
+        Analizamos los casos donde una de las poblaciones iniciales es nula:
+        \begin{itemize}
+            \item \textbf{Si $u_0 = 0$ (no hay presas):}
+            $u(t) \equiv 0$. El sistema se reduce a la ecuación logística para el depredador $v' = \mu v - v^2$. Su solución (con $v_0 > 0$) es la misma curva logística:
+            \[
+                (u(t), v(t)) = \left( 0, \frac{1}{\left( \frac{1}{v_0} - \frac{1}{\mu} \right) e^{-\mu t} + \frac{1}{\mu}} \right)
+            \]
+            Con comportamiento asintótico $\lim_{t \to \infty} v(t) = \mu$.
+
+            \item \textbf{Si $v_0 = 0$ (no hay depredadores):}
+            $v(t) \equiv 0$. El sistema se reduce a la ecuación logística para la presa $u' = \lambda u - u^2$:
+            \[
+                (u(t), v(t)) = \left( \frac{1}{\left( \frac{1}{u_0} - \frac{1}{\lambda} \right) e^{-\lambda t} + \frac{1}{\lambda}}, 0 \right)
+            \]
+            En este caso $\lim_{t \to \infty} u(t) = \lambda$.
+            
+            \item \textbf{Si $u_0 = 0$ y $v_0 = 0$:}
+            Es el equilibrio trivial: $(u(t), v(t)) = (0, 0)$.
+        \end{itemize}
+
+        \item La forma integral de Kolmogorov asegura que el signo viene dado exclusivamente por el dato inicial. Si arrancamos en el primer cuadrante ($u_0 > 0, v_0 > 0$):
+        \[
+            u(t) = u_0 e^{\int_0^t A(s) ds} > 0 \quad \text{y} \quad v(t) = v_0 e^{\int_0^t B(s) ds} > 0 \quad \forall t \in I.
+        \]
+        Por tanto, el primer cuadrante es un conjunto invariante para la dinámica del sistema.
+
+        \item En el primer cuadrante, al ser todos los parámetros positivos ($b, c > 0$), podemos acotar:
+        \[
+            A(t) = \lambda - u(t) - bv(t) \le \lambda \quad \forall t \in I
+        \]
+        Esto nos permite acotar el crecimiento de las presas usando la monotonía de la integral:
+        \[
+            0 < u(t) = u_0 e^{\int_0^t A(s) ds} \le u_0 e^{\lambda t}
+        \]
+        
+        Para la población de depredadores $B(t) = \mu - v(t) + cu(t)$, notemos que el término $+cu(t)$ impide acotar directamente por $\mu$. Sin embargo, procedemos por reducción al absurdo suponiendo un tiempo de explosión finito $T_{\max} < +\infty$.
+        En el intervalo $t \in [0, T_{\max})$, la presa estaría acotada por:
+        \[
+            u(t) \le u_0 e^{\lambda T_{\max}}
+        \]
+        Sustituyendo esta cota en la tasa de crecimiento del depredador:
+        \[
+            B(t) \le \mu + cu(t) \le \mu + c u_0 e^{\lambda T_{\max}} := K < +\infty
+        \]
+        De aquí deducimos que el depredador tampoco puede explotar:
+        \[
+            0 < v(t) = v_0 e^{\int_0^t B(s) ds} \le v_0 e^{K t} \le v_0 e^{K T_{\max}} < +\infty
+        \]
+        
+        Al estar ambas componentes de la órbita $(u(t), v(t))$ acotadas por constantes finitas, la suma $|u(t)|+|v(t)|$ no puede divergir a $+\infty$ cuando $t \nearrow T_{\max}$. Esto contradice el criterio de explosión del Segundo Teorema Fundamental. Concluimos que el tiempo de vida maximal es infinito: $T_{\max} = +\infty \implies I = [0, +\infty)$.
+    \end{enumerate}
+
+    \vspace{0.5cm}
+    \textbf{Análisis adicional de equilibrios:} \\
+    Buscamos los puntos estacionarios anulando el campo vectorial:
+    \[
+        \begin{cases}
+            u(\lambda - u - bv) = 0 \\
+            v(\mu - v + cu) = 0
+        \end{cases}
+    \]
+    Obtenemos cuatro escenarios:
+    \begin{enumerate}[label=\Roman*)]
+        \item Equilibrio trivial: $u=0, v=0 \implies (0,0)$.
+        \item Equilibrio con solo presas: $v=0 \implies u=\lambda \implies (\lambda, 0)$. 
+        \item Equilibrio con solo depredadores: $u=0 \implies v=\mu \implies (0, \mu)$.
+        \item Posible estado de coexistencia (ambas especies): 
+        \[
+            \begin{cases}
+                u + bv = \lambda \\
+                -cu + v = \mu
+            \end{cases}
+            \iff
+            \begin{pmatrix} 1 & b \\ -c & 1 \end{pmatrix} \begin{pmatrix} u \\ v \end{pmatrix} = \begin{pmatrix} \lambda \\ \mu \end{pmatrix}
+        \]
+        El determinante de este sistema es $1 - b(-c) = 1 + bc > 0$. Al ser siempre estrictamente positivo, siempre existe una única solución matemática por el teorema de Cramer:
+        \[
+            u = \frac{\lambda - b\mu}{1 + bc}, \quad
+            v = \frac{\mu + c\lambda}{1 + bc}
+        \]
+        Como la componente $v$ siempre es positiva, la existencia biológica del estado de coexistencia (donde la presa sobrevive, $u > 0$) depende únicamente de que las presas crezcan lo suficientemente rápido para compensar la depredación: $\lambda > b\mu$.
+    \end{enumerate}
+    
+    \begin{center}
+    \begin{tikzpicture}[scale=1.5]
+        % Ejes
+        \draw[->, thick] (-0.5,0) -- (3,0) node[right] {$u$};
+        \draw[->, thick] (0,-0.5) -- (0,3) node[above] {$v$};
+        
+        % Puntos de equilibrio
+        \filldraw[black] (0,0) circle (1.5pt) node[below left] {$(0,0)$};
+        \filldraw[blue] (2,0) circle (1.5pt) node[below right, text=blue] {$(\lambda,0)$};
+        \filldraw[blue] (0,1.5) circle (1.5pt) node[above left, text=blue] {$(0,\mu)$};
+        
+        % Punto de coexistencia (asumiendo lambda > b*mu)
+        \filldraw[cyan] (1,1.8) circle (1.5pt) node[above=2pt, text=cyan] {$(\frac{\lambda-b\mu}{1+bc},\frac{\mu+c\lambda}{1+bc})$};
+    \end{tikzpicture}
+    \end{center}
+}
 % Ejercicio 9
-\ejercicio{enunciado}{}{
+\ejercicio{resuelto}{}{
     Dados $\lambda > 0$ y $b > 0$, considera el modelo simbiótico:
     \[
         \begin{cases}
@@ -449,10 +577,94 @@
         \quad (u(0), v(0)) = (1, 1).
     \]
     Demuestra que admite una única solución maximal a la derecha. Determina esta solución y su tiempo maximal de existencia en términos del parámetro $b > 0$, el cual mide la sinergia entre los individuos de las especies $u$ y $v$.
-}{}
+}{
+    Sea $J = [0, +\infty)$ y $\Omega = \R^2$. Definimos la función de campo vectorial:
+    \[
+        f(t,u,v) = \begin{pmatrix} \lambda u - u^2 + buv \\ \lambda v - v^2 + buv \end{pmatrix}
+    \]
+    Notamos que $f \in \mathcal{C}^\infty(J \times \Omega; \R^2)$, y de hecho es analítica. Su Jacobiana es continua:
+    \[
+        D_{(u,v)}f(t,u,v) = \begin{pmatrix} \lambda - 2u + bv & bu \\ bv & \lambda - 2v + bu \end{pmatrix} \in \mathcal{C}(J \times \Omega; \R^{2 \times 2})
+    \]
+    Por el corolario del criterio de Lipschitz, $f$ es localmente Lipschitziana respecto de $(u,v) \in \R^2$. Al igual que en ejercicios anteriores:
+    \begin{enumerate}[label=\Roman*)]
+        \item Por el Teorema de Cauchy-Lipschitz Local, existe una única solución local con el dato inicial $(1, 1)$.
+        \item Por el Teorema de Unicidad Global, la solución es única en cualquier intervalo donde esté definida.
+        \item Por el Teorema de Existencia de Solución Maximal, el problema de valor inicial tiene una única solución maximal, $(I, u, v)$.
+    \end{enumerate}
+    Por el Segundo Teorema Fundamental, el intervalo de existencia a la derecha será $I = [0, T_{\max})$ con $T_{\max} \le +\infty$. Si $T_{\max} < +\infty$, entonces $\lim_{t \nearrow T_{\max}} (|u(t)| + |v(t)|) = +\infty$.
+
+    Para encontrar explícitamente la solución, explotaremos la simetría del problema (como vimos en el ejercicio 6). Dado que las ecuaciones para $u$ y $v$ son idénticas bajo intercambio de variables, y el dato inicial es simétrico $(1,1)$, si $(u,v)$ resuelve el problema, $(v,u)$ también lo resuelve con la misma condición inicial. Por la unicidad de la solución, ambas órbitas deben ser idénticas:
+    \[
+        u(t) = v(t) \quad \forall t \in I
+    \]
+    Llamaremos $w(t) \equiv u(t) = v(t)$. Sustituyendo en el sistema, este colapsa a una única ecuación unidimensional para $w$:
+    \[
+        w' = \lambda w - w^2 + bw^2 \implies w' = \lambda w + (b-1)w^2, \quad \text{con } w(0) = 1
+    \]
+    Esta ecuación se puede escribir separando la $w$: $w' = (\lambda + (b-1)w(t))w$. Integrando con el dato inicial:
+    \[
+        w(t) = w(0) e^{\int_0^t (\lambda + (b-1)w(s)) ds} = e^{\int_0^t (\lambda + (b-1)w(s)) ds} > 0 \quad \forall t \in I
+    \]
+    Procedemos a resolver esta ecuación de Bernoulli aplicando el cambio de variable $z = w^{-1}$. Derivando obtenemos $z' = -w^{-2} w'$. Dividiendo la ecuación diferencial original por $w^2$:
+    \[
+        \frac{w'}{w^2} = \frac{\lambda}{w} + (b-1) \implies -z' = \lambda z + (b-1) \implies z' + \lambda z = 1 - b
+    \]
+    Esta es una ecuación diferencial lineal de primer orden con coeficientes constantes. Su solución es la suma de la homogénea y una constante particular ($z_p = \frac{1-b}{\lambda}$):
+    \[
+        z(t) = C e^{-\lambda t} + \frac{1-b}{\lambda}
+    \]
+    Usando la condición inicial $z(0) = w(0)^{-1} = 1$:
+    \[
+        1 = C + \frac{1-b}{\lambda} \implies C = 1 - \frac{1-b}{\lambda} = \frac{\lambda - 1 + b}{\lambda}
+    \]
+    Por tanto, $z(t) = \left(\frac{\lambda - 1 + b}{\lambda}\right) e^{-\lambda t} + \frac{1-b}{\lambda}$. Deshaciendo el cambio de variable ($w = z^{-1}$), la solución del sistema es:
+    \[
+        u(t) = v(t) = w(t) = \frac{1}{\left(\frac{\lambda - 1 + b}{\lambda}\right) e^{-\lambda t} + \frac{1-b}{\lambda}} = \frac{\lambda e^{\lambda t}}{\lambda + (1 - b)(e^{\lambda t} - 1)}
+    \]
+
+    Para determinar el tiempo maximal de existencia, analizamos si el denominador $D(t) = z(t)$ puede anularse:
+    \begin{itemize}
+        \item \textbf{Caso $0 \le b < 1$ (competencia débil o nula):}
+        El denominador en su forma original $z(t) = \left(\frac{\lambda - 1 + b}{\lambda}\right) e^{-\lambda t} + \frac{1-b}{\lambda}$ es estrictamente positivo, ya que $\lambda > 0$ y $1-b > 0$. Nunca se anula para $t \ge 0$. Por tanto, $T_{\max} = +\infty$ e $I = [0, +\infty)$.
+        
+        \item \textbf{Caso $b = 1$ (crecimiento exponencial):}
+        La ecuación es $w' = \lambda w$, luego $w(t) = e^{\lambda t}$. La solución existe globalmente, $T_{\max} = +\infty$ e $I = [0, +\infty)$.
+        
+        \item \textbf{Caso $b > 1$ (fuerte sinergia):}
+        El término $\frac{1-b}{\lambda}$ es negativo, lo que provoca que el denominador termine anulándose para un cierto tiempo. Buscamos el tiempo de explosión resolviendo $z(T_{\max}) = 0$:
+        \[
+            e^{-\lambda T_{\max}} \left(1 + \frac{b-1}{\lambda}\right) - \frac{b-1}{\lambda} = 0 \implies e^{-\lambda T_{\max}} = \frac{\frac{b-1}{\lambda}}{1 + \frac{b-1}{\lambda}} = \frac{b-1}{\lambda + b - 1}
+        \]
+        Tomando logaritmos:
+        \[
+            -\lambda T_{\max} = \ln\left(\frac{b-1}{\lambda+b-1}\right) \implies T_{\max}(b) = \frac{-1}{\lambda} \ln\left(\frac{b-1}{\lambda+b-1}\right) = \frac{1}{\lambda} \ln\left(1 + \frac{\lambda}{b-1}\right)
+        \]
+        En este escenario, la solución explota en tiempo finito y el intervalo maximal es $I = [0, T_{\max}(b))$. Como predice el Segundo Teorema Fundamental: $\lim_{t \nearrow T_{\max}} u(t) = \lim_{t \nearrow T_{\max}} v(t) = +\infty$.
+    \end{itemize}
+
+    \vspace{0.2cm}
+    Además, podemos estudiar el comportamiento del tiempo de vida $T_{\max}(b)$ con respecto a la sinergia $b$:
+    \[
+        \lim_{b \downarrow 1} T_{\max}(b) = +\infty \quad \text{y} \quad \lim_{b \to +\infty} T_{\max}(b) = 0
+    \]
+    Esto nos dice que cuanta mayor sea la sinergia mutualista ($b \to \infty$), el crecimiento es tan explosivo que la población diverge en un instante de tiempo prácticamente nulo.
+    
+    \begin{center}
+    \begin{tikzpicture}[scale=1.5]
+        \draw[->, thick] (-0.5,0) -- (3,0) node[right] {$b$};
+        \draw[->, thick] (0,-0.5) -- (0,2.5) node[above] {$T_{\max}$};
+        
+        \draw[dashed, blue] (1, -0.2) -- (1, 2.5) node[below=2.7cm, text=black] {$1$};
+        \draw[thick, blue] plot[domain=1.1:2.8, samples=100] (\x, {ln(1 + 2/(\x-1))});
+        
+        \node[above] at (1.5, 1.5) {$T_{\max}(b)$};
+    \end{tikzpicture}
+    \end{center}
+}
 
 % Ejercicio 10
-\ejercicio{enunciado}{}{
+\ejercicio{resuelto}{}{
     Dado el sistema plano:
     \[
         \begin{cases}
@@ -461,7 +673,93 @@
         \end{cases}
     \]
     obtén un sistema equivalente utilizando coordenadas polares, $u = \rho \cos \theta, \quad v = \rho \sin \theta$. Resuelve el sistema resultante y representa las soluciones del sistema original en el plano $(u,v)$.
-}{}
+}{
+    Realizamos el cambio a coordenadas polares con las relaciones inversas habituales (cuidando que $\rho \neq 0$):
+    \[
+        \rho^2 = u^2 + v^2, \quad \theta = \arctan\left(\frac{v}{u}\right)
+    \]
+    Derivando las ecuaciones paramétricas $u = \rho \cos \theta$ y $v = \rho \sin \theta$ respecto del tiempo obtenemos:
+    \[
+        \begin{cases}
+            u' = \rho' \cos \theta - \rho \sin \theta \cdot \theta' \\
+            v' = \rho' \sin \theta + \rho \cos \theta \cdot \theta'
+        \end{cases}
+    \]
+    Para aislar la dinámica del ángulo, podemos cruzar las ecuaciones multiplicando por $u$ y $v$:
+    \[
+        u v' = \rho \rho' \sin \theta \cos \theta + \rho^2 \cos^2 \theta \cdot \theta'
+    \]
+    \[
+        v u' = \rho \rho' \sin \theta \cos \theta - \rho^2 \sin^2 \theta \cdot \theta'
+    \]
+    Restando ambas expresiones obtenemos una expresión para la rotación: 
+    \[
+        u v' - v u' = \rho^2 (\cos^2 \theta + \sin^2 \theta) \theta' = \rho^2 \theta' \implies \theta' = \frac{u v' - v u'}{\rho^2}
+    \]
+    (Formalmente, esto se obtiene más rápido derivando el arco tangente: $\theta' = \frac{(v/u)'}{1+(v/u)^2} = \frac{u v' - v u'}{u^2+v^2} = \frac{u v' - v u'}{\rho^2}$).
+    
+    Sustituimos el campo vectorial original en esta fórmula de $\theta'$:
+    \[
+        \theta' = \frac{u(-u + v - v(u^2+v^2)) - v(u + v - u(u^2+v^2))}{u^2+v^2}
+    \]
+    \[
+        \theta' = \frac{-u^2 + uv - uv(u^2+v^2) - uv - v^2 + uv(u^2+v^2)}{\rho^2} = \frac{-u^2 - v^2}{\rho^2} = \frac{-\rho^2}{\rho^2} = -1
+    \]
+    Por lo tanto, la dinámica angular es constante: $\theta(t) = -t + \theta_0$. Las trayectorias giran en sentido horario indefinidamente.
+    
+    Para la variable radial $\rho'$, derivamos la identidad pitagórica $\rho^2 = u^2 + v^2$:
+    \[
+        2\rho \rho' = 2uu' + 2vv' \implies \rho \rho' = uu' + vv'
+    \]
+    Sustituimos nuevamente el sistema original:
+    \[
+        \rho \rho' = u(u + v - u(u^2+v^2)) + v(-u + v - v(u^2+v^2))
+    \]
+    \[
+        \rho \rho' = u^2 + uv - u^2\rho^2 - uv + v^2 - v^2\rho^2 = (u^2 + v^2) - (u^2 + v^2)\rho^2 = \rho^2 - \rho^4
+    \]
+    Dividiendo por $\rho > 0$, la dinámica radial es la de una ecuación polinómica simple: $\rho' = \rho - \rho^3 = \rho(1 - \rho^2)$.
+
+    El sistema en coordenadas polares se ha desacoplado y queda reducido a:
+    \[
+        \begin{cases}
+            \rho' = \rho(1 - \rho^2) \\
+            \theta' = -1
+        \end{cases}
+    \]
+    Analizando el espacio de fases de la ecuación radial unidimensional $\rho' = \rho(1-\rho)(1+\rho)$ (recordando que el radio es estrictamente positivo, $\rho \ge 0$), vemos que los puntos de equilibrio son el origen $\rho = 0$ y la circunferencia unitaria $\rho = 1$.
+    
+    Observando el signo de la derivada radial en los distintos tramos:
+    \begin{itemize}
+        \item Si $0 < \rho < 1$, entonces $\rho' > 0$. La trayectoria se aleja exponencialmente del origen y el radio crece acercándose a 1.
+        \item Si $\rho > 1$, entonces $\rho' < 0$. La trayectoria pierde radio progresivamente acercándose a 1.
+    \end{itemize}
+    Esto implica que $\lim_{t \to \infty} \rho(t) = 1$ para cualquier condición inicial $\rho_0 > 0$. 
+    
+    Combinando la atracción radial hacia $1$ con la rotación angular horaria constante, en el plano de fases $(u,v)$ vemos que todas las soluciones (excepto el equilibrio inestable en el origen) se acercan asintóticamente y se enroscan en la curva cerrada $u^2+v^2 = 1$. Esta circunferencia unitaria representa un **ciclo límite (solución periódica atrayente)** de periodo $P = 2\pi$. 
+    
+    \begin{center}
+    \begin{tikzpicture}[scale=1.5]
+        \draw[->, thick] (-2,0) -- (2,0) node[right] {$u$};
+        \draw[->, thick] (0,-2) -- (0,2) node[above] {$v$};
+        
+        % Ciclo limite dividido en dos arcos para flechas de giro horario
+        \draw[very thick, cyan, -stealth] (1,0) arc[start angle=0, end angle=-180, radius=1];
+        \draw[very thick, cyan, -stealth] (-1,0) arc[start angle=-180, end angle=-360, radius=1];
+        \node[cyan, right] at (0.8, -0.8) {$\rho = 1$ (ciclo)};
+        
+        % Trayectoria interior (crece hacia rho=1, giro horario)
+        \draw[red, -stealth, domain=0:2*pi, samples=100, smooth] plot ({(1-0.9*exp(-\x))*cos(deg(-\x))}, {(1-0.9*exp(-\x))*sin(deg(-\x))});
+        \draw[red, -stealth, domain=2*pi:4*pi, samples=100, smooth] plot ({(1-0.9*exp(-\x))*cos(deg(-\x))}, {(1-0.9*exp(-\x))*sin(deg(-\x))});
+        
+        % Trayectoria exterior (decrece hacia rho=1, giro horario)
+        \draw[magenta, -stealth, domain=0:2*pi, samples=100, smooth] plot ({(1+1.5*exp(-\x))*cos(deg(-\x))}, {(1+1.5*exp(-\x))*sin(deg(-\x))});
+        \draw[magenta, -stealth, domain=2*pi:4*pi, samples=100, smooth] plot ({(1+1.5*exp(-\x))*cos(deg(-\x))}, {(1+1.5*exp(-\x))*sin(deg(-\x))});
+        
+        \filldraw[black] (0,0) circle (1.5pt);
+    \end{tikzpicture}
+    \end{center}
+}
 
 % Ejercicio 11
 \ejercicio{enunciado}{}{
