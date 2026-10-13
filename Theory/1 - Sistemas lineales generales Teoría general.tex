@@ -1,4 +1,4 @@
-﻿\section{Funciones Lipschitzianas}
+\section{Funciones Lipschitzianas}
 
 \subsection{Introducción a las funciones Lipschitzianas}
 En el estudio introductorio de las ecuaciones diferenciales, el enfoque principal radica en la obtención de soluciones explícitas y el análisis de sus propiedades básicas. Sin embargo, dado que la mayoría de los problemas no admiten una solución analítica cerrada, resulta indispensable adoptar una perspectiva cualitativa para estudiar la existencia, unicidad y el comportamiento de las soluciones.
@@ -1041,7 +1041,7 @@ Antes de ver el teorema de existencia de la solución maximal, debemos definir q
 Una vez definidas estas nociones, podemos enunciar el teorema de existencia de la solución maximal.
 
 \begin{teorema}[Teorema de existencia de la solución maximal]
-    bajo las condiciones generales, es decir, sea $J \in \{ [t_0, t_0 + T], [t_0, t_0 + T), [t_0, \infty) \}$, $\Omega \subset \mathbb{R}^N$ un conjunto abierto, $u_0 \in \Omega$, y $f \in C(J \times \Omega, \mathbb{R}^N)$ una función localmente Lipschitziana respecto a $u \in \Omega$, uniformemente en $t \in J$, en subintervalos compactos de $J$. Entonces, el problema de valor inicial:
+    Bajo las condiciones generales, es decir, sea $J \in \{ [t_0, t_0 + T], [t_0, t_0 + T), [t_0, \infty) \}$, $\Omega \subset \mathbb{R}^N$ un conjunto abierto, $u_0 \in \Omega$, y $f \in C(J \times \Omega, \mathbb{R}^N)$ una función localmente Lipschitziana respecto a $u \in \Omega$, uniformemente en $t \in J$, en subintervalos compactos de $J$. Entonces, el problema de valor inicial:
     \[
         (P) =
         \begin{cases}
@@ -1206,8 +1206,7 @@ Probemos ahora el teorema.
     Probemos que la primera posibilidad es imposible, y después probemos la segunda
     \begin{enumerate}
         \item Supongamos que $I = [t_0, T_{\text{max}}]$, con $T_{\text{max}} < t_0 + T$.\\
-        \item 
-        Sabemos por RELLENAR, $\exists \delta > 0$ tal que el PVI tiene una única solución en el intervalo $[T_{\text{max}}, T_{\text{max}} + \delta]$, y por tanto podemos prolongar estrictamente la solución maximal $(I, u)$ a su derecha, lo cual es una contradicción de que $(I, u)$ sea maximal. Por lo tanto, la primera posibilidad es imposible.\\
+        Sabemos por el Teorema de Cauchy-Lipschitz local que, al ser $f$ localmente Lipschitziana y estar $(T_{\text{max}}, u(T_{\text{max}})) \in J \times \mathbb{R}^N$, $\exists \delta > 0$ tal que el PVI tiene una única solución en el intervalo $[T_{\text{max}}, T_{\text{max}} + \delta]$, y por tanto podemos prolongar estrictamente la solución maximal $(I, u)$ a su derecha, lo cual es una contradicción de que $(I, u)$ sea maximal. Por lo tanto, la primera posibilidad es imposible.\\
 
         Si se quisiera extender la solución maximal a su derecha, se podría hacer definiendo la función:
         \[
@@ -1240,7 +1239,7 @@ Probemos ahora el teorema.
 
         Sea ahora:
         \[
-            \| f \|_\infty = \max_{\| f(t, x) \| : (t, x) \in J \times \overline{\Gamma}}
+            \| f \|_\infty = \max_{(t, x) \in J \times \overline{\Gamma}} \| f(t, x) \|
         \]
         Y sea la sucesión:
         \[
@@ -1248,7 +1247,7 @@ Probemos ahora el teorema.
         \]
         Ahora como $\Gamma$ es acotada, la sucesión $\{ u(t_n) \}_{n \geq 1}$ es acotada, y por, al ser una sucesión acotada en un compacto, podemos aplicar el teorema de Bolzano-Weierstrass, y por tanto existe una subsucesión convergente:
         \[
-            \exists \mu(t_{n_m}) \to u^* \in \mathbb{R}^N
+            \exists u(t_{n_m}) \to u^* \in \mathbb{R}^N
         \]
         Y por lo tanto también se cumple que:
         \[
@@ -1265,7 +1264,7 @@ Probemos ahora el teorema.
         \]
         Y por lo tanto, tomando el límite cuando $m \to \infty$:
         \[
-            \| u^* - u(t) \| = \| f \|_\infty | T_{\text{max}} - t | 
+            \| u^* - u(t) \| \leq \| f \|_\infty | T_{\text{max}} - t | 
         \]
         Prolongando así:
         \[
@@ -1286,13 +1285,21 @@ Probemos ahora el teorema.
             \lim_{m \to \infty} \| u(t_{n_m}) \| = +\infty
         \]
 
-        Pero ahora debemos probar que $t^* = T_{\text{max}}$, para que así se cumpla que:
+        Probemos que necesariamente $t^* = T_{\text{max}}$ razonando por reducción al absurdo:
+        \begin{itemize}
+            \item Si fuera $t^* < T_{\text{max}}$, entonces $t^* \in [t_0, T_{\text{max}}) = I$. Puesto que $(I, u)$ es solución del PVI, $u \in C(I, \mathbb{R}^N)$, y por la continuidad de $u$ y de la norma euclídea se tendría:
+            \[
+                \lim_{m \to \infty} \| u(t_{n_m}) \| = \| u(t^*) \| < +\infty
+            \]
+            Lo cual contradice directamente que $\lim_{m \to \infty} \| u(t_{n_m}) \| = +\infty$.
+            \item Por lo tanto, la hipótesis $t^* < T_{\text{max}}$ es imposible, concluyendo que necesariamente $t^* = T_{\text{max}}$.
+        \end{itemize}
+
+        Dado que $t_{n_m} \in [t_0, T_{\text{max}})$ y $t_{n_m} \to T_{\text{max}}$, tenemos una sucesión de instantes $t_{n_m} \nearrow T_{\text{max}}$ a lo largo de la cual $\| u(t_{n_m}) \| \to +\infty$. En consecuencia, por definición de límite superior:
         \[
             \varlimsup_{t \nearrow T_{\text{max}}} \| u(t) \| = +\infty
         \]
-        
-        Y así concluir que la solución maximal $(I, u)$ explota en tiempo $T_{\text{max}}$.\\
-        RELLENAR ESTA PARTE
+        Demostrando que la solución maximal $(I, u)$ explota en tiempo $T_{\text{max}}$, lo que concluye la demostración.
     \end{enumerate}
 \end{proof}
 
@@ -1366,37 +1373,12 @@ Probemos ahora el teorema.
     \]
     Como el límite de $u(t)$ existe y es finito, podemos definir $u(T_{\text{max}}) = u^*$. Esto extiende la solución de forma continua al intervalo cerrado $[t_0, T_{\text{max}}]$, lo cual ya probamos en la primera parte que es imposible porque contradice la maximalidad de la solución.
     
-    Esta contradicción proviene de suponer que $\Gamma$ es acotada. Por lo tanto, la órbita debe ser no acotada, concluyendo la demostración:
+    Esta contradicción proviene de suponer que $\Gamma$ es acotada. Por lo tanto, la órbita debe ser no acotada. Aplicando el mismo argumento que en el primer teorema fundamental (pues toda subsucesión donde la norma diverge debe acumularse necesariamente en el extremo $T_{\text{max}}$ por la continuidad de $u$ en $I$), se concluye que:
     \[
         \varlimsup_{t \nearrow T_{\text{max}}} \| u(t) \| = +\infty
     \]
+    demostrando así la explosión en tiempo finito siempre que $T_{\text{max}} < +\infty$.
 \end{proof}
-
-\[
-    n \geq 1, \quad t_n \in T = [t_0, T_{\text{max}}), \quad \| u(t_n) \| \geq n
-\]
-\[
-    \lim_{n \to \infty} \| u(t_n) \| = +\infty, \quad \{t_n\}_{n \geq 1} \text{ es acotada} 
-\]
-por Bolzano-Weierstrass, $\exists t_{n_m} \to t^* \in [t_0, T_{\text{max}}]$.
-\[
-    \begin{cases}
-        t^* < T_{\text{max}} \\
-        t^* = T_{\text{max}}
-    \end{cases}
-\]
-\[
-    \| u(t_{n_m}) \| \xrightarrow[m \to \infty]{} \| u(t^*) \| 
-\]
-\[
-    \lim_{m \to \infty} \| u(t_{n_m}) \| = \| u(t^*) \| \quad \text{ contradicción}
-\]
-\[
-    t^* = T_{\text{max}}, \quad t_{n_m} \nearrow T_{\text{max}} = t^*
-\]
-\[
-    \| u(t_{n_m}) \| \xrightarrow[m \to \infty]{} +\infty, \quad \limsup_{t \nearrow T_{\text{max}}} \| u(t) \| = +\infty
-\]
 
 \subsubsection{Tercer teorema fundamental}
 

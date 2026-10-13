@@ -762,7 +762,7 @@
 }
 
 % Ejercicio 11
-\ejercicio{enunciado}{}{
+\ejercicio{resuelto}{}{
     Dados $p > 0$ y $q > 0$ con $pq < 1$, considera el problema:
     \[
         \begin{cases}
@@ -772,10 +772,86 @@
         \quad (u(0), v(0)) = (1, 1).
     \]
     Demuestra la existencia de una única solución maximal a la derecha, $(I, u, v)$, y analiza su carácter global.
-}{}
+}{
+    Sea $J = [0, +\infty)$ y $\Omega = (0, +\infty) \times (0, +\infty)$. Definimos la función de campo vectorial:
+    \[
+        f(u,v) = \begin{pmatrix} |v|^p \\ |u|^q \end{pmatrix}
+    \]
+    Es un sistema autónomo. Elegimos este abierto $\Omega$ porque, al ser $pq < 1$, al menos uno de los exponentes debe ser estrictamente menor que $1$. En tal caso, la función correspondiente ($|v|^p$ o $|u|^q$) no es localmente Lipschitz en el origen o en los ejes ($v=0$ o $u=0$). Por lo tanto, no podemos afirmar que el campo sea localmente Lipschitziano en todo $\R^2$. La matriz Jacobiana formal es:
+    \[
+        D_{(u,v)}f(u,v) = \begin{pmatrix} 0 & p|v|^{p-1}\operatorname{sgn}(v) \\ q|u|^{q-1}\operatorname{sgn}(u) & 0 \end{pmatrix}
+    \]
+    Como en el interior del primer cuadrante $\Omega$ las variables $u,v$ son estrictamente positivas, las funciones valor absoluto desaparecen y tenemos:
+    \[
+        f(u,v) = \begin{pmatrix} v^p \\ u^q \end{pmatrix} \in \mathcal{C}^\infty(J \times \Omega; \R^2)
+    \]
+    \[
+        D_{(u,v)}f(t,u,v) = \begin{pmatrix} 0 & p v^{p-1} \\ q u^{q-1} & 0 \end{pmatrix} \in \mathcal{C}^\infty(J \times \Omega; \R^{2 \times 2})
+    \]
+    (Nota: las derivadas parciales no están acotadas al acercarnos a los ejes).
+
+    Por el corolario del criterio de Lipschitz, $f$ es localmente Lipschitz respecto de $(u,v) \in \Omega$, uniformemente en subintervalos compactos de $J$. Como la condición inicial satisface $(1,1) \in \Omega$:
+    \begin{enumerate}
+        \item Por el Teorema de Cauchy-Lipschitz Local existe una única solución local con dato inicial $(1,1)$.
+        \item Por el Teorema de Unicidad Global, la solución es única en cualquier intervalo donde esté definida.
+        \item Por el Teorema de Existencia de Solución Maximal, el PVI tiene una única solución maximal $(I, u, v)$.
+    \end{enumerate}
+
+    Por el Tercer Teorema Fundamental (al trabajar en un abierto $\Omega \subsetneq \R^2$), el intervalo maximal a la derecha es de la forma $I = [0, T_{\max})$ con $T_{\max} \le +\infty$. Si fuera finito ($T_{\max} < +\infty$), la solución explotaría en norma o se acercaría a la frontera $\partial \Omega$ (los ejes de coordenadas).
+
+    Observemos que las componentes de las soluciones son estrictamente crecientes en $\Omega$, puesto que sus derivadas son positivas:
+    \[
+        u'(t) = |v(t)|^p > 0 \quad \text{y} \quad v'(t) = |u(t)|^q > 0 \quad \forall t \in I
+    \]
+    Integrando y usando el Teorema Fundamental del Cálculo:
+    \[
+        u(t) = 1 + \int_0^t |v(s)|^p ds \ge 1 \quad \text{y} \quad v(t) = 1 + \int_0^t |u(s)|^q ds \ge 1 \quad \forall t \in I
+    \]
+    Esto implica que $u(t) \ge 1$ y $v(t) \ge 1$, de forma que toda solución hacia la derecha permanece alejada de los ejes, dentro de $\Omega$. (Además, la unicidad demostrada en $\Omega$ sirve como unicidad global para el problema original). 
+    Al no poder acercarse a la frontera, la explosión por límite del dominio no es posible. Si existiera un tiempo finito de explosión, se debería dar:
+    \[
+        T_{\max} < +\infty \implies \lim_{t \nearrow T_{\max}} (|u(t)|+|v(t)|) = +\infty
+    \]
+
+    Buscamos ahora una relación cualitativa entre $u$ y $v$. Partiendo del sistema original, por la regla de la cadena:
+    \[
+        u(t)^q \cdot u'(t) = v(t)^p \cdot v'(t) \implies \frac{d}{dt} \left( \frac{u(t)^{q+1}}{q+1} - \frac{v(t)^{p+1}}{p+1} \right) = 0 \implies \frac{u(t)^{q+1}}{q+1} - \frac{v(t)^{p+1}}{p+1} = \text{cte}
+    \]
+    Evaluando en $t=0$ con $(u(0), v(0)) = (1,1)$, la constante es $\frac{1}{q+1} - \frac{1}{p+1} = \frac{p-q}{(q+1)(p+1)}$.
+    Despejando $u(t)^{q+1}$ y extrayendo la raíz:
+    \[
+        \frac{u(t)^{q+1}}{q+1} = \frac{v(t)^{p+1}}{p+1} + \frac{p-q}{(p+1)(q+1)} \implies u(t) = \left( \frac{q+1}{p+1} v(t)^{p+1} + \frac{p-q}{p+1} \right)^{\frac{1}{q+1}}
+    \]
+    Sustituyendo esto en la ecuación diferencial de $v$, obtenemos una ecuación unidimensional para $v$:
+    \[
+        v'(t) = u(t)^q = \left( \frac{q+1}{p+1} v(t)^{p+1} + \frac{p-q}{p+1} \right)^{\frac{q}{q+1}}
+    \]
+    Podemos acotar el crecimiento usando que $v(t) \ge 1 \implies v(t)^{p+1} \ge 1$. Factorizamos una cota combinando términos:
+    \[
+        v'(t) \le \left( v(t)^{p+1} \left( \frac{q+1}{p+1} + \left| \frac{p-q}{p+1} \right| \right) \right)^{\frac{q}{q+1}}
+    \]
+    Definiendo la constante $C = \left( \frac{q+1}{p+1} + \left| \frac{p-q}{p+1} \right| \right)^{\frac{q}{q+1}}$ y el exponente $\rho = \frac{q(p+1)}{q+1}$, tenemos $v'(t) \le C \cdot v(t)^\rho$.
+    
+    Por hipótesis tenemos que $pq < 1$, lo que garantiza que:
+    \[
+        \rho = \frac{pq+q}{q+1} < \frac{1+q}{q+1} = 1
+    \]
+    Dividiendo por $v(t)^\rho$ e integrando la inecuación en el intervalo $[0, t]$:
+    \[
+        \frac{v'(s)}{v(s)^\rho} \le C \implies \int_0^t \frac{v'(s)}{v(s)^\rho} ds \le \int_0^t C ds \implies \left[ \frac{v(s)^{1-\rho}}{1-\rho} \right]_0^t \le C t
+    \]
+    \[
+        \frac{v(t)^{1-\rho}}{1-\rho} - \frac{1}{1-\rho} \le C t \implies v(t)^{1-\rho} \le 1 + C (1-\rho) t
+    \]
+    Dado que $1-\rho > 0$, podemos elevar la inecuación sin invertir su sentido:
+    \[
+        v(t) \le \Big( 1 + C (1-\rho) t \Big)^{\frac{1}{1-\rho}} \quad \forall t \in I
+    \]
+    Por tanto, la función $v(t)$ (y consecuentemente $u(t)$ por la relación de igualdad) está acotada superiormente en todo subintervalo de tiempo finito $[0, T_{\max})$. Como la órbita no puede divergir, se contradice la explosión. Concluimos finalmente que $T_{\max} = +\infty$ y $I = [0, +\infty)$.
+}
 
 % Ejercicio 12
-\ejercicio{enunciado}{}{
+\ejercicio{resuelto}{}{
     Dados $h, j, k, \ell \in \N \setminus \{0\}$, demuestra que, para todo $t_0 \in \R$ y $(u_0, v_0) \in \R^2$, el problema:
     \[
         \begin{cases}
@@ -784,8 +860,58 @@
         \end{cases}
         \quad (u(t_0), v(t_0)) = (u_0, v_0),
     \]
-    tiene una única solución, la cual está globalmente definida en $[t_0, \infty)$.
-}{}
+    tiene una única solución, que está definida globalmente en $[t_0, \infty)$.
+}{
+    Sea $J = [t_0, +\infty)$ y $\Omega = \R^2$. Definimos la función vectorial autónoma y polinómica (luego analítica, $\mathcal{C}^\infty$):
+    \[
+        f(t,u,v) = \begin{pmatrix} -u^{2h+1}v^{2\ell} \\ -u^{2j}v^{2k+1} \end{pmatrix}
+    \]
+    Calculamos explícitamente su matriz Jacobiana:
+    \[
+        D_{(u,v)}f(t,u,v) = \begin{pmatrix} -(2h+1)u^{2h}v^{2\ell} & -2\ell u^{2h+1}v^{2\ell-1} \\ -2j u^{2j-1}v^{2k+1} & -(2k+1)u^{2j}v^{2k} \end{pmatrix} \in \mathcal{C}^\infty(J \times \R^2; \R^{2 \times 2})
+    \]
+    Por el corolario del criterio de Lipschitz, $f$ es localmente Lipschitziana respecto de $(u,v) \in \Omega$. Invocando los teoremas fundamentales en cascada obtenemos:
+    \begin{enumerate}
+        \item Existencia de una única solución local por el Teorema de Cauchy-Lipschitz Local.
+        \item Unicidad en cualquier intervalo donde se defina (Teorema de Unicidad Global).
+        \item Existencia de una única solución maximal $(I, u, v)$ donde $I = [t_0, T_{\max})$ con $T_{\max} \le +\infty$.
+    \end{enumerate}
+    Si $T_{\max} < +\infty$, por el Segundo Teorema Fundamental la solución debería explotar en norma cumpliendo $\lim_{t \nearrow T_{\max}} (|u(t)|+|v(t)|) = +\infty$.
+
+    Para encontrar cotas uniformes de las soluciones e impedir la explosión, reescribimos el sistema extrayendo las propias variables lineales:
+    \[
+        \begin{cases}
+            u' = A(t) \cdot u, & \text{donde } A(t) = -u(t)^{2h} v(t)^{2\ell} \\
+            v' = B(t) \cdot v, & \text{donde } B(t) = -u(t)^{2j} v(t)^{2k}
+        \end{cases}
+    \]
+    Este sistema en forma de Kolmogorov nos permite integrar y expresar las soluciones como exponenciales moduladas:
+    \[
+        u(t) = u_0 \cdot \exp\left( \int_{t_0}^t -u(s)^{2h}v(s)^{2\ell} ds \right)
+    \]
+    \[
+        v(t) = v_0 \cdot \exp\left( \int_{t_0}^t -u(s)^{2j}v(s)^{2k} ds \right)
+    \]
+    Todos los exponentes en los integrandos provienen de la multiplicación por 2 de naturales estrictamente positivos, luego son pares, y por tanto $u(s)^{2h} v(s)^{2\ell} \ge 0$ y $u(s)^{2j} v(s)^{2k} \ge 0$.
+    
+    En consecuencia, para todo $t \ge t_0$, la integral acumula valores estrictamente negativos o nulos, ocasionando que los factores exponenciales permanezcan acotados en el intervalo $(0, 1]$.
+    De aquí se infieren dos propiedades críticas de las soluciones:
+    \begin{enumerate}
+        \item[1)] Los signos se conservan invariantes: $\operatorname{sgn}(u(t)) = \operatorname{sgn}(u_0)$ y $\operatorname{sgn}(v(t)) = \operatorname{sgn}(v_0)$. Si alguna condición inicial es nula, por ejemplo $u_0 = 0$, resulta en la función idénticamente nula $u(t) \equiv 0$, lo que a su vez anula la derivada del otro campo convirtiéndolo en un equilibrio $(u(t),v(t)) = (0, v_0)$.
+        \item[2)] El valor absoluto de las variables está acotado por sus condiciones iniciales:
+        \[
+            |u(t)| \le |u_0| \quad \text{y} \quad |v(t)| \le |v_0| \quad \forall t \ge t_0
+        \]
+    \end{enumerate}
+
+    Supongamos, buscando una contradicción, que el intervalo maximal está acotado con un $T_{\max} < +\infty$. Gracias a las acotaciones encontradas en el paso previo tendríamos:
+    \[
+        |u(t)| + |v(t)| \le |u_0| + |v_0| < +\infty \quad \forall t \in [t_0, T_{\max})
+    \]
+    Esto significa que la órbita no crece sin límite sino que se confina en el rectángulo $|u| \le |u_0|$, $|v| \le |v_0|$, lo cual vulnera la propiedad de explosión en tiempo finito estipulada por el Segundo Teorema Fundamental. 
+    
+    Queda demostrado así que el tiempo de explosión no puede ser finito ($T_{\max} = +\infty$). Deducimos que el problema de valor inicial tiene una única solución que está globalmente bien definida hacia la derecha en todo el intervalo $[t_0, +\infty)$.
+}
 
 % Ejercicio 13
 \ejercicio{enunciado}{}{
