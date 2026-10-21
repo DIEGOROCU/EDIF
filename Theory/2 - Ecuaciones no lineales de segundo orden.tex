@@ -304,9 +304,7 @@ Por el \textbf{Segundo Teorema Fundamental de Cauchy-Lipschitz}, sabemos que:
 \end{itemize}
 
 \ejemplo{
-    \textbf{Explosión en tiempo finito para el caso particular $a = 1, \lambda = 0$:}
-
-    Consideremos el problema de valor inicial:
+    Consideramos el caso particular $a = 1$, $\lambda = 0$, es decir, la ecuación $u'' = u^2$. Con el cambio $v = u'$, el problema de valor inicial
     \[
         \begin{cases}
             u'' = u^2 \\
@@ -314,49 +312,554 @@ Por el \textbf{Segundo Teorema Fundamental de Cauchy-Lipschitz}, sabemos que:
             u'(0) = 0
         \end{cases}
     \]
-    Por el teorema de Cauchy-Lipschitz local, existe una única solución maximal $(I, u)$ con intervalo maximal hacia el futuro $I = [0, T_{\max})$. Si $T_{\max} < +\infty$, el Segundo Teorema Fundamental asegura que:
+    se transforma en el sistema plano
     \[
-        \lim_{t \nearrow T_{\max}} (|u(t)| + |u'(t)|) = +\infty
+        \begin{pmatrix} u \\ v \end{pmatrix}' = \begin{pmatrix} v \\ u^2 \end{pmatrix} = f(u, v), \qquad
+        \begin{pmatrix} u(0) \\ v(0) \end{pmatrix} = \begin{pmatrix} x \\ 0 \end{pmatrix}
+    \]
+    donde $f$ es analítica, luego $f \in \mathcal{C}^\infty(\mathbb{R}^2;\mathbb{R}^2)$, y por tanto \textbf{localmente Lipschitziana} respecto de $(u,v) \in \mathbb{R}^2$, uniformemente en $t \in \mathbb{R}$. Su jacobiana es
+    \[
+        Df(u,v) = \begin{pmatrix} 0 & 1 \\ 2u & 0 \end{pmatrix}
+    \]
+    Como la entrada $2u$ no está acotada en $\mathbb{R}^2$, $f$ \textbf{no} es globalmente Lipschitziana respecto de $(u,v) \in \mathbb{R}^2$.
+
+    El Teorema de Cauchy-Lipschitz local y el teorema de existencia y unicidad de soluciones maximales garantizan la existencia de $(I, u, v)$ solución maximal de este sistema. Teniendo en cuenta el dato inicial, el intervalo maximal tiene la forma $I = [0, T_{\max})$ con $T_{\max} \leq +\infty$.
+
+    \textbf{Objetivo:} demostrar que $T_{\max} < +\infty$ y que $\displaystyle\lim_{t \nearrow T_{\max}} \bigl(|u(t)| + |u'(t)|\bigr) = +\infty$.
+
+    \medskip
+
+    Dado que $u'' = u^2 > 0$ para $t > 0$ (pues $u(0)=x>0$), integrando:
+    \[
+        u'(t) - u'(0) = \int_0^t u'' = \int_0^t u^2 > 0 \implies u'(t) > 0 \quad \forall t \in (0, T_{\max})
+    \]
+    Luego $u(t)$ es \textbf{estrictamente creciente} y $u(t) \geq x > 0$ para todo $t \in I$. De aquí:
+    \[
+        u''(t) = u^2(t) \geq x^2 > 0
+    \]
+    por lo que $u(t)$ es \textbf{estrictamente convexa} y $u'(t) = v(t)$ es estrictamente creciente. En consecuencia, la suma $u(t) + v(t)$ también es creciente, y como ambas cantidades son positivas y crecientes:
+    \[
+        T_{\max} < +\infty \implies \lim_{t \nearrow T_{\max}} \bigl(u(t) + v(t)\bigr) = +\infty
     \]
 
-    \textbf{Demostración de que ocurre explosión en tiempo finito ($T_{\max} < +\infty$):}
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.1]
+        % Gráfica de u(t)
+        \begin{scope}
+            \draw[->] (-0.2,0) -- (3.2,0) node[right] {$t$};
+            \draw[->] (0,-0.2) -- (0,3.5) node[above] {$u(t)$};
+            \draw[thick, blue!70!black, domain=0:2.5, samples=80]
+                plot (\x, {0.5 + 0.3*\x + 0.5*\x*\x});
+            \draw[dashed] (2.7,0) node[below] {$T_{\max}$} -- (2.7,3.2);
+            \node[left] at (0,0.5) {$x$};
+            \draw (0,0.5) -- (-0.06,0.5);
+        \end{scope}
+        % Gráfica de v(t) a la derecha
+        \begin{scope}[xshift=4.5cm]
+            \draw[->] (-0.2,0) -- (3.2,0) node[right] {$t$};
+            \draw[->] (0,-0.2) -- (0,3.5) node[above] {$v(t)$};
+            \draw[thick, red!70!black, domain=0:2.5, samples=80]
+                plot (\x, {0.3*\x + 0.4*\x*\x});
+            \draw[dashed] (2.7,0) node[below] {$T_{\max}$} -- (2.7,3.2);
+            \node[left] at (0,0.02) {$0$};
+        \end{scope}
+    \end{tikzpicture}
+    \end{center}
 
-    Multipliquemos ambos miembros de la ecuación por el factor integrante $u'(t)$:
+    \medskip
+
+    \textbf{Demostración de que $T_{\max} < +\infty$ (energía conservada):} Del sistema $u'(t) = v(t)$, $v'(t) = u^2(t)$, se tiene:
     \[
-        u'(t) u''(t) = u^2(t) u'(t) \implies \frac{d}{dt} \left[ \frac{1}{2} (u'(t))^2 \right] = \frac{d}{dt} \left[ \frac{1}{3} u^3(t) \right]
+        u'(t)\, u^2(t) = v'(t)\, v(t) \implies \left(\frac{v^2(t)}{2} - \frac{u^3(t)}{3}\right)' = 0
     \]
-    Integrando entre $0$ y $t$:
+    Es decir, la \textit{energía total} $E(u,v) = \dfrac{v^2}{2} - \dfrac{u^3}{3}$ se conserva. Evaluando en $t=0$:
     \[
-        \frac{1}{2} (u'(t))^2 - \frac{1}{2} (u'(0))^2 = \frac{1}{3} u^3(t) - \frac{1}{3} u^3(0)
+        \frac{v^2(t)}{2} - \frac{u^3(t)}{3} = \frac{v^2(0)}{2} - \frac{u^3(0)}{3} = 0 - \frac{x^3}{3} = -\frac{x^3}{3} \qquad \forall t \in I
     \]
-    Sustituyendo los datos iniciales $u(0) = x > 0$ y $u'(0) = 0$:
+    Despejando y recordando que $v(t) = u'(t) > 0$:
     \[
-        (u'(t))^2 = \frac{2}{3} (u^3(t) - x^3)
+        v^2(t) = \frac{2}{3}\bigl(u^3(t) - x^3\bigr) \implies v(t) = \sqrt{\frac{2}{3}\bigl(u^3(t) - x^3\bigr)} \qquad \forall t \in I = [0, T_{\max})
     \]
-    Como $u(0) = x > 0$ y $u''(0) = x^2 > 0$, la solución satisface $u'(t) > 0$ y $u(t) > x$ para todo $t > 0$. Tomando la raíz cuadrada positiva:
+    (el carácter de los 2 es el mismo: ambos son positivos y crecientes). Si $T_{\max} < +\infty$, entonces $\lim_{t \nearrow T_{\max}} u(t) = +\infty$ y $\lim_{t \nearrow T_{\max}} v(t) = +\infty$.
+
+    \medskip
+
+    Realizamos el cambio de variable $\zeta = u(s)$ en la integral de tiempo:
     \[
-        u'(t) = \sqrt{\frac{2}{3}} \sqrt{u^3(t) - x^3}
+        t = \int_0^t 1\, ds = \int_0^t \frac{u'(s)}{\sqrt{\tfrac{2}{3}(u^3(s)-x^3)}}\, ds = \int_x^{u(t)} \frac{d\zeta}{\sqrt{\tfrac{2}{3}(\zeta^3 - x^3)}}
     \]
-    Separando variables e integrando entre $0$ y $t$:
+    Ahora aplicamos la sustitución $\zeta = x\theta$ (luego $d\zeta = x\, d\theta$):
     \[
-        \int_x^{u(t)} \frac{du}{\sqrt{u^3 - x^3}} = \sqrt{\frac{2}{3}} t
+        t = \int_1^{u(t)/x} \frac{x\, d\theta}{\sqrt{\tfrac{2}{3}(x^3\theta^3 - x^3)}} = \int_1^{u(t)/x} \frac{x\, d\theta}{x^{3/2}\sqrt{\tfrac{2}{3}}\,\sqrt{\theta^3 - 1}} = \sqrt{\frac{3}{2x}} \int_1^{u(t)/x} \frac{d\theta}{\sqrt{\theta^3 - 1}} \qquad \forall t \in (0, T_{\max})
     \]
-    El tiempo máximo de existencia $T_{\max}$ viene determinado por el límite cuando $u \to +\infty$:
+    Sea $J = \displaystyle\int_1^\infty \frac{d\theta}{\sqrt{\theta^3-1}}$. Como $u(t) \to +\infty$ cuando $t \nearrow T_{\max}$, pasando al límite:
     \[
-        T_{\max} = \sqrt{\frac{3}{2}} \int_x^{+\infty} \frac{du}{\sqrt{u^3 - x^3}}
+        t < \sqrt{\frac{3}{2x}}\, J \implies T_{\max} \leq \sqrt{\frac{3}{2x}}\, J \qquad \text{y} \qquad T_{\max} = \sqrt{\frac{3}{2x}} \int_1^\infty \frac{d\theta}{\sqrt{\theta^3-1}}
     \]
-    Efectuando el cambio de variable $u = x \, s$ (con $du = x \, ds$):
+
+    \medskip
+
+    \textbf{Convergencia de $J$:} Dividimos para cualquier $M > 1$:
     \[
-        T_{\max} = \sqrt{\frac{3}{2}} \int_1^{+\infty} \frac{x \, ds}{\sqrt{x^3 (s^3 - 1)}} = \sqrt{\frac{3}{2x}} \int_1^{+\infty} \frac{ds}{\sqrt{s^3 - 1}}
+        J = \int_1^M \frac{d\theta}{\sqrt{\theta^3-1}} + \int_M^\infty \frac{d\theta}{\sqrt{\theta^3-1}}
     \]
-    Analicemos la convergencia de la integral impropia:
     \begin{itemize}
-        \item Cerca de $s = 1$, factorizamos $s^3 - 1 = (s - 1)(s^2 + s + 1)$, por lo que $\frac{1}{\sqrt{s^3 - 1}} \sim \frac{1}{\sqrt{3}} (s - 1)^{-1/2}$, que es integrable en $[1, 2]$.
-        \item Cuando $s \to +\infty$, $\frac{1}{\sqrt{s^3 - 1}} \sim s^{-3/2}$, y como el exponente es $3/2 > 1$, la integral converge en $[2, +\infty)$.
+        \item \textit{Cerca de $\theta = 1$:} Como $\theta^3 - 1 = (\theta-1)(\theta^2+\theta+1) \geq 3(\theta-1)$ para $\theta \geq 1$, se tiene:
+        \[
+            \int_1^M \frac{d\theta}{\sqrt{\theta^3-1}} \leq \int_1^M \frac{d\theta}{\sqrt{3(\theta-1)}} = \frac{1}{\sqrt{3}} \int_1^M (\theta-1)^{-1/2}\, d\theta = \frac{1}{\sqrt{3}} \Bigl[ 2\sqrt{\theta-1} \Bigr]_1^M = \frac{2\sqrt{M-1}}{\sqrt{3}} < \infty
+        \]
+        \item \textit{En $+\infty$:} Como $\dfrac{\sqrt{\theta^3}}{\sqrt{\theta^3-1}} \xrightarrow{\theta \to \infty} 1 < 2$, existe $M$ suficientemente grande tal que $\dfrac{\sqrt{\theta^3}}{\sqrt{\theta^3-1}} \leq 2$ para todo $\theta \geq M$. Entonces:
+        \[
+            \int_M^\infty \frac{d\theta}{\sqrt{\theta^3-1}} \leq 2\int_M^\infty \theta^{-3/2}\, d\theta = 2\left[\frac{\theta^{-1/2}}{-1/2}\right]_M^\infty = -4\left[-\frac{1}{\sqrt{\theta}}\right]_M^\infty = \frac{4}{\sqrt{M}} < \infty
+        \]
     \end{itemize}
-    Por consiguiente, la integral converge a un valor estrictamente positivo y finito:
+    Luego $J < +\infty$ y por tanto $T_{\max} = \sqrt{\dfrac{3}{2x}}\, J < +\infty$.
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.0]
+        % Gráfica familia de curvas u(t) para distintos x
+        \begin{scope}
+            \draw[->] (-0.2,0) -- (4.2,0) node[right] {$t$};
+            \draw[->] (0,-0.2) -- (0,4.0) node[above] {$u(t)$};
+            % Curva x pequeño (T_max grande)
+            \draw[thick, blue!80!black, domain=0:3.6, samples=80]
+                plot (\x, {0.2 + 0.05*\x + 0.18*\x*\x});
+            \draw[dashed, blue!60!black] (3.8,0) -- (3.8,3.8);
+            \node[below, blue!60!black, font=\footnotesize] at (3.8,0) {$T_{\max}$};
+            % Curva x mediano
+            \draw[thick, green!60!black, domain=0:2.5, samples=80]
+                plot (\x, {0.5 + 0.1*\x + 0.35*\x*\x});
+            \draw[dashed, green!50!black] (2.7,0) -- (2.7,3.8);
+            % Curva x grande (T_max pequeño)
+            \draw[thick, red!70!black, domain=0:1.5, samples=80]
+                plot (\x, {1.2 + 0.3*\x + 0.8*\x*\x});
+            \draw[dashed, red!50!black] (1.6,0) -- (1.6,3.8);
+            \node[left, font=\footnotesize] at (0,0.2) {$x_1$};
+            \node[left, font=\footnotesize] at (0,0.5) {$x_2$};
+            \node[left, font=\footnotesize] at (0,1.2) {$x_3$};
+            \node[below, font=\footnotesize] at (1.6,0) {};
+        \end{scope}
+        % Gráfica T_max(x) decreciente
+        \begin{scope}[xshift=5.5cm]
+            \draw[->] (-0.2,0) -- (3.5,0) node[right] {$x$};
+            \draw[->] (0,-0.2) -- (0,3.5) node[above] {$T_{\max}(x)$};
+            \draw[thick, purple!70!black, domain=0.25:3.2, samples=80]
+                plot (\x, {1.5/sqrt(\x)});
+            \node[font=\small] at (2.0,2.2) {$T_{\max}(x) = \sqrt{\dfrac{3}{2x}}\, J$};
+        \end{scope}
+    \end{tikzpicture}
+    \end{center}
+}
+
+\begin{observación}
+    La solución $u(t)$ existe hacia el pasado por simetría: si $w(t) = u(-t)$ para $t \in (-T_{\max}(x), 0)$, entonces
     \[
-        T_{\max} = C \, x^{-1/2} < +\infty, \quad \text{con } C = \sqrt{\frac{3}{2}} \int_1^{+\infty} \frac{ds}{\sqrt{s^3 - 1}} > 0
+        w'(t) = -u'(-t), \qquad w''(t) = u''(-t) = u^2(-t) = w^2(t)
     \]
-    Esto demuestra de forma rigurosa que la solución maximal experimenta una explosión en tiempo finito (\textit{blow-up}) en $T_{\max} < +\infty$, con $\lim_{t \nearrow T_{\max}} u(t) = +\infty$.
+    de modo que $w$ también es solución de la ecuación diferencial $w'' = w^2$ con $w(0) = u(0) = x$ y $w'(0) = 0$. El intervalo maximal completo es, por tanto, $I = (-T_{\max}(x), T_{\max}(x))$.
+\end{observación}
+
+\ejemplo{
+    \textbf{Explosión en tiempo finito para la ecuación $u'' = u^4$:}
+
+    Consideremos ahora el problema con una no linealidad de mayor orden:
+    \[
+        \begin{cases}
+            u'' = u^4 \\
+            u(0) = x > 0 \\
+            u'(0) = 0
+        \end{cases}
+    \]
+    Introduciendo la velocidad $v = u'$, se formula como el sistema plano autónomo:
+    \[
+        \begin{pmatrix} u \\ v \end{pmatrix}' = \begin{pmatrix} v \\ u^4 \end{pmatrix} = f(u, v), \qquad
+        \begin{pmatrix} u(0) \\ v(0) \end{pmatrix} = \begin{pmatrix} x \\ 0 \end{pmatrix}
+    \]
+    El campo vectorial $f: \mathbb{R}^2 \to \mathbb{R}^2$ es analítico, de modo que $f \in \mathcal{C}^\infty(\mathbb{R}^2; \mathbb{R}^2)$ y, en particular, es localmente Lipschitziano respecto de $(u, v) \in \mathbb{R}^2$, uniformemente en $t \in \mathbb{R}$. Su matriz jacobiana es:
+    \[
+        Df(u, v) = \begin{pmatrix} 0 & 1 \\ 4u^3 & 0 \end{pmatrix}
+    \]
+    Dado que el término $4u^3$ no está acotado en $\mathbb{R}^2$, $f$ \textbf{no} es globalmente Lipschitziana con respecto a $(u, v) \in \mathbb{R}^2$.
+
+    Por el teorema de Cauchy-Lipschitz local y los teoremas de existencia y unicidad de soluciones maximales, existe una única solución maximal $(I, u, v) = (I, u, u')$, con intervalo hacia el futuro $I = [0, T_{\max})$ y $T_{\max} \leq +\infty$.
+
+    \textbf{Objetivo:} Demostrar que $T_{\max} < +\infty$ y que $\displaystyle\lim_{t \nearrow T_{\max}} \bigl(|u(t)| + |u'(t)|\bigr) = +\infty$.
+
+    \medskip
+
+    Integrando la ecuación $u'' = u^4$ sobre $[0, t]$:
+    \[
+        u'(t) - u'(0) = \int_0^t u^4(s)\, ds > 0 \implies u'(t) > 0 \quad \forall t \in (0, T_{\max})
+    \]
+    En consecuencia:
+    \begin{itemize}
+        \item $u(t)$ es \textbf{estrictamente creciente}, por lo que $u(t) > u(0) = x > 0$ para todo $t \in (0, T_{\max})$.
+        \item $u''(t) = u^4(t) \geq x^4 > 0$, de donde $u(t)$ es \textbf{estrictamente convexa}.
+        \item Al ser $u''(t) = (u')'(t) \geq 0$, la velocidad $u'(t) = v(t)$ es \textbf{estrictamente creciente}.
+    \end{itemize}
+    Así, la suma $|u(t)| + |u'(t)| = u(t) + v(t)$ es estrictamente creciente, por lo que:
+    \[
+        T_{\max} < +\infty \implies \lim_{t \nearrow T_{\max}} \bigl(u(t) + v(t)\bigr) = +\infty
+    \]
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.0]
+        \begin{scope}
+            \draw[->] (-0.2,0) -- (3.2,0) node[right] {$t$};
+            \draw[->] (0,-0.2) -- (0,3.5) node[above] {$u(t)$};
+            \draw[thick, blue!70!black, domain=0:2.4, samples=80]
+                plot (\x, {0.6 + 0.1*\x + 0.5*\x^2.5});
+            \draw[dashed] (2.6,0) node[below] {$T_{\max}$} -- (2.6,3.2);
+            \node[left] at (0,0.6) {$x$};
+            \draw (0,0.6) -- (-0.06,0.6);
+        \end{scope}
+        \begin{scope}[xshift=4.5cm]
+            \draw[->] (-0.2,0) -- (3.2,0) node[right] {$t$};
+            \draw[->] (0,-0.2) -- (0,3.5) node[above] {$v(t)$};
+            \draw[thick, red!70!black, domain=0:2.4, samples=80]
+                plot (\x, {0.2*\x + 0.6*\x^2.5});
+            \draw[dashed] (2.6,0) node[below] {$T_{\max}$} -- (2.6,3.2);
+            \node[left] at (0,0.02) {$0$};
+        \end{scope}
+    \end{tikzpicture}
+    \end{center}
+
+    \medskip
+
+    \textbf{Conservación de la energía y finitud de $T_{\max}$:} Multiplicando las ecuaciones del sistema:
+    \[
+        u'(t)\, u^4(t) = v'(t)\, v(t) \implies \left( \frac{v^2(t)}{2} - \frac{u^5(t)}{5} \right)' = 0
+    \]
+    Por consiguiente, la cantidad $\dfrac{v^2(t)}{2} - \dfrac{u^5(t)}{5}$ permanece constante a lo largo de la trayectoria. Evaluando en $t = 0$:
+    \[
+        \frac{v^2(t)}{2} - \frac{u^5(t)}{5} = \frac{v^2(0)}{2} - \frac{u^5(0)}{5} = 0 - \frac{x^5}{5} = -\frac{x^5}{5} \qquad \forall t \in [0, T_{\max})
+    \]
+    Despejando $v(t)$ y utilizando que $v(t) = u'(t) > 0$:
+    \[
+        v^2(t) = \frac{2}{5}\bigl(u^5(t) - x^5\bigr) \implies v(t) = \sqrt{\frac{2}{5}\bigl(u^5(t) - x^5\bigr)} \qquad \forall t \in [0, T_{\max})
+    \]
+    Si $T_{\max} < +\infty$, se tiene $\displaystyle\lim_{t \nearrow T_{\max}} u(t) = +\infty$ y $\displaystyle\lim_{t \nearrow T_{\max}} v(t) = +\infty$.
+
+    \medskip
+
+    Separando variables mediante el cambio $\zeta = u(s)$ (con $d\zeta = u'(s)\, ds$):
+    \[
+        t = \int_0^t 1\, ds = \int_0^t \frac{u'(s)}{\sqrt{\tfrac{2}{5}(u^5(s) - x^5)}}\, ds = \int_x^{u(t)} \frac{d\zeta}{\sqrt{\tfrac{2}{5}(\zeta^5 - x^5)}}
+    \]
+    Efectuando ahora la sustitución $\zeta = x \theta$ (de modo que $d\zeta = x\, d\theta$):
+    \[
+        t = \int_1^{u(t)/x} \frac{x\, d\theta}{\sqrt{\tfrac{2}{5}(x^5 \theta^5 - x^5)}} = \int_1^{u(t)/x} \frac{x\, d\theta}{x^{5/2} \sqrt{\tfrac{2}{5}} \sqrt{\theta^5 - 1}} = \sqrt{\frac{5}{2x^3}} \int_1^{u(t)/x} \frac{d\theta}{\sqrt{\theta^5 - 1}} \qquad \forall t \in [0, T_{\max})
+    \]
+    Definiendo la función:
+    \[
+        F(y) = \int_1^y \frac{d\theta}{\sqrt{\theta^5 - 1}}, \qquad F'(y) = \frac{1}{\sqrt{y^5 - 1}} > 0 \quad (y > 1)
+    \]
+    la relación anterior se escribe como:
+    \[
+        t = \sqrt{\frac{5}{2x^3}} F\left(\frac{u(t)}{x}\right) \iff F\left(\frac{u(t)}{x}\right) = \sqrt{\frac{2x^3}{5}}\, t \iff u(t) = x \, F^{-1}\left( \sqrt{\frac{2x^3}{5}}\, t \right)
+    \]
+    Aunque no sea posible expresar $F^{-1}$ mediante funciones elementales, la solución $u(t)$ queda unívocamente determinada en forma implícita por esta ecuación.
+
+    \medskip
+
+    Tomando el límite cuando $u(t) \to +\infty$ (es decir, $t \nearrow T_{\max}$):
+    \[
+        t < \sqrt{\frac{5}{2x^3}} \int_1^\infty \frac{d\theta}{\sqrt{\theta^5 - 1}} = \sqrt{\frac{5}{2x^3}}\, J < +\infty \implies T_{\max} = \sqrt{\frac{5}{2x^3}}\, J < +\infty
+    \]
+    donde definimos la integral impropia:
+    \[
+        J = \int_1^\infty \frac{d\theta}{\sqrt{\theta^5 - 1}}
+    \]
+
+    \medskip
+
+    \textbf{Convergencia de la integral impropia $J$:} Para cualquier $M > 1$, descomponemos:
+    \[
+        J = \int_1^M \frac{d\theta}{\sqrt{\theta^5 - 1}} + \int_M^\infty \frac{d\theta}{\sqrt{\theta^5 - 1}}
+    \]
+    \begin{itemize}
+        \item \textit{Convergencia en el extremo inferior ($\theta = 1$):} Factorizando el polinomio:
+        \[
+            \theta^5 - 1 = (\theta - 1)(\theta^4 + \theta^3 + \theta^2 + \theta + 1) \geq 5(\theta - 1) \qquad \forall \theta \geq 1
+        \]
+        Por consiguiente:
+        \[
+            \int_1^M \frac{d\theta}{\sqrt{\theta^5 - 1}} \leq \frac{1}{\sqrt{5}} \int_1^M (\theta - 1)^{-1/2}\, d\theta = \frac{1}{\sqrt{5}} \Bigl[ 2\sqrt{\theta - 1} \Bigr]_1^M = \frac{2\sqrt{M - 1}}{\sqrt{5}} < +\infty
+        \]
+        lo que prueba la convergencia en $\theta = 1$.
+        \item \textit{Convergencia en el extremo superior ($+\infty$):} Observamos que:
+        \[
+            \lim_{\theta \to \infty} \frac{\sqrt{\theta^5}}{\sqrt{\theta^5 - 1}} = 1 < 2
+        \]
+        luego existe $M > 1$ tal que $\dfrac{\sqrt{\theta^5}}{\sqrt{\theta^5 - 1}} \leq 2$ para todo $\theta \geq M$. En consecuencia:
+        \[
+            \int_M^\infty \frac{d\theta}{\sqrt{\theta^5 - 1}} = \int_M^\infty \frac{\sqrt{\theta^5}}{\sqrt{\theta^5 - 1}} \theta^{-5/2}\, d\theta \leq 2 \int_M^\infty \theta^{-5/2}\, d\theta = 2 \left[ \frac{\theta^{-3/2}}{-3/2} \right]_M^\infty = \frac{4}{3 M^{3/2}} < +\infty
+        \]
+    \end{itemize}
+    Queda así rigurosamente probado que $J < +\infty$ y, por consiguiente, $T_{\max}(x) < +\infty$ para cualquier dato inicial $x > 0$.
+
+    \medskip
+
+    \textbf{Simetría y solución bilateral:} Para extender la solución hacia el pasado ($t < 0$), consideramos $w(t) = u(-t)$ para $t \in (-T_{\max}(x), 0)$. Derivando:
+    \[
+        w'(t) = -u'(-t), \qquad w''(t) = u''(-t) = u^4(-t) = w^4(t)
+    \]
+    con datos iniciales $w(0) = u(0) = x$ y $w'(0) = -u'(0) = 0$. Por el teorema de unicidad, $w(t) = u(t)$, de donde la solución es una función par:
+    \[
+        u(-t) = u(t) \qquad \forall t \in (-T_{\max}(x), T_{\max}(x))
+    \]
+    El intervalo maximal completo es el intervalo simétrico $(-T_{\max}(x), T_{\max}(x))$, con explosión en ambos extremos:
+    \[
+        \lim_{t \searrow -T_{\max}(x)} u(t) = +\infty, \qquad \lim_{t \nearrow T_{\max}(x)} u(t) = +\infty
+    \]
+    \medskip
+
+    \textbf{Dependencia con respecto al dato inicial y problemas de contorno singulares:}
+
+    El tiempo de vida de la solución maximal de $u'' = u^4$ con $u(0) = x > 0$ y $u'(0) = 0$ viene dado explícitamente por:
+    \[
+        T_{\max}(x) = \sqrt{\frac{5}{2x^3}} \, J = C \, x^{-3/2}, \qquad \text{con } C = \sqrt{\frac{5}{2}} \int_1^\infty \frac{d\theta}{\sqrt{\theta^5 - 1}} < +\infty
+    \]
+    Analizando sus límites cuando varía el nivel inicial $x > 0$:
+    \[
+        \lim_{x \searrow 0} T_{\max}(x) = +\infty, \qquad \lim_{x \to +\infty} T_{\max}(x) = 0
+    \]
+    Es decir, cuanto mayor es el valor inicial $x$, con mayor rapidez se produce la explosión en tiempo finito.
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.0]
+        % Gráfica T_max(x)
+        \begin{scope}
+            \draw[->] (-0.2,0) -- (3.5,0) node[right] {$x$};
+            \draw[->] (0,-0.2) -- (0,3.5) node[above] {$T_{\max}(x)$};
+            \draw[thick, blue!80!black, domain=0.35:3.2, samples=80]
+                plot (\x, {1.2/(\x^1.5)});
+            \node[blue!80!black, font=\small] at (2.0,1.8) {$T_{\max}(x) = C x^{-3/2}$};
+        \end{scope}
+        % Gráfica solución bilateral u(t)
+        \begin{scope}[xshift=5.5cm]
+            \draw[->] (-2.8,0) -- (2.8,0) node[right] {$t$};
+            \draw[->] (0,-0.2) -- (0,3.5) node[above] {$u(t)$};
+            \draw[dashed, gray] (-1.8,0) node[below, font=\footnotesize] {$-T_{\max}(x)$} -- (-1.8,3.2);
+            \draw[dashed, gray] (1.8,0) node[below, font=\footnotesize] {$T_{\max}(x)$} -- (1.8,3.2);
+            \draw[thick, red!70!black] (-1.65, 3.1) .. controls (-1.4, 0.9) and (-0.6, 0.7) .. (0, 0.7) .. controls (0.6, 0.7) and (1.4, 0.9) .. (1.65, 3.1);
+            \node[left, font=\footnotesize] at (0,0.7) {$x$};
+            \fill (0,0.7) circle (1.5pt);
+            \node[font=\footnotesize, align=center] at (0,-0.8) {Solución bilateral en $(-T_{\max}(x), T_{\max}(x))$};
+        \end{scope}
+    \end{tikzpicture}
+    \end{center}
+
+    \medskip
+
+    \textbf{Problema de valores de contorno singular (soluciones largas):}
+
+    Fijado un radio arbitrario $R > 0$, podemos plantear el problema de valores de contorno con condiciones de frontera explosivas:
+    \[
+        \begin{cases}
+            u'' = u^4 \quad \text{en } (-R, R) \\
+            \displaystyle\lim_{t \to -R^+} u(t) = +\infty, \quad \lim_{t \to R^-} u(t) = +\infty
+        \end{cases}
+    \]
+    Por la simetría par demostrada, una solución de este problema debe alcanzar su valor mínimo en $t = 0$, verificando $u'(0) = 0$ y $u(0) = x > 0$. Para que el intervalo maximal de explosión sea exactamente $(-R, R)$, requerimos que:
+    \[
+        T_{\max}(x) = R
+    \]
+    Igualando con la expresión obtenida para $T_{\max}(x)$:
+    \[
+        R = \sqrt{\frac{5}{2x^3}} \, J \implies \frac{5}{2x^3} = \left(\frac{R}{J}\right)^2 \implies \frac{2x^3}{5} = \left(\frac{J}{R}\right)^2 \implies x = \left[ \frac{5}{2} \left( \frac{J}{R} \right)^2 \right]^{1/3}
+    \]
+    Como la función $T_{\max}(x)$ es estrictamente decreciente y biyectiva de $(0, +\infty)$ en $(0, +\infty)$, existe un \textbf{único} dato inicial $x > 0$ que satisface esta condición. Las soluciones correspondientes que divergen en la frontera del dominio se denominan \textbf{soluciones largas} (\textit{large solutions}).
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.1]
+        \draw[thick] (-2.2,0) -- (2.2,0);
+        \draw[dashed, cyan!80!black, thick] (-1.5,0) -- (-1.5,2.8);
+        \draw[dashed, cyan!80!black, thick] (1.5,0) -- (1.5,2.8);
+        \draw[dashed, cyan!80!black] (0,0) -- (0,2.8);
+        \node[below] at (-1.5,0) {$-R$};
+        \node[below] at (1.5,0) {$R$};
+        \draw[thick, blue!80!black] (-1.35, 2.7) .. controls (-1.15, 0.8) and (-0.5, 0.6) .. (0, 0.6) .. controls (0.5, 0.6) and (1.15, 0.8) .. (1.35, 2.7);
+        \node[above right, font=\footnotesize] at (0,0.6) {$x$};
+        \fill (0,0.6) circle (1.5pt);
+    \end{tikzpicture}
+    \end{center}
+}
+
+\ejemplo{
+    \textbf{Estudio cualitativo de la ecuación $-u'' = \lambda u - a u^2$ mediante energía potencial:}
+
+    Pasamos ahora al estudio cualitativo de una ecuación diferencial de segundo orden más general con dos parámetros positivos:
+    \[
+        \begin{cases}
+            -u'' = \lambda u - a u^2, \qquad \lambda > 0, \; a > 0 \\
+            u(0) = x \geq 0 \\
+            u'(0) = 0
+        \end{cases}
+    \]
+    Reescribiendo la ecuación despejando la segunda derivada:
+    \[
+        u'' = a u^2 - \lambda u
+    \]
+    Definiendo la variable velocidad $v = u'$, formulamos el sistema plano equivalente de primer orden:
+    \[
+        \begin{cases}
+            u' = v \\
+            v' = a u^2 - \lambda u
+        \end{cases}
+        \iff
+        \begin{pmatrix} u \\ v \end{pmatrix}' = \begin{pmatrix} v \\ a u^2 - \lambda u \end{pmatrix} = f(u, v)
+    \]
+    con dato inicial $(u(0), v(0)) = (x, 0)$. 
+
+    El campo $f: \mathbb{R}^2 \to \mathbb{R}^2$ es analítico, luego localmente Lipschitziano en $\mathbb{R}^2$. Su matriz jacobiana:
+    \[
+        D_{(u,v)} f(u, v) = \begin{pmatrix} 0 & 1 \\ 2au - \lambda & 0 \end{pmatrix}
+    \]
+    posee elementos no acotados cuando $|u| \to \infty$, por lo que $f$ no es globalmente Lipschitziana. 
+
+    El Teorema de Cauchy-Lipschitz local garantiza la existencia y unicidad de una solución maximal $(I, u, v)$, que se reduce a $(I, u)$ puesto que $v = u'$. Por el Segundo Teorema Fundamental, el intervalo hacia el futuro es $I = [0, T_{\max})$ con $T_{\max} \leq +\infty$, y en caso de que $T_{\max} < +\infty$ se produce la explosión:
+    \[
+        \varlimsup_{t \nearrow T_{\max}} \bigl( |u(t)| + |u'(t)| \bigr) = +\infty
+    \]
+
+    \medskip
+
+    \textbf{Ley de conservación de la energía y función potencial:}
+
+    Efectuando el producto cruzado de las ecuaciones del sistema para todo $t \in I$:
+    \[
+        u'(t)\bigl(a u^2(t) - \lambda u(t)\bigr) = v(t) v'(t) \implies v(t) v'(t) + \lambda u(t) u'(t) - a u^2(t) u'(t) = 0
+    \]
+    Reconociendo una derivada total respecto de $t$:
+    \[
+        \frac{d}{dt} \left( \frac{v^2(t)}{2} + \frac{\lambda}{2} u^2(t) - \frac{a}{3} u^3(t) \right) = 0
+    \]
+    La cantidad entre paréntesis permanece constante a lo largo de cualquier solución y coincide con su valor en $t = 0$:
+    \[
+        \frac{v^2(t)}{2} + \frac{\lambda}{2} u^2(t) - \frac{a}{3} u^3(t) = \frac{\lambda}{2} x^2 - \frac{a}{3} x^3 \qquad \forall t \in [0, T_{\max})
+    \]
+    Para dotar a esta identidad de una interpretación física directa, definimos la \textbf{energía potencial} $\varphi: \mathbb{R} \to \mathbb{R}$:
+    \[
+        \varphi(z) = \frac{\lambda}{2} z^2 - \frac{a}{3} z^3, \qquad z \in \mathbb{R}
+    \]
+    con lo que la ley de conservación se expresa como la suma de energía cinética y potencial:
+    \[
+        \frac{v^2(t)}{2} + \varphi(u(t)) = \varphi(x) \qquad \forall t \in I
+    \]
+    Como la energía cinética es no negativa ($\frac{v^2(t)}{2} \geq 0$), obtenemos la cota fundamental de confinamiento:
+    \[
+        \varphi(u(t)) \leq \varphi(x) \qquad \forall t \in I
+    \]
+
+    \medskip
+
+    \textbf{Estudio cualitativo del potencial $\varphi(z)$:}
+
+    Analizamos las propiedades analíticas y la gráfica del potencial $\varphi(z)$:
+    \begin{itemize}
+        \item \textbf{Ceros:} Factorizando $\varphi(z) = z^2 \left( \dfrac{\lambda}{2} - \dfrac{a}{3} z \right)$, encontramos:
+        \[
+            \varphi^{-1}(\{0\}) = \left\{ 0, \; \frac{3\lambda}{2a} \right\}
+        \]
+        \item \textbf{Puntos críticos:} Derivando respecto a $z$:
+        \[
+            \varphi'(z) = \lambda z - a z^2 = z(\lambda - a z) = 0 \implies z = 0, \quad z = \frac{\lambda}{a}
+        \]
+        Estos puntos críticos coinciden exactamente con los estados de equilibrio estacionarios de la ecuación original.
+        \item \textbf{Clasificación mediante la segunda derivada:} $\varphi''(z) = \lambda - 2az$:
+        \begin{itemize}
+            \item En $z = 0$: $\varphi''(0) = \lambda > 0 \implies z = 0$ es un \textbf{mínimo local}, con $\varphi(0) = 0$.
+            \item En $z = \dfrac{\lambda}{a}$: $\varphi''\left(\dfrac{\lambda}{a}\right) = \lambda - 2a \dfrac{\lambda}{a} = -\lambda < 0 \implies z = \dfrac{\lambda}{a}$ es un \textbf{máximo local}, con valor:
+            \[
+                \varphi\left(\frac{\lambda}{a}\right) = \frac{\lambda}{2}\left(\frac{\lambda}{a}\right)^2 - \frac{a}{3}\left(\frac{\lambda}{a}\right)^3 = \frac{\lambda^3}{6a^2}
+            \]
+        \end{itemize}
+    \end{itemize}
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.2]
+        % Ejes
+        \draw[->] (-1.2,0) -- (4.2,0) node[right] {$z$};
+        \draw[->] (0,-2.2) -- (0,2.6) node[above] {$\varphi(z)$};
+        
+        % Curva del potencial cúbico
+        \draw[thick, blue!80!black, domain=-0.8:2.1, samples=100]
+            plot (\x, {1.8*\x*\x - 1.2*\x*\x*\x});
+        
+        % Línea de nivel de energía phi(x) discontinua
+        \draw[dashed, red!70!black] (-1.0, 0.45) -- (3.5, 0.45) node[right, font=\footnotesize] {$\varphi(x)$};
+        
+        % Puntos clave
+        \node[below left, font=\footnotesize] at (0,0) {$0$};
+        \fill (0,0) circle (1.5pt);
+        
+        \draw[dashed, gray] (1.0,0) -- (1.0, 0.6);
+        \node[below, font=\footnotesize, cyan!80!black] at (1.0,0) {$\frac{\lambda}{a}$};
+        
+        \node[below, font=\footnotesize, cyan!80!black] at (1.5,0) {$\frac{3\lambda}{2a}$};
+        \fill (1.5,0) circle (1.5pt);
+    \end{tikzpicture}
+    \end{center}
+
+    \medskip
+
+    \textbf{Comportamiento global frente a explosión según el dato inicial:}
+
+    Dependiendo de la posición del valor inicial $x \geq 0$ respecto a la barrera de potencial en $z = \frac{\lambda}{a}$, distinguimos dos regímenes diametralmente opuestos:
+
+    \begin{itemize}
+        \item \textbf{Régimen oscilatorio / acotado (Existencia global):} Supongamos que:
+        \[
+            x \in \left( 0, \, \frac{\lambda}{a} \right)
+        \]
+        En este intervalo, el valor de energía satisface $0 < \varphi(x) < \varphi(\lambda/a)$. La condición de confinamiento $\varphi(u(t)) \leq \varphi(x)$ implica que la posición $u(t)$ permanece atrapada en el pozo de potencial:
+        \[
+            u(t) \in [\alpha(x), x] \qquad \forall t \in I
+        \]
+        donde $\alpha(x) < 0$ es el punto donde la rama izquierda del potencial alcanza la altura $\varphi(x)$. En particular, $u(t)$ está acotada en todo su intervalo de existencia.
+        
+        A partir de la ecuación de energía:
+        \[
+            v^2(t) = 2\bigl(\varphi(x) - \varphi(u(t))\bigr) \leq 2\varphi(x)
+        \]
+        por lo que la velocidad $v(t) = u'(t)$ también se encuentra acotada uniformemente para todo $t \in I$.
+
+        Al estar simultáneamente acotadas $u(t)$ y $u'(t)$, el Segundo Teorema Fundamental impide la explosión en tiempo finito:
+        \[
+            T_{\max}(x) = +\infty, \qquad T_{\min}(x) = -\infty
+        \]
+        Por consiguiente, la solución maximal está \textbf{globalmente definida en tiempo} ($I = \mathbb{R}$).
+
+        \item \textbf{Régimen explosivo ($x > \frac{\lambda}{a}$):} Si el dato inicial se sitúa a la derecha de la barrera de potencial:
+        \[
+            u(t) \geq x > \frac{\lambda}{a} \qquad \forall t \in [0, T_{\max})
+        \]
+        Evaluamos el signo de la segunda derivada a partir de la ecuación:
+        \[
+            -u''(t) = \lambda u(t) - a u^2(t) = \bigl(\lambda - a u(t)\bigr) u(t) < 0
+        \]
+        ya que $u(t) > \frac{\lambda}{a} \implies \lambda - a u(t) < 0$ y $u(t) > 0$. Por lo tanto:
+        \[
+            u''(t) > 0 \quad \forall t \in I \implies (u')'(t) > 0 \implies u'(t) \text{ es estrictamente creciente}
+        \]
+        Puesto que $u'(0) = 0$, se deduce que $u'(t) = v(t) > 0$ para todo $t \in (0, T_{\max})$, lo que garantiza que $u(t)$ es estrictamente creciente.
+
+        Despejando la velocidad positiva a partir de la conservación de la energía:
+        \[
+            \frac{v^2(t)}{2} = \frac{a}{3}\bigl(u^3(t) - x^3\bigr) - \frac{\lambda}{2}\bigl(u^2(t) - x^2\bigr)
+        \]
+        \[
+            v(t) = \sqrt{\frac{2a}{3}\bigl(u^3(t) - x^3\bigr) - \lambda\bigl(u^2(t) - x^2\bigr)} \qquad \forall t \in [0, T_{\max})
+        \]
+        Separando variables e integrando mediante $\zeta = u(s)$ y posteriormente $\zeta = x\theta$:
+        \[
+            t = \int_0^t 1\, ds = \int_x^{u(t)} \frac{d\zeta}{\sqrt{\frac{2a}{3}(\zeta^3 - x^3) - \lambda(\zeta^2 - x^2)}} = \int_1^{u(t)/x} \frac{x\, d\theta}{\sqrt{\frac{2a}{3}x^3(\theta^3 - 1) - \lambda x^2(\theta^2 - 1)}}
+        \]
+        Simplificando un factor $x$ del denominador:
+        \[
+            t = \int_1^{u(t)/x} \frac{d\theta}{\sqrt{\frac{2a}{3}x(\theta^3 - 1) - \lambda(\theta^2 - 1)}}
+        \]
+        Como el término de grado $3$ domina sobre el de grado $2$ cuando $\theta \to \infty$ y cerca de $\theta = 1$ la singularidad es de tipo $(\theta - 1)^{-1/2}$, esta integral converge al extender el límite superior a $+\infty$. Por tanto, se produce \textbf{explosión en tiempo finito} ($T_{\max} < +\infty$).
+    \end{itemize}
 }
