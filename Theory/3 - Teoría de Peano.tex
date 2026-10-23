@@ -269,7 +269,9 @@ El Teorema de Ascoli-Arzelà culmina esta teoría proporcionando la caracterizac
 \end{teorema}
 
 \begin{proof}
-    Demostramos la implicación directa: que la relativa compacidad implica necesariamente la acotación uniforme y la equicontinuidad de la familia $\mathcal{F}$.
+    \textbf{Implicación directa ($(1) \implies (2)$):}
+
+    Demostraremos primero que la relativa compacidad implica necesariamente la acotación uniforme y la equicontinuidad de la familia $\mathcal{F}$.
 
     Supongamos que $\mathcal{F}$ es relativamente compacto en $\mathcal{C}(K; \, \mathbb{R}^N)$. Por definición, su clausura $\overline{\mathcal{F}}$ es un subconjunto compacto del espacio de Banach $(\mathcal{C}(K; \, \mathbb{R}^N), \|\cdot\|_\infty)$.
 
@@ -353,127 +355,115 @@ El Teorema de Ascoli-Arzelà culmina esta teoría proporcionando la caracterizac
     lo que contradice flagrantemente que $\varepsilon_0 > 0$.
 
     Esta contradicción demuestra que la hipótesis de no equicontinuidad es insostenible. Por consiguiente, $\mathcal{F}$ es forzosamente equicontinua en $K$.
-\end{proof}
 
-% LO ANTERIOR A ESTO ESTÁ GENERADO HASTA EL MIÉRCOLES, EN EL ARCHIVO AUXILIAR, REVISAR SI ESTÁ BIEN COHESIONADO CON LO QUE VIENE A CONTINUACIÓN
+    \medskip
 
-Para demostrarlo seguiremos 3 etapas:
+    \textbf{Implicación recíproca ($(2) \implies (1)$):}
 
-\begin{enumerate}
-    \item Con la compacidad de $\mathcal{K}$ veremos que $\exists D = \{d_n\}_{n \in \mathbb{N}} \subset \mathcal{K}$ tal que $\overline{D} = \mathcal{K}$, es decir, $D$ es denso en $\mathcal{K}$.
-    \item Con la acotación de $\mathcal{F}$ veremos que existe una subsucesión de funciones $\{g_n\}_{n \in \mathbb{N}}$ de $\{f_n\}_{n \in \mathbb{N}}$ convergente en $D$.
-    \item Con la equicontinuidad de $\mathcal{F}$ veremos que la subsucesión $\{g_n\}_{n \in \mathbb{N}}$ es de Cauchy en $C(\mathcal{K}, \mathbb{R}^n)$ y por tanto convergente en $C(\mathcal{K}, \mathbb{R}^n)$.
-\end{enumerate}
+    Supongamos ahora que $\mathcal{F}$ es uniformemente acotado y equicontinuo en $\mathcal{C}(K; \, \mathbb{R}^N)$. Queremos demostrar que $\mathcal{F}$ es relativamente compacto, es decir, que de toda sucesión infinita $\{f_n\}_{n \geq 1} \subset \mathcal{F}$ se puede extraer una subsucesión $\{g_n\}_{n \geq 1}$ que sea de Cauchy en $\mathcal{C}(K; \, \mathbb{R}^N)$ (y por tanto convergente, al ser un espacio de Banach).
+    
+    Para demostrarlo seguiremos 3 etapas:
+    \begin{enumerate}
+        \item \textbf{Etapa 1 (Compacidad de $K$):} Construiremos un conjunto numerable $D = \{d_n\}_{n \geq 1} \subset K$ que sea denso en $K$ ($\overline{D} = K$).
+        \item \textbf{Etapa 2 (Acotación de $\mathcal{F}$):} Extraeremos una subsucesión $\{g_n\}_{n \geq 1}$ de $\{f_n\}_{n \geq 1}$ que converja puntualmente en cada punto del conjunto denso $D$.
+        \item \textbf{Etapa 3 (Equicontinuidad de $\mathcal{F}$):} Demostraremos que esta subsucesión $\{g_n\}_{n \geq 1}$ es de Cauchy con la norma uniforme en $\mathcal{C}(K; \, \mathbb{R}^N)$.
+    \end{enumerate}
 
-\begin{proof}
     Vayamos etapa por etapa:
     \begin{enumerate}
-        \item \textbf{Etapa 1:} Sabemos que, por la compacidad de $\mathcal{K}$:
+        \item \textbf{Etapa 1:} Para cada número natural $n \geq 1$, consideramos el recubrimiento abierto de $K$ formado por bolas de radio $1/n$:
         \[
-            \mathcal{K} \subset \bigcup_{x \in \mathcal{K}} B_{\frac{1}{n}}(x) \quad \forall n \in \mathbb{N} \implies
-            \exists \{x_1, \dots, x_{k_n}\} \subset \mathcal{K} : \mathcal{K} \subset \bigcup_{i=1}^{k_n} B_{\frac{1}{n}}(x_i) \quad \forall n \in \mathbb{N}
+            K \subset \bigcup_{x \in K} B_{\frac{1}{n}}(x)
         \]
-        Y por tanto, tomemos $D = \{x_i\}_{i=1}^{i=m} \subset \mathcal{K}$, que es denso en $\mathcal{K}$.\\
-
-        Además, tomando cualquier $x \in \mathcal{K}$, $\exists \{x_{i_n}\}_{n \in \mathbb{N}} \subset D$ tal que:
+        Como $K$ es compacto, de este recubrimiento se puede extraer un subrecubrimiento finito:
         \[
-            x \in B_{\frac{1}{n}}(x_{i_n}) \implies
-            d(x, x_{i_n}) < \frac{1}{n} \implies
-            \lim_{n \to \infty} d(x, x_{i_n}) = 0 \implies
-            \lim_{n \to \infty} x_{i_n} = x
+            K \subset \bigcup_{j=1}^{p(n)} B_{\frac{1}{n}}(x_{n,j})
         \]
-        \item \textbf{Etapa 2:} Sea $\{f_n\}_{n \in \mathbb{N}} \subset \mathcal{F}$ una sucesión de funciones, y sea $D = \{d_n\}_{n \in \mathbb{N}}$ el conjunto denso en $\mathcal{K}$ que hemos construido en la etapa 1.\\
+        Definimos el conjunto $D$ formado por los centros de todas estas bolas para todo $n \geq 1$:
+        \[
+            D = \{x_{n,j} : n \geq 1, \, 1 \leq j \leq p(n)\}
+        \]
+        Al ser una unión numerable de conjuntos finitos, $D$ es un conjunto numerable, por lo que podemos reescribirlo como una sucesión $D = \{d_k\}_{k \geq 1}$. 
         
-        Como $\mathcal{F}$ es acotado, $\exists M > 0$ tal que:
+        Veamos que $\overline{D} = K$. Dado cualquier $x \in K$ y cualquier $n \geq 1$, por la propiedad del recubrimiento sabemos que existe algún índice $j(x,n) \in \{1, \dots, p(n)\}$ tal que $x \in B_{\frac{1}{n}}(x_{n,j(x,n)})$. Entonces:
         \[
-            \|f_n\|_\infty \leq M \quad \forall n \in \mathbb{N} \implies
-            \max_{x \in \mathcal{K}} |f_n(x)| \leq M \implies
-            \| f_n(x) \| \leq M \quad \forall n \in \mathbb{N}, \forall x \in \mathcal{K}
+            \|x - x_{n,j(x,n)}\| < \frac{1}{n} \implies \lim_{n \to \infty} x_{n,j(x,n)} = x
+        \]
+        Como $x_{n,j(x,n)} \in D$, hemos encontrado una sucesión en $D$ que converge a $x$. Luego $D$ es denso en $K$.
+
+        \item \textbf{Etapa 2:} Sea $\{f_n\}_{n \geq 1} \subset \mathcal{F}$ una sucesión de funciones. Como $\mathcal{F}$ está uniformemente acotado, existe $M > 0$ tal que:
+        \[
+            \|f_n\|_\infty \leq M \quad \forall n \geq 1 \implies \| f_n(x) \| \leq M \quad \forall n \geq 1, \, \forall x \in K
         \]
 
-        Por lo tanto, $\{f_n(d_1)\}_{n \in \mathbb{N}}$ es una sucesión acotada en $\mathbb{R}^n$, y por el teorema de Bolzano-Weierstrass, $\exists \{f_n^1\}_{n \in \mathbb{N}}$ una subsucesión convergente de $\{f_n(d_1)\}_{n \in \mathbb{N}}$, tal que:
+        Evaluando en el primer punto $d_1 \in D$, la sucesión $\{f_n(d_1)\}_{n \geq 1}$ es una sucesión acotada en $\mathbb{R}^N$. Por el teorema de Bolzano-Weierstrass, existe una subsucesión de funciones, que denotaremos $\{f_n^1\}_{n \geq 1}$, tal que converge en $d_1$:
         \[
-            \lim_{n \to \infty} f_n^1(d_1) = L_1
+            \lim_{n \to \infty} f_n^1(d_1) = L_1 \in \mathbb{R}^N
         \]
 
-        Así, podemos tener una sucesión de funciones $f_1^1, f_2^1, \dots$ convergente en $d_1$.\\
-
-        Ahora, como $\{f_n^1(d_2)\}_{n \in \mathbb{N}}$ es una sucesión acotada en $\mathbb{R}^n$, $\exists \{f_n^2\}_{n \in \mathbb{N}}$ una subsucesión convergente de $\{f_n^1(d_2)\}_{n \in \mathbb{N}}$, tal que:
+        Tomando esta nueva subsucesión y evaluándola en $d_2$, la sucesión $\{f_n^1(d_2)\}_{n \geq 1}$ vuelve a estar acotada, por lo que aplicamos Bolzano-Weierstrass nuevamente para extraer una subsucesión $\{f_n^2\}_{n \geq 1}$ que converge en $d_2$:
         \[
-            \lim_{n \to \infty} f_n^2(d_2) = L_2
+            \lim_{n \to \infty} f_n^2(d_2) = L_2 \in \mathbb{R}^N
         \]
+        Notemos que esta subsucesión $\{f_n^2\}_{n \geq 1}$ converge tanto en $d_1$ como en $d_2$.
 
-        Y así, tendríamos que la sucesión de funciones $f_1^2, f_2^2, \dots$ converge en $d_1$ y $d_2$.\\
-
-        De forma análoga, podemos construir una sucesión de funciones $\{f_n^3\}_{n \in \mathbb{N}}$ convergente en $d_1, d_2, d_3$, y así sucesivamente podemos definir subsucesiones $\{f_n^{m-1}\}_{n \in \mathbb{N}}$ de la ya a su vez subsucesión $\{f_n^{m-2}\}_{n \in \mathbb{N}}$ convergente en $d_1, d_2, \dots, d_{m-1}$, permitiéndonos definir una sucesión de funciones $\{f_n^m\}_{n \in \mathbb{N}}$ convergente en $d_1, d_2, \dots, d_m$. Ahora aplicaremos un argumento diagonal en la siguiente diagonal:
-
-        % Esquema cuadrado donde cada fila va de f_1^fila hasta f_n^fila (se mencionan 1, 2, 3, 4 y luego ... n), y esta marcado en boxed el elemento de la diagonal f_1^1, f_2^2, f_3^3, f_4^4, ..., f_n^n
+        Podemos continuar este proceso inductivamente. Supongamos que hemos construido la subsucesión $\{f_n^{m-1}\}_{n \geq 1}$ que converge en $d_1, \dots, d_{m-1}$. Como la sucesión de vectores $\{f_n^{m-1}(d_m)\}_{n \geq 1}$ está acotada en $\mathbb{R}^N$, podemos extraer una subsucesión $\{f_n^m\}_{n \geq 1}$ tal que:
+        \[
+            \lim_{n \to \infty} f_n^m(d_m) = L_m \in \mathbb{R}^N
+        \]
+        Organizando estas subsucesiones obtenemos el siguiente esquema de argumento diagonal:
         \[
             \begin{matrix}
-                \boxed{f_1^1} & f_2^1 & f_3^1 & f_4^1 & \dots & f_n^1 & \text{converge en } d_1 \\
-                f_1^2 & \boxed{f_2^2} & f_3^2 & f_4^2 & \dots & f_n^2 & \text{converge en } d_1, d_2 \\
-                f_1^3 & f_2^3 & \boxed{f_3^3} & f_4^3 & \dots & f_n^3 & \text{converge en } d_1, d_2, d_3 \\
-                f_1^4 & f_2^4 & f_3^4 & \boxed{f_4^4} & \dots & f_n^4 & \text{converge en } d_1, d_2, d_3, d_4 \\
+                \boxed{f_1^1} & f_2^1 & f_3^1 & f_4^1 & \dots & \text{converge en } d_1 \\
+                f_1^2 & \boxed{f_2^2} & f_3^2 & f_4^2 & \dots & \text{converge en } d_1, d_2 \\
+                f_1^3 & f_2^3 & \boxed{f_3^3} & f_4^3 & \dots & \text{converge en } d_1, d_2, d_3 \\
                 \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-                f_1^{m} & f_2^{m} & f_3^{m} & f_4^{m} & \dots & f_n^{m} & \text{converge en } d_1, d_2, \dots, d_m
+                f_1^{m} & f_2^{m} & f_3^{m} & f_4^{m} & \dots & \text{converge en } d_1, \dots, d_m
             \end{matrix}
         \]
 
-        Ahora podemos definir la sucesión diagonal $\{g_n\}_{n \in \mathbb{N}} = \{f_n^n\}_{n \in \mathbb{N}}$, que converge en $d_1, d_2, \dots, d_m$, es decir, en $D$. Es importante también que fijando $m \geq 1$ arbitrario, $\{g_n\}_{n \geq m}$ es una subsucesión de la fila $m$-ésima, y por tanto converge en $d_1, d_2, \dots, d_m$.\\
+        Definimos la sucesión diagonal $\{g_n\}_{n \geq 1} = \{f_n^n\}_{n \geq 1}$. Para cualquier $m \geq 1$ fijado, notemos que $\{g_n\}_{n \geq m}$ es una subsucesión de la fila $m$-ésima ($\{f_n^m\}_{n \geq 1}$), y por tanto es convergente en $d_m$. Concluimos que la sucesión diagonal $\{g_n\}_{n \geq 1}$ es convergente puntualmente en todos los puntos del conjunto denso $D$.
 
-        \item \textbf{Etapa 3:} Ahora, necesitamos ver que $\{g_n\}_{n \in \mathbb{N}}$ es de Cauchy en $C(\mathcal{K}, \mathbb{R}^n)$.\\
-        
-        Sabemos que es convergente en $D$, que es denso en $\mathcal{K}$, entonces queremos ver que:
-        \[
-            \forall \varepsilon > 0, \exists n_0 (\varepsilon) \geq 1 :
-            m \geq 1, n \geq n_0 (\varepsilon) \implies
-            \|g_n - g_{n+m}\|_\infty < \varepsilon
-        \]
+        \item \textbf{Etapa 3:} Ahora demostraremos que $\{g_n\}_{n \geq 1}$ es una sucesión de Cauchy en el espacio de Banach $\mathcal{C}(K; \, \mathbb{R}^N)$. 
+        Dado $\varepsilon > 0$, queremos encontrar un $n_0 \geq 1$ tal que para todo $n \geq n_0$ y todo $m \geq 1$ se cumpla $\|g_n - g_{n+m}\|_\infty < \varepsilon$.
 
-        Tomemos $\frac{\varepsilon}{3}$, entonces por la equicontinuidad, $\exists \delta > 0$ tal que:
+        Por la equicontinuidad de la familia $\mathcal{F}$ (a la que pertenecen todas las $g_n$), para $\frac{\varepsilon}{3} > 0$ existe un $\delta > 0$ tal que:
         \[
-            x, y \in \mathcal{K} : \|x - y\| < \delta \implies
-            \|g_n(x) - g_n(y)\| < \frac{\varepsilon}{3} \quad \forall n \in \mathbb{N}
+            \forall x, y \in K, \quad \|x - y\| < \delta \implies \|g_n(x) - g_n(y)\| < \frac{\varepsilon}{3} \quad \forall n \geq 1
         \]
-        Ahora:
+        Como $D$ es denso en $K$, las bolas de radio $\delta$ centradas en los puntos de $D$ recubren todo el compacto $K$:
         \[
-            \mathcal{K} \subset \bigcup_{n \geq 1} B_\delta(d_n) \implies
-            x \in \mathcal{K}, \exists n(x) \geq 1 : \| x - d_{n(x)} \| < \delta \implies
-            x \in B_\delta(d_{n(x)})
+            K \subset \bigcup_{k \geq 1} B_\delta(d_k)
         \]
-
-        Así, $\mathcal{K}$ está contenido:
+        Por compacidad, podemos extraer un subrecubrimiento finito:
         \[
-            \mathcal{K} \subset \bigcup_{n=1}^{q} B_\delta(d_n) \quad \text{para algún } q \geq 1
+            K \subset \bigcup_{j=1}^{q} B_\delta(d_{k_j})
+        \]
+        Como la sucesión $\{g_n\}_{n \geq 1}$ es convergente en cada uno de estos $q$ puntos $\{d_{k_1}, \dots, d_{k_q}\}$, también es de Cauchy en ellos. Al ser un número finito de puntos, existe un índice común $N_0 \geq 1$ tal que para todo $n \geq N_0$ y todo $m \geq 1$:
+        \[
+            \|g_n(d_{k_j}) - g_{n+m}(d_{k_j})\| < \frac{\varepsilon}{3} \quad \forall j \in \{1, \ldots, q\}
         \]
 
-        Y así, para cada $d_n$, $\{g_n(d_j)\}_{n \in \mathbb{N}}^{j \in \{1, \ldots, q\}}$ es convergente, y por tanto es de Cauchy, por lo que:
+        Sea ahora un punto cualquiera $x \in K$. Por el recubrimiento finito, existe algún índice $j(x) \in \{1, \dots, q\}$ tal que $x \in B_\delta(d_{k_{j(x)}})$. Aplicando la desigualdad triangular para cualesquiera $n \geq N_0$ y $m \geq 1$:
         \[
-            \forall \varepsilon > 0, \exists n_j = n_j(\varepsilon) \geq 1 : 
-            m \geq 1, n \geq n_j(\varepsilon) \implies
-            \|g_n(d_j) - g_{n+m}(d_j)\| < \frac{\varepsilon}{3} \quad \forall j \in \{1, \ldots, q\}
+            \|g_n(x) - g_{n+m}(x)\| \leq \|g_n(x) - g_n(d_{k_{j(x)}})\| + \|g_n(d_{k_{j(x)}}) - g_{n+m}(d_{k_{j(x)}})\| + \|g_{n+m}(d_{k_{j(x)}}) - g_{n+m}(x)\|
         \]
-        Por lo que son uniformemente de Cauchy en $D$.\\
-
-        Ahora sea $x \in \mathcal{K}$, entonces $\exists j(x) \in \{1, \ldots, q\}$ tal que $x \in B_\delta(d_{j(x)})$, y por tanto:
+        Acotamos cada término:
+        \begin{itemize}
+            \item El primer y tercer término son estrictamente menores que $\frac{\varepsilon}{3}$ por la equicontinuidad, ya que $\|x - d_{k_{j(x)}}\| < \delta$.
+            \item El segundo término es estrictamente menor que $\frac{\varepsilon}{3}$ porque $n \geq N_0$ garantiza la condición de Cauchy en el conjunto finito de puntos.
+        \end{itemize}
+        Sumando, obtenemos:
         \[
-            n \geq n_{j(x)}(\varepsilon), m \geq 1 \implies
-            \|g_n(x) - g_{n+m}(x)\| \leq
+            \|g_n(x) - g_{n+m}(x)\| < \frac{\varepsilon}{3} + \frac{\varepsilon}{3} + \frac{\varepsilon}{3} = \varepsilon \quad \forall x \in K
         \]
+        Tomando el supremo sobre todo $x \in K$, se concluye que:
         \[
-            \leq \|g_n(x) - g_n(d_{j(x)})\| + \|g_{n+m}(d_{j(x)}) - g_{n+m}(x)\| + \|g_n(d_{j(x)}) - g_{n+m}(d_{j(x)})\| \leq
+            \|g_n - g_{n+m}\|_\infty \leq \varepsilon \quad \forall n \geq N_0, \quad \forall m \geq 1
         \]
-        \[
-            \leq \underbrace{\frac{\varepsilon}{3}}_{\text{por equicontinuidad}} + \underbrace{\frac{\varepsilon}{3}}_{\text{por equicontinuidad}} + \underbrace{\frac{\varepsilon}{3}}_{\text{por Cauchy en } D} = \varepsilon \implies
-            \boxed{ \|g_n - g_{n+m}\|_\infty \leq \varepsilon \quad \forall n \geq n_0(\varepsilon), m \geq 1 }
-        \]
-
-        Y así, estaría probada la convergencia de $\{g_n\}_{n \in \mathbb{N}}$ en $C(\mathcal{K}, \mathbb{R}^n)$, y por tanto el teorema de Ascoli-Arzela.
-        
+        Por tanto, $\{g_n\}_{n \geq 1}$ es una sucesión de Cauchy en $\mathcal{C}(K; \, \mathbb{R}^N)$. Al ser este un espacio de Banach, la sucesión converge uniformemente a una función límite en $\mathcal{C}(K; \, \mathbb{R}^N)$, lo que demuestra que $\mathcal{F}$ es relativamente compacto.
     \end{enumerate}
 \end{proof}
-
-
 
 \begin{teorema}[Teorema global de Peano]
     Sean $J=[t_0, t_0 + T]$ y $f: C(J \times \mathbb{R}^N; \, \mathbb{R}^N)$ y acotada.\\
@@ -517,8 +507,6 @@ Antes de probar el teorema, vamos a ver un ejemplo de su aplicación.
         T_{\max} = \frac{1}{(1-p)u_0^{1-p}} \quad
     \]
 }
-
-Veamos ahora el esquema de Tonelli, que nos permitirá construir una demostración del teorema global de Peano.
 
 \begin{proposición}[Esquema de Tonelli]
     Sea $J=[t_0, t_0 + T]$, dividamoslo en $n$ subintervalos de longitud $\frac{T}{n}$:
