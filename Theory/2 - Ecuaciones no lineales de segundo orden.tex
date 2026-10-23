@@ -861,5 +861,293 @@ Por el \textbf{Segundo Teorema Fundamental de Cauchy-Lipschitz}, sabemos que:
             t = \int_1^{u(t)/x} \frac{d\theta}{\sqrt{\frac{2a}{3}x(\theta^3 - 1) - \lambda(\theta^2 - 1)}}
         \]
         Como el término de grado $3$ domina sobre el de grado $2$ cuando $\theta \to \infty$ y cerca de $\theta = 1$ la singularidad es de tipo $(\theta - 1)^{-1/2}$, esta integral converge al extender el límite superior a $+\infty$. Por tanto, se produce \textbf{explosión en tiempo finito} ($T_{\max} < +\infty$).
+
+        \medskip
+
+        \textbf{Finitud y caracterización de $T_{\max}(x)$:}
+
+        Para todo instante $t \in [0, T_{\max})$, como la solución $u(t)$ toma valores finitos:
+        \[
+            t < \int_1^\infty \frac{d\theta}{\sqrt{\frac{2ax}{3}(\theta^3 - 1) - \lambda(\theta^2 - 1)}} \equiv j(x) < +\infty
+        \]
+        En consecuencia, el intervalo de existencia está uniformemente acotado superiormente por $j(x)$, lo que implica:
+        \[
+            T_{\max}(x) \leq j(x) < +\infty
+        \]
+        Por el Segundo Teorema Fundamental para sistemas diferenciales autónomos, la finitud del tiempo de vida implica necesariamente la divergencia de la norma de la trayectoria:
+        \[
+            \lim_{t \nearrow T_{\max}} \bigl( |u(t)| + |u'(t)| \bigr) = +\infty
+        \]
+        Puesto que $u(t)$ y $u'(t) = v(t)$ son simultáneamente positivas y monótonas crecientes en $[0, T_{\max})$, la explosión se produce de forma directa e independiente en ambas variables:
+        \[
+            \lim_{t \nearrow T_{\max}} u(t) = +\infty \qquad \text{y} \qquad \lim_{t \nearrow T_{\max}} u'(t) = +\infty
+        \]
+        Tomando el límite $t \nearrow T_{\max}$ en la relación integral de $t$, obtenemos la expresión exacta del tiempo de explosión:
+        \[
+            T_{\max}(x) = \int_1^\infty \frac{d\theta}{\sqrt{\frac{2ax}{3}(\theta^3 - 1) - \lambda(\theta^2 - 1)}}
+        \]
+
+        \medskip
+
+        \textbf{Estudio analítico de la convergencia y comportamiento asintótico:}
+
+        Sea $x \in \left( \frac{\lambda}{a}, \, +\infty \right)$. Para justificar rigurosamente la convergencia de la integral impropia y analizar su comportamiento respecto a $x$, dividimos la integral para cualquier $M > 1$:
+        \[
+            T_{\max}(x) = \int_1^M \frac{d\theta}{\sqrt{f(\theta)}} + \int_M^\infty \frac{d\theta}{\sqrt{f(\theta)}}
+        \]
+        donde definimos el radicando $f(\theta)$ y lo factorizamos extrayendo la raíz común en $\theta = 1$:
+        \[
+            f(\theta) = \frac{2ax}{3}(\theta^3 - 1) - \lambda(\theta^2 - 1) = (\theta - 1)\left[ \frac{2ax}{3}(\theta^2 + \theta + 1) - \lambda(\theta + 1) \right] \equiv (\theta - 1) g(\theta)
+        \]
+        con:
+        \[
+            g(\theta) = \frac{2ax}{3}(\theta^2 + \theta + 1) - \lambda(\theta + 1)
+        \]
+        Derivando $g(\theta)$ para todo $\theta \geq 1$:
+        \[
+            g'(\theta) = \frac{2ax}{3}(2\theta + 1) - \lambda \geq \frac{2ax}{3}(3) - \lambda = 2ax - \lambda > 2a\left(\frac{\lambda}{a}\right) - \lambda = \lambda > 0
+        \]
+        Por consiguiente, la función $g(\theta)$ es estrictamente creciente en $[1, +\infty)$, alcanzando su valor mínimo en $\theta = 1$:
+        \[
+            g(\theta) \geq g(1) = \frac{2ax}{3}(3) - 2\lambda = 2(ax - \lambda) > 0 \qquad \forall \theta \geq 1
+        \]
+        \begin{itemize}
+            \item \textit{Acotación en $[1, M]$:} Acotando inferiormente $g(\theta)$ por $g(1)$:
+            \[
+                \int_1^M \frac{d\theta}{\sqrt{(\theta - 1) g(\theta)}} \leq \frac{1}{\sqrt{2(ax - \lambda)}} \int_1^M (\theta - 1)^{-1/2}\, d\theta = \frac{2\sqrt{M - 1}}{\sqrt{2(ax - \lambda)}} < +\infty
+            \]
+            Se observa de inmediato que esta cota tiende a $0$ cuando $x \to +\infty$.
+            \item \textit{Acotación en $[M, +\infty)$:} Para $\theta \to \infty$, el término cúbico domina:
+            \[
+                \lim_{\theta \to +\infty} \frac{\sqrt{\frac{2ax}{3}\theta^3}}{\sqrt{\frac{2ax}{3}(\theta^3 - 1) - \lambda(\theta^2 - 1)}} = 1 < 2
+            \]
+            luego fijando $M > 1$ suficientemente grande tal que dicho cociente sea menor o igual que $2$ en $[M, +\infty)$, tenemos:
+            \[
+                \int_M^\infty \frac{d\theta}{\sqrt{f(\theta)}} \leq 2 \int_M^\infty \frac{d\theta}{\sqrt{\frac{2ax}{3}\theta^3}} = 2 \sqrt{\frac{3}{2ax}} \int_M^\infty \theta^{-3/2}\, d\theta = 4 \sqrt{\frac{3}{2ax}} \frac{1}{\sqrt{M}} < +\infty
+            \]
+            la cual converge y también tiende a $0$ cuando $x \to +\infty$.
+        \end{itemize}
+        Se deduce que la integral impropia es absolutamente convergente para todo $x > \frac{\lambda}{a}$, y que al crecer el dato inicial $x$, el tiempo de vida maximal disminuye monótonamente:
+        \[
+            \lim_{x \to +\infty} T_{\max}(x) = 0
+        \]
+
+        \medskip
+
+        \textbf{Divergencia de $T_{\max}(x)$ en la barrera de potencial ($x \downarrow \frac{\lambda}{a}$):}
+
+        Desde el punto de vista cualitativo, cuando el dato inicial se sitúa infinitesimalmente próximo al punto de equilibrio inestable $z = \frac{\lambda}{a}$, la dependencia lipschitziana exige que el tiempo que la partícula tarda en alejarse de la cima de la colina tienda a infinito:
+        \[
+            \lim_{x \downarrow \frac{\lambda}{a}} T_{\max}(x) = +\infty
+        \]
+        Analíticamente, comprobamos que la integral diverge para el valor crítico $x = \frac{\lambda}{a}$. Evaluando $g(\theta)$ en $x = \frac{\lambda}{a}$:
+        \[
+            g(\theta)\Big|_{x = \frac{\lambda}{a}} = \frac{2\lambda}{3}(\theta^2 + \theta + 1) - \lambda(\theta + 1)
+        \]
+        Observamos que $g(1) = \frac{2\lambda}{3}(3) - 2\lambda = 0$. Aplicando la regla de Ruffini para extraer el factor $(\theta - 1)$:
+        \[
+            g(\theta)\Big|_{x = \frac{\lambda}{a}} = (\theta - 1)\left( \frac{2\lambda}{3}\theta + \frac{\lambda}{3} \right) = \frac{\lambda}{3}(\theta - 1)(2\theta + 1)
+        \]
+        Sustituyendo en la integral sobre el intervalo acotado $[1, M]$:
+        \[
+            \int_1^M \frac{d\theta}{\sqrt{(\theta - 1)g(\theta)}} = \int_1^M \frac{d\theta}{\sqrt{(\theta - 1)^2 \frac{\lambda}{3}(2\theta + 1)}} = \int_1^M \frac{d\theta}{(\theta - 1)\sqrt{\frac{\lambda}{3}(2\theta + 1)}}
+        \]
+        Dado que $2\theta + 1 \leq 2M + 1$ para todo $\theta \in [1, M]$:
+        \[
+            \int_1^M \frac{d\theta}{(\theta - 1)\sqrt{\frac{\lambda}{3}(2\theta + 1)}} \geq \frac{1}{\sqrt{\frac{\lambda}{3}(2M + 1)}} \int_1^M \frac{d\theta}{\theta - 1} = +\infty
+        \]
+        lo que demuestra de forma rigurosa la divergencia hacia $+\infty$ cuando $x \downarrow \frac{\lambda}{a}$.
+
+        \medskip
+
+        \textbf{Representación gráfica del tiempo de explosión y de las soluciones:}
+
+        \begin{center}
+        \begin{tikzpicture}[>=stealth, scale=1.0]
+            % Gráfica T_max(x)
+            \begin{scope}
+                \draw[->] (-0.2,0) -- (4.2,0) node[right] {$x$};
+                \draw[->] (0,-0.2) -- (0,3.6) node[above] {$T_{\max}(x)$};
+                
+                % Asíntota vertical en lambda/a
+                \draw[dashed, red!70!black] (1.2,0) -- (1.2,3.3);
+                \node[below, red!70!black, font=\footnotesize] at (1.2,0) {$\frac{\lambda}{a}$};
+                
+                % Curva de T_max(x)
+                \draw[thick, blue!80!black, domain=1.35:3.9, samples=80]
+                    plot (\x, {0.6/sqrt(\x - 1.2)});
+                
+                \node[blue!80!black, font=\footnotesize] at (2.7,1.8) {$T_{\max}(x)$};
+            \end{scope}
+
+            % Gráfica soluciones largas u(t)
+            \begin{scope}[xshift=6.0cm]
+                \draw[->] (-2.8,0) -- (2.8,0) node[right] {$t$};
+                \draw[->] (0,-0.2) -- (0,3.6) node[above] {$u(t)$};
+                
+                % Barrera lambda/a
+                \draw[dashed, cyan!80!black] (-2.6, 0.6) -- (2.6, 0.6);
+                \node[left, cyan!80!black, font=\footnotesize] at (-2.6, 0.6) {$\frac{\lambda}{a}$};
+                
+                % Asíntotas de explosión en tiempo finito
+                \draw[dashed, gray] (-1.8,0) node[below, font=\footnotesize] {$-T_{\max}$} -- (-1.8,3.3);
+                \draw[dashed, gray] (1.8,0) node[below, font=\footnotesize] {$T_{\max}$} -- (1.8,3.3);
+                
+                % Solución u(t) par
+                \draw[thick, blue!80!black] (-1.68, 3.2) .. controls (-1.4, 1.4) and (-0.6, 1.2) .. (0, 1.2) .. controls (0.6, 1.2) and (1.4, 1.4) .. (1.68, 3.2);
+                
+                \node[left, font=\footnotesize] at (0,1.2) {$x$};
+                \fill (0,1.2) circle (1.5pt);
+                \node[font=\footnotesize, align=center] at (0,2.4) {Soluciones largas};
+                \node[font=\footnotesize, align=center] at (0,-0.7) {$u(-t) = u(t), \quad T_{\min}(x) = -T_{\max}(x)$};
+            \end{scope}
+        \end{tikzpicture}
+        \end{center}
     \end{itemize}
 }
+
+\subsection{Reducción de ecuaciones y sistemas de orden superior a sistemas de primer orden}
+
+El método de análisis desarrollado para problemas no lineales de segundo orden no se restringe a modelos específicos, sino que constituye una técnica universal: cualquier ecuación diferencial ordinaria de orden arbitrario, así como sistemas acoplados de ecuaciones, pueden formularse canónicamente como un sistema de primer orden en un espacio euclídeo de dimensión apropiada.
+
+\subsubsection{Ecuaciones escalares de orden superior}
+
+Consideremos una ecuación escalar general de segundo orden:
+\[
+    \begin{cases}
+        u'' = g(t, u, u') \\
+        u(t_0) = u_0 \\
+        u'(t_0) = v_0
+    \end{cases}
+\]
+donde $g: \mathbb{R} \times \mathbb{R}^2 \to \mathbb{R}$ es una función continua de clase $\mathcal{C}^1$ respecto de las variables espaciales, es decir, las derivadas parciales $\frac{\partial g}{\partial u}$ y $\frac{\partial g}{\partial v}$ existen y son continuas en $\mathbb{R} \times \mathbb{R}^2$.
+
+Definiendo la variable de velocidad $v = u'$, establecemos el sistema de primer orden:
+\[
+    \begin{cases}
+        u' = v \\
+        v' = g(t, u, v)
+    \end{cases}
+    \iff
+    \begin{pmatrix} u \\ v \end{pmatrix}' = \begin{pmatrix} v \\ g(t, u, v) \end{pmatrix} = f(t, u, v)
+\]
+Existe una biyección natural entre el espacio de soluciones de la ecuación escalar $\mathcal{S}_E$ y el espacio de soluciones del sistema $\mathcal{S}_{\text{sis}}$:
+\[
+    u \longmapsto D(u) = \begin{pmatrix} u \\ u' \end{pmatrix} = \begin{pmatrix} u \\ v \end{pmatrix}
+\]
+La matriz jacobiana del campo vectorial $f$ respecto de las variables $(u, v)$ es:
+\[
+    Df(t, u, v) = \begin{pmatrix}
+        0 & 1 \\
+        \frac{\partial g}{\partial u} & \frac{\partial g}{\partial v}
+    \end{pmatrix}
+\]
+Al ser las derivadas parciales de $g$ continuas, la matriz $Df(t, u, v)$ es continua en todo compacto, por lo que $f$ es localmente Lipschitziana respecto de $(u, v)$. Por consiguiente, el Teorema de Picard-Lindelöf garantiza la existencia y unicidad local de soluciones con dato inicial $(u(t_0), v(t_0)) = (u_0, v_0)$.
+
+\medskip
+
+\textbf{Ecuaciones de tercer orden:}
+
+Si la ecuación es de tercer orden:
+\[
+    u''' = g(t, u, u', u'')
+\]
+con $g: \mathbb{R} \times \mathbb{R}^3 \to \mathbb{R}$ continua y de clase $\mathcal{C}^1$ en $(u, u', u'')$, introducimos las variables $v = u'$ y $w = u''$:
+\[
+    \begin{cases}
+        u' = v \\
+        v' = w \\
+        w' = g(t, u, v, w)
+    \end{cases}
+    \iff
+    \begin{pmatrix} u \\ v \\ w \end{pmatrix}' = \begin{pmatrix} v \\ w \\ g(t, u, v, w) \end{pmatrix} = f(t, u, v, w)
+\]
+La transformación $u \mapsto D(u) = (u, u', u'')^T$ establece una biyección entre soluciones escalares y vectoriales. La matriz jacobiana asociada es:
+\[
+    Df(t, u, v, w) = \begin{pmatrix}
+        0 & 1 & 0 \\
+        0 & 0 & 1 \\
+        \frac{\partial g}{\partial u} & \frac{\partial g}{\partial v} & \frac{\partial g}{\partial w}
+    \end{pmatrix}
+\]
+con condiciones iniciales $(u(t_0), v(t_0), w(t_0)) = (u_0, v_0, w_0)$. El carácter localmente Lipschitziano de $f$ asegura de nuevo la existencia y unicidad de soluciones maximales.
+
+\medskip
+
+\textbf{Ecuaciones escalares de orden $N$:}
+
+En general, consideremos una ecuación de orden arbitrario $N \in \mathbb{N}$:
+\[
+    u^{(N)} = g(t, u, u', \dots, u^{(N-1)})
+\]
+donde $g: \mathbb{R} \times \mathbb{R}^N \to \mathbb{R}$ es continua y las derivadas parciales $\frac{\partial g}{\partial x_j}$ existen y son continuas para todo $1 \leq j \leq N$.
+
+Definiendo el vector de estado en $\mathbb{R}^N$ mediante:
+\[
+    u_1 = u, \quad u_2 = u', \quad \dots, \quad u_N = u^{(N-1)}
+\]
+se tiene la biyección:
+\[
+    u \longmapsto D(u) = \begin{pmatrix} u_1 \\ u_2 \\ \vdots \\ u_N \end{pmatrix} = \begin{pmatrix} u \\ u' \\ \vdots \\ u^{(N-1)} \end{pmatrix}
+\]
+El sistema equivalente de primer orden adopta la forma:
+\[
+    \begin{pmatrix} u_1 \\ u_2 \\ \vdots \\ u_{N-1} \\ u_N \end{pmatrix}' = \begin{pmatrix} u_2 \\ u_3 \\ \vdots \\ u_N \\ g(t, u_1, u_2, \dots, u_N) \end{pmatrix} = f(t, u_1, \dots, u_N)
+\]
+La matriz jacobiana $Df(t, u_1, \dots, u_N)$ presenta la estructura compañera característica:
+\[
+    Df(t, u_1, \dots, u_N) = \begin{pmatrix}
+        0 & 1 & 0 & \dots & 0 \\
+        0 & 0 & 1 & \dots & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & 0 & \dots & 1 \\
+        \frac{\partial g}{\partial u_1} & \frac{\partial g}{\partial u_2} & \frac{\partial g}{\partial u_3} & \dots & \frac{\partial g}{\partial u_N}
+    \end{pmatrix}
+\]
+con dato inicial $(u_1(t_0), \dots, u_N(t_0)) = (u_{0,0}, \dots, u_{0, N-1}) \in \mathbb{R}^N$. Toda la teoría analítica desarrollada (existencia, unicidad, prolongabilidad maximal y dependencia diferenciable respecto de parámetros e información inicial) se aplica inmediatamente a estos sistemas.
+
+\subsubsection{Sistemas acoplados de segundo orden}
+
+El procedimiento se extiende con idéntica naturalidad a sistemas formados por varias ecuaciones diferenciales simultáneas. Un modelo paradigmático en mecánica analítica es el de dos péndulos acoplados (uno suspendido del extremo de otro), descrito por un sistema de segundo orden de la forma:
+\[
+    \begin{cases}
+        u'' = g(t, u, u', v, v') \\
+        v'' = h(t, u, u', v, v')
+    \end{cases}
+\]
+con condiciones iniciales completas:
+\[
+    u(t_0) = u_{0,0}, \quad u'(t_0) = u_{0,1}, \quad v(t_0) = v_{0,0}, \quad v'(t_0) = v_{0,1}
+\]
+Para reducir este sistema a uno de primer orden, introducimos las variables de velocidad correspondientes a cada coordenada:
+\[
+    z = u', \qquad w = v'
+\]
+El sistema acoplado de primer orden asociado en $\mathbb{R}^4$ resulta:
+\[
+    \begin{cases}
+        u' = z \\
+        z' = g(t, u, z, v, w) \\
+        v' = w \\
+        w' = h(t, u, z, v, w)
+    \end{cases}
+    \iff
+    \begin{pmatrix} u \\ z \\ v \\ w \end{pmatrix}' = \begin{pmatrix} z \\ g(t, u, z, v, w) \\ w \\ h(t, u, z, v, w) \end{pmatrix} = f(t, u, z, v, w)
+\]
+con condiciones iniciales $(u(t_0), z(t_0), v(t_0), w(t_0)) = (u_{0,0}, u_{0,1}, v_{0,0}, v_{0,1})$.
+
+Calculando la matriz jacobiana de $f$ respecto de las variables de estado $(u, z, v, w)$:
+\[
+    Df(t, u, z, v, w) = \begin{pmatrix}
+        0 & 1 & 0 & 0 \\
+        \frac{\partial g}{\partial u} & \frac{\partial g}{\partial z} & \frac{\partial g}{\partial v} & \frac{\partial g}{\partial w} \\
+        0 & 0 & 0 & 1 \\
+        \frac{\partial h}{\partial u} & \frac{\partial h}{\partial z} & \frac{\partial h}{\partial v} & \frac{\partial h}{\partial w}
+    \end{pmatrix}
+\]
+Si las funciones $g$ y $h$ son de clase $\mathcal{C}^1$ respecto de sus argumentos espaciales, el campo $f$ es localmente Lipschitziano. Por tanto:
+\begin{itemize}
+    \item Existe una única trayectoria maximal $(I, u, z, v, w)$.
+    \item La correspondencia $(I, u, z, v, w) \longleftrightarrow (I, u, v)$ es biyectiva (las variables $z$ y $w$ son simplemente las derivadas de las trayectorias principales $u$ y $v$, por lo que no añaden grados de libertad analíticos).
+    \item Todos los resultados de prolongabilidad maximal, conjuntos límite y análisis cualitativo quedan automáticamente a disposición de estos sistemas físicos acoplados.
+\end{itemize}
