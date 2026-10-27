@@ -1,4 +1,4 @@
-\section{Teoría de Peano}
+﻿\section{Teoría de Peano}
 
 \subsection{El problema de Cauchy bajo continuidad y el fenómeno de no unicidad}
 
@@ -508,42 +508,291 @@ Antes de probar el teorema, vamos a ver un ejemplo de su aplicación.
     \]
 }
 
-\begin{proposición}[Esquema de Tonelli]
-    Sea $J=[t_0, t_0 + T]$, dividamoslo en $n$ subintervalos de longitud $\frac{T}{n}$:
-    % Tikzpic de la división del intervalo
-    \[
-        \begin{tikzpicture}[scale=1.5]
-            % Intervalo [t_0, t_0 + T]
-            \draw[thick] (1,0) -- (6,0);
-            % Divisiones
-            \foreach \x in {1, 2, 3, 4, 6} {
-                \draw (\x,0.1) -- (\x,-0.1);
-            }
-            % Etiquetas
-            \node[below] at (1,-0.1) {$t_0$};
-            \node[below] at (6,-0.1) {$t_0 + T$};
-            \node[below] at (2,-0.1) {$t_0 +\frac{T}{n}$};
-            \node[below] at (3,-0.1) {$t_0 +\frac{2T}{n}$};
-            \node[below] at (4,-0.1) {$t_0 +\frac{3T}{n}$};
+\begin{proposición}[Aproximaciones retardadas del esquema de Tonelli]
+    Sea $J = [t_0, t_0 + T]$ y dividamos el intervalo en $n \in \mathbb{N}$ subintervalos de longitud equiespaciada $\frac{T}{n}$:
 
-            % Etiqueta de ... entre t_0 + 3T/n y t_0 + T
-            \node[below] at (5,-0.1) {$\dots$};
-        \end{tikzpicture}
-    \]
+    \begin{center}
+    \begin{tikzpicture}[scale=1.5, >=stealth]
+        % Intervalo [t_0, t_0 + T]
+        \draw[thick] (1,0) -- (6,0);
+        % Divisiones
+        \foreach \x in {1, 2, 3, 4, 6} {
+            \draw (\x,0.1) -- (\x,-0.1);
+        }
+        % Etiquetas
+        \node[below] at (1,-0.1) {$t_0$};
+        \node[below] at (2,-0.1) {$t_0 + \frac{T}{n}$};
+        \node[below] at (3,-0.1) {$t_0 + \frac{2T}{n}$};
+        \node[below] at (4,-0.1) {$t_0 + \frac{3T}{n}$};
+        \node[below] at (5,-0.1) {$\dots$};
+        \node[below] at (6,-0.1) {$t_0 + T$};
+    \end{tikzpicture}
+    \end{center}
 
-    Ahora defino $u_n \in C (J; \, \mathbb{R}^N)$ de la siguiente manera:
+    Para cada $n \ge 1$, se define la sucesión de funciones $u_n \in \mathcal{C}(J; \, \mathbb{R}^N)$ de forma inductiva con retardo temporal $\frac{T}{n}$ mediante la fórmula unificada:
     \[
         u_n(t) =
         \begin{cases}
-            u_0 & t \in [t_0, t_0 + \frac{T}{n}] \\
-            u_0 + \int_{t_0}^{t- \frac{T}{n}} f(s, u_n(s)) \, ds & t \in (t_0 + \frac{T}{n}, t_0 + \frac{2T}{n}] \\
-            u_0 + 
-            \int_{t_0}^{t_0 + \frac{T}{n}} f(s, u_n(s)) + 
-            \left(
-            \int_{t_0 + \frac{T}{n}}^{t - \frac{T}{n}} f(\tau, u_n(\tau)) \, d\tau 
-            \right)
-            \, ds & t \in (t_0 + \frac{2T}{n}, t_0 + \frac{3T}{n}] \\
-            \vdots & \vdots \\
+            u_0 & \text{si } t \in \left[ t_0, \, t_0 + \frac{T}{n} \right] \\
+            u_0 + \int_{t_0}^{t - \frac{T}{n}} f(s, u_n(s)) \, ds & \text{si } t \in \left( t_0 + \frac{T}{n}, \, t_0 + T \right]
         \end{cases}
     \]
+    En cada subintervalo sucesivo $\left( t_0 + k\frac{T}{n}, \, t_0 + (k+1)\frac{T}{n} \right]$, el argumento del integrando solo evalúa $u_n(s)$ para $s \leq t - \frac{T}{n} \leq t_0 + k\frac{T}{n}$, donde la función ya ha sido completamente determinada en los pasos precedentes.
 \end{proposición}
+
+\begin{proof}[Demostración del Teorema Global de Peano (Tonelli, 1928)]
+    Construimos la familia de funciones continuas $\mathcal{F} = \{ u_n : n \geq 1 \} \subset \mathcal{C}(J; \, \mathbb{R}^N)$ mediante el esquema de aproximación de Tonelli y demostraremos que es relativamente compacta aplicando el Teorema de Ascoli-Arzelà.
+
+    \medskip
+
+    \textbf{1. Acotación uniforme de la familia $\mathcal{F}$:}
+
+    Por hipótesis, la función $f$ es continua y acotada en $J \times \mathbb{R}^N$, de modo que existe una constante $M > 0$ tal que:
+    \[
+        \|f(t, x)\| \leq M \qquad \forall (t, x) \in J \times \mathbb{R}^N
+    \]
+    Evaluamos la norma de $u_n(t)$ distinguiendo la posición de $t \in J$:
+    \begin{itemize}
+        \item Si $t \in \left[ t_0, \, t_0 + \frac{T}{n} \right]$:
+        \[
+            \|u_n(t)\| = \|u_0\|
+        \]
+        \item Si $t \in \left( t_0 + \frac{T}{n}, \, t_0 + T \right]$:
+        \[
+            \|u_n(t)\| \leq \|u_0\| + \int_{t_0}^{t - \frac{T}{n}} \|f(s, u_n(s))\| \, ds \leq \|u_0\| + M\left( t - \frac{T}{n} - t_0 \right) \leq \|u_0\| + MT
+        \]
+    \end{itemize}
+    Tomando el supremo para todo $t \in J$ y todo $n \geq 1$:
+    \[
+        \|u_n\|_\infty = \max_{t \in J} \|u_n(t)\| \leq \|u_0\| + MT \equiv R
+    \]
+    Por consiguiente, $\mathcal{F} \subset \overline{B_R(0)} \subset \mathcal{C}(J; \, \mathbb{R}^N)$, lo que demuestra que la familia $\mathcal{F}$ está uniformemente acotada.
+
+    \medskip
+
+    \textbf{2. Equicontinuidad de la familia $\mathcal{F}$:}
+
+    Sean $t, \tau \in J$. Sin pérdida de generalidad, supongamos $t \leq \tau$. Para comprobar que las funciones $u_n$ son uniformemente lipschitzianas con constante común $M$, analizamos tres configuraciones relativas:
+
+    \begin{itemize}
+        \item \textbf{Caso 1 ($t_0 \leq t \leq \tau \leq t_0 + \frac{T}{n}$):}
+        Ambos puntos pertenecen al tramo inicial constante:
+        \[
+            \|u_n(t) - u_n(\tau)\| = \|u_0 - u_0\| = 0 \leq M (\tau - t)
+        \]
+
+        \begin{center}
+        \begin{tikzpicture}[scale=1.2, >=stealth]
+            \draw[thick] (0,0) -- (5,0);
+            \draw (0,0.1) -- (0,-0.1) node[below] {$t_0$};
+            \draw (3.5,0.1) -- (3.5,-0.1) node[below] {$t_0 + \frac{T}{n}$};
+            \fill (1.2,0) circle (1.5pt) node[below] {$t$};
+            \fill (2.2,0) circle (1.5pt) node[below] {$\tau$};
+        \end{tikzpicture}
+        \end{center}
+
+        \item \textbf{Caso 2 ($t \in \left[ t_0, \, t_0 + \frac{T}{n} \right]$ y $\tau \in \left( t_0 + \frac{T}{n}, \, t_0 + T \right]$):}
+        El punto $t$ pertenece al tramo inicial y $\tau$ al tramo con integral:
+        \[
+            \|u_n(t) - u_n(\tau)\| = \left\| u_0 - \left( u_0 + \int_{t_0}^{\tau - \frac{T}{n}} f(s, u_n(s)) \, ds \right) \right\| \leq \int_{t_0}^{\tau - \frac{T}{n}} \|f(s, u_n(s))\| \, ds \leq M\left( \tau - \frac{T}{n} - t_0 \right)
+        \]
+        Como $t \leq t_0 + \frac{T}{n}$, tenemos $-\left( t_0 + \frac{T}{n} \right) \leq -t$, de donde:
+        \[
+            \|u_n(t) - u_n(\tau)\| \leq M(\tau - t) = M |\tau - t|
+        \]
+
+        \begin{center}
+        \begin{tikzpicture}[scale=1.2, >=stealth]
+            \draw[thick] (0,0) -- (5,0);
+            \draw (0,0.1) -- (0,-0.1) node[below] {$t_0$};
+            \draw (2.2,0.1) -- (2.2,-0.1) node[below] {$t_0 + \frac{T}{n}$};
+            \fill (1.0,0) circle (1.5pt) node[below] {$t$};
+            \fill (3.8,0) circle (1.5pt) node[below] {$\tau$};
+        \end{tikzpicture}
+        \end{center}
+
+        \item \textbf{Caso 3 ($t_0 + \frac{T}{n} \leq t \leq \tau \leq t_0 + T$):}
+        Ambos puntos pertenecen a la región definida por la integral:
+        \[
+            \|u_n(t) - u_n(\tau)\| = \left\| \int_{t_0}^{t - \frac{T}{n}} f(s, u_n(s)) \, ds - \int_{t_0}^{\tau - \frac{T}{n}} f(s, u_n(s)) \, ds \right\| = \left\| \int_{t - \frac{T}{n}}^{\tau - \frac{T}{n}} f(s, u_n(s)) \, ds \right\|
+        \]
+        \[
+            \leq \int_{t - \frac{T}{n}}^{\tau - \frac{T}{n}} \|f(s, u_n(s))\| \, ds \leq M \left[ \left( \tau - \frac{T}{n} \right) - \left( t - \frac{T}{n} \right) \right] = M (\tau - t) = M |\tau - t|
+        \]
+
+        \begin{center}
+        \begin{tikzpicture}[scale=1.2, >=stealth]
+            \draw[thick] (0,0) -- (5,0);
+            \draw (0,0.1) -- (0,-0.1) node[below] {$t_0$};
+            \draw (1.5,0.1) -- (1.5,-0.1) node[below] {$t_0 + \frac{T}{n}$};
+            \fill (2.6,0) circle (1.5pt) node[below] {$t$};
+            \fill (4.0,0) circle (1.5pt) node[below] {$\tau$};
+        \end{tikzpicture}
+        \end{center}
+    \end{itemize}
+
+    En todos los casos posibles se verifica:
+    \[
+        \|u_n(t) - u_n(\tau)\| \leq M |t - \tau| \qquad \forall t, \tau \in J, \quad \forall n \geq 1
+    \]
+    Dado $\varepsilon > 0$ arbitrario, eligiendo $\delta = \frac{\varepsilon}{M} > 0$ se garantiza que $|t - \tau| < \delta \implies \|u_n(t) - u_n(\tau)\| < \varepsilon$ para todo $n \ge 1$. En consecuencia, la familia $\mathcal{F}$ es equicontinua en $J$.
+
+    \medskip
+
+    \textbf{3. Convergencia uniforme mediante el Teorema de Ascoli-Arzelà:}
+
+    Siendo $\mathcal{F}$ uniformemente acotada y equicontinua en el intervalo compacto $J$, el Teorema de Ascoli-Arzelà asegura que $\mathcal{F}$ es relativamente compacta en el espacio de Banach $(\mathcal{C}(J; \, \mathbb{R}^N), \, \|\cdot\|_\infty)$.
+
+    Por compacidad secuencial, existe una subsucesión $\{u_{n_m}\}_{m \geq 1} \subset \mathcal{F}$ que converge uniformemente en $J$ a alguna función continua $u \in \mathcal{C}(J; \, \mathbb{R}^N)$:
+    \[
+        \lim_{m \to \infty} \|u_{n_m} - u\|_\infty = \lim_{m \to \infty} \max_{t \in J} \|u_{n_m}(t) - u(t)\| = 0
+    \]
+
+    \medskip
+
+    \textbf{4. Paso al límite y satisfacción de la ecuación integral:}
+
+    Verifiquemos que la función límite $u(t)$ satisface la ecuación integral de Volterra asociada al PVI:
+    \begin{itemize}
+        \item En $t = t_0$: para todo $m \geq 1$, $u_{n_m}(t_0) = u_0$. Por tanto:
+        \[
+            u(t_0) = \lim_{m \to \infty} u_{n_m}(t_0) = u_0
+        \]
+        \item Para cualquier $t \in (t_0, \, t_0 + T]$ fijo: puesto que $\frac{T}{n_m} \xrightarrow{m \to \infty} 0$, existe un índice $m_0 \in \mathbb{N}$ tal que $t > t_0 + \frac{T}{n_m}$ para todo $m \geq m_0$. Descomponemos:
+        \[
+            u_{n_m}(t) = u_0 + \int_{t_0}^{t - \frac{T}{n_m}} f(s, u_{n_m}(s)) \, ds = u_0 + \int_{t_0}^t f(s, u_{n_m}(s)) \, ds - \int_{t - \frac{T}{n_m}}^t f(s, u_{n_m}(s)) \, ds
+        \]
+        Acotamos el término residual de la integral sobre el tramo de retardo:
+        \[
+            \left\| \int_{t - \frac{T}{n_m}}^t f(s, u_{n_m}(s)) \, ds \right\| \leq \int_{t - \frac{T}{n_m}}^t \|f(s, u_{n_m}(s))\| \, ds \leq M \frac{T}{n_m} \xrightarrow{m \to \infty} 0
+        \]
+        Por consiguiente:
+        \[
+            u(t) = \lim_{m \to \infty} u_{n_m}(t) = u_0 + \lim_{m \to \infty} \int_{t_0}^t f(s, u_{n_m}(s)) \, ds
+        \]
+        Para permutar el límite con la integral, aplicamos el Teorema de la Convergencia Dominada de Lebesgue:
+        \begin{itemize}
+            \item \textbf{Convergencia puntual del integrando:} Para cada $s \in [t_0, t]$, la convergencia uniforme implica que $u_{n_m}(s) \to u(s)$ en $\mathbb{R}^N$. Al ser $f$ continua en $J \times \mathbb{R}^N$:
+            \[
+                \lim_{m \to \infty} f(s, u_{n_m}(s)) = f(s, u(s))
+            \]
+            \item \textbf{Dominación integrable:} $\|f(s, u_{n_m}(s))\| \leq M$ para todo $s \in [t_0, t]$ y todo $m \geq 1$, siendo la constante $M$ una función integrable en $[t_0, t]$.
+        \end{itemize}
+        Se deduce que:
+        \[
+            u(t) = u_0 + \int_{t_0}^t f(s, u(s)) \, ds \qquad \forall t \in J
+        \]
+    \end{itemize}
+
+    Dado que $u$ es continua y $f$ es continua, la función integrando $s \mapsto f(s, u(s))$ es continua en $J$. Por el Teorema Fundamental del Cálculo, $u$ es de clase $\mathcal{C}^1(J; \, \mathbb{R}^N)$ y satisface:
+    \[
+        u'(t) = f(t, u(t)) \quad \forall t \in J, \qquad u(t_0) = u_0
+    \]
+    Queda demostrado que $u$ es una solución globalmente definida en $J = [t_0, t_0 + T]$ del problema de valor inicial.
+\end{proof}
+
+\subsection{No unicidad de soluciones en el marco del Teorema de Peano}
+
+Conviene destacar y enfatizar que el Teorema de Peano es un teorema de pura existencia: bajo la sola continuidad de $f$, \textbf{la unicidad de soluciones se pierde en general}. El siguiente ejemplo ilustra con nitidez este fenómeno en un problema donde se satisfacen plenamente todas las hipótesis del Teorema Global de Peano (continuidad y acotación global).
+
+\ejemplo{
+    \textbf{Pérdida de unicidad con un campo continuo y acotado:}
+
+    Consideremos la función autónoma $f: \mathbb{R} \to \mathbb{R}$ definida mediante truncamiento:
+    \[
+        f(u) =
+        \begin{cases}
+            0 & \text{si } u \leq 0 \\
+            u^q & \text{si } 0 < u \leq 1 \quad (0 < q < 1) \\
+            1 & \text{si } u > 1
+        \end{cases}
+    \]
+    Analicemos las propiedades analíticas de $f$:
+    \begin{itemize}
+        \item \textbf{Continuidad:} En $u = 0$, $\displaystyle\lim_{u \to 0^-} f(u) = 0 = \lim_{u \to 0^+} u^q = f(0)$. En $u = 1$, $\displaystyle\lim_{u \to 1^-} u^q = 1 = \lim_{u \to 1^+} 1 = f(1)$. Por tanto, $f \in \mathcal{C}(\mathbb{R}; \mathbb{R})$.
+        \item \textbf{Acotación:} $0 \leq f(u) \leq 1$ para todo $u \in \mathbb{R}$, de modo que $f$ está globalmente acotada por $M = 1$.
+        \item \textbf{Carácter no Lipschitziano:} Calculando la derivada en $(0, 1)$:
+        \[
+            f'(u) = q u^{q-1} \xrightarrow{u \to 0^+} +\infty \qquad (\text{pues } q - 1 < 0)
+        \]
+        mientras que $f'(1^-) = q < 1$. La pendiente vertical en el origen impide que $f$ sea localmente Lipschitziana en $u = 0$.
+    \end{itemize}
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.3]
+        % Ejes
+        \draw[->] (-0.8,0) -- (2.8,0) node[right] {$u$};
+        \draw[->] (0,-0.3) -- (0,1.8) node[above] {$f(u)$};
+        
+        % u <= 0: f(u) = 0
+        \draw[thick, blue!80!black] (-0.7,0) -- (0,0);
+        
+        % 0 < u <= 1: f(u) = u^q
+        \draw[thick, blue!80!black, domain=0:1.4, samples=80]
+            plot (\x, {sqrt(\x/1.4)*1.2});
+            
+        % u > 1: f(u) = 1 (meseta)
+        \draw[thick, blue!80!black] (1.4,1.2) -- (2.5,1.2);
+        
+        % Líneas de referencia
+        \draw[dashed, gray] (1.4,0) node[below, black, font=\footnotesize] {$1$} -- (1.4,1.2);
+        \draw[dashed, gray] (0,1.2) node[left, black, font=\footnotesize] {$1$} -- (1.4,1.2);
+        
+        % Nodos informativos
+        \node[below left, font=\footnotesize] at (0,0) {$0$};
+        \node[blue!80!black, font=\footnotesize] at (0.7,1.1) {$f(u) = u^q$};
+        \draw[->, red!70!black] (0.2,0.6) -- (0.05,0.15) node[midway, right, font=\scriptsize, red!70!black] {$f'(0^+) = +\infty$};
+    \end{tikzpicture}
+    \end{center}
+
+    Al cumplirse las hipótesis del Teorema Global de Peano, el problema de valor inicial:
+    \[
+        \begin{cases}
+            u' = f(u) \\
+            u(0) = 0
+        \end{cases}
+    \]
+    admite al menos una solución en $[0, T]$ para todo $T > 0$. Mostremos que, de hecho, existen múltiples soluciones:
+
+    \begin{itemize}
+        \item \textbf{Solución trivial:} Puesto que $f(0) = 0$, la función idénticamente nula:
+        \[
+            u_0(t) \equiv 0 \qquad \forall t \in [0, T]
+        \]
+        es una solución perfectamente admisible del PVI.
+
+        \item \textbf{Solución positiva por despegue:} Para hallar una solución no trivial que escape del equilibrio en $u = 0$, consideramos el PVI regularizado con dato inicial $\varepsilon > 0$:
+        \[
+            \begin{cases}
+                u' = u^q \\
+                u(0) = \varepsilon > 0
+            \end{cases}
+        \]
+        Separando variables:
+        \[
+            u^{-q}(t) u'(t) = 1 \implies \frac{d}{dt} \left( \frac{u^{1-q}(t)}{1-q} \right) = 1 \implies \frac{u^{1-q}(t)}{1-q} = t + c
+        \]
+        Evaluando en $t = 0$:
+        \[
+            c = \frac{\varepsilon^{1-q}}{1-q} \implies \frac{u^{1-q}(t)}{1-q} = t + \frac{\varepsilon^{1-q}}{1-q}
+        \]
+        Multiplicando por $(1 - q)$ y despejando $u(t)$:
+        \[
+            u^{1-q}(t) = (1 - q)t + \varepsilon^{1-q} \implies u(t) = \left[ (1 - q)t + \varepsilon^{1-q} \right]^{\frac{1}{1-q}}
+        \]
+        Tomando el límite cuando $\varepsilon \to 0^+$:
+        \[
+            \varphi(t) = \lim_{\varepsilon \to 0^+} u(t) = \left[ (1 - q)t \right]^{\frac{1}{1-q}} \qquad \forall t \geq 0
+        \]
+        Comprobamos que $\varphi(t)$ es solución del problema original para $t \geq 0$ mientras $\varphi(t) \leq 1$:
+        \begin{itemize}
+            \item Condición inicial: $\varphi(0) = \left[ (1 - q)\cdot 0 \right]^{\frac{1}{1-q}} = 0$.
+            \item Ecuación diferencial: Derivando respecto a $t$:
+            \[
+                \varphi'(t) = \frac{1}{1 - q} (1 - q) \left[ (1 - q)t \right]^{\frac{1}{1-q} - 1} = \left[ (1 - q)t \right]^{\frac{q}{1-q}} = \left( \left[ (1 - q)t \right]^{\frac{1}{1-q}} \right)^q = \varphi^q(t)
+            \]
+        \end{itemize}
+    \end{itemize}
+
+    Puesto que $\varphi(t) > 0$ para todo $t > 0$, la trayectoria $\varphi(t)$ es estrictamente distinta de la solución idénticamente nula $u_0(t) \equiv 0$. Por consiguiente, el PVI posee al menos dos soluciones diferenciables distintas, confirmando que bajo la sola hipótesis de continuidad no se garantiza la unicidad.
+}
