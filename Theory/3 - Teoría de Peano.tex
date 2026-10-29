@@ -792,7 +792,493 @@ Conviene destacar y enfatizar que el Teorema de Peano es un teorema de pura exis
                 \varphi'(t) = \frac{1}{1 - q} (1 - q) \left[ (1 - q)t \right]^{\frac{1}{1-q} - 1} = \left[ (1 - q)t \right]^{\frac{q}{1-q}} = \left( \left[ (1 - q)t \right]^{\frac{1}{1-q}} \right)^q = \varphi^q(t)
             \]
         \end{itemize}
+        \item \textbf{Prolongación global de la solución positiva:} La solución $\varphi(t) = \left[ (1 - q)t \right]^{\frac{1}{1-q}}$ alcanza el valor $\varphi(t) = 1$ en el instante crítico $t = \frac{1}{1 - q}$. A partir de dicho punto, la trayectoria ingresa en la región $u \geq 1$, donde el campo es constante: $f(u) = 1$.
+        
+        Para continuar la trayectoria con diferenciabilidad para $t \geq \frac{1}{1 - q}$, resolvemos el problema de enlace:
+        \[
+            \begin{cases}
+                u'(t) = 1 \\
+                u\left(\frac{1}{1 - q}\right) = 1
+            \end{cases}
+        \]
+        Integrando inmediatamente:
+        \[
+            u(t) = t + c \implies 1 = \frac{1}{1 - q} + c \implies c = 1 - \frac{1}{1 - q}
+        \]
+        de modo que:
+        \[
+            u(t) = t - \frac{1}{1 - q} + 1 \geq 1 \qquad \forall t \geq \frac{1}{1 - q}
+        \]
+        Como las derivadas laterales en el punto de empalme $t = \frac{1}{1 - q}$ coinciden:
+        \[
+            \lim_{t \to \left(\frac{1}{1-q}\right)^-} \varphi'(t) = 1^q = 1, \qquad \lim_{t \to \left(\frac{1}{1-q}\right)^+} u'(t) = 1
+        \]
+        obtenemos una solución $\varphi \in \mathcal{C}^1([0, +\infty); \, \mathbb{R})$ globalmente definida:
+        \[
+            \varphi(t) =
+            \begin{cases}
+                \left[ (1 - q)t \right]^{\frac{1}{1-q}} & \text{si } 0 \leq t \leq \frac{1}{1 - q} \\[2ex]
+                t - \frac{1}{1 - q} + 1 & \text{si } t > \frac{1}{1 - q}
+            \end{cases}
+        \]
+
+        \item \textbf{Familia no numerable de soluciones por retardo:} Dado que la ecuación es autónoma y el origen es un equilibrio estricto ($f(0) = 0$), cualquier solución puede permanecer en reposo durante un tiempo arbitrario $c \geq 0$ antes de despegar. Definimos, para cada parámetro $c \geq 0$:
+        \[
+            \varphi_c(t) =
+            \begin{cases}
+                0 & \text{si } 0 \leq t \leq c \\[1ex]
+                \varphi(t - c) & \text{si } t > c
+            \end{cases}
+        \]
+        Cada una de estas funciones es de clase $\mathcal{C}^1([0, +\infty))$, verifica $\varphi_c(0) = 0$ y satisface la ecuación diferencial en todo $t \geq 0$. Concluimos así que existe un continuo de soluciones diferenciables distintas que parten del mismo dato inicial $u(0) = 0$.
     \end{itemize}
 
-    Puesto que $\varphi(t) > 0$ para todo $t > 0$, la trayectoria $\varphi(t)$ es estrictamente distinta de la solución idénticamente nula $u_0(t) \equiv 0$. Por consiguiente, el PVI posee al menos dos soluciones diferenciables distintas, confirmando que bajo la sola hipótesis de continuidad no se garantiza la unicidad.
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.1]
+        % Ejes
+        \draw[->] (-0.5,0) -- (5.6,0) node[right] {$t$};
+        \draw[->] (0,-0.3) -- (0,3.3) node[above] {$u(t)$};
+        
+        % Línea u = 1
+        \draw[dashed, gray!70] (0,1.2) node[left, font=\footnotesize, black] {$1$} -- (5.2,1.2);
+        
+        % Solución trivial
+        \draw[ultra thick, blue!80!black] (-0.2,0) -- (5.2,0);
+        \node[below, blue!80!black, font=\footnotesize] at (0.6,-0.1) {$u \equiv 0$};
+        
+        % Solución principal \varphi(t) (despega en c=0)
+        \draw[thick, red!80!black, domain=0:1.6, samples=50]
+            plot (\x, {1.2*(\x/1.6)*(\x/1.6)});
+        \draw[thick, red!80!black] (1.6,1.2) -- (3.4,3.0);
+        \node[above left, red!80!black, font=\footnotesize] at (1.6,1.2) {$\varphi(t)$};
+        \draw[dashed, gray!70] (1.6,0) node[below, font=\footnotesize, black] {$\frac{1}{1-q}$} -- (1.6,1.2);
+        
+        % Solución retardada \varphi_c(t) (despega en c=1.8)
+        \draw[ultra thick, green!60!black] (0,0) -- (1.8,0);
+        \fill[green!60!black] (1.8,0) circle (1.8pt);
+        \node[below, green!60!black, font=\footnotesize] at (1.8,-0.1) {$c$};
+        \draw[thick, green!60!black, domain=1.8:3.4, samples=50]
+            plot (\x, {1.2*((\x-1.8)/1.6)*((\x-1.8)/1.6)});
+        \draw[thick, green!60!black] (3.4,1.2) -- (4.8,2.6);
+        \node[right, green!60!black, font=\footnotesize] at (3.4,1.2) {$\varphi_c(t)$};
+        \draw[dashed, gray!70] (3.4,0) node[below, font=\footnotesize, black] {$c + \frac{1}{1-q}$} -- (3.4,1.2);
+    \end{tikzpicture}
+    \end{center}
+
+    Puesto que $\varphi(t) > 0$ para todo $t > 0$, la trayectoria $\varphi(t)$ es estrictamente distinta de la solución idénticamente nula $u_0(t) \equiv 0$. Por consiguiente, el PVI posee una familia no numerable de soluciones diferenciables distintas, confirmando que bajo la sola hipótesis de continuidad no se garantiza en absoluto la unicidad.
 }
+
+\subsection{El Teorema Local de Peano}
+
+El Teorema Global de Peano requiere de forma ineludible que el campo vectorial $f$ esté definido y globalmente acotado en todo el cilindro temporal $J \times \mathbb{R}^N$. Sin embargo, en la mayor parte de las aplicaciones prácticas el campo $f$ únicamente se encuentra definido en un entorno abierto $\Omega \subset \mathbb{R}^N$, careciendo además de acotación uniforme a priori.
+
+Mediante una técnica de truncamiento y extensión radial continua, es posible reducir el análisis sobre abiertos al marco global ya demostrado, garantizando la existencia local de soluciones.
+
+\begin{teorema}[Teorema local de Peano]
+    Sean $J = [t_0, t_0 + T]$, $\Omega \subset \mathbb{R}^N$ un conjunto abierto y $f \in \mathcal{C}(J \times \Omega; \, \mathbb{R}^N)$ un campo continuo.
+    
+    Entonces, para cada dato inicial $u_0 \in \Omega$, existe un tiempo $\delta = \delta(u_0) > 0$ tal que el problema de Cauchy:
+    \[
+        \begin{cases}
+            u' = f(t, u) \\
+            u(t_0) = u_0
+        \end{cases}
+    \]
+    admite al menos una solución $u \in \mathcal{C}^1([t_0, t_0 + \delta]; \, \Omega)$.
+\end{teorema}
+
+\begin{proof}
+    Como $\Omega$ es un conjunto abierto en $\mathbb{R}^N$ y $u_0 \in \Omega$, existe un radio $R > 0$ lo suficientemente pequeño para el cual la bola cerrada de centro $u_0$ y radio $R$ queda estrictamente contenida en $\Omega$:
+    \[
+        \overline{B_R(u_0)} = \left\{ x \in \mathbb{R}^N : \|x - u_0\| \leq R \right\} \subset \Omega
+    \]
+    El producto cartesiano $J \times \overline{B_R(u_0)}$ es un subconjunto compacto de $\mathbb{R} \times \mathbb{R}^N$. Puesto que $f$ es una función continua, el Teorema de Weierstrass garantiza que $f$ alcanza su máximo y se encuentra uniformemente acotada en dicho cilindro:
+    \[
+        M \equiv \|f\|_{\infty, \, J \times \overline{B_R(u_0)}} = \max_{\substack{t \in J \\ \|x - u_0\| \leq R}} \|f(t, x)\| < +\infty
+    \]
+    Para extender el campo a todo $J \times \mathbb{R}^N$ preservando la continuidad y la cota $M$, definimos la retracción radial continua sobre la bola cerrada $\tilde{u}: \mathbb{R}^N \to \overline{B_R(u_0)}$ dada por:
+    \[
+        \tilde{u} =
+        \begin{cases}
+            u & \text{si } \|u - u_0\| \leq R \\[1ex]
+            u_0 + R \, \dfrac{u - u_0}{\|u - u_0\|} & \text{si } \|u - u_0\| > R
+        \end{cases}
+    \]
+    A partir de dicha proyección, construimos el campo extendido $\tilde{f}: J \times \mathbb{R}^N \to \mathbb{R}^N$:
+    \[
+        \tilde{f}(t, u) = f(t, \tilde{u}) =
+        \begin{cases}
+            f(t, u) & \text{si } \|u - u_0\| \leq R \\[1ex]
+            f\left(t, \, u_0 + R \, \dfrac{u - u_0}{\|u - u_0\|}\right) & \text{si } \|u - u_0\| > R
+        \end{cases}
+    \]
+    La aplicación $\tilde{f}$ satisface las siguientes propiedades fundamentales:
+    \begin{itemize}
+        \item \textbf{Continuidad global:} Por composición de funciones continuas, $\tilde{f} \in \mathcal{C}(J \times \mathbb{R}^N; \, \mathbb{R}^N)$.
+        \item \textbf{Acotación global:} Para todo $(t, u) \in J \times \mathbb{R}^N$, se verifica que $\tilde{u} \in \overline{B_R(u_0)}$, por lo que:
+        \[
+            \|\tilde{f}\|_{\infty, \, J \times \mathbb{R}^N} = \sup_{(t, u) \in J \times \mathbb{R}^N} \|f(t, \tilde{u})\| = M < +\infty
+        \]
+    \end{itemize}
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.2]
+        % Dominio Omega
+        \draw[dashed, blue!50, fill=blue!5] plot[smooth cycle, tension=0.7] coordinates {(-2.5,-1.8) (2.5,-1.6) (2.8,2.0) (-0.5,2.3) (-2.6,1.2)};
+        \node[blue!80!black, font=\small] at (-1.8,1.6) {$\Omega$};
+        
+        % Bola B_R(u_0)
+        \draw[thick, fill=orange!15] (0,0) circle (1.3);
+        \node[below, font=\scriptsize] at (0,-1.35) {$\overline{B_R(u_0)}$};
+        \fill (0,0) circle (1.5pt) node[below left, font=\footnotesize] {$u_0$};
+        \draw[->, thick, gray] (0,0) -- (0.92,0.92) node[midway, above left, font=\scriptsize] {$R$};
+        
+        % Punto exterior u y su proyección
+        \coordinate (U) at (2.2, 0.8);
+        \coordinate (Uproj) at (1.22, 0.44);
+        \fill[red!70!black] (U) circle (1.5pt) node[right, font=\footnotesize] {$u$};
+        \fill[blue!70!black] (Uproj) circle (1.5pt) node[above left, font=\scriptsize] {$\tilde{u}$};
+        \draw[dashed, red!70!black] (0,0) -- (U);
+        
+        % Trayectoria local
+        \draw[thick, green!60!black, ->] (0,0) to[out=40, in=200] (0.7, 0.4) to[out=20, in=220] (1.1, 0.6);
+        \node[above, green!50!black, font=\scriptsize] at (0.6,0.5) {$\tilde{u}(t)$};
+        \fill[green!50!black] (1.1,0.6) circle (1.3pt) node[right, font=\scriptsize] {$\tilde{u}(t_0 + \delta)$};
+    \end{tikzpicture}
+    \end{center}
+
+    Consideremos ahora el problema regularizado global:
+    \[
+        (\tilde{P}) \quad
+        \begin{cases}
+            \tilde{u}' = \tilde{f}(t, \tilde{u}) \\
+            \tilde{u}(t_0) = u_0
+        \end{cases}
+    \]
+    Puesto que $\tilde{f}$ está definida, es continua y está acotada en todo $J \times \mathbb{R}^N$, podemos aplicar el \textbf{Teorema Global de Peano}, el cual asegura la existencia de al menos una solución $\tilde{u} \in \mathcal{C}^1(J; \, \mathbb{R}^N)$ de $(\tilde{P})$ definida en todo el intervalo $J = [t_0, t_0 + T]$.
+
+    Para vincular $\tilde{u}$ con el problema original $(P)$, basta asegurar que la trayectoria permanezca en el interior de la bola $\overline{B_R(u_0)}$. Utilizando la representación integral de $\tilde{u}$:
+    \[
+        \tilde{u}(t) - u_0 = \int_{t_0}^t \tilde{u}'(s) \, ds = \int_{t_0}^t \tilde{f}(s, \tilde{u}(s)) \, ds
+    \]
+    Tomando normas y acotando por el supremo $M$:
+    \[
+        \|\tilde{u}(t) - u_0\| \leq \int_{t_0}^t \|\tilde{f}(s, \tilde{u}(s))\| \, ds \leq M(t - t_0) \qquad \forall t \geq t_0
+    \]
+    Si escogemos:
+    \[
+        \delta = \min\left\{ T, \, \frac{R}{M} \right\} > 0
+    \]
+    entonces para todo $t \in [t_0, t_0 + \delta]$ se verifica de forma directa:
+    \[
+        \|\tilde{u}(t) - u_0\| \leq M \delta \leq M \left(\frac{R}{M}\right) = R
+    \]
+    Esto garantiza que $\tilde{u}(t) \in \overline{B_R(u_0)}$ para todo $t \in [t_0, t_0 + \delta]$. Por consiguiente, en dicho intervalo el campo extendido coincide con el campo inicial:
+    \[
+        \tilde{f}(t, \tilde{u}(t)) = f(t, \tilde{u}(t)) \qquad \forall t \in [t_0, t_0 + \delta]
+    \]
+    Definiendo la restricción $u = \tilde{u}|_{[t_0, t_0 + \delta]}$, tenemos que $u \in \mathcal{C}^1([t_0, t_0 + \delta]; \, \Omega)$ y satisface plenamente:
+    \[
+        u'(t) = \tilde{u}'(t) = \tilde{f}(t, \tilde{u}(t)) = f(t, u(t)) \quad \forall t \in [t_0, t_0 + \delta], \qquad u(t_0) = \tilde{u}(t_0) = u_0
+    \]
+    quedando así demostrado el Teorema Local de Peano.
+\end{proof}
+
+\subsection{Fenómeno de explosión en tiempo finito (Blow-up)}
+
+El Teorema Local de Peano establece que la existencia de soluciones está asegurada en un intervalo $[t_0, t_0 + \delta]$. Cabe preguntarse si toda solución puede extenderse globalmente a todo el intervalo temporal $J$ o si, por el contrario, pueden manifestarse obstrucciones analíticas.
+
+El siguiente ejemplo pone de manifiesto que, bajo falta de condiciones Lipschitzianas combinadas con crecimiento superlineal en infinito, las soluciones no sólo presentan no unicidad, sino que además pueden sufrir una \textbf{explosión en tiempo finito (blow-up)}, alcanzando el infinito en un tiempo estrictamente menor que la longitud del intervalo base.
+
+\ejemplo{
+    \textbf{Soluciones maximales con explosión en tiempo finito:}
+
+    Consideremos la función autónoma $f: \mathbb{R} \to \mathbb{R}$ con comportamiento superlineal en infinito:
+    \[
+        f(u) =
+        \begin{cases}
+            0 & \text{si } u \leq 0 \\
+            u^q & \text{si } 0 < u \leq 1 \quad (0 < q < 1) \\
+            u^p & \text{si } u \geq 1 \quad (p > 1)
+        \end{cases}
+    \]
+    y consideremos el problema de Cauchy con dato nulo:
+    \[
+        \begin{cases}
+            u' = f(u) \\
+            u(0) = 0
+        \end{cases}
+    \]
+    La función $f$ es continua en todo $\mathbb{R}$, pues en $u = 0$ y $u = 1$ coinciden los límites laterales ($f(0) = 0$ y $f(1) = 1$).
+    
+    Analicemos el comportamiento de la solución positiva despegando del reposo:
+    \begin{itemize}
+        \item \textbf{Fase sublineal ($0 \leq u \leq 1$):} En el intervalo temporal $0 \leq t \leq \frac{1}{1 - q}$, la ecuación viene gobernada por $u' = u^q$. Como se demostró anteriormente, la solución despegada verifica:
+        \[
+            \varphi(t) = \left[ (1 - q)t \right]^{\frac{1}{1-q}}
+        \]
+        alcanzando el valor umbral $\varphi\left(\frac{1}{1 - q}\right) = 1$ en el instante $t_1 = \frac{1}{1 - q}$.
+
+        \item \textbf{Fase superlineal ($u \geq 1$):} Para tiempos $t \geq \frac{1}{1 - q}$, mientras la solución se mantenga por encima de la unidad, la dinámica pasa a estar regida por $u' = u^p$ con $p > 1$:
+        \[
+            \begin{cases}
+                u'(t) = u^p(t) \\
+                u\left(\frac{1}{1 - q}\right) = 1
+            \end{cases}
+        \]
+        Integrando por separación de variables:
+        \[
+            u^{-p}(t) u'(t) = 1 \implies \frac{d}{dt} \left( \frac{u^{1-p}(t)}{1-p} \right) = 1 \implies \frac{u^{1-p}(t)}{1-p} = t + C
+        \]
+        Imponiendo la condición de enlace en $t_1 = \frac{1}{1 - q}$:
+        \[
+            \frac{1}{1 - p} = \frac{1}{1 - q} + C \implies C = \frac{1}{1 - p} - \frac{1}{1 - q}
+        \]
+        Sustituyendo el valor de la constante de integración:
+        \[
+            \frac{u^{1-p}(t)}{1-p} = t + \frac{1}{1 - p} - \frac{1}{1 - q}
+        \]
+        Multiplicando por $1 - p = -(p - 1) < 0$:
+        \[
+            u^{-(p-1)}(t) = 1 - (p - 1)t + \frac{p - 1}{1 - q} = 1 + \frac{p - 1}{1 - q} - (p - 1)t
+        \]
+        Despejando $u(t)$:
+        \[
+            u^{p-1}(t) = \frac{1}{1 + \frac{p - 1}{1 - q} - (p - 1)t} \implies u(t) = \left[ 1 + \frac{p - 1}{1 - q} - (p - 1)t \right]^{-\frac{1}{p-1}}
+        \]
+    \end{itemize}
+
+    \textbf{Determinación del tiempo de explosión:}
+
+    Nótese que el denominador de $u(t)$ se anula cuando:
+    \[
+        1 + \frac{p - 1}{1 - q} - (p - 1)\tau = 0 \iff (p - 1)\tau = 1 + \frac{p - 1}{1 - q}
+    \]
+    Dividiendo entre $p - 1$:
+    \[
+        \tau = \frac{1}{p - 1} + \frac{1}{1 - q}
+    \]
+    Cuando $t \to \tau^-$, la solución diverge:
+    \[
+        \lim_{t \to \tau^-} u(t) = +\infty
+    \]
+    Por consiguiente, la trayectoria $\varphi(t)$ está definida en el intervalo acotado $[0, \tau)$ y viene expresada de forma cerrada por:
+    \[
+        \varphi(t) =
+        \begin{cases}
+            \left[ (1 - q)t \right]^{\frac{1}{1-q}} & \text{si } 0 \leq t \leq \frac{1}{1 - q} \\[2ex]
+            \left[ 1 + \frac{p - 1}{1 - q} - (p - 1)t \right]^{-\frac{1}{p-1}} & \text{si } \frac{1}{1 - q} < t < \tau
+        \end{cases}
+    \]
+
+    De igual modo, combinando el fenómeno de despegue diferido con la explosión, para cualquier valor de retardo $c \geq 0$, la función:
+    \[
+        \varphi_c(t) =
+        \begin{cases}
+            0 & \text{si } 0 \leq t \leq c \\[1ex]
+            \varphi(t - c) & \text{si } c < t < c + \tau
+        \end{cases}
+    \]
+    es solución maximal de $(P)$, encontrándose definida en $[0, c + \tau)$ y sufriendo blow-up exactamente en el instante $t = c + \tau$.
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.1]
+        % Ejes
+        \draw[->] (-0.5,0) -- (6.0,0) node[right] {$t$};
+        \draw[->] (0,-0.3) -- (0,3.5) node[above] {$u(t)$};
+        
+        % Asíntota en \tau
+        \draw[dashed, red!80!black] (2.8,0) node[below, font=\footnotesize, black] {$\tau$} -- (2.8,3.3);
+        % Asíntota en c + \tau
+        \draw[dashed, green!60!black] (4.8,0) node[below, font=\footnotesize, black] {$c + \tau$} -- (4.8,3.3);
+        
+        % Línea u = 1
+        \draw[dashed, gray!60] (0,1.0) node[left, font=\footnotesize, black] {$1$} -- (5.0,1.0);
+        
+        % Solución trivial
+        \draw[ultra thick, blue!80!black] (-0.2,0) -- (5.8,0);
+        \node[below, blue!80!black, font=\footnotesize] at (0.5,-0.1) {$u \equiv 0$};
+        
+        % Curva \varphi(t) (despega en 0, explota en \tau = 2.8)
+        \draw[thick, red!80!black, domain=0:1.3, samples=40]
+            plot (\x, {1.0*(\x/1.3)*(\x/1.3)});
+        \draw[thick, red!80!black, domain=1.3:2.65, samples=50]
+            plot (\x, {1.0 / (1.0 - ((\x - 1.3)/(2.8 - 1.3))*0.75)});
+        \node[above left, red!80!black, font=\footnotesize] at (2.4,2.5) {$\varphi(t)$};
+        \draw[dashed, gray!70] (1.3,0) node[below, font=\footnotesize, black] {$\frac{1}{1-q}$} -- (1.3,1.0);
+        
+        % Curva \varphi_c(t) (despega en c = 2.0, explota en 4.8)
+        \draw[ultra thick, green!60!black] (0,0) -- (2.0,0);
+        \fill[green!60!black] (2.0,0) circle (1.8pt);
+        \node[below, green!60!black, font=\footnotesize] at (2.0,-0.1) {$c$};
+        \draw[thick, green!60!black, domain=2.0:3.3, samples=40]
+            plot (\x, {1.0*((\x - 2.0)/1.3)*((\x - 2.0)/1.3)});
+        \draw[thick, green!60!black, domain=3.3:4.65, samples=50]
+            plot (\x, {1.0 / (1.0 - ((\x - 3.3)/(4.8 - 3.3))*0.75)});
+        \node[above left, green!60!black, font=\footnotesize] at (4.5,2.5) {$\varphi_c(t)$};
+    \end{tikzpicture}
+    \end{center}
+}
+
+\begin{observación}
+    Este análisis revela una dicotomía crucial sobre la prolongabilidad de soluciones:
+    \begin{itemize}
+        \item Todas las funciones $\varphi_c(t)$ son \textbf{soluciones maximales} (es decir, no admiten prolongación estricta a la derecha), si bien sus intervalos de existencia dependen continuamente del retardo $c$ y explotan en tiempos distintos $c + \tau$.
+        \item Las soluciones maximales del problema de Cauchy son explosivas (su norma diverge al aproximarse al extremo del intervalo temporal) o están globalmente definidas en todo $[0, T]$ (como la solución de equilibrio $u_0 \equiv 0$).
+    \end{itemize}
+\end{observación}
+
+\subsection{Elementos de teoría de conjuntos y el Lema de Kuratowski-Zorn}
+
+Para formalizar rigurosamente la idea de que cualquier solución local puede prolongarse sucesivamente hasta alcanzar una barrera infranqueable (una solución maximal), no basta con inducir sobre pasos discretos, ya que la familia de posibles prolongaciones puede no ser numerable. La herramienta matemática apropiada procede de la teoría axiomática de conjuntos y del estudio de las estructuras de orden.
+
+\begin{definición}[Conjunto parcialmente ordenado y relaciones de orden]
+    Sea $X$ un conjunto no vacío. Una relación binaria $\leq$ sobre $X$ es una \textbf{relación de orden} si verifica para todo $x, y, z \in X$:
+    \begin{itemize}
+        \item \textbf{Reflexiva:} $x \leq x$.
+        \item \textbf{Antisimétrica:} Si $x \leq y$ e $y \leq x$, entonces $x = y$.
+        \item \textbf{Transitiva:} Si $x \leq y$ e $y \leq z$, entonces $x \leq z$.
+    \end{itemize}
+    El par $(X, \leq)$ recibe el nombre de \textbf{conjunto parcialmente ordenado}.
+    
+    Además:
+    \begin{itemize}
+        \item El orden $\leq$ se dice \textbf{total} si para cualesquiera $x, y \in X$ se cumple que $x \leq y$ o bien $y \leq x$.
+        \item El orden se denomina \textbf{parcial} cuando no es total (existen pares de elementos incomparables).
+    \end{itemize}
+\end{definición}
+
+\begin{definición}[Cadena]
+    Sea $(X, \leq)$ un conjunto parcialmente ordenado. Un subconjunto no vacío $C \subseteq X$ se denomina \textbf{cadena} si el subconjunto $(C, \leq)$ está totalmente ordenado; es decir:
+    \[
+        \forall c_1, c_2 \in C \implies (c_1 \leq c_2 \quad \text{o bien} \quad c_2 \leq c_1)
+    \]
+\end{definición}
+
+\begin{definición}[Conjunto inductivo]
+    Un conjunto parcialmente ordenado $(X, \leq)$ se dice \textbf{inductivo} si toda cadena $C \subseteq X$ posee una \textbf{cota superior} en $X$. Esto es, existe un elemento $s \in X$ (denotado $s(C)$) tal que:
+    \[
+        c \leq s \qquad \forall c \in C
+    \]
+\end{definición}
+
+El resultado angular formulado independientemente por Kazimierz Kuratowski (1922) y Max Zorn (1935) afirma que la condición de inductividad garantiza la existencia de elementos no prolongables:
+
+\begin{lema}[Lema de Kuratowski-Zorn (1922--1935)]
+    Sea $(X, \leq)$ un conjunto parcialmente ordenado inductivo no vacío. Entonces, toda cadena $C \subseteq X$ está acotada por un \textbf{elemento maximal} $m \in X$.
+    
+    Es decir, existe $m \in X$ tal que:
+    \begin{itemize}
+        \item $c \leq m$ para todo $c \in C$.
+        \item Si existe algún $x \in X$ que satisface $m \leq x$, entonces necesariamente $x = m$.
+    \end{itemize}
+\end{lema}
+
+\begin{observación}[Axiomática de Zermelo-Fraenkel y el Axioma de Elección]
+    Dentro del sistema axiomático de Zermelo-Fraenkel ($\text{ZF}$), el Lema de Kuratowski-Zorn es lógicamente equivalente al \textbf{Axioma de Elección} ($\text{AC}$): dada cualquier familia de conjuntos no vacíos $\{S_\lambda\}_{\lambda \in \Lambda}$, existe una función de elección que selecciona un elemento de cada conjunto:
+    \[
+        \prod_{\lambda \in \Lambda} S_\lambda \neq \emptyset
+    \]
+    En el marco del Análisis de Ecuaciones Diferenciales Ordinarias sin unicidad Lipschitziana, \textbf{no es posible eliminar el axioma de elección} para fundamentar la existencia de soluciones maximales.
+\end{observación}
+
+\subsection{Existencia de la solución maximal}
+
+Abordamos a continuación la construcción rigurosa de las soluciones maximales para problemas de Cauchy generales, empleando el marco de orden inductivo establecido por el Lema de Zorn.
+
+Consideremos el problema de Cauchy:
+\[
+    (P) \quad
+    \begin{cases}
+        u' = f(t, u) \\
+        u(t_0) = u_0
+    \end{cases}
+\]
+donde el intervalo base $J$ es de la forma $J = [t_0, t_0 + T]$ o bien $J = [t_0, +\infty)$, $\Omega \subset \mathbb{R}^N$ es un conjunto abierto, $f \in \mathcal{C}(J \times \Omega; \, \mathbb{R}^N)$ y $u_0 \in \Omega$.
+
+Por el Teorema Local de Peano, existe al menos un $\delta > 0$ tal que $(P)$ admite una solución $u \in \mathcal{C}^1([t_0, t_0 + \delta]; \, \Omega)$. Por tanto, el conjunto de soluciones no es vacío.
+
+Definimos el espacio de todas las soluciones del problema $(P)$ definidas sobre subintervalos de $J$:
+\[
+    \Sigma = \left\{ (I, u) : I \subseteq J \text{ es un intervalo con } t_0 \in I, \text{ y } u: I \to \Omega \text{ es solución de } (P) \text{ en } I \right\}
+\]
+donde los dominios $I$ son intervalos a derechas de la forma $[t_0, t_0 + h]$, $[t_0, t_0 + h)$ o $[t_0, +\infty)$.
+
+\begin{definición}[Prolongación a la derecha y relación de orden]
+    Sean $(I_1, u_1), \, (I_2, u_2) \in \Sigma$. Diremos que $(I_2, u_2)$ es una \textbf{prolongación a la derecha} de $(I_1, u_1)$ si:
+    \[
+        I_1 \subseteq I_2 \qquad \text{y} \qquad u_2\big|_{I_1} = u_1
+    \]
+    En tal caso, denotamos la relación escribiendo:
+    \[
+        (I_1, u_1) \leq (I_2, u_2)
+    \]
+\end{definición}
+
+La relación $\leq$ confiere a $\Sigma$ una estructura de orden:
+\begin{itemize}
+    \item $(\Sigma, \leq)$ es un \textbf{conjunto ordenado}.
+    \item El orden es \textbf{parcial} y no total: debido a la pérdida de unicidad constatada en los ejemplos anteriores, dos soluciones que bifurcan a partir de un instante temporal común dejan de coincidir, por lo que ninguna de las dos es prolongación de la otra.
+\end{itemize}
+
+\subsubsection{Cadenas en el espacio de soluciones}
+
+Para ilustrar la existencia de cadenas en $(\Sigma, \leq)$, consideremos una solución local $u \in \mathcal{C}^1([t_0, t_0 + \delta]; \, \Omega)$. Para cada $n \geq 1$, restringimos $u$ a intervalos crecientes:
+\[
+    I_n = \left[ t_0, \, t_0 + \delta - \frac{1}{n} \right], \qquad u_n = u\big|_{I_n}
+\]
+El conjunto:
+\[
+    \mathcal{C} = \left\{ (I_n, u_n) : n \geq 1 \right\} \subset \Sigma
+\]
+es una cadena estrictamente creciente en $(\Sigma, \leq)$, pues para cualesquiera $n < m$ se tiene $I_n \subset I_m$ y $u_m\big|_{I_n} = u_n$, de suerte que $(I_n, u_n) \leq (I_m, u_m)$.
+
+\begin{lema}[Inductividad del espacio de soluciones]
+    El conjunto parcialmente ordenado $(\Sigma, \leq)$ es inductivo.
+\end{lema}
+
+\begin{proof}
+    Sea $\mathcal{C} = \{ (I_\alpha, u_\alpha) : \alpha \in A \} \subseteq \Sigma$ una cadena cualquiera en $\Sigma$. Debemos construir una cota superior $(I_{\sup}, u_{\sup}) \in \Sigma$ de dicha cadena.
+    
+    Definimos el intervalo temporal candidato como la unión de los dominios:
+    \[
+        I_{\sup} = \bigcup_{\alpha \in A} I_\alpha
+    \]
+    Puesto que cada $I_\alpha$ es un intervalo conexo que contiene al punto inicial $t_0$, y la familia $\{I_\alpha\}_{\alpha \in A}$ está totalmente ordenada por inclusión (al ser $\mathcal{C}$ una cadena), la unión arbitraria $I_{\sup}$ es un intervalo conexo de $\mathbb{R}$ contenido en $J$ que contiene a $t_0$.
+
+    Definimos a continuación la función $u_{\sup}: I_{\sup} \to \Omega$. Dado cualquier punto $t \in I_{\sup}$, existe algún índice $\alpha \in A$ tal que $t \in I_\alpha$. Definimos:
+    \[
+        u_{\sup}(t) = u_\alpha(t)
+    \]
+    Comprobemos que $u_{\sup}$ está bien definida de manera unívoca: si $t$ pertenece a dos intervalos $I_\alpha$ e $I_\beta$, al ser $\mathcal{C}$ una cadena, uno de los pares prolonga al otro; supongamos sin pérdida de generalidad que $(I_\alpha, u_\alpha) \leq (I_\beta, u_\beta)$. Entonces $I_\alpha \subseteq I_\beta$ y $u_\beta\big|_{I_\alpha} = u_\alpha$, lo que implica:
+    \[
+        u_\beta(t) = u_\alpha(t)
+    \]
+    Por consiguiente, el valor $u_{\sup}(t)$ no depende del representante seleccionado.
+
+    Además, dado cualquier $t \in I_{\sup}$, existe un entorno de $t$ restringido a algún intervalo $I_\alpha$ donde $u_{\sup}$ coincide con $u_\alpha$. Al ser $u_\alpha \in \mathcal{C}^1(I_\alpha; \, \Omega)$ solución de $(P)$, $u_{\sup}$ es derivable en todo $I_{\sup}$ y satisface:
+    \[
+        u_{\sup}'(t) = u_\alpha'(t) = f(t, u_\alpha(t)) = f(t, u_{\sup}(t)) \qquad \forall t \in I_{\sup}
+    \]
+    y evalúa en el dato inicial $u_{\sup}(t_0) = u_\alpha(t_0) = u_0$.
+    
+    Por consiguiente, $(I_{\sup}, u_{\sup}) \in \Sigma$. Finalmente, para todo $\alpha \in A$ se cumple por construcción $I_\alpha \subseteq I_{\sup}$ y $u_{\sup}\big|_{I_\alpha} = u_\alpha$, lo que demuestra:
+    \[
+        (I_\alpha, u_\alpha) \leq (I_{\sup}, u_{\sup}) \qquad \forall \alpha \in A
+    \]
+    Así pues, $(I_{\sup}, u_{\sup})$ es una cota superior de la cadena $\mathcal{C}$ en $\Sigma$, demostrando que $(\Sigma, \leq)$ es inductivo.
+\end{proof}
+
+Con este lema queda expedito el camino hacia el teorema principal de prolongabilidad:
+
+\begin{teorema}[Existencia de solución maximal]
+    El conjunto $(\Sigma, \leq)$ posee al menos un elemento maximal $(I, u)$.
+    
+    Es decir, existe una solución de $(P)$ que no es estrictamente prolongable a la derecha.
+\end{teorema}
+
+\begin{proof}
+    En virtud del Teorema Local de Peano, el conjunto $\Sigma$ de soluciones de $(P)$ no es vacío ($\Sigma \neq \emptyset$). Por el lema anterior, $(\Sigma, \leq)$ es un conjunto parcialmente ordenado e inductivo.
+    
+    Aplicando directamente el \textbf{Lema de Kuratowski-Zorn}, se deduce la existencia de al menos un elemento maximal $(I, u) \in \Sigma$. Por definición de maximalidad, no existe ningún elemento $(I_2, u_2) \in \Sigma$ tal que $(I, u) \leq (I_2, u_2)$ con $I \subsetneq I_2$, por lo que $u$ no es susceptible de ninguna extensión estricta como solución de $(P)$.
+\end{proof}
