@@ -1282,3 +1282,436 @@ Con este lema queda expedito el camino hacia el teorema principal de prolongabil
     
     Aplicando directamente el \textbf{Lema de Kuratowski-Zorn}, se deduce la existencia de al menos un elemento maximal $(I, u) \in \Sigma$. Por definición de maximalidad, no existe ningún elemento $(I_2, u_2) \in \Sigma$ tal que $(I, u) \leq (I_2, u_2)$ con $I \subsetneq I_2$, por lo que $u$ no es susceptible de ninguna extensión estricta como solución de $(P)$.
 \end{proof}
+
+
+\subsubsection{Aplicaciones clásicas del Lema de Kuratowski-Zorn}
+
+El principio inductivo formulado por Kuratowski y Zorn constituye una pieza angular en múltiples ramas de las matemáticas modernas. Señalamos algunas de sus aplicaciones más representativas:
+
+\begin{itemize}
+    \item \textbf{Existencia de bases en espacios vectoriales arbitrarios:} Todo espacio vectorial (de dimensión finita o infinita) posee una base (base de Hamel). La familia de subconjuntos linealmente independientes, ordenada por inclusión, es inductiva y su elemento maximal es una base.
+    \item \textbf{Teorema de Tychonoff (1930):} Si $\{K_\alpha\}_{\alpha \in A}$ es una familia arbitraria (posiblemente infinita o no numerable) de espacios topológicos compactos, entonces el espacio producto dotado de la topología producto:
+    \[
+        \prod_{\alpha \in A} K_\alpha
+    \]
+    es compacto.
+    \item \textbf{Teorema de Krull (1929):} En cualquier anillo conmutativo unitario no nulo $A$, todo ideal propio $I \subsetneq A$ está contenido en al menos un ideal maximal $\mathfrak{m} \subset A$.
+    \item \textbf{Teorema de Hahn-Banach (1929):} En un espacio vectorial normado real $E$, si $A, K \subset E$ son conjuntos convexos no vacíos disjuntos con $A$ cerrado y $K$ compacto, existe un hiperplano cerrado que separa estrictamente a ambos conjuntos.
+\end{itemize}
+
+\subsection{Adaptación de los Teoremas Fundamentales al marco de Peano}
+
+Bajo la sola hipótesis de continuidad $f \in \mathcal{C}$, hemos probado que el espacio de soluciones $(\Sigma, \leq)$ admite al menos un elemento maximal $(I, u)$, que no puede prolongarse estrictamente a la derecha. Sin embargo, al no disponer de unicidad, el comportamiento global puede diferir entre distintas soluciones maximales que parten del mismo punto inicial. Pasamos a adaptar los Teoremas Fundamentales de prolongabilidad a este marco general.
+
+\subsubsection{Primer Teorema Fundamental}
+
+\begin{teorema}[Primer Teorema Fundamental en el marco de Peano]
+    Sean $J = [t_0, t_0 + T]$, $f \in \mathcal{C}(J \times \mathbb{R}^N; \, \mathbb{R}^N)$, $u_0 \in \mathbb{R}^N$, y sea $(I, u)$ una solución maximal del problema de Cauchy:
+    \[
+        (P) \quad
+        \begin{cases}
+            u' = f(t, u) \\
+            u(t_0) = u_0
+        \end{cases}
+    \]
+    Entonces se verifica una y solo una de las siguientes posibilidades:
+    \begin{itemize}
+        \item O bien la solución maximal alcanza el extremo final del intervalo temporal:
+        \[
+            I = J = [t_0, t_0 + T]
+        \]
+        \item O bien existe un instante $T_{\max} \in (t_0, t_0 + T]$ tal que:
+        \[
+            I = [t_0, T_{\max})
+        \]
+        y en tal caso la solución explota en norma en tiempo finito:
+        \[
+            \lim_{t \nearrow T_{\max}} \|u(t)\| = +\infty
+        \]
+    \end{itemize}
+\end{teorema}
+
+\begin{observación}
+    Obsérvese que, debido a la no unicidad, distintas soluciones maximales con el mismo dato inicial pueden presentar comportamientos diametralmente distintos: una solución particular puede existir globalmente en todo $J$, mientras que otra puede sufrir explosión en tiempo finito $T_{\max} < t_0 + T$, como ocurría en el ejemplo de bifurcación con no linealidad $u^p$ para $p > 1$.
+\end{observación}
+
+\begin{proof}
+    Si $I = J$, la solución está definida en todo el dominio temporal y la demostración concluye.
+    
+    Supongamos, por tanto, que $I \subsetneq J$. Al ser $I \subset [t_0, t_0 + T]$ un intervalo conexo con $t_0 \in I$ no prolongable a la derecha, debe existir $T_{\max} \in (t_0, t_0 + T]$ tal que:
+    \[
+        I = [t_0, T_{\max})
+    \]
+    (el caso $I = [t_0, T_{\max}]$ con $T_{\max} < t_0 + T$ queda excluido, pues en tal caso $u(T_{\max}) \in \mathbb{R}^N$ y el Teorema Local de Peano permitiría prolongar $u$ estrictamente a la derecha de $T_{\max}$, contradiciendo la maximalidad de $(I, u)$).
+
+    Consideremos la órbita (imagen) de la trayectoria:
+    \[
+        \mathcal{P} = \left\{ u(t) : t \in [t_0, T_{\max}) \right\} \subset \mathbb{R}^N
+    \]
+    Demostraremos que si $\mathcal{P}$ estuviera acotada, se produciría una contradicción. Razonemos por reducción al absurdo suponiendo que $\mathcal{P}$ es un conjunto acotado en $\mathbb{R}^N$.
+
+    Por el Teorema de Bolzano-Weierstrass, al ser $\mathcal{P}$ acotada, su clausura $\overline{\mathcal{P}}$ es un conjunto compacto en $\mathbb{R}^N$. Consideremos el conjunto cilíndrico compacto:
+    \[
+        K_0 = [t_0, T_{\max}] \times \overline{\mathcal{P}} \subset J \times \mathbb{R}^N
+    \]
+    Al ser $f$ continua en el compacto $K_0$, el Teorema de Weierstrass garantiza que $f$ está acotada en $K_0$:
+    \[
+        M = \max_{(t, x) \in K_0} \|f(t, x)\| < +\infty
+    \]
+    En consecuencia, la derivada de la trayectoria está uniformemente acotada:
+    \[
+        \|u'(t)\| = \|f(t, u(t))\| \leq M \qquad \forall t \in [t_0, T_{\max})
+    \]
+    Integrando entre cualesquiera $t_1, t_2 \in [t_0, T_{\max})$:
+    \[
+        \|u(t_2) - u(t_1)\| = \left\| \int_{t_1}^{t_2} f(s, u(s)) \, ds \right\| \leq \int_{t_1}^{t_2} \|f(s, u(s))\| \, ds \leq M |t_2 - t_1|
+    \]
+    Tomando una sucesión cualquiera $\{t_n\}_{n \geq 1} \subset [t_0, T_{\max})$ tal que $t_n \nearrow T_{\max}$, la estimación anterior demuestra que $\{u(t_n)\}_{n \geq 1}$ es una sucesión de Cauchy en $\mathbb{R}^N$:
+    \[
+        \|u(t_n) - u(t_m)\| \leq M |t_n - t_m| \xrightarrow{n, m \to \infty} 0
+    \]
+    Por la completitud de $\mathbb{R}^N$, existe el límite:
+    \[
+        u_* = \lim_{t \nearrow T_{\max}} u(t) \in \overline{\mathcal{P}} \subset \mathbb{R}^N
+    \]
+    Podemos entonces definir la función extendida $\widetilde{u}: [t_0, T_{\max}] \to \mathbb{R}^N$ mediante:
+    \[
+        \widetilde{u}(t) = \begin{cases}
+            u(t) & \text{si } t \in [t_0, T_{\max}) \\
+            u_* & \text{si } t = T_{\max}
+        \end{cases}
+    \]
+    La función $\widetilde{u}$ es continua en $[t_0, T_{\max}]$ y satisface la ecuación integral:
+    \[
+        \widetilde{u}(t) = u_0 + \int_{t_0}^t f(s, \widetilde{u}(s)) \, ds \qquad \forall t \in [t_0, T_{\max}]
+    \]
+    Por tanto, $\widetilde{u} \in \mathcal{C}^1([t_0, T_{\max}]; \, \mathbb{R}^N)$ es solución de $(P)$. Si $T_{\max} < t_0 + T$, el Teorema Local de Peano aplicado al nuevo dato inicial $\widetilde{u}(T_{\max}) = u_*$ permite extender la solución a un intervalo estrictamente mayor $[t_0, T_{\max} + \delta]$, lo que contradice la maximalidad de $(I, u)$. Si $T_{\max} = t_0 + T$, tendríamos $([t_0, t_0 + T], \widetilde{u}) \in \Sigma$, contradiciendo de nuevo la maximalidad de $([t_0, t_0 + T), u)$.
+
+    Por consiguiente, la hipótesis de que $\mathcal{P}$ está acotada es insostenible: el conjunto $\mathcal{P}$ no está acotado, lo que implica:
+    \[
+        \lim_{t \nearrow T_{\max}} \|u(t)\| = +\infty
+    \]
+\end{proof}
+
+\subsubsection{Segundo Teorema Fundamental}
+
+\begin{teorema}[Segundo Teorema Fundamental en el marco de Peano]
+    Sean $J = [t_0, +\infty)$, $f \in \mathcal{C}(J \times \mathbb{R}^N; \, \mathbb{R}^N)$, $u_0 \in \mathbb{R}^N$, y sea $(I, u)$ una solución maximal del problema $(P)$.
+    
+    Entonces, o bien $I = [t_0, +\infty)$, o bien existe $T_{\max} < +\infty$ tal que $I = [t_0, T_{\max})$, y en tal caso:
+    \[
+        \lim_{t \nearrow T_{\max}} \|u(t)\| = +\infty
+    \]
+\end{teorema}
+
+\begin{proof}
+    El esquema de demostración reproduce el del caso no autónomo lipschitziano: si $T_{\max} < +\infty$, consideramos cualquier intervalo acotado de la forma $[t_0, T_1]$ con $T_1 > T_{\max}$. Restringiendo la solución maximal a este intervalo, la hipótesis de no explosión generaría un punto límite $u_* \in \mathbb{R}^N$ en $t = T_{\max}$, permitiendo una prolongación estricta por el Teorema Local de Peano, en abierta contradicción con la maximalidad de $(I, u)$.
+\end{proof}
+
+\subsubsection{Tercer Teorema Fundamental}
+
+\begin{teorema}[Tercer Teorema Fundamental en el marco de Peano]
+    Sean $J = [t_0, +\infty)$, $\Omega \subsetneq \mathbb{R}^N$ un abierto no acotado, $f \in \mathcal{C}(J \times \Omega; \, \mathbb{R}^N)$, $u_0 \in \Omega$, y sea $(I, u)$ una solución maximal del problema $(P)$.
+    
+    Entonces, $I = [t_0, T_{\max})$ con $T_{\max} \leq +\infty$. Si $T_{\max} < +\infty$, se cumple necesariamente al menos una de las dos condiciones siguientes:
+    \[
+        \lim_{t \nearrow T_{\max}} \|u(t)\| = +\infty
+    \]
+    o bien existe una sucesión temporal $t_n \nearrow T_{\max}$ y puntos $u_n = u(t_n) \in \Omega$ tales que la trayectoria se aproxima a la frontera de $\Omega$:
+    \[
+        \lim_{n \to \infty} u(t_n) = u_* \in \partial \Omega
+    \]
+\end{teorema}
+
+\subsubsection{Cuarto Teorema Fundamental}
+
+\begin{teorema}[Cuarto Teorema Fundamental en el marco de Peano]
+    Sean $J = [t_0, t_0 + T]$, $\Omega \subset \mathbb{R}^N$ un abierto acotado, $f \in \mathcal{C}(J \times \overline{\Omega}; \, \mathbb{R}^N)$, $u_0 \in \Omega$, y sea $(I, u)$ una solución maximal del problema $(P)$.
+    
+    Entonces, $I = [t_0, T_{\max})$ con $T_{\max} \leq t_0 + T$, y cuando $T_{\max} < t_0 + T$, la solución necesariamente alcanza la frontera espacial de $\Omega$ en tiempo finito:
+    \[
+        \lim_{t \nearrow T_{\max}} u(t) = u(T_{\max}) \in \partial \Omega
+    \]
+\end{teorema}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3, >=stealth]
+    % Dominio acotado Omega
+    \draw[thick, fill=blue!5] (0,0) circle (1.8cm);
+    \node[above left] at (-1.1,1.1) {$\Omega$};
+    \node[right] at (1.8,0.5) {$\partial \Omega$};
+    
+    % Dato inicial u_0
+    \coordinate (U0) at (-0.6, -0.4);
+    \fill[black] (U0) circle (1.5pt) node[below left, font=\footnotesize] {$u_0$};
+    
+    % Trayectoria u(t)
+    \draw[thick, teal!80!black] (U0) .. controls (-0.2, 0.4) and (0.6, -0.2) .. (1.35, 1.19);
+    \fill[red!80!black] (1.35, 1.19) circle (2pt);
+    \node[above right, font=\footnotesize, red!80!black] at (1.35, 1.19) {$u(T_{\max}) \in \partial \Omega$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Intervalo de existencia de soluciones maximales}
+
+Establecemos a continuación una cota inferior analítica precisa para el tiempo de vida de cualquier solución maximal, en función de la geometría del dominio abierto y de la magnitud máxima del campo vectorial.
+
+\begin{teorema}[Cota inferior del intervalo de existencia maximal]
+    Supongamos que $J = [t_0, t_0 + T]$, $\Omega \subseteq \mathbb{R}^N$ es un abierto, $f \in \mathcal{C}(J \times \Omega; \, \mathbb{R}^N)$, $u_0 \in \Omega$ y sea $(I, u)$ una solución maximal de:
+    \[
+        \begin{cases}
+            u' = f(t, u) \\
+            u(t_0) = u_0
+        \end{cases}
+    \]
+    Para cada radio $R > 0$ tal que la bola cerrada satisfaga $\overline{B_R(u_0)} \subset \Omega$, se verifica:
+    \[
+        [t_0, \, t_0 + \delta_0(R)] \subseteq I
+    \]
+    donde el parámetro temporal $\delta_0(R)$ viene determinado por:
+    \[
+        \delta_0(R) = \begin{cases}
+            \min\left\{ T, \, \dfrac{R}{\|f\|_\infty} \right\} & \text{si } \|f\|_\infty = \displaystyle\max_{\substack{t \in J \\ \|x - u_0\| \leq R}} \|f(t, x)\| > 0 \\
+            T & \text{si } \|f\|_\infty = 0 \quad (\text{es decir, } f \equiv 0 \text{ en } J \times \overline{B_R(u_0)})
+        \end{cases}
+    \]
+\end{teorema}
+
+\begin{proof}
+    Consideremos la constante $\|f\|_\infty = \displaystyle\max_{t \in J, \|x - u_0\| \leq R} \|f(t, x)\|$.
+    
+    Si $\|f\|_\infty = 0$, el campo es idénticamente nulo sobre $J \times \overline{B_R(u_0)}$, con lo que la función constante $u(t) \equiv u_0$ es solución definida en todo $J = [t_0, t_0 + T]$. Entonces $\delta_0(R) = T$ y $[t_0, t_0 + T] \subseteq I$.
+
+    Supongamos ahora $\|f\|_\infty > 0$. Si la solución maximal verifica $I = J$, como $\delta_0(R) \leq T$, se cumple inmediatamente:
+    \[
+        [t_0, \, t_0 + \delta_0(R)] \subseteq [t_0, \, t_0 + T] = I
+    \]
+    Supongamos, en caso contrario, que $I \subsetneq J$. Por el carácter maximal, el dominio temporal es de la forma $I = [t_0, T_{\max})$ con $T_{\max} \leq t_0 + T$.
+    
+    Consideremos la órbita de la trayectoria $\mathcal{P} = \{ u(t) : t \in [t_0, T_{\max}) \}$. Se presentan dos alternativas mutuamente excluyentes:
+    \begin{itemize}
+        \item \textbf{Caso 1 ($\mathcal{P} \subset \overline{B_R(u_0)}$):} 
+        La órbita permanece completamente confinada dentro de la bola compacta $\overline{B_R(u_0)} \subset \Omega$.
+        
+        En este caso, la clausura de la órbita $\overline{\mathcal{P}} \subseteq \overline{B_R(u_0)}$ es un conjunto compacto estrictamente contenido en el abierto $\Omega$. Si tuviéramos $T_{\max} \leq t_0 + T$, para cualquier instante $t_1, t_2 \in I$:
+        \[
+            \|u(t_2) - u(t_1)\| \leq \int_{t_1}^{t_2} \|f(s, u(s))\| \, ds \leq \|f\|_\infty |t_2 - t_1|
+        \]
+        lo que implicaría la existencia del límite $u_* = \lim_{t \nearrow T_{\max}} u(t) \in \overline{\mathcal{P}} \subset \Omega$. Por el Teorema Local de Peano, la solución podría extenderse más allá de $T_{\max}$, contradiciendo la maximalidad de $(I, u)$. Por consiguiente, este caso solo puede darse si $T_{\max} > t_0 + T$, lo cual obligaría a que $I = [t_0, t_0 + T]$, en contradicción con $I \subsetneq J$.
+
+        \item \textbf{Caso 2 ($\mathcal{P}$ escapa de $\overline{B_R(u_0)}$):}
+        Existe algún instante temporal en el cual la trayectoria abandona la bola cerrada $\overline{B_R(u_0)}$; es decir:
+        \[
+            \exists t_1 \in I \quad \text{tal que} \quad \|u(t_1) - u_0\| > R
+        \]
+        Definimos el primer instante de salida hacia la frontera esférica:
+        \[
+            t_* = \inf \{ t \in I : \|u(t) - u_0\| = R \}
+        \]
+        Por continuidad de $u(t)$ y dado que $\|u(t_0) - u_0\| = 0 < R$, se tiene $t_0 < t_* \leq t_1 < T_{\max}$ y $\|u(t_*) - u_0\| = R$. Además:
+        \[
+            \|u(t) - u_0\| \leq R \qquad \forall t \in [t_0, t_*]
+        \]
+        Integrando la ecuación diferencial entre $t_0$ y $t_*$:
+        \[
+            R = \|u(t_*) - u_0\| = \left\| \int_{t_0}^{t_*} f(s, u(s)) \, ds \right\| \leq \int_{t_0}^{t_*} \|f(s, u(s))\| \, ds \leq \|f\|_\infty (t_* - t_0)
+        \]
+        Despejando el incremento temporal $(t_* - t_0)$:
+        \[
+            t_* - t_0 \geq \frac{R}{\|f\|_\infty} \implies t_* \geq t_0 + \frac{R}{\|f\|_\infty}
+        \]
+        Puesto que $t_* < T_{\max}$, se deduce que:
+        \[
+            T_{\max} > t_* \geq t_0 + \frac{R}{\|f\|_\infty} \geq t_0 + \min\left\{ T, \, \frac{R}{\|f\|_\infty} \right\} = t_0 + \delta_0(R)
+        \]
+        En consecuencia:
+        \[
+            [t_0, \, t_0 + \delta_0(R)] \subset [t_0, T_{\max}) = I
+        \]
+    \end{itemize}
+    Queda demostrado en todos los casos que la solución maximal permanece definida al menos durante un intervalo temporal de longitud $\delta_0(R)$.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3, >=stealth]
+    % Bola B_R(u_0)
+    \draw[thick, dashed, fill=gray!10] (0,0) circle (1.8cm);
+    \node[above left] at (-1.2,1.2) {$\overline{B_R(u_0)}$};
+    \draw[<->, gray!80!black] (0,0) -- (1.27,-1.27) node[midway, below left, font=\footnotesize] {$R$};
+    
+    % Centro u_0
+    \fill (0,0) circle (1.5pt) node[below] {$u_0$};
+    
+    % Trayectoria
+    \draw[thick, blue!80!black] (0,0) .. controls (0.5, 0.4) and (0.2, 1.2) .. (0.9, 1.56);
+    \fill[red!70!black] (0.9, 1.56) circle (2pt);
+    \node[above right, font=\footnotesize, red!70!black] at (0.9, 1.56) {$u(t_*)$};
+    
+    \node[font=\footnotesize, align=center] at (0, -2.3) {Escape de la bola en $t_* \geq t_0 + \dfrac{R}{\|f\|_\infty}$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{El contraejemplo de Müller (1927)}
+
+El Teorema de Picard-Lindelöf asegura que cuando el campo vectorial $f$ es Lipschitziano, las aproximaciones sucesivas de Picard convergen uniformemente a la única solución del problema. En el marco de Peano, la mera continuidad garantiza la existencia de solución, pero suscita dos cuestiones cruciales:
+\begin{itemize}
+    \item ¿Es posible que un problema de Cauchy con campo no Lipschitziano admita una \textbf{única} solución?
+    \item En tal caso, ¿convergen las iteradas de Picard hacia dicha solución única?
+\end{itemize}
+
+El matemático alemán Max Müller construyó en 1927 un contraejemplo célebre que responde afirmativamente a la primera pregunta y negativamente a la segunda.
+
+\ejemplo{
+    \textbf{Contraejemplo de Müller (1927):}
+
+    Consideremos la función $f: [0, 1] \times \mathbb{R} \to \mathbb{R}$ definida para cada $t \in [0, 1]$ mediante la función continua a trozos en $u$:
+    \[
+        f(t, u) = \begin{cases}
+            2t & \text{si } u \leq 0 \\
+            2t - \dfrac{4}{t} u & \text{si } 0 < u < t^2 \\
+            -2t & \text{si } u \geq t^2
+        \end{cases}
+    \]
+    donde para $t = 0$ se entiende $f(0, u) = 0$ para todo $u \in \mathbb{R}$.
+
+    Analicemos las propiedades de $f$:
+    \begin{itemize}
+        \item \textbf{Continuidad y acotación:} La función $f$ es continua en $[0, 1] \times \mathbb{R}$ y verifica $|f(t, u)| \leq 2$ para todo $(t, u) \in [0, 1] \times \mathbb{R}$, de modo que $\|f\|_\infty = 2$.
+        \item Por el Teorema de Peano, el problema de Cauchy:
+        \[
+            (P) \quad
+            \begin{cases}
+                u' = f(t, u) \\
+                u(0) = 0
+            \end{cases}
+        \]
+        posee al menos una solución $u \in \mathcal{C}^1([0, 1]; \, \mathbb{R})$.
+    \end{itemize}
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.3]
+        % Ejes u y f(t, u) para t fijo
+        \draw[->] (-1.2,0) -- (3.2,0) node[right] {$u$};
+        \draw[->] (0,-1.6) -- (0,1.8) node[above] {$f(t, u)$};
+        
+        % Tramos
+        \draw[thick, blue!80!black] (-1.0, 1.2) -- (0, 1.2) node[above left, font=\footnotesize] {$2t$};
+        \draw[thick, blue!80!black] (0, 1.2) -- (1.8, -1.2);
+        \draw[thick, blue!80!black] (1.8, -1.2) -- (2.8, -1.2) node[below right, font=\footnotesize] {$-2t$};
+        
+        % Referencias
+        \draw[dashed, gray] (1.8, 0) node[above, black, font=\footnotesize] {$t^2$} -- (1.8, -1.2);
+        \draw[dashed, gray] (0, -1.2) node[left, black, font=\footnotesize] {$-2t$} -- (1.8, -1.2);
+        \draw[dashed, gray] (0, 1.2) -- (0, 0);
+        \fill (0,0) circle (1.5pt);
+        \node[below left, font=\footnotesize] at (0,0) {$0$};
+    \end{tikzpicture}
+    \end{center}
+
+    \textbf{1. Unicidad de solución:}
+
+    A pesar de que el campo no es lipschitziano en el origen, demostraremos que $(P)$ posee una \textbf{única solución}.
+    
+    Sean $u_1, u_2 \in \mathcal{C}^1([0, \alpha]; \, \mathbb{R})$ dos soluciones de $(P)$ en un intervalo $[0, \alpha]$ con $\alpha \leq 1$. Consideremos la función cuadrática de las diferencias:
+    \[
+        x(t) = \bigl(u_1(t) - u_2(t)\bigr)^2 \geq 0 \qquad \forall t \in [0, \alpha]
+    \]
+    Derivando respecto a $t$:
+    \[
+        x'(t) = 2\bigl(u_1(t) - u_2(t)\bigr)\bigl(u_1'(t) - u_2'(t)\bigr) = 2\bigl(u_1(t) - u_2(t)\bigr)\bigl(f(t, u_1(t)) - f(t, u_2(t))\bigr)
+    \]
+    Observamos que para cada $t \in [0, 1]$ fijo, la función $u \mapsto f(t, u)$ es \textbf{monótona decreciente} en $u$. Por consiguiente:
+    \[
+        (u_1 - u_2)\bigl(f(t, u_1) - f(t, u_2)\bigr) \leq 0 \qquad \forall u_1, u_2 \in \mathbb{R}
+    \]
+    lo que implica directamente:
+    \[
+        x'(t) \leq 0 \qquad \forall t \in [0, \alpha]
+    \]
+    Integrando entre $0$ y $t$, y utilizando que $x(0) = (u_1(0) - u_2(0))^2 = 0$:
+    \[
+        x(t) = x(0) + \int_0^t x'(s) \, ds \leq 0 \qquad \forall t \in [0, \alpha]
+    \]
+    Como $x(t) \geq 0$ por definición, concluimos que $x(t) \equiv 0$, de donde:
+    \[
+        u_1(t) = u_2(t) \qquad \forall t \in [0, \alpha]
+    \]
+    La solución del problema de Cauchy $(P)$ es, por tanto, rigurosamente \textbf{única}.
+
+    \medskip
+
+    \textbf{2. Falta de carácter Lipschitziano en $u = 0$:}
+
+    Comprobemos formalmente que $f$ no satisface una condición de Lipschitz respecto de $u$ en ningún entorno del origen. Si existiera una constante $L > 0$ tal que:
+    \[
+        |f(t, t^2) - f(t, 0)| \leq L |t^2 - 0| \qquad \forall t \in (0, 1]
+    \]
+    sustituyendo los valores de la función:
+    \[
+        |-2t - 2t| \leq L t^2 \implies 4t \leq L t^2 \implies 4 \leq L t \qquad \forall t \in (0, 1]
+    \]
+    Tomando el límite cuando $t \to 0^+$, obtenemos $4 \leq 0$, una flagrante contradicción. Por consiguiente, $f$ no es Lipschitziana en $u = 0$.
+
+    \medskip
+
+    \textbf{3. Comportamiento oscilatorio no convergente de las iteradas de Picard:}
+
+    Analicemos el operador integral de Volterra asociado a $(P)$:
+    \[
+        (\mathcal{K}h)(t) = \int_0^t f(s, h(s)) \, ds
+    \]
+    Partiendo de la aproximación inicial nula $h_0(t) \equiv 0$, calculamos sucesivamente las primeras iteradas de Picard:
+    \begin{itemize}
+        \item \textbf{Primera iterada:} Como $h_0(s) = 0 \leq 0$, $f(s, h_0(s)) = 2s$:
+        \[
+            h_1(t) = (\mathcal{K}h_0)(t) = \int_0^t f(s, 0) \, ds = \int_0^t 2s \, ds = t^2
+        \]
+        \item \textbf{Segunda iterada:} Evaluando en $h_1(s) = s^2$, tenemos $h_1(s) \geq s^2$, por lo que $f(s, h_1(s)) = -2s$:
+        \[
+            h_2(t) = (\mathcal{K}h_1)(t) = \int_0^t f(s, s^2) \, ds = \int_0^t (-2s) \, ds = -t^2
+        \]
+        \item \textbf{Tercera iterada:} Como $h_2(s) = -s^2 \leq 0$, se tiene de nuevo $f(s, h_2(s)) = 2s$:
+        \[
+            h_3(t) = (\mathcal{K}h_2)(t) = \int_0^t f(s, -s^2) \, ds = \int_0^t 2s \, ds = t^2
+        \]
+    \end{itemize}
+    Por inducción inmediata, la sucesión de Picard genera un ciclo periódico de periodo 2:
+    \[
+        h_n(t) = \begin{cases}
+            t^2 & \text{si } n \text{ es impar} \\
+            -t^2 & \text{si } n \text{ es par}
+        \end{cases}
+    \]
+    Para cualquier $t \in (0, 1]$, la sucesión numérica $\{h_n(t)\}_{n \geq 1}$ oscila indefinidamente entre $t^2$ y $-t^2$, por lo que \textbf{no converge}.
+    
+    Además, ninguna de las dos ramas oscilantes es solución de $(P)$:
+    \[
+        (t^2)' = 2t \neq -2t = f(t, t^2), \qquad (-t^2)' = -2t \neq 2t = f(t, -t^2)
+    \]
+    El operador integral $\mathcal{K}$ no es una contracción en ningún espacio métrico adecuado, lo que demuestra de manera concluyente que la convergencia de las iteradas de Picard no puede asegurarse prescindiendo de la hipótesis Lipschitziana, ni siquiera cuando la solución es única.
+}
+
+\subsection{Perspectiva hacia el método de sub y supersoluciones}
+
+Para rescatar esquemas iterativos constructivos en ausencia de la condición lipschitziana, la teoría recurre a propiedades de orden y monotonía. Cuando el campo vectorial $f(t, u)$ satisface una condición de crecimiento monótono respecto de $u$:
+\[
+    u \leq v \implies f(t, u) \leq f(t, v)
+\]
+es posible acotar las soluciones entre una \textbf{subsolución} $\underline{u}$ y una \textbf{supersolución} $\overline{u}$:
+\[
+    \begin{cases}
+        \underline{u}' \leq f(t, \underline{u}) \\
+        \underline{u}(t_0) \leq u_0
+    \end{cases}
+    \qquad
+    \begin{cases}
+        \overline{u}' \geq f(t, \overline{u}) \\
+        \overline{u}(t_0) \geq u_0
+    \end{cases}
+    \qquad \text{con } \underline{u} \leq \overline{u}
+\]
+Bajo estas condiciones (desarrolladas por Kamke), las iteraciones monótonas:
+\[
+    \underline{u} \leq \mathcal{K}\underline{u} \leq \mathcal{K}^2\underline{u} \leq \dots \leq \mathcal{K}^n\underline{u} \leq \dots \leq \mathcal{K}^n\overline{u} \leq \dots \leq \mathcal{K}\overline{u} \leq \overline{u}
+\]
+convergen monótonamente hacia una solución extremal inferior $u_*$ y superior $u^*$, sentando las bases del método analítico que se estudiará en los capítulos subsiguientes.
