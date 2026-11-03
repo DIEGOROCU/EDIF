@@ -935,7 +935,7 @@
 }{}
 
 % Ejercicio 14
-\ejercicio{enunciado}{}{
+\ejercicio{resuelto}{}{
     Dado un entero $N \ge 1$ y una matriz cuadrada no nula $A = (a_{ij})_{1\le i,j \le N} \in \mathcal{M}_N(\mathcal{C}(\R; \R))$, considera la función $f(t,u) = (f_1(t,u), \dots, f_N(t,u))^T$, con $u = (u_1, \dots, u_N)^T$, cuyas componentes se definen como
     \[
         f_i(t,u) = \sum_{j=1}^N a_{ij}(t)|u_j|^{p_{ij}}, \quad (t,u) \in \R \times \R^N, \;\; 1 \le i \le N,
@@ -948,10 +948,125 @@
         \end{cases}
     \]
     Discute todos sus comportamientos admisibles, y da ejemplos para todos ellos en el caso particular $N=2$ eligiendo apropiadamente $a_{ij}(t)$ y $p_{ij}$.
-}{}
+}{
+    Sea $J = \R$ y $\Omega = \R^N$. El problema es de la forma $u' = f(t,u)$ con
+    \[
+        f_i(t,u) = \sum_{j=1}^N a_{ij}(t) |u_j|^{p_{ij}}, \quad f_i \in \mathcal{C}(\R \times \R^N; \R), \quad 1 \le i \le N,
+    \]
+    donde $a_{ij} \in \mathcal{C}(\R; \R)$, $p_{ij} \ge 1$ para $i,j \in \{1, \dots, N\}$, y existen $i,j$ y $\tilde{t}$ tales que $a_{ij}(\tilde{t}) \neq 0$ (pues $A$ es no nula).
+
+    Si $p_{ij} > 1$, la función $x \mapsto |x|^{p_{ij}}$ es de clase $\mathcal{C}^1$ en $\R$ y la derivada parcial correspondiente es
+    \[
+        \frac{\partial f_i}{\partial u_j}(t,u) = a_{ij}(t)\, p_{ij} |u_j|^{p_{ij}-1} \operatorname{signo}(u_j) \in \mathcal{C}(\R \times \R^N; \R).
+    \]
+    Si algún $p_{ij} = 1$, el término $|u_j|$ no es derivable en $u_j = 0$, así que no podemos usar directamente el corolario del criterio de Lipschitz. Por eso vamos a demostrar que $f$ es localmente Lipschitziana respecto de $u \in \R^N$, uniformemente en subintervalos compactos de $\R$, directamente a partir de la definición. Empezamos por los casos escalares más sencillos.
+
+    \begin{itemize}
+        \item \textbf{Caso $u' = a(t)|u|$.} Fijado un compacto $J = [\alpha, \beta] \subset \R$, para todo $t \in J$ y $u, v \in \R$, por la desigualdad triangular inversa:
+        \[
+            |f(t,u) - f(t,v)| = \big| a(t)|u| - a(t)|v| \big| = |a(t)| \, \big| |u| - |v| \big| \le |a(t)| \, |u - v| \le L |u - v|,
+        \]
+        con $L = \|a\|_{\infty, J}$. Luego $f$ es incluso globalmente Lipschitziana respecto de $u \in \R$, uniformemente en $t \in J$.
+
+        \item \textbf{Caso $u' = a(t)|u|^p$ con $p > 1$.} Fijados $J = [\alpha, \beta]$ y $R > 0$, tomamos $u, v \in (-R, R)$. Aplicando el Teorema del Valor Medio a la función $g(x) = |x|^p$, de clase $\mathcal{C}^1$, existe $\xi$ entre $\min\{u,v\}$ y $\max\{u,v\}$ tal que
+        \[
+            |f(t,u) - f(t,v)| = |a(t)| \, \big| |u|^p - |v|^p \big| = |a(t)| \, p |\xi|^{p-1} |\operatorname{signo}(\xi)| \, |u - v| \le \|a\|_{\infty, J} \, p R^{p-1} |u - v|,
+        \]
+        ya que $|\xi| \le \max\{|u|, |v|\} < R$. Por tanto $f$ es localmente Lipschitziana respecto de $u \in \R$, uniformemente en subintervalos compactos de $\R$ (la constante depende de $R$, así que en general no es global).
+    \end{itemize}
+
+    \textbf{Caso general.} Fijamos un compacto $J = [\alpha, \beta] \subset \R$ y un abierto convexo y acotado $B = B_R(0) \subset \R^N$. Por los dos casos anteriores, para cada $i,j$ y todo $u_j, v_j$ con $|u_j|, |v_j| < R$:
+    \[
+        \big| |u_j|^{p_{ij}} - |v_j|^{p_{ij}} \big| \le L |u_j - v_j|, \quad \text{con } L = \max_{1 \le i,j \le N} p_{ij} R^{p_{ij}-1}
+    \]
+    (si $p_{ij} = 1$ la constante es $1 = p_{ij} R^{0}$, así que esta $L$ sirve en todos los casos). Usando la norma $\|\cdot\|_1$, para todo $t \in J$ y $u, v \in B$:
+    \[
+        \|f(t,u) - f(t,v)\|_1 = \sum_{i=1}^N |f_i(t,u) - f_i(t,v)| = \sum_{i=1}^N \left| \sum_{j=1}^N a_{ij}(t)|u_j|^{p_{ij}} - \sum_{j=1}^N a_{ij}(t)|v_j|^{p_{ij}} \right| \le
+    \]
+    \[
+        \le \sum_{i=1}^N \sum_{j=1}^N |a_{ij}(t)| \, \big| |u_j|^{p_{ij}} - |v_j|^{p_{ij}} \big| \le \sum_{i=1}^N \sum_{j=1}^N |a_{ij}(t)| \, L |u_j - v_j| \le \sum_{i=1}^N \sum_{j=1}^N \|a_{ij}\|_{\infty, J} \, L |u_j - v_j|.
+    \]
+    Llamando $M = \max\{ \|a_{ij}\|_{\infty, J} : i,j \in \{1, \dots, N\} \}$:
+    \[
+        \|f(t,u) - f(t,v)\|_1 \le M L \sum_{i=1}^N \sum_{j=1}^N |u_j - v_j| = \underbrace{M L N}_{L'} \|u - v\|_1 \quad \forall t \in J, \ \forall u, v \in B.
+    \]
+    Así, $f$ es localmente Lipschitziana respecto de $u \in \R^N$, uniformemente en subintervalos compactos de $\R$.
+
+    Observemos además que, en general, $f$ no es globalmente Lipschitziana: si $a_{ij}(\tilde{t}) \neq 0$ con $p_{ij} > 1$, entonces
+    \[
+        \left| \frac{\partial f_i}{\partial u_j}(\tilde{t}, u) \right| = |a_{ij}(\tilde{t})| \, p_{ij} |u_j|^{p_{ij}-1} \xrightarrow{|u| \to \infty} +\infty.
+    \]
+    (En cambio, si todos los $p_{ij} = 1$, el primer caso simple muestra que $f$ es globalmente Lipschitziana respecto de $u \in \R^N$ uniformemente en compactos de tiempo.)
+
+    Como $u_0 \in \R^N = \Omega$, aplicamos los teoremas fundamentales en cascada:
+    \begin{enumerate}[label=\Roman*)]
+        \item Por el Teorema de Cauchy-Lipschitz Local, existe una única solución local con dato inicial $u(0) = u_0$.
+        \item Por el Teorema de Unicidad Global, la solución es única en cualquier intervalo donde esté definida.
+        \item Por el Teorema de Existencia de Solución Maximal, el problema tiene una única solución maximal $(I, u)$.
+    \end{enumerate}
+    Por el Segundo Teorema Fundamental (pues $J = \R$ y $\Omega = \R^N$), el intervalo maximal a la derecha es $I = [0, T_{\max})$ con $T_{\max} \le +\infty$, y
+    \[
+        T_{\max} < +\infty \implies \lim_{t \nearrow T_{\max}} \|u(t)\| = +\infty.
+    \]
+    (Análogamente hacia la izquierda con $T_{\min}$.)
+
+    \textbf{Comportamientos admisibles.} Hacia la derecha solo caben dos posibilidades:
+    \begin{enumerate}
+        \item La solución está definida globalmente: $T_{\max} = +\infty$ e $I = [0, +\infty)$. Esto ocurre siempre, por ejemplo, si todos los $p_{ij} = 1$ (por el Primer Teorema Fundamental, al ser $f$ globalmente Lipschitziana en compactos de tiempo).
+        \item La solución explota en tiempo finito: $T_{\max} < +\infty$ y $\lim_{t \nearrow T_{\max}} \|u(t)\| = +\infty$.
+    \end{enumerate}
+
+    \textbf{Ejemplos con $N = 2$.} Tomamos coeficientes constantes $a_{ij} \in \{-1, 0, 1\}$ y $p_{ij} = 2$ (salvo en el último ejemplo), con dato inicial simétrico. En los sistemas simétricos usamos el argumento del Ejercicio 6: si $(u,v)$ es solución, $(v,u)$ también lo es con el mismo dato inicial, así que por unicidad $u = v =: w$.
+    \begin{itemize}
+        \item \textbf{Explosión en tiempo finito:}
+        \[
+            \begin{cases}
+                u' = v^2, \\
+                v' = u^2,
+            \end{cases}
+            \quad (u(0), v(0)) = (1,1).
+        \]
+        Aquí $a_{11} = a_{22} = 0$, $a_{12} = a_{21} = 1$, $p_{12} = p_{21} = 2$. Por simetría, $u = v = w$ con $w' = w^2$, $w(0) = 1$. Separando variables, $w(t) = \frac{1}{1-t}$, que explota en $T_{\max} = 1$: $\lim_{t \nearrow 1} w(t) = +\infty$.
+
+        Si en su lugar tomamos $u' = u^2 + v^2$, $v' = u^2 + v^2$ con el mismo dato, se obtiene $w' = 2w^2$, es decir, $w(t) = \frac{1}{1 - 2t}$, que explota antes, en $T_{\max} = \frac{1}{2}$.
+
+        \item \textbf{Solución global (constante):}
+        \[
+            \begin{cases}
+                u' = u^2 - v^2, \\
+                v' = u^2 - v^2,
+            \end{cases}
+            \quad (u(0), v(0)) = (1,1).
+        \]
+        Restando las ecuaciones, $(u - v)' = 0$, luego $u - v \equiv u(0) - v(0) = 0$. Así $u = v = w$ con $w' = w^2 - w^2 = 0$, y la solución es el equilibrio $(u,v) \equiv (1,1)$, definida en todo $\R$. Pese a que el campo es cuadrático, no hay explosión.
+
+        \item \textbf{Solución global que decae, o explosión, según el dato:}
+        \[
+            \begin{cases}
+                u' = -v^2, \\
+                v' = -u^2.
+            \end{cases}
+        \]
+        Por simetría, con dato $(w_0, w_0)$ tenemos $w' = -w^2$, cuya solución es $w(t) = \frac{1}{t + 1/w_0}$.
+        \begin{itemize}
+            \item Con $(u(0), v(0)) = (1,1)$: $w(t) = \frac{1}{1+t}$, definida en $[0, +\infty)$ y $\lim_{t \to \infty} w(t) = 0$. Solución global a la derecha (aunque hacia la izquierda explota en $T_{\min} = -1$).
+            \item Con $(u(0), v(0)) = (-1,-1)$: $w(t) = \frac{1}{t - 1}$, que explota en $T_{\max} = 1$ con $\lim_{t \nearrow 1} w(t) = -\infty$.
+        \end{itemize}
+
+        \item \textbf{Caso $p_{ij} = 1$ (siempre global):}
+        \[
+            \begin{cases}
+                u' = |v|, \\
+                v' = |u|,
+            \end{cases}
+            \quad (u(0), v(0)) = (1,1).
+        \]
+        Por simetría $w' = |w|$, y como $w' \ge 0$ y $w(0) = 1$, se tiene $w > 0$ hacia la derecha, así que $w' = w$ y $w(t) = e^t$, definida en $[0, +\infty)$.
+    \end{itemize}
+}
 
 % Ejercicio 15
-\ejercicio{enunciado}{}{
+\ejercicio{medio}{}{
     Demuestra que, para todo $\varepsilon \ge 0$, el problema
     \[
         \begin{cases}
@@ -960,7 +1075,107 @@
         \end{cases}
     \]
     tiene una única solución globalmente definida en $[0, \infty)$, denotada por $u_\varepsilon$, y estima $|u_\varepsilon(t) - u_0(t)|$ para todo $t > 0$ y $\varepsilon > 0$.
-}{}
+}{
+    Llamamos $(P)$ al problema. Sea $\varepsilon \ge 0$ fijo y definimos
+    \[
+        f(t,u) = t(\sin u + \varepsilon \cos u), \quad f \in \mathcal{C}(\R \times \R; \R),
+    \]
+    de modo que la ecuación es $u'(t) = f(t, u(t))$.
+
+    \textbf{Observación (error conceptual):} hay que distinguir entre la función $f(t,u)$, que depende de dos variables independientes $(t,u) \in \R \times \R$, y la expresión $t[\sin u(t) + \varepsilon \cos u(t)] = f(t, u(t))$, que es una función solo de $t$ una vez fijada la solución. Escribir $u'(t) = t[\sin u(t) + \varepsilon \cos u(t)]$ y llamar a eso $f(t,u)$ es un error conceptual: la Lipschitzianidad se estudia sobre $f(t,u)$ con $u$ variable libre.
+
+    La derivada parcial respecto de $u$ es continua:
+    \[
+        \frac{\partial f}{\partial u}(t,u) = t \cos u - \varepsilon t \sin u \in \mathcal{C}(\R \times \R; \R).
+    \]
+    Fijamos un compacto $J = [\alpha, \beta] \subset \R$ y llamamos $M = \max\{|\alpha|, |\beta|\}$. Para todo $t \in J$ y $u \in \R$:
+    \[
+        \left| \frac{\partial f}{\partial u}(t,u) \right| = |t \cos u - \varepsilon t \sin u| \le |t|(1 + \varepsilon) \le M(1 + \varepsilon).
+    \]
+    Como la derivada está acotada en $J \times \R$ y $\R$ es convexo, por el teorema de caracterización $f$ es globalmente Lipschitziana respecto de $u \in \R$, uniformemente en $t \in J$.
+
+    Por el Teorema de Cauchy-Lipschitz Global, el problema $(P)$ tiene una única solución en cada compacto $J_n = [0, n]$, $n \ge 1$, que denotamos $u_n$. Como
+    \[
+        \bigcup_{n \ge 1} J_n = [0, +\infty),
+    \]
+    y por unicidad las restricciones coinciden, $u_{n+1}|_{J_n} = u_n$, podemos definir
+    \[
+        u_\varepsilon(t) = \lim_{n \to \infty} u_n(t), \quad t \in [0, +\infty),
+    \]
+    que es la única solución de $(P)$ en $[0, +\infty)$ (por el mismo argumento que en el Ejercicio 2: dos soluciones distintas lo serían también restringidas a algún $J_n$, contradiciendo la unicidad en $J_n$).
+
+    \textbf{Estimación de $|u_\varepsilon(t) - u_0(t)|$.} Las soluciones para $\varepsilon = 0$ y $\varepsilon > 0$ satisfacen
+    \[
+        u_0'(t) = t \sin u_0(t), \qquad u_\varepsilon'(t) = t \sin u_\varepsilon(t) + t \varepsilon \cos u_\varepsilon(t),
+    \]
+    ambas con $u_0(0) = u_\varepsilon(0) = 1$. Restando:
+    \[
+        u_\varepsilon'(t) - u_0'(t) = \varepsilon t \cos u_\varepsilon(t) + t \big( \sin u_\varepsilon(t) - \sin u_0(t) \big).
+    \]
+    Por el Teorema del Valor Medio aplicado a $\sin$, existe $\xi$ entre $u_0(t)$ y $u_\varepsilon(t)$ tal que $\sin u_\varepsilon(t) - \sin u_0(t) = \cos \xi \, \big( u_\varepsilon(t) - u_0(t) \big)$. Como $|\cos| \le 1$ y $t \ge 0$:
+    \[
+        |u_\varepsilon'(t) - u_0'(t)| \le \varepsilon t + t |u_\varepsilon(t) - u_0(t)| \quad \forall t \ge 0.
+    \]
+    Por el Teorema Fundamental del Cálculo, y usando que los datos iniciales coinciden:
+    \[
+        u_\varepsilon(t) - u_0(t) = \underbrace{u_\varepsilon(0) - u_0(0)}_{= 0} + \int_0^t (u_\varepsilon' - u_0')(s) \, ds = \int_0^t (u_\varepsilon' - u_0')(s) \, ds.
+    \]
+    Llamamos $x_\varepsilon(t) = |u_\varepsilon(t) - u_0(t)|$ a la distancia entre ambas soluciones. Entonces
+    \[
+        x_\varepsilon(t) = \left| \int_0^t (u_\varepsilon' - u_0')(s) \, ds \right| \le \int_0^t |u_\varepsilon'(s) - u_0'(s)| \, ds \le \int_0^t \big( \varepsilon s + s |u_\varepsilon(s) - u_0(s)| \big) \, ds =
+    \]
+    \[
+        = \varepsilon \frac{t^2}{2} + \int_0^t s \, x_\varepsilon(s) \, ds.
+    \]
+    Es decir,
+    \[
+        x_\varepsilon(t) \le \varepsilon \frac{t^2}{2} + \int_0^t s \, x_\varepsilon(s) \, ds \quad \forall t \ge 0.
+    \]
+    \begin{center}
+        \fcolorbox{orange!85!black}{orange!10}{\parbox{0.92\linewidth}{\centering
+            \textbf{Hasta aquí llegamos en clase (03/11).}\\[0.2em]
+            Lo que sigue es una propuesta para terminarlo \textbf{sin usar el Lema de Gronwall-Bellman}, repitiendo su demostración dentro del ejercicio (como pide el profesor). Pendiente de corregir en la próxima clase.
+        }}
+    \end{center}
+
+    Para no aplicar el lema directamente, introducimos la función auxiliar
+    \[
+        \varphi(t) = \int_0^t s \, x_\varepsilon(s) \, ds, \quad t \ge 0.
+    \]
+    Como $x_\varepsilon$ es continua (es el valor absoluto de una diferencia de funciones $\mathcal{C}^1$), por el Teorema Fundamental del Cálculo $\varphi \in \mathcal{C}^1([0, +\infty))$, con
+    \[
+        \varphi(0) = 0, \qquad \varphi'(t) = t \, x_\varepsilon(t).
+    \]
+    Multiplicando la desigualdad integral por $t \ge 0$ (que no cambia el sentido):
+    \[
+        \varphi'(t) = t \, x_\varepsilon(t) \le \varepsilon \frac{t^3}{2} + t \, \varphi(t) \implies \varphi'(t) - t \, \varphi(t) \le \varepsilon \frac{t^3}{2}.
+    \]
+    El lado izquierdo es, salvo un factor, la derivada de un producto. Multiplicamos por el factor integrante $e^{-\int_0^t s \, ds} = e^{-\frac{t^2}{2}} > 0$:
+    \[
+        \frac{d}{dt} \left( \varphi(t) e^{-\frac{t^2}{2}} \right) = \big( \varphi'(t) - t \, \varphi(t) \big) e^{-\frac{t^2}{2}} \le \frac{\varepsilon}{2} t^3 e^{-\frac{t^2}{2}}.
+    \]
+    Integramos entre $0$ y $t$, usando $\varphi(0) = 0$:
+    \[
+        \varphi(t) e^{-\frac{t^2}{2}} \le \frac{\varepsilon}{2} \int_0^t s^3 e^{-\frac{s^2}{2}} \, ds.
+    \]
+    Calculamos la integral con el cambio $r = \frac{s^2}{2}$, $dr = s \, ds$, $s^2 = 2r$, e integrando por partes:
+    \[
+        \int_0^t s^3 e^{-\frac{s^2}{2}} \, ds = \int_0^{t^2/2} 2r e^{-r} \, dr = 2 \Big[ -r e^{-r} - e^{-r} \Big]_0^{t^2/2} = 2 \left( 1 - e^{-\frac{t^2}{2}} \left( 1 + \frac{t^2}{2} \right) \right).
+    \]
+    Por tanto, multiplicando por $e^{\frac{t^2}{2}}$:
+    \[
+        \varphi(t) \le \varepsilon e^{\frac{t^2}{2}} \left( 1 - e^{-\frac{t^2}{2}} \left( 1 + \frac{t^2}{2} \right) \right) = \varepsilon \left( e^{\frac{t^2}{2}} - 1 - \frac{t^2}{2} \right).
+    \]
+    Volviendo a la desigualdad integral, $x_\varepsilon(t) \le \varepsilon \frac{t^2}{2} + \varphi(t)$, luego
+    \[
+        x_\varepsilon(t) \le \varepsilon \frac{t^2}{2} + \varepsilon \left( e^{\frac{t^2}{2}} - 1 - \frac{t^2}{2} \right) = \varepsilon \left( e^{\frac{t^2}{2}} - 1 \right).
+    \]
+    Concluimos que
+    \[
+        |u_\varepsilon(t) - u_0(t)| \le \varepsilon \left( e^{\frac{t^2}{2}} - 1 \right) \quad \forall t > 0, \ \forall \varepsilon > 0.
+    \]
+    En particular, en cada compacto $[0, T]$ se tiene $\|u_\varepsilon - u_0\|_{\infty, [0,T]} \le \varepsilon \left( e^{T^2/2} - 1 \right) \xrightarrow{\varepsilon \to 0} 0$: la solución depende de forma Lipschitziana (y por tanto continua) del parámetro $\varepsilon$, aunque la cota crece muy deprisa con $t$.
+}
 
 % Ejercicio 16
 \ejercicio{enunciado}{}{
