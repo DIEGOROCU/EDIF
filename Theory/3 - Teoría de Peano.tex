@@ -504,7 +504,7 @@ Antes de probar el teorema, vamos a ver un ejemplo de su aplicación.
     \]
     \[
         u(t) = \left( (1-p) t + u_0^{1-p} \right)^{\frac{1}{1-p}} \quad \forall t \in [0, T] \quad
-        T_{\max} = \frac{1}{(1-p)u_0^{1-p}} \quad
+        (T_{\max} = +\infty)
     \]
 }
 
@@ -865,7 +865,7 @@ Conviene destacar y enfatizar que el Teorema de Peano es un teorema de pura exis
     \end{tikzpicture}
     \end{center}
 
-    Puesto que $\varphi(t) > 0$ para todo $t > 0$, la trayectoria $\varphi(t)$ es estrictamente distinta de la solución idénticamente nula $u_0(t) \equiv 0$. Por consiguiente, el PVI posee una familia no numerable de soluciones diferenciables distintas, confirmando que bajo la sola hipótesis de continuidad no se garantiza en absoluto la unicidad.
+    Puesto que $\varphi(t) > 0$ para todo $t > 0$, la trayectoria $\varphi(t)$ es strictly distinta de la solución idénticamente nula $u_0(t) \equiv 0$. Por consiguiente, el PVI posee una familia no numerable de soluciones diferenciables distintas, confirmando que bajo la sola hipótesis de continuidad no se garantiza en absoluto la unicidad.
 }
 
 \subsection{El Teorema Local de Peano}
@@ -988,7 +988,7 @@ Mediante una técnica de truncamiento y extensión radial continua, es posible r
 
 El Teorema Local de Peano establece que la existencia de soluciones está asegurada en un intervalo $[t_0, t_0 + \delta]$. Cabe preguntarse si toda solución puede extenderse globalmente a todo el intervalo temporal $J$ o si, por el contrario, pueden manifestarse obstrucciones analíticas.
 
-El siguiente ejemplo pone de manifiesto que, bajo falta de condiciones Lipschitzianas combinadas con crecimiento superlineal en infinito, las soluciones no sólo presentan no unicidad, sino que además pueden sufrir una \textbf{explosión en tiempo finito (blow-up)}, alcanzando el infinito en un tiempo estrictamente menor que la longitud del intervalo base.
+El siguiente ejemplo pone de manifiesto que, bajo falta de condiciones Lipschitzianas combinadas con crecimiento superlineal en infinito, las soluciones no sólo presentan no unicidad, sino que además pueden sufrir una \textbf{explosión en tiempo finito (blow-up)}, alcanzando el infinito en un tiempo strictly menor que la longitud del intervalo base.
 
 \ejemplo{
     \textbf{Soluciones maximales con explosión en tiempo finito:}
@@ -1512,7 +1512,7 @@ Establecemos a continuación una cota inferior analítica precisa para el tiempo
         \[
             \|u(t) - u_0\| \leq R \qquad \forall t \in [t_0, t_*]
         \]
-        Integrando la ecuación diferencial entre $t_0$ y $t_*$:
+        Integrando la ecuación diferencial entre $t_0$ y $t_x$:
         \[
             R = \|u(t_*) - u_0\| = \left\| \int_{t_0}^{t_*} f(s, u(s)) \, ds \right\| \leq \int_{t_0}^{t_*} \|f(s, u(s))\| \, ds \leq \|f\|_\infty (t_* - t_0)
         \]
