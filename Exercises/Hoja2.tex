@@ -1,0 +1,285 @@
+\hojaejercicio{Parte 1: Capítulo 2}
+\setcounter{ejercicio}{0}
+
+% Ejercicio 1
+\ejercicio{resuelto}{}{
+    Suponiendo que una fuerza friccional resiste el movimiento del péndulo simple y que esa fuerza es proporcional, con un coeficiente $\kappa > 0$, a la velocidad del péndulo, la ecuación del péndulo simple se convierte en
+    \[
+        MLu'' + \kappa Lu' + MG \sin u = 0.
+    \]
+    Analizar la existencia, unicidad y comportamiento global de las soluciones maximales del problema de Cauchy asociado a esta ecuación diferencial.
+}{
+    Dividiendo la ecuación por $ML > 0$ y definiendo el coeficiente de amortiguamiento $r = \frac{\kappa}{M} > 0$ y la frecuencia propia al cuadrado $\omega_0^2 = \frac{G}{L} > 0$, el problema de Cauchy general con datos iniciales en $t = t_0$ adopta la forma canónica:
+    \[
+        (P) \quad
+        \begin{cases}
+            u'' = - r u' - \frac{G}{L} \sin u, \\
+            u(t_0) = u_0, \quad u'(t_0) = v_0,
+        \end{cases}
+        \qquad r = \frac{\kappa}{M} > 0, \quad \frac{G}{L} > 0.
+    \]
+
+    \textbf{1. Reducción a sistema de primer orden y regularidad:}
+
+    Introduciendo las variables de estado en el plano de fases $(u, v) = (u, u')$, la ecuación escalar de segundo orden equivale al sistema autónomo de primer orden en $\mathbb{R}^2$:
+    \[
+        \begin{cases}
+            u' = v, \\
+            v' = - r v - \frac{G}{L} \sin u,
+        \end{cases}
+        \iff
+        \begin{pmatrix} u \\ v \end{pmatrix}' = \begin{pmatrix} v \\ - r v - \frac{G}{L} \sin u \end{pmatrix} = f(u, v),
+    \]
+    con dato inicial $(u(t_0), v(t_0)) = (u_0, v_0) \in \mathbb{R}^2$.
+    
+    El campo vectorial $f: \mathbb{R}^2 \to \mathbb{R}^2$ no depende explícitamente de $t$ (autónomo) y sus componentes son funciones analíticas ($\mathcal{C}^\infty$). Su matriz jacobiana respecto de $(u, v)$ es:
+    \[
+        D_{(u,v)} f(u, v) = \begin{pmatrix}
+            0 & 1 \\
+            - \frac{G}{L} \cos u & -r
+        \end{pmatrix}.
+    \]
+
+    \textbf{2. Carácter Lipschitziano global y existencia y unicidad:}
+
+    Analizamos la norma de las entradas de la matriz jacobiana en todo el espacio de fases $\mathbb{R}^2$:
+    \[
+        |0| = 0, \quad |1| = 1, \quad |-r| = r, \quad \left| - \frac{G}{L} \cos u \right| \le \frac{G}{L} \qquad \forall (u, v) \in \mathbb{R}^2.
+    \]
+    Al estar la matriz $D_{(u,v)} f(u, v)$ uniformemente acotada en todo $\mathbb{R}^2$, el campo vectorial $f$ es \textbf{globalmente Lipschitziano} en $\mathbb{R}^2$, con constante de Lipschitz independiente de $t$.
+
+    Por el Teorema de Cauchy-Lipschitz global (o considerando una sucesión de intervalos expansivos $J_n = [t_0 - n, t_0 + n]$ y pasando al límite gracias a la unicidad), para cualquier dato inicial $(u_0, v_0) \in \mathbb{R}^2$ existe una \textbf{única solución maximal} $(u, v) \in \mathcal{C}^1(\mathbb{R}; \, \mathbb{R}^2)$, globalmente definida en todo tiempo:
+    \[
+        I = (-\infty, +\infty).
+    \]
+    Por tanto, $u \in \mathcal{C}^2(\mathbb{R}; \, \mathbb{R})$ existe de forma global sin posibilidad de explosión en tiempo finito ($T_{\max} = +\infty$, $T_{\min} = -\infty$).
+
+    \medskip
+
+    \textbf{3. Comportamiento global hacia el futuro (disipación de energía):}
+
+    Definimos la energía mecánica total del péndulo (cinética más potencial gravitatoria):
+    \[
+        E(u, v) = \frac{1}{2} v^2 + \frac{G}{L} (1 - \cos u) \ge 0 \qquad \forall (u, v) \in \mathbb{R}^2.
+    \]
+    Derivando la energía a lo largo de cualquier trayectoria solución $(u(t), v(t))$:
+    \[
+        \frac{d}{dt} E(u(t), v(t)) = v(t) v'(t) + \frac{G}{L} \sin u(t) u'(t) = v(t) \left( -r v(t) - \frac{G}{L} \sin u(t) \right) + \frac{G}{L} v(t) \sin u(t) = - r v^2(t) \le 0.
+    \]
+    Puesto que $r = \frac{\kappa}{M} > 0$, la energía mecánica es una función monótona no creciente del tiempo. En particular:
+    \[
+        \frac{1}{2} v^2(t) \le E(u(t), v(t)) \le E(u_0, v_0) \qquad \forall t \ge t_0,
+    \]
+    lo que garantiza que la velocidad angular permanece uniformemente acotada para todo $t \ge t_0$:
+    \[
+        |u'(t)| = |v(t)| \le \sqrt{2 E(u_0, v_0)} \qquad \forall t \ge t_0.
+    \]
+    Al ser un sistema disipativo con rozamiento estricto, la energía decrece estrictamente siempre que $v(t) \neq 0$. Por el Principio de Invarianza de LaSalle, las trayectorias convergen cuando $t \to +\infty$ hacia el conjunto invariante maximal contenido en $\{ (u, v) \in \mathbb{R}^2 : v = 0 \}$, que son exactamente los puntos de equilibrio estático del péndulo:
+    \[
+        (u, v) = (k\pi, 0), \qquad k \in \mathbb{Z}.
+    \]
+    Para condiciones iniciales genéricas fuera de las variedades estables de los equilibrios inestables invertidos ($k$ impar), las oscilaciones se amortiguan y la solución converge asintóticamente a una posición de reposo colgado hacia abajo ($u(t) \to 2k\pi$, $u'(t) \to 0$).
+}
+
+% Ejercicio 2
+\ejercicio{resuelto}{}{
+    Demuéstrese que, para cada $p > 1$ y $x > 0$, el problema de valores iniciales
+    \[
+        \begin{cases}
+            u'' = |u|^p, \\
+            u(0) = x, \\
+            u'(0) = 0,
+        \end{cases}
+    \]
+    posee una única solución no prolongable estrictamente a la derecha que explota en tiempo finito, y calcúlese su tiempo de explosión analizando su dependencia con respecto de los parámetros $x > 0$ y $p > 1$.
+}{
+    Llamamos $(P)$ al problema de valor inicial.
+
+    \textbf{1. Formulación como sistema plano y carácter Lipschitziano local:}
+
+    Introduciendo la velocidad $v = u'$, formulamos $(P)$ como el sistema plano autónomo:
+    \[
+        \begin{cases}
+            u' = v, \\
+            v' = |u|^p,
+        \end{cases}
+        \iff
+        \begin{pmatrix} u \\ v \end{pmatrix}' = \begin{pmatrix} v \\ |u|^p \end{pmatrix} = f(u, v), \qquad
+        \begin{pmatrix} u(0) \\ v(0) \end{pmatrix} = \begin{pmatrix} x \\ 0 \end{pmatrix}.
+    \]
+    Dado que $p > 1$, la función $u \mapsto |u|^p = (u^2)^{p/2}$ es de clase $\mathcal{C}^1(\mathbb{R})$ con derivada continua:
+    \[
+        \frac{d}{du} |u|^p = p |u|^{p-1} \operatorname{sgn}(u).
+    \]
+    Por consiguiente, el campo $f \in \mathcal{C}^1(\mathbb{R}^2; \mathbb{R}^2)$ tiene matriz jacobiana continua:
+    \[
+        D_{(u,v)} f(u, v) = \begin{pmatrix} 0 & 1 \\ p |u|^{p-1} \operatorname{sgn}(u) & 0 \end{pmatrix}.
+    \]
+    Esto implica que $f$ es \textbf{localmente Lipschitziano} en $\mathbb{R}^2$, uniformemente respecto a $t \in \mathbb{R}$. Por el Teorema de Cauchy-Lipschitz local y el principio de prolongabilidad de soluciones maximales, existe una \textbf{única solución maximal} $(I, u, v) = (I, u, u')$ no prolongable estrictamente a la derecha, con intervalo hacia el futuro:
+    \[
+        I = [0, T_{\max}), \qquad T_{\max} \le +\infty.
+    \]
+    Por el Segundo Teorema Fundamental, si $T_{\max} < +\infty$, entonces $\lim_{t \nearrow T_{\max}} \bigl( |u(t)| + |u'(t)| \bigr) = +\infty$.
+
+    \medskip
+
+    \textbf{2. Monotonía, positividad y convexidad:}
+
+    Como $u(0) = x > 0$, por continuidad existe un primer intervalo donde $u(t) > 0$, de modo que $|u(t)|^p = u^p(t)$. Integrando la ecuación diferencial sobre $[0, t]$:
+    \[
+        u'(t) - \underbrace{u'(0)}_{= 0} = \int_0^t |u(s)|^p \, ds \ge 0 \implies u'(t) > 0 \qquad \forall t \in (0, T_{\max}).
+    \]
+    En consecuencia:
+    \begin{itemize}
+        \item $u(t)$ es \textbf{estrictamente creciente}, por lo que $u(t) > u(0) = x > 0$ para todo $t \in (0, T_{\max})$ (lo que confirma que $u(t)$ nunca se anula y la solución permanece positiva en todo $I$).
+        \item $u''(t) = u^p(t) \ge x^p > 0$, luego $u(t)$ es \textbf{estrictamente convexa}.
+        \item Como $u''(t) = v'(t) > 0$, la velocidad $v(t) = u'(t)$ es también \textbf{estrictamente creciente}.
+    \end{itemize}
+    Al ser ambas funciones monótonas crecientes y no negativas, la explosión de la norma implica que ambas variables divergen simultáneamente hacia $+\infty$:
+    \[
+        T_{\max} < +\infty \implies \lim_{t \nearrow T_{\max}} u(t) = +\infty \qquad \text{y} \qquad \lim_{t \nearrow T_{\max}} u'(t) = +\infty.
+    \]
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.1]
+        \draw[->] (-0.3,0) -- (3.8,0) node[right] {$t$};
+        \draw[->] (0,-0.3) -- (0,3.6) node[above] {$u(t)$};
+        
+        \draw[dashed, gray] (2.8,0) node[below, black] {$T_{\max}$} -- (2.8,3.3);
+        \draw[thick, blue!80!black, domain=0:2.55, samples=70]
+            plot (\x, {0.8 + 0.1*\x + 0.35/((2.8 - \x)^1.2) - 0.35/(2.8^1.2)});
+        
+        \node[left] at (0,0.8) {$x$};
+        \fill (0,0.8) circle (1.5pt);
+        \node[font=\footnotesize, blue!80!black] at (1.4,2.5) {$u''(t) = u^p(t)$};
+    \end{tikzpicture}
+    \end{center}
+
+    \textbf{3. Ley de conservación de energía y separación de variables:}
+
+    Multiplicando la ecuación $u'' = u^p$ por la velocidad $u'$:
+    \[
+        u'(t) u''(t) = u^p(t) u'(t) \implies \frac{d}{dt} \left( \frac{v^2(t)}{2} - \frac{u^{p+1}(t)}{p+1} \right) = 0 \qquad \forall t \in I.
+    \]
+    Por consiguiente, la energía es constante e igual a su valor en $t = 0$:
+    \[
+        \frac{v^2(t)}{2} - \frac{u^{p+1}(t)}{p+1} = \frac{v^2(0)}{2} - \frac{u^{p+1}(0)}{p+1} = - \frac{x^{p+1}}{p+1} \qquad \forall t \in [0, T_{\max}).
+    \]
+    Despejando $v(t) = u'(t) > 0$:
+    \[
+        v^2(t) = \frac{2}{p+1} \left( u^{p+1}(t) - x^{p+1} \right) \implies v(t) = \sqrt{\frac{2}{p+1} \left( u^{p+1}(t) - x^{p+1} \right)}.
+    \]
+    Separando variables e integrando mediante el cambio $\zeta = u(s)$ (con $d\zeta = u'(s) ds$):
+    \[
+        t = \int_0^t 1 \, ds = \int_0^t \frac{u'(s)}{\sqrt{\frac{2}{p+1} \left( u^{p+1}(s) - x^{p+1} \right)}} \, ds = \int_x^{u(t)} \frac{d\zeta}{\sqrt{\frac{2}{p+1} \left( \zeta^{p+1} - x^{p+1} \right)}}.
+    \]
+    Efectuamos el cambio de escala $\zeta = x \theta$ (de modo que $d\zeta = x \, d\theta$ y los límites son $\theta = 1$ y $\theta = \frac{u(t)}{x}$):
+    \[
+        t = \int_1^{u(t)/x} \frac{x \, d\theta}{\sqrt{\frac{2}{p+1} x^{p+1} (\theta^{p+1} - 1)}} = \sqrt{\frac{p+1}{2}} x^{1 - \frac{p+1}{2}} \int_1^{u(t)/x} \frac{d\theta}{\sqrt{\theta^{p+1} - 1}} = \sqrt{\frac{p+1}{2}} x^{-\frac{p-1}{2}} \int_1^{u(t)/x} \frac{d\theta}{\sqrt{\theta^{p+1} - 1}}.
+    \]
+    Como la función integrando es continua y estrictamente positiva en $(1, +\infty)$, la integral define una función estrictamente creciente de $\frac{u(t)}{x}$, luego invertible.
+
+    \medskip
+
+    \textbf{4. Finitud y cálculo del tiempo de explosión $T_{\max}$:}
+
+    Tomando el límite cuando $t \nearrow T_{\max}$, como $u(t) \to +\infty$, el límite superior de integración tiende a $+\infty$:
+    \[
+        T_{\max} = \sqrt{\frac{p+1}{2}} \, x^{-\frac{p-1}{2}} \int_1^\infty \frac{d\theta}{\sqrt{\theta^{p+1} - 1}}.
+    \]
+    Demostremos que la integral impropia converge, probando que $T_{\max} < +\infty$. Descomponemos para cualquier $\varepsilon > 0$ suficientemente pequeño y $M > 1 + \varepsilon$:
+    \[
+        \int_1^\infty \frac{d\theta}{\sqrt{\theta^{p+1} - 1}} = \int_1^{1+\varepsilon} \frac{d\theta}{\sqrt{\theta^{p+1} - 1}} + \int_{1+\varepsilon}^M \frac{d\theta}{\sqrt{\theta^{p+1} - 1}} + \int_M^\infty \frac{d\theta}{\sqrt{\theta^{p+1} - 1}}.
+    \]
+    \begin{itemize}
+        \item \textit{Convergencia en el extremo inferior $\theta = 1$:} Consideremos la función $g(\theta) = \theta^{p+1} - 1$. Por el desarrollo de Taylor en $\theta = 1$:
+        \[
+            g(1) = 0, \qquad g'(1) = p + 1 > 0 \implies g(\theta) = (p + 1)(\theta - 1) + h(\theta)(\theta - 1) = \bigl( p + 1 + h(\theta) \bigr)(\theta - 1),
+        \]
+        donde $\lim_{\theta \to 1} h(\theta) = 0$. Tomando $\varepsilon > 0$ suficientemente pequeño, se tiene $p + 1 + h(\theta) \ge \frac{p+1}{2}$ para todo $\theta \in [1, 1+\varepsilon]$. Por tanto:
+        \[
+            \int_1^{1+\varepsilon} \frac{d\theta}{\sqrt{\theta^{p+1} - 1}} \le \sqrt{\frac{2}{p+1}} \int_1^{1+\varepsilon} \frac{d\theta}{\sqrt{\theta - 1}} = \sqrt{\frac{2}{p+1}} \Bigl[ 2\sqrt{\theta - 1} \Bigr]_1^{1+\varepsilon} = 2 \sqrt{\frac{2\varepsilon}{p+1}} < +\infty.
+        \]
+        \item \textit{Tramo intermedio $[1+\varepsilon, M]$:} La función integrando es continua sobre un compacto, luego la integral es finita.
+        \item \textit{Convergencia en $+\infty$:} Para $\theta \to \infty$, el radicando se comporta como $\theta^{\frac{p+1}{2}}$. Como $p > 1$:
+        \[
+            \frac{p+1}{2} > \frac{1+1}{2} = 1.
+        \]
+        Fijando $M > 1$ tal que $\theta^{p+1} - 1 \ge \frac{1}{2} \theta^{p+1}$ para todo $\theta \ge M$:
+        \[
+            \int_M^\infty \frac{d\theta}{\sqrt{\theta^{p+1} - 1}} \le \sqrt{2} \int_M^\infty \theta^{-\frac{p+1}{2}} \, d\theta = \sqrt{2} \left[ \frac{\theta^{-\frac{p-1}{2}}}{-\frac{p-1}{2}} \right]_M^\infty = \frac{2\sqrt{2}}{(p-1) M^{\frac{p-1}{2}}} < +\infty.
+        \]
+    \end{itemize}
+    Queda demostrado que la integral impropia converge a una constante positiva:
+    \[
+        J(p) = \int_1^\infty \frac{d\theta}{\sqrt{\theta^{p+1} - 1}} < +\infty.
+    \]
+    En consecuencia, la solución explota en tiempo finito con:
+    \[
+        T_{\max}(x, p) = \sqrt{\frac{p+1}{2}} \, J(p) \, x^{-\frac{p-1}{2}} < +\infty.
+    \]
+
+    \medskip
+
+    \textbf{5. Dependencia respecto de los parámetros $x > 0$ y $p > 1$:}
+    \begin{itemize}
+        \item \textbf{Dependencia respecto de $x$:} Como $-\frac{p-1}{2} < 0$, la función $x \mapsto T_{\max}(x, p)$ es estrictamente decreciente:
+        \[
+            \lim_{x \to 0^+} T_{\max}(x, p) = +\infty, \qquad \lim_{x \to +\infty} T_{\max}(x, p) = 0.
+        \]
+        A mayor dato inicial $x$, la explosión se produce de manera mucho más rápida.
+        \item \textbf{Dependencia respecto de $p$:} Cuando $p \to 1^+$, el exponente de decaimiento $-\frac{p-1}{2} \to 0$ y la integral en el infinito $\int_M^\infty \theta^{-\frac{p+1}{2}} d\theta$ diverge logarítmicamente (puesto que para la ecuación lineal $u'' = u$, las soluciones son combinaciones de exponenciales $e^{\pm t}$ globales sin explosión en tiempo finito). Por consiguiente:
+        \[
+            \lim_{p \to 1^+} T_{\max}(x, p) = +\infty.
+        \]
+        Para potencias $p$ grandes, la no linealidad acelera intensamente la tasa de divergencia temporal.
+    \end{itemize}
+}
+
+% Ejercicio 3
+\ejercicio{enunciado}{}{
+    Dados $\lambda > 0$, $m > 0$, $p > 1$ y $x \ge 0$, demuéstrese que el problema
+    \[
+        \begin{cases}
+            -u'' = \lambda u - m|u|^p, \\
+            u(0) = x, \\
+            u'(0) = 0,
+        \end{cases}
+    \]
+    posee una única solución maximal a la derecha, y estúdiese su naturaleza de acuerdo con los diferentes valores que toma $x$.
+}{}
+
+% Ejercicio 4
+\ejercicio{enunciado}{}{
+    Caracterizar las funciones $f \in \mathcal{C}^1([0, +\infty); \R)$ tales que $f(0) = 0$ y $f'(u) > 0$ para cada $u > 0$ para las que la solución del problema de Cauchy
+    \[
+        \begin{cases}
+            u'' = f(u), \\
+            u(0) = x > 0, \\
+            u'(0) = 0,
+        \end{cases}
+    \]
+    explota en tiempo finito.
+    
+    Dado $R > 0$, analizar la existencia de soluciones positivas para el problema singular de valores de contorno
+    \[
+        \begin{cases}
+            u'' = f(u) \quad \text{en } (-R, R), \\
+            u(-R) = +\infty = u(R).
+        \end{cases}
+    \]
+}{}
+
+% Ejercicio 5
+\ejercicio{enunciado}{}{
+    Analizar la existencia, unicidad y prolongabilidad de las soluciones del problema de valores iniciales para el sistema de competición difusivo unidimensional
+    \[
+        \begin{cases}
+            -u'' = \lambda u - a u^2 - b u v, \\
+            -v'' = \mu v - d v^2 - c u v, \\
+            u(0) = x, \quad u'(0) = 0, \\
+            v(0) = y, \quad v'(0) = 0,
+        \end{cases}
+    \]
+    donde $\lambda, \mu, a, b, c, d, x$ e $y$ son constantes positivas.
+}{}

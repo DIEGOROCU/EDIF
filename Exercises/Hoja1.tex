@@ -1131,54 +1131,45 @@
     \[
         x_\varepsilon(t) \le \varepsilon \frac{t^2}{2} + \int_0^t s \, x_\varepsilon(s) \, ds \quad \forall t \ge 0.
     \]
-    \begin{center}
-        \fcolorbox{orange!85!black}{orange!10}{\parbox{0.92\linewidth}{\centering
-            \textbf{Hasta aquí llegamos en clase (03/11).}\\[0.2em]
-            Lo que sigue es una propuesta para terminarlo \textbf{sin usar el Lema de Gronwall-Bellman}, repitiendo su demostración dentro del ejercicio (como pide el profesor). Pendiente de corregir en la próxima clase.
-        }}
-    \end{center}
-
-    Para no aplicar el lema directamente, introducimos la función auxiliar
+        Para resolver la desigualdad integral sin invocar directamente el lema general, aplicamos el método de variación de constantes sobre la función acumulada:
     \[
-        \varphi(t) = \int_0^t s \, x_\varepsilon(s) \, ds, \quad t \ge 0.
+        \varphi(t) = \int_0^t s \, x_\varepsilon(s) \, ds, \qquad \varphi(0) = 0.
     \]
-    Como $x_\varepsilon$ es continua (es el valor absoluto de una diferencia de funciones $\mathcal{C}^1$), por el Teorema Fundamental del Cálculo $\varphi \in \mathcal{C}^1([0, +\infty))$, con
+    Por el Teorema Fundamental del Cálculo, $\varphi \in \mathcal{C}^1([0, +\infty))$ y $\varphi'(t) = t \, x_\varepsilon(t)$. Sustituyendo en la cota de $x_\varepsilon(t)$:
     \[
-        \varphi(0) = 0, \qquad \varphi'(t) = t \, x_\varepsilon(t).
+        \varphi'(t) = t \, x_\varepsilon(t) \le t \left( \varepsilon \frac{t^2}{2} + \varphi(t) \right) = t \, \varphi(t) + \varepsilon \frac{t^3}{2}.
     \]
-    Multiplicando la desigualdad integral por $t \ge 0$ (que no cambia el sentido):
+    Multiplicando por el factor integrante $e^{-t^2/2} > 0$ (asociado a la solución de la homogénea $h' = th \implies h(t) = e^{t^2/2}$):
     \[
-        \varphi'(t) = t \, x_\varepsilon(t) \le \varepsilon \frac{t^3}{2} + t \, \varphi(t) \implies \varphi'(t) - t \, \varphi(t) \le \varepsilon \frac{t^3}{2}.
+        e^{-t^2/2} \varphi'(t) - t e^{-t^2/2} \varphi(t) \le \frac{\varepsilon}{2} t^3 e^{-t^2/2} \implies \frac{d}{dt} \left( e^{-t^2/2} \varphi(t) \right) \le \frac{\varepsilon}{2} t^3 e^{-t^2/2}.
     \]
-    El lado izquierdo es, salvo un factor, la derivada de un producto. Multiplicamos por el factor integrante $e^{-\int_0^t s \, ds} = e^{-\frac{t^2}{2}} > 0$:
+    Integramos entre $0$ y $t$, y teniendo en cuenta que $\varphi(0) = 0$:
     \[
-        \frac{d}{dt} \left( \varphi(t) e^{-\frac{t^2}{2}} \right) = \big( \varphi'(t) - t \, \varphi(t) \big) e^{-\frac{t^2}{2}} \le \frac{\varepsilon}{2} t^3 e^{-\frac{t^2}{2}}.
+        e^{-t^2/2} \varphi(t) \le \frac{\varepsilon}{2} \int_0^t s^3 e^{-s^2/2} \, ds \implies \varphi(t) \le \frac{\varepsilon}{2} e^{t^2/2} \int_0^t s^3 e^{-s^2/2} \, ds.
     \]
-    Integramos entre $0$ y $t$, usando $\varphi(0) = 0$:
+    Calculamos la integral mediante integración por partes, agrupando $-s e^{-s^2/2} = (e^{-s^2/2})'$:
     \[
-        \varphi(t) e^{-\frac{t^2}{2}} \le \frac{\varepsilon}{2} \int_0^t s^3 e^{-\frac{s^2}{2}} \, ds.
+        \int_0^t s^3 e^{-s^2/2} \, ds = \int_0^t -s^2 \left( -s e^{-s^2/2} \right) ds = \int_0^t -s^2 \left( e^{-s^2/2} \right)' ds = \left[ -s^2 e^{-s^2/2} \right]_0^t + \int_0^t 2s e^{-s^2/2} \, ds =
     \]
-    Calculamos la integral con el cambio $r = \frac{s^2}{2}$, $dr = s \, ds$, $s^2 = 2r$, e integrando por partes:
     \[
-        \int_0^t s^3 e^{-\frac{s^2}{2}} \, ds = \int_0^{t^2/2} 2r e^{-r} \, dr = 2 \Big[ -r e^{-r} - e^{-r} \Big]_0^{t^2/2} = 2 \left( 1 - e^{-\frac{t^2}{2}} \left( 1 + \frac{t^2}{2} \right) \right).
+        = -t^2 e^{-t^2/2} + \left[ -2 e^{-s^2/2} \right]_0^t = -t^2 e^{-t^2/2} - 2 e^{-t^2/2} + 2 = 2 - e^{-t^2/2}(t^2 + 2).
     \]
-    Por tanto, multiplicando por $e^{\frac{t^2}{2}}$:
+    Por consiguiente:
     \[
-        \varphi(t) \le \varepsilon e^{\frac{t^2}{2}} \left( 1 - e^{-\frac{t^2}{2}} \left( 1 + \frac{t^2}{2} \right) \right) = \varepsilon \left( e^{\frac{t^2}{2}} - 1 - \frac{t^2}{2} \right).
+        \varphi(t) \le \frac{\varepsilon}{2} e^{t^2/2} \left[ 2 - e^{-t^2/2}(t^2 + 2) \right] = \varepsilon \left( e^{t^2/2} - 1 - \frac{t^2}{2} \right).
     \]
-    Volviendo a la desigualdad integral, $x_\varepsilon(t) \le \varepsilon \frac{t^2}{2} + \varphi(t)$, luego
+    Sustituyendo esta cota en la desigualdad integral inicial:
     \[
-        x_\varepsilon(t) \le \varepsilon \frac{t^2}{2} + \varepsilon \left( e^{\frac{t^2}{2}} - 1 - \frac{t^2}{2} \right) = \varepsilon \left( e^{\frac{t^2}{2}} - 1 \right).
+        x_\varepsilon(t) \le \varepsilon \frac{t^2}{2} + \varphi(t) \le \varepsilon \frac{t^2}{2} + \varepsilon \left( e^{t^2/2} - 1 - \frac{t^2}{2} \right) = \varepsilon \left( e^{t^2/2} - 1 \right).
     \]
-    Concluimos que
+    Concluimos que:
     \[
-        |u_\varepsilon(t) - u_0(t)| \le \varepsilon \left( e^{\frac{t^2}{2}} - 1 \right) \quad \forall t > 0, \ \forall \varepsilon > 0.
+        |u_\varepsilon(t) - u_0(t)| \le \varepsilon \left( e^{\frac{t^2}{2}} - 1 \right) \qquad \forall t > 0, \quad \forall \varepsilon > 0.
     \]
-    En particular, en cada compacto $[0, T]$ se tiene $\|u_\varepsilon - u_0\|_{\infty, [0,T]} \le \varepsilon \left( e^{T^2/2} - 1 \right) \xrightarrow{\varepsilon \to 0} 0$: la solución depende de forma Lipschitziana (y por tanto continua) del parámetro $\varepsilon$, aunque la cota crece muy deprisa con $t$.
 }
 
 % Ejercicio 16
-\ejercicio{enunciado}{}{
+\ejercicio{resuelto}{}{
     Demuestra que, para todo $\varepsilon \ge 0$, el problema
     \[
         \begin{cases}
@@ -1187,4 +1178,77 @@
         \end{cases}
     \]
     tiene una única solución globalmente definida en $[0, \infty)$, denotada por $u_\varepsilon$, y estima $|u_\varepsilon(t) - u_0(t)|$ para todo $t > 0$ y $\varepsilon > 0$.
-}{}
+}{
+    Llamamos $(P)$ al problema de valor inicial. Definimos el campo escalar:
+    \[
+        f(t, u) = t \sin u, \qquad f \in \mathcal{C}^\infty(\mathbb{R} \times \mathbb{R}; \, \mathbb{R}).
+    \]
+    Al ser analítica en ambas variables, $f$ es en particular de clase $\mathcal{C}^1$ respecto de $u$, luego localmente Lipschitziana en $\mathbb{R}$.
+
+    \textbf{Existencia y unicidad global:}
+    
+    Calculamos la derivada parcial respecto de $u$:
+    \[
+        \frac{\partial f}{\partial u}(t, u) = t \cos u.
+    \]
+    Fijado cualquier intervalo compacto de tiempo $J = [\alpha, \beta] \subset \mathbb{R}$, acotamos uniformemente la derivada parcial:
+    \[
+        \left| \frac{\partial f}{\partial u}(t, u) \right| = |t \cos u| \le |t| \le \max\{|\alpha|, |\beta|\} \equiv M_J \qquad \forall (t, u) \in J \times \mathbb{R}.
+    \]
+    Como la derivada parcial está uniformemente acotada en $J \times \mathbb{R}$, $f$ es globalmente Lipschitziana respecto de $u \in \mathbb{R}$ en subintervalos compactos de tiempo.
+
+    Por el Teorema de Cauchy-Lipschitz global, para cada compacto $J_n = [0, n]$ ($n \ge 1$), existe una única solución $u_n(t)$ definida en $J_n$. Como $[0, +\infty) = \bigcup_{n \ge 1} J_n$ y por la unicidad de soluciones las restricciones coinciden ($u_{n+1}\big|_{J_n} = u_n$), existe una única solución maximal globalmente definida en $[0, +\infty)$, que denotamos $u_\varepsilon(t) = \lim_{n \to \infty} u_n(t)$.
+
+    \medskip
+
+    \textbf{Estimación de $|u_\varepsilon(t) - u_0(t)|$:}
+    
+    Para $\varepsilon = 0$, la función idénticamente nula $u_0(t) \equiv 0$ es la única solución de:
+    \[
+        \begin{cases}
+            u_0'(t) = t \sin(0) = 0, \\
+            u_0(0) = 0.
+        \end{cases}
+    \]
+    Para $\varepsilon > 0$, integrando la ecuación de $u_\varepsilon$ y de $u_0$ sobre $[0, t]$:
+    \[
+        u_\varepsilon(t) - u_0(t) = u_\varepsilon(0) - u_0(0) + \int_0^t \bigl( u_\varepsilon'(s) - u_0'(s) \bigr) \, ds = \varepsilon + \int_0^t s \bigl( \sin u_\varepsilon(s) - \sin u_0(s) \bigr) \, ds.
+    \]
+    Por el Teorema del Valor Medio aplicado a la función seno:
+    \[
+        |\sin u_\varepsilon(s) - \sin u_0(s)| = |\cos \xi_s| |u_\varepsilon(s) - u_0(s)| \le |u_\varepsilon(s) - u_0(s)|.
+    \]
+    Por consiguiente, definiendo la distancia $x_\varepsilon(t) = |u_\varepsilon(t) - u_0(t)|$, tenemos para todo $t \ge 0$:
+    \[
+        x_\varepsilon(t) \le \varepsilon + \int_0^t s \, x_\varepsilon(s) \, ds.
+    \]
+    Definimos la función auxiliar acumulada:
+    \[
+        \psi(t) = \int_0^t s \, x_\varepsilon(s) \, ds, \qquad \psi(0) = 0.
+    \]
+    Por el Teorema Fundamental del Cálculo, $\psi \in \mathcal{C}^1([0, +\infty))$ y satisface:
+    \[
+        \psi'(t) = t \, x_\varepsilon(t) \le t \bigl( \varepsilon + \psi(t) \bigr) = t \, \psi(t) + \varepsilon t.
+    \]
+    Reorganizando mediante el factor integrante $e^{-t^2/2} > 0$:
+    \[
+        \psi'(t) - t \, \psi(t) \le \varepsilon t \implies \frac{d}{dt} \left( e^{-t^2/2} \psi(t) \right) \le \varepsilon t e^{-t^2/2}.
+    \]
+    Integramos entre $0$ y $t$, teniendo en cuenta que $\psi(0) = 0$:
+    \[
+        e^{-t^2/2} \psi(t) \le \varepsilon \int_0^t s e^{-s^2/2} \, ds = \varepsilon \left[ -e^{-s^2/2} \right]_0^t = \varepsilon \left( 1 - e^{-t^2/2} \right).
+    \]
+    Multiplicando por $e^{t^2/2}$:
+    \[
+        \psi(t) \le \varepsilon \left( e^{t^2/2} - 1 \right).
+    \]
+    Sustituyendo esta cota en la desigualdad de $x_\varepsilon(t)$:
+    \[
+        x_\varepsilon(t) \le \varepsilon + \psi(t) \le \varepsilon + \varepsilon \left( e^{t^2/2} - 1 \right) = \varepsilon e^{t^2/2}.
+    \]
+    Concluimos que:
+    \[
+        |u_\varepsilon(t) - u_0(t)| \le \varepsilon e^{\frac{t^2}{2}} \qquad \forall t \ge 0, \quad \forall \varepsilon > 0.
+    \]
+    La solución depende por tanto de forma lipschitziana respecto del dato inicial $\varepsilon$ en cada compacto $[0, T]$, con constante de Lipschitz $e^{T^2/2}$.
+}
