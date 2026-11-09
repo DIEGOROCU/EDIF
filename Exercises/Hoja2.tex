@@ -115,7 +115,12 @@
     \[
         D_{(u,v)} f(u, v) = \begin{pmatrix} 0 & 1 \\ p |u|^{p-1} \operatorname{sgn}(u) & 0 \end{pmatrix}.
     \]
-    Esto implica que $f$ es \textbf{localmente Lipschitziano} en $\mathbb{R}^2$, uniformemente respecto a $t \in \mathbb{R}$. Por el Teorema de Cauchy-Lipschitz local y el principio de prolongabilidad de soluciones maximales, existe una \textbf{única solución maximal} $(I, u, v) = (I, u, u')$ no prolongable estrictamente a la derecha, con intervalo hacia el futuro:
+    Esto implica que $f$ es \textbf{localmente Lipschitziano} en $\mathbb{R}^2$, uniformemente respecto a $t \in \mathbb{R}$. Como $(x, 0) \in \R^2 = \Omega$, aplicamos los teoremas en cascada:
+    \begin{enumerate}[label=\Roman*)]
+        \item Por el Teorema de Cauchy-Lipschitz Local, existe una única solución local con dato inicial $(u(0), v(0)) = (x, 0)$.
+        \item Por el Teorema de Unicidad Global, la solución es única en cualquier intervalo donde esté definida.
+        \item Por el Teorema de Existencia de Solución Maximal, existe una \textbf{única solución maximal} $(I, u, v) = (I, u, u')$ no prolongable estrictamente a la derecha, con intervalo hacia el futuro:
+    \end{enumerate}
     \[
         I = [0, T_{\max}), \qquad T_{\max} \le +\infty.
     \]
@@ -183,11 +188,19 @@
 
     \textbf{4. Finitud y cálculo del tiempo de explosión $T_{\max}$:}
 
-    Tomando el límite cuando $t \nearrow T_{\max}$, como $u(t) \to +\infty$, el límite superior de integración tiende a $+\infty$:
+    Veamos primero que $u(t) \to +\infty$ cuando $t \nearrow T_{\max}$, sin suponer de antemano que $T_{\max} < +\infty$:
+    \begin{itemize}
+        \item Si $T_{\max} < +\infty$, lo hemos visto en el apartado 2 (Segundo Teorema Fundamental más monotonía).
+        \item Si $T_{\max} = +\infty$, como $u''(t) = u^p(t) \ge x^p$ para todo $t \ge 0$, integrando dos veces y usando $u'(0) = 0$, $u(0) = x$:
+        \[
+            u'(t) \ge x^p t, \qquad u(t) \ge x + x^p \frac{t^2}{2} \xrightarrow{t \to +\infty} +\infty.
+        \]
+    \end{itemize}
+    En ambos casos $\lim_{t \nearrow T_{\max}} u(t) = +\infty$. Tomando el límite cuando $t \nearrow T_{\max}$ en la expresión de $t$, el límite superior de integración tiende a $+\infty$:
     \[
         T_{\max} = \sqrt{\frac{p+1}{2}} \, x^{-\frac{p-1}{2}} \int_1^\infty \frac{d\theta}{\sqrt{\theta^{p+1} - 1}}.
     \]
-    Demostremos que la integral impropia converge, probando que $T_{\max} < +\infty$. Descomponemos para cualquier $\varepsilon > 0$ suficientemente pequeño y $M > 1 + \varepsilon$:
+    Si la integral impropia converge, el lado derecho es finito y, por tanto, $T_{\max} < +\infty$ (si fuese $T_{\max} = +\infty$ tendríamos $+\infty$ igual a un número finito, lo cual es absurdo). Demostremos que la integral impropia converge. Descomponemos para cualquier $\varepsilon > 0$ suficientemente pequeño y $M > 1 + \varepsilon$:
     \[
         \int_1^\infty \frac{d\theta}{\sqrt{\theta^{p+1} - 1}} = \int_1^{1+\varepsilon} \frac{d\theta}{\sqrt{\theta^{p+1} - 1}} + \int_{1+\varepsilon}^M \frac{d\theta}{\sqrt{\theta^{p+1} - 1}} + \int_M^\infty \frac{d\theta}{\sqrt{\theta^{p+1} - 1}}.
     \]
@@ -222,8 +235,9 @@
     Nótese que se podría haber aplicado el teorema del valor medio a la función:
     \[
         f(\theta) = \theta^{p+1} \implies
-        \theta^{p+1} - 1 = f(\theta) - f(1) = f'(\xi)(\theta - 1) = \geq (1 + p) (1)^p (\theta - 1) 
+        \theta^{p+1} - 1 = f(\theta) - f(1) = f'(\xi)(\theta - 1) = (p + 1) \xi^p (\theta - 1) \ge (p + 1) (\theta - 1), \qquad \xi \in (1, \theta),
     \]
+    ya que $\xi > 1$ implica $\xi^p > 1$.
     Permitiendonos de nuevo acotar la integral por la de $(\theta - 1)^{-1/2}$ y concluir la convergencia.
 
     \medskip
@@ -241,10 +255,33 @@
         \]
         Para potencias $p$ grandes, la no linealidad acelera intensamente la tasa de divergencia temporal.
     \end{itemize}
+
+    \textbf{Justificación de los límites respecto de $p$.} Usando el Teorema del Valor Medio anterior y $\theta^{p+1} - 1 \le \theta^{p+1}$, obtenemos cotas explícitas de $J(p)$:
+    \begin{itemize}
+        \item \textit{Cota inferior:} como $\theta^{p+1} - 1 \le \theta^{p+1}$,
+        \[
+            J(p) \ge \int_1^\infty \theta^{-\frac{p+1}{2}} \, d\theta = \left[ \frac{\theta^{-\frac{p-1}{2}}}{-\frac{p-1}{2}} \right]_1^\infty = \frac{2}{p-1}.
+        \]
+        Por tanto
+        \[
+            T_{\max}(x, p) \ge \sqrt{\frac{p+1}{2}} \, \frac{2}{p-1} \, x^{-\frac{p-1}{2}} \xrightarrow{p \to 1^+} +\infty,
+        \]
+        pues $\sqrt{\frac{p+1}{2}} \to 1$, $x^{-\frac{p-1}{2}} \to 1$ y $\frac{2}{p-1} \to +\infty$. Esto demuestra rigurosamente que $\lim_{p \to 1^+} T_{\max}(x, p) = +\infty$.
+        \item \textit{Cota superior:} en $[1, 2]$ usamos $\theta^{p+1} - 1 \ge (p+1)(\theta - 1)$, y en $[2, +\infty)$ usamos $\theta^{p+1} - 1 \ge \frac{1}{2} \theta^{p+1}$ (cierto porque $\theta^{p+1} \ge 2^{p+1} \ge 2$):
+        \[
+            J(p) \le \frac{1}{\sqrt{p+1}} \int_1^2 \frac{d\theta}{\sqrt{\theta - 1}} + \sqrt{2} \int_2^\infty \theta^{-\frac{p+1}{2}} \, d\theta = \frac{2}{\sqrt{p+1}} + \frac{2\sqrt{2}}{p-1} \, 2^{-\frac{p-1}{2}}.
+        \]
+        Así, $\sqrt{\frac{p+1}{2}} \, J(p) \le \sqrt{2} + \frac{2\sqrt{p+1}}{p-1} \, 2^{-\frac{p-1}{2}}$, que está acotado para $p \ge 2$.
+    \end{itemize}
+    \textbf{Observación (cuidado con $p \to +\infty$):} la afirmación de que $p$ grande acelera la explosión solo es cierta si $x > 1$. En efecto, el factor $\sqrt{\frac{p+1}{2}} \, J(p)$ está acotado, así que todo depende de $x^{-\frac{p-1}{2}}$:
+    \begin{itemize}
+        \item Si $x > 1$: $x^{-\frac{p-1}{2}} \to 0$ exponencialmente, luego $T_{\max}(x, p) \xrightarrow{p \to \infty} 0$.
+        \item Si $0 < x < 1$: por la cota inferior, $T_{\max}(x, p) \ge \sqrt{\frac{p+1}{2}} \frac{2}{p-1} \, x^{-\frac{p-1}{2}}$, y la exponencial $x^{-\frac{p-1}{2}} \to +\infty$ domina al factor $\frac{\sqrt{p+1}}{p-1} \sim \frac{1}{\sqrt{p}}$, luego $T_{\max}(x, p) \xrightarrow{p \to \infty} +\infty$. Intuitivamente, si $0 < u < 1$, entonces $u^p$ es muy pequeño para $p$ grande y la solución tarda mucho en despegar.
+    \end{itemize}
 }
 
 % Ejercicio 3
-\ejercicio{enunciado}{}{
+\ejercicio{medio}{}{
     Dados $\lambda > 0$, $m > 0$, $p > 1$ y $x \ge 0$, demuéstrese que el problema
     \[
         \begin{cases}
@@ -254,7 +291,171 @@
         \end{cases}
     \]
     posee una única solución maximal a la derecha, y estúdiese su naturaleza de acuerdo con los diferentes valores que toma $x$.
-}{}
+}{
+    Llamamos $(P)$ al problema de valor inicial.
+
+    \textbf{1. Formulación como sistema de primer orden y carácter Lipschitziano local:}
+
+    Introduciendo la velocidad $v = u'$, el problema $(P)$ equivale al sistema de primer orden asociado
+    \[
+        \begin{cases}
+            u' = v, \\
+            v' = m|u|^p - \lambda u, \\
+            (u(0), v(0)) = (x, 0),
+        \end{cases}
+        \qquad
+        f(u, v) = \begin{pmatrix} v \\ m|u|^p - \lambda u \end{pmatrix} \in \mathcal{C}^1(\R^2; \R^2).
+    \]
+    Su matriz jacobiana es
+    \[
+        D_{(u,v)} f(u, v) = \begin{pmatrix} 0 & 1 \\ p m |u|^{p-1} \operatorname{signo}(u) - \lambda & 0 \end{pmatrix} \in \mathcal{C}(\R^2; \mathcal{M}_2(\R)),
+    \]
+    que es continua en todo $\R^2$: el único punto delicado es $u = 0$, pero como $p > 1$ se tiene
+    \[
+        |u|^{p-1} \xrightarrow{u \to 0} 0,
+    \]
+    luego $p m |u|^{p-1} \operatorname{signo}(u) \to 0$ y la entrada es continua también en $u = 0$. Por tanto, $f$ es localmente Lipschitziana respecto de $(u, v) \in \R^2$, uniformemente en $t \in \R$ (el sistema es autónomo).
+
+    \textbf{2. Existencia y unicidad de la solución maximal:}
+
+    Como $(x, 0) \in \R^2 = \Omega$, aplicamos los teoremas en cascada:
+    \begin{enumerate}[label=\Roman*)]
+        \item Por el Teorema de Cauchy-Lipschitz Local, existe una única solución local con dato inicial $(u(0), v(0)) = (x, 0)$.
+        \item Por el Teorema de Unicidad Global, la solución es única en cualquier intervalo donde esté definida.
+        \item Por el Teorema de Existencia de Solución Maximal, existe una única solución maximal a la derecha $(I, u, v)$.
+    \end{enumerate}
+    Por el Segundo Teorema Fundamental (pues el campo está definido en todo $\R^2$), $I = [0, T_{\max})$ con $T_{\max} \le +\infty$, y
+    \[
+        T_{\max} < +\infty \implies \lim_{t \nearrow T_{\max}} \big( |u(t)| + |v(t)| \big) = +\infty.
+    \]
+
+    \textbf{3. Ley de conservación de la energía:}
+
+    Para $t \in I$, multiplicamos la ecuación $v' = m|u|^p - \lambda u$ por $v = u'$:
+    \[
+        \big( m|u(t)|^p - \lambda u(t) \big) u'(t) = v'(t) v(t).
+    \]
+    Ambos miembros son derivadas exactas. Usando que $\frac{d}{dz} \left( |z|^{p+1} \operatorname{signo}(z) \right) = (p+1)|z|^p$:
+    \[
+        \left( \frac{v^2(t)}{2} + \frac{\lambda u^2(t)}{2} - \frac{m |u(t)|^{p+1} \operatorname{signo}(u(t))}{p+1} \right)' = 0 \quad \forall t \in I.
+    \]
+    Por tanto, la expresión es constante e igual a su valor en $t = 0$, donde $u(0) = x \ge 0$ y $v(0) = 0$:
+    \[
+        \frac{v^2(t)}{2} + \frac{\lambda u^2(t)}{2} - \frac{m}{p+1} \operatorname{signo}(u(t)) |u(t)|^{p+1} = \frac{\lambda x^2}{2} - \frac{m}{p+1} x^{p+1}.
+    \]
+    Definimos el \textbf{potencial}: con el signo menos de la ecuación $-u'' = \lambda u - m|u|^p$, el potencial es la primitiva del miembro derecho,
+    \[
+        \varphi(z) = \frac{\lambda z^2}{2} - \frac{m}{p+1} \operatorname{signo}(z) |z|^{p+1} =
+        \begin{cases}
+            \dfrac{\lambda z^2}{2} - \dfrac{m}{p+1} z^{p+1} & \text{si } z \ge 0, \\[1em]
+            \dfrac{\lambda z^2}{2} + \dfrac{m}{p+1} |z|^{p+1} & \text{si } z < 0,
+        \end{cases}
+        \qquad \varphi'(z) = \lambda z - m |z|^p.
+    \]
+    Con esta notación, la ley de conservación se escribe
+    \[
+        \boxed{\frac{v^2(t)}{2} + \varphi(u(t)) = \varphi(x) =: E \quad \forall t \in I.}
+    \]
+
+    \textbf{4. Estudio del potencial $\varphi$:}
+    \begin{itemize}
+        \item \textit{Signo de $\varphi'$ para $z < 0$:} $\varphi'(z) = \lambda z - m|z|^p < 0$, pues $\lambda z < 0$ y $-m|z|^p < 0$. Así, $\varphi$ es estrictamente decreciente en $(-\infty, 0)$, con $\varphi(z) \to +\infty$ cuando $z \to -\infty$.
+
+        \item \textit{Ceros de $\varphi$ en $z \ge 0$:}
+        \[
+            \frac{\lambda z^2}{2} - \frac{m}{p+1} z^{p+1} = 0 \iff
+            \begin{cases}
+                z = 0, \\
+                \dfrac{\lambda}{2} - \dfrac{m}{p+1} z^{p-1} = 0 \implies z = \left( \dfrac{\lambda (p+1)}{2m} \right)^{\frac{1}{p-1}} =: \alpha.
+            \end{cases}
+        \]
+
+        \item \textit{Puntos críticos de $\varphi$ en $z \ge 0$:}
+        \[
+            \lambda z - m z^p = 0 \iff
+            \begin{cases}
+                z = 0, \\
+                z^{p-1} = \dfrac{\lambda}{m} \implies z = \left( \dfrac{\lambda}{m} \right)^{\frac{1}{p-1}} =: \omega.
+            \end{cases}
+        \]
+        Como $p > 1$ se tiene $\frac{p+1}{2} > 1$, luego $\frac{\lambda(p+1)}{2m} > \frac{\lambda}{m}$ y, por tanto, $\omega < \alpha$. Además, para $z > 0$, $\varphi'(z) = z(\lambda - m z^{p-1})$ es positiva en $(0, \omega)$ y negativa en $(\omega, +\infty)$.
+
+        \item \textit{Naturaleza de los puntos críticos:} para $z \ge 0$, $\varphi''(z) = \lambda - m p z^{p-1}$, luego
+        \[
+            \varphi''(0) = \lambda > 0 \quad (\text{mínimo local}), \qquad
+            \varphi''(\omega) = \lambda - m p \frac{\lambda}{m} = (1 - p) \lambda < 0 \quad (\text{máximo local}),
+        \]
+        ya que $1 - p < 0$ y $\lambda > 0$.
+    \end{itemize}
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, xscale=2.6, yscale=5.5]
+        % ejes
+        \draw[->] (-1.0,0) -- (1.95,0) node[right] {$z$};
+        \draw[->] (0,-0.3) -- (0,0.72) node[above] {$\varphi(z)$};
+        % potencial (lambda = m = 1, p = 2)
+        \draw[thick, blue!80!black, domain=-0.95:0, samples=60] plot (\x, {\x*\x/2 - \x*\x*\x/3});
+        \draw[thick, blue!80!black, domain=0:1.72, samples=80] plot (\x, {\x*\x/2 - \x*\x*\x/3});
+        % nivel phi(x)
+        \draw[dashed, gray] (-1.0,0.108) node[left, black] {$\varphi(x)$} -- (1.9,0.108);
+        % puntos
+        \draw[dotted] (-0.4117,0.108) -- (-0.4117,0) node[below] {$\beta(x)$};
+        \draw[dotted] (0.6,0.108) -- (0.6,0) node[below] {$x$};
+        \draw[dotted] (1,0.1667) -- (1,0) node[below] {$\omega$};
+        \draw[dotted] (1.3117,0.108) -- (1.3117,0) node[below] {$x$};
+        \fill (1.5,0) circle (0.25pt) node[below right] {$\alpha$};
+        % conjuntos donde puede moverse u
+        \draw[very thick, red!80!black] (-0.4117,0) -- (0.6,0);
+        \draw[very thick, red!80!black] (1.3117,0) -- (1.9,0);
+    \end{tikzpicture}
+    \end{center}
+    En rojo, los intervalos donde puede moverse $u(t)$: $[\beta(x), x]$ si $x \in (0, \omega)$, y $[x, +\infty)$ si $x > \omega$. Aquí $\beta(x) < 0$ es el único punto negativo con $\varphi(\beta(x)) = \varphi(x)$.
+
+    \textbf{5. Consecuencia de la ley de conservación:}
+
+    Como $\frac{v^2(t)}{2} \ge 0$,
+    \[
+        \varphi(u(t)) = \varphi(x) - \frac{v^2(t)}{2} \le \varphi(x) \quad \forall t \in I.
+    \]
+    Es decir, la solución solo puede moverse por la región $\{ z \in \R : \varphi(z) \le \varphi(x) \}$, y, al ser $u$ continua con $u(0) = x$, por conexión se queda en la componente de ese conjunto que contiene a $x$.
+
+    \textbf{6. Casos según el dato inicial $x$:}
+    \begin{itemize}
+        \item \textbf{Si $x = 0$:} $(u, v) \equiv (0, 0)$ es solución, pues $f(0, 0) = (0, 0)$. Por unicidad, $u \equiv 0$.
+
+        \item \textbf{Si $x = \omega$:} $f(\omega, 0) = (0, m\omega^p - \lambda \omega) = (0, \omega(m\omega^{p-1} - \lambda)) = (0, 0)$, así que $(\omega, 0)$ es un equilibrio, y por unicidad $u \equiv \omega$.
+
+        \item \textbf{Si $x \in (0, \omega)$:} el conjunto $\{ \varphi \le \varphi(x) \}$ cerca de $x$ es $[\beta(x), x]$, separado del resto del conjunto porque $\varphi(\omega) > \varphi(x)$. Luego $u(t) \in [\beta(x), x]$ está acotada. Entonces $v(t)$ también lo está, ya que $\varphi \ge 0$ en $[\beta(x), x]$ (su mínimo es $\varphi(0) = 0$):
+        \[
+            v^2(t) = 2 \big( \varphi(x) - \varphi(u(t)) \big) \le 2 \varphi(x) \implies |v(t)| \le \sqrt{2 \varphi(x)} \quad \forall t \in I.
+        \]
+        Así, $|u(t)| + |v(t)|$ está acotada en $I$ y, por el Segundo Teorema Fundamental, $T_{\max} = +\infty$: la solución está globalmente definida.
+
+        \item \textbf{Si $x \in (\omega, +\infty)$:} como $\varphi$ es decreciente en $(\omega, +\infty)$ y $\varphi(\omega) > \varphi(x)$, de $\varphi(u(t)) \le \varphi(x)$ se deduce
+        \[
+            u(t) \ge x \quad \forall t \in I.
+        \]
+        En particular $u(t) > 0$, así que $|u(t)|^p = u^p(t)$ y la ecuación queda
+        \[
+            -u''(t) = \big( \lambda - m u^{p-1}(t) \big) u(t) \overset{(\ast)}{<} 0.
+        \]
+        $(\ast)$: como $u(t) \ge x > \omega$,
+        \[
+            u(t) > \left( \frac{\lambda}{m} \right)^{\frac{1}{p-1}} \implies u^{p-1}(t) > \frac{\lambda}{m} \implies \lambda - m u^{p-1}(t) < 0,
+        \]
+        y además $u(t) > 0$. Por tanto $u''(t) > 0$, así que $u'(t)$ es estrictamente creciente y, como $u'(0) = 0$,
+        \[
+            u'(t) > 0 \quad \forall t \in (0, T_{\max}).
+        \]
+    \end{itemize}
+
+    \begin{center}
+        \fcolorbox{orange!85!black}{orange!10}{\parbox{0.92\linewidth}{\centering
+            \textbf{Hasta aquí llegamos en clase (06/11).}\\[0.2em]
+            Falta terminar el caso $x \in (\omega, +\infty)$. Se termina en la próxima clase.
+        }}
+    \end{center}
+}
 
 % Ejercicio 4
 \ejercicio{enunciado}{}{
