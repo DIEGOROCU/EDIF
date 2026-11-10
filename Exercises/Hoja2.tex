@@ -447,18 +447,77 @@
         \[
             u'(t) > 0 \quad \forall t \in (0, T_{\max}).
         \]
-    \end{itemize}
 
-    \begin{center}
-        \fcolorbox{orange!85!black}{orange!10}{\parbox{0.92\linewidth}{\centering
-            \textbf{Hasta aquí llegamos en clase (06/11).}\\[0.2em]
-            Falta terminar el caso $x \in (\omega, +\infty)$. Se termina en la próxima clase.
-        }}
-    \end{center}
+            Puesto que $u(t) \ge x > \omega$, de la ley de conservación deducimos:
+        \[
+            \frac{v^2(t)}{2} + \varphi(u(t)) = \varphi(x) \implies v^2(t) = 2\big(\varphi(x) - \varphi(u(t))\big).
+        \]
+        Sustituyendo la expresión del potencial $\varphi(z) = \frac{\lambda}{2} z^2 - \frac{m}{p+1} z^{p+1}$:
+        \[
+            v(t) = \sqrt{\frac{2m}{p+1}\big(u^{p+1}(t) - x^{p+1}\big) - \lambda\big(u^2(t) - x^2\big)}.
+        \]
+        Como $v(t) = u'(t) > 0$, integramos por separación de variables en $[0, t]$ realizando el cambio $z = u(s)$ y posteriormente el reescalado $z = x\theta$ ($dz = x\,d\theta$):
+        \[
+            t = \int_0^t dt = \int_x^{u(t)} \frac{dz}{\sqrt{\frac{2m}{p+1}(z^{p+1} - x^{p+1}) - \lambda(z^2 - x^2)}} = \int_1^{u(t)/x} \frac{d\theta}{\sqrt{\frac{2m x^{p-1}}{p+1}(\theta^{p+1} - 1) - \lambda(\theta^2 - 1)}}.
+        \]
+        Definiendo el radicando $f(\theta) = \frac{2m x^{p-1}}{p+1}(\theta^{p+1} - 1) - \lambda(\theta^2 - 1)$, el tiempo maximal de existencia hacia el futuro está dado por el límite cuando $u(t) \to +\infty$:
+        \[
+            T_{\max}(x, p) = \int_1^{+\infty} \frac{d\theta}{\sqrt{f(\theta)}} = \int_1^M \frac{d\theta}{\sqrt{f(\theta)}} + \int_M^{+\infty} \frac{d\theta}{\sqrt{f(\theta)}} \qquad (M > 1).
+        \]
+
+        \textbf{Convergencia de la integral en $\theta \to 1^+$:}
+        
+        Observamos que $f(1) = 0$. Derivando respecto de $\theta$:
+        \[
+            f'(\theta) = 2m x^{p-1}\theta^p - 2\lambda\theta = 2\theta(m x^{p-1}\theta^{p-1} - \lambda).
+        \]
+        Para $\theta > 1$ y siendo $x > \omega = \left(\frac{\lambda}{m}\right)^{\frac{1}{p-1}}$, tenemos $m x^{p-1} - \lambda > 0$, luego $f'(\theta) > 2\theta(m x^{p-1} - \lambda) > 0$. Además:
+        \[
+            f''(\theta) = 2m p x^{p-1}\theta^{p-1} - 2\lambda > 2(m x^{p-1} - \lambda) > 2\left(m \frac{\lambda}{m} - \lambda\right) = 0,
+        \]
+        por lo que $f'(\theta)$ es estrictamente creciente para $\theta \ge 1$. Por el desarrollo de Taylor con resto de Lagrange (o el Teorema del Valor Medio), existe $\xi \in (1, \theta)$ tal que:
+        \[
+            f(\theta) = f(1) + f'(\xi)(\theta - 1) \ge f'(1)(\theta - 1) = 2(mx^{p-1} - \lambda)(\theta - 1).
+        \]
+        Por consiguiente:
+        \[
+            \int_1^M \frac{d\theta}{\sqrt{f(\theta)}} \le \frac{1}{\sqrt{2(mx^{p-1} - \lambda)}} \int_1^M (\theta - 1)^{-1/2}\,d\theta = \frac{2\sqrt{M-1}}{\sqrt{2(mx^{p-1} - \lambda)}} < +\infty.
+        \]
+
+        \textbf{Convergencia de la integral en $\theta \to +\infty$:}
+        
+        Para la cola asintótica cuando $\theta \to +\infty$, el término dominante del radicando es de orden $\theta^{p+1}$:
+        \[
+            \lim_{\theta \to +\infty} \frac{f(\theta)}{\frac{2m x^{p-1}}{p+1}\theta^{p+1}} = \lim_{\theta \to +\infty} \left(1 - \frac{1}{\theta^{p+1}} - \frac{\lambda(p+1)}{2mx^{p-1}}\left(\frac{1}{\theta^{p-1}} - \frac{1}{\theta^{p+1}}\right)\right) = 1.
+        \]
+        Por tanto, fijando $M$ suficientemente grande, $\sqrt{f(\theta)} \ge \frac{1}{2}\sqrt{\frac{2m x^{p-1}}{p+1}}\,\theta^{\frac{p+1}{2}}$, de donde:
+        \[
+            \int_M^{+\infty} \frac{d\theta}{\sqrt{f(\theta)}} \le 2\sqrt{\frac{p+1}{2mx^{p-1}}} \int_M^{+\infty} \theta^{-\frac{p+1}{2}}\,d\theta.
+        \]
+        Al ser $p > 1$, se cumple $\frac{p+1}{2} > 1$, luego el exponente $-\frac{p+1}{2} < -1$ y la integral de Riemann converge:
+        \[
+            \int_M^{+\infty} \theta^{-\frac{p+1}{2}}\,d\theta = \left[\frac{\theta^{1 - \frac{p+1}{2}}}{1 - \frac{p+1}{2}}\right]_M^{+\infty} = \frac{M^{-\frac{p-1}{2}}}{\frac{p-1}{2}} < +\infty.
+        \]
+        Concluimos que $T_{\max}(x, p) < +\infty$, por lo que la solución \textbf{explota en tiempo finito hacia $+\infty$}:
+        \[
+            \lim_{t \to T_{\max}^-} u(t) = +\infty, \qquad \lim_{t \to T_{\max}^-} u'(t) = +\infty.
+        \]
+        Además, analizando la dependencia de $T_{\max}(x, p)$ respecto de $x$, cuando $x \to \omega^+ = \left(\frac{\lambda}{m}\right)^{\frac{1}{p-1}}$, el denominador en $\theta = 1$ verifica $f'(1) = 2(mx^{p-1} - \lambda) \to 0$, por lo que la singularidad en $\theta = 1$ se vuelve no integrable (cero de orden doble con comportamiento local asintótico como $\frac{1}{\theta-1}$), obteniéndose $\lim_{x \to \omega^+} T_{\max}(x, p) = +\infty$, consistente con que $u \equiv \omega$ es una solución de equilibrio global. Por contra, cuando $x \to +\infty$, $T_{\max}(x, p) \to 0^+$.
+
+        \begin{center}
+        \begin{tikzpicture}[scale=1.1]
+            \draw[->] (-0.3,0) -- (4.5,0) node[right] {$x$};
+            \draw[->] (0,-0.3) -- (0,3.5) node[above] {$T_{\max}(x)$};
+            \draw[dashed, blue!70!black] (1.2,0) -- (1.2,3.3);
+            \node[below] at (1.2,0) {$\left(\frac{\lambda}{m}\right)^{\frac{1}{p-1}}$};
+            \draw[thick, blue!80!black, domain=1.35:4.2, samples=100] plot (\x, {0.6/(\x - 1.2) + 0.15});
+        \end{tikzpicture}
+        \end{center}
+    \end{itemize}
 }
 
 % Ejercicio 4
-\ejercicio{enunciado}{}{
+\ejercicio{medio}{}{
     Caracterizar las funciones $f \in \mathcal{C}^1([0, +\infty); \R)$ tales que $f(0) = 0$ y $f'(u) > 0$ para cada $u > 0$ para las que la solución del problema de Cauchy
     \[
         \begin{cases}
@@ -476,7 +535,27 @@
             u(-R) = +\infty = u(R).
         \end{cases}
     \]
-}{}
+}{
+    \textbf{1. Formulación como sistema de primer orden y conservación de energía:}
+
+    Introduciendo $v = u'$, el problema de Cauchy para la ecuación de segundo orden se formula como el sistema autónomo en el plano de fases:
+    \[
+        \begin{pmatrix} u \\ v \end{pmatrix}' = \begin{pmatrix} v \\ f(u) \end{pmatrix}, \qquad \begin{pmatrix} u(0) \\ v(0) \end{pmatrix} = \begin{pmatrix} x \\ 0 \end{pmatrix}.
+    \]
+    Como $f \in \mathcal{C}^1([0, +\infty); \R)$, el campo es localmente Lipschitziano en el semiplano $u \ge 0$. Por el Teorema Fundamental de existencia y unicidad maximal, existe una única solución maximal $(I, u)$ con $I = [0, T_{\max})$.
+
+    Multiplicando la ecuación escalar por $u'(t) = v(t)$:
+    \[
+        u''(t) u'(t) = f(u(t)) u'(t) \implies \left( \frac{v^2(t)}{2} - \int_x^{u(t)} f(s)\,ds \right)' = 0 \quad \forall t \in I.
+    \]
+
+    \begin{center}
+        \fcolorbox{orange!85!black}{orange!10}{\parbox{0.92\linewidth}{\centering
+            \textbf{Hasta aquí llegamos en clase (10/11).}\\[0.2em]
+            Se continúa completando la caracterización de explosión en tiempo finito de la integral singular en la próxima sesión.
+        }}
+    \end{center}
+}
 
 % Ejercicio 5
 \ejercicio{enunciado}{}{
