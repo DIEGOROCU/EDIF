@@ -540,21 +540,102 @@
 
     Introduciendo $v = u'$, el problema de Cauchy para la ecuación de segundo orden se formula como el sistema autónomo en el plano de fases:
     \[
-        \begin{pmatrix} u \\ v \end{pmatrix}' = \begin{pmatrix} v \\ f(u) \end{pmatrix}, \qquad \begin{pmatrix} u(0) \\ v(0) \end{pmatrix} = \begin{pmatrix} x \\ 0 \end{pmatrix}.
+        \begin{pmatrix} u \\ v \end{pmatrix}' = \begin{pmatrix} v \\ f(u) \end{pmatrix} =
+        g(u, v) : [0, +\infty) \times \mathbb{R} \to \mathbb{R}^2,
+        \qquad \begin{pmatrix} u(0) \\ v(0) \end{pmatrix} = \begin{pmatrix} x \\ 0 \end{pmatrix}.
     \]
-    Como $f \in \mathcal{C}^1([0, +\infty); \R)$, el campo es localmente Lipschitziano en el semiplano $u \ge 0$. Por el Teorema Fundamental de existencia y unicidad maximal, existe una única solución maximal $(I, u)$ con $I = [0, T_{\max})$.
-
-    Multiplicando la ecuación escalar por $u'(t) = v(t)$:
+    
+    Por lo que podemos tomar la matriz Hessiana de $g$:
     \[
-        u''(t) u'(t) = f(u(t)) u'(t) \implies \left( \frac{v^2(t)}{2} - \int_x^{u(t)} f(s)\,ds \right)' = 0 \quad \forall t \in I.
+        D_{(u,v)} g(u, v) = \begin{pmatrix} 0 & 1 \\ f'(u) & 0 \end{pmatrix} \in \mathcal{C}([0, +\infty) \times \R; \mathcal{M}_2(\R)),
+    \]
+    Que es continua en todo su dominio, pues $f \in \mathcal{C}^1([0, +\infty); \R)$. Por tanto, $g$ es localmente Lipschitziana respecto de $(u, v) \in \Omega = (0, +\infty) \times \R$, uniformemente en $t \in [0, +\infty)$. Aplicando los teoremas:
+    \begin{enumerate}[label=\Roman*)]
+        \item Por el Teorema de Cauchy-Lipschitz Local, existe una única solución local con dato inicial $(u(0), v(0)) = (x, 0)$.
+        \item Por el Teorema de Unicidad Global, la solución es única en cualquier intervalo donde esté definida.
+        \item Por el Teorema de Existencia de Solución Maximal, existe una única solución maximal a la derecha $(I, u, v)$.
+        \item Por el 3er Teorema Fundamental, $I = [0, T_{\max})$ con $T_{\max} \le +\infty$, y si $T_{\max} < +\infty$ entonces:
+        \[
+            \limsup_{t \nearrow T_{\max}} \big( |u(t)| + |v(t)| \big) = +\infty.
+        \]
+        ó
+        \[
+            \exists t_n \to T_{\max}, u_{\omega} \in \partial \Omega : 
+            \lim_{n \to +\infty} u(t_n) = u_{\omega} \in \partial \Omega.
+        \]
+    \end{enumerate}
+
+    Ahora, podemos integrar:
+    \[
+        u''(t) = f(u(t)) \implies
+        u'(t) - u'(0) = \int_0^t f(u(s)) \, ds \implies
+        u'(t) = \int_0^t f(u(s)) \, ds
     \]
 
-    \begin{center}
-        \fcolorbox{orange!85!black}{orange!10}{\parbox{0.92\linewidth}{\centering
-            \textbf{Hasta aquí llegamos en clase (10/11).}\\[0.2em]
-            Se continúa completando la caracterización de explosión en tiempo finito de la integral singular en la próxima sesión.
-        }}
-    \end{center}
+    Ahora, como $f'(u) > 0$:
+    \[
+        f(u) - f(0) = f(u) = \int_0^u f'(s) \, ds > 0 \quad \forall u > 0.
+    \]
+    
+    Por lo tanto, $u'(t) = \int_0^t f(u(s)) \, ds > 0$ para todo $t > 0$, lo que implica que $u(t)$ es estrictamente creciente. Además, como $u(0) = x > 0$, se tiene que $u(t) \geq x > 0 \forall t \in [0, T_{\max})$. Esto nos permite quitar los valores absolutos en el caso de explosión en tiempo finito dejandonos $\lim_{t \nearrow T_{\max}} u(t) + v(t) = +\infty$. Multiplicando en cruz:
+    \[
+        u'(t) f(u(t)) = v(t) v'(t) \implies
+        v(t) v'(t) - u'(t) f(u(t)) = 0 \implies
+        \left( \frac{v^2(t)}{2} - \int_x^{u(t)} f(s) \, ds \right)' = 0.
+    \]
+
+    Como la derivada es nula, la función es constante, en particular coincide con su valor en $t = 0$:
+    \[
+        \frac{v^2(t)}{2} - \int_x^{u(t)} f(s) \, ds = \frac{v^2(0)}{2} - \int_x^{u(0)} f(s) \, ds = 0 - 0 = 0 \implies
+    \]
+    \[
+        \implies v(t) = \sqrt{2 \int_x^{u(t)} f(s) \, ds} \quad \forall t \in [0, T_{\max}).
+    \]
+
+    Como $f(u)$ es creciente, entonces $\int_x^{u(t)} f(s) \, ds > (u(t) - x) f(x)$, y por lo tanto:
+    \[
+        t =
+        \int_0^t 1 ds =
+        \int_0^t \frac{u'(s)}{v(s)} ds =
+        \int_0^t \frac{u'(s)}{\sqrt{2 \int_x^{u(s)} f(\tau) \, d\tau}} ds
+    \]
+
+    Haciendo el cambio de variable $z = u(s)$, $dz = u'(s) ds$:
+    \[
+        t = \int_x^{u(t)} \frac{dz}{\sqrt{2 \int_x^z f(\tau) \, d\tau}}.
+    \]
+
+    Haciendo el cambio de variable $z = \theta x$, $dz = x d\theta$:
+    \[
+        t = \frac{x}{\sqrt{2}} \int_1^{u(t)/x} \frac{d\theta}{\sqrt{\int_x^{\theta x} f(\tau) \, d\tau}}.
+    \]
+
+    Cambiando ahora en la integral interior $\tau = x y$, $d\tau = x dy$:
+    \[
+        t = \sqrt{\frac{x}{2}} \int_1^{u(t)/x} \frac{d\theta}{\sqrt{\int_1^{\theta} f(x y) \, dy}}.
+    \]
+
+    Ahora, si $u(t)$ explota, entonces el tiempo debe ser finito y por lo tanto la integral debe converger, es decir:
+    \[
+    t \to T_{\max} = \sqrt{\frac{x}{2}} 
+    \underbrace{\int_1^{+\infty} \frac{d\theta}{\sqrt{\int_1^{\theta} f(x y) \, dy}} < +\infty}_{=j(x)}.
+    \]
+
+    Si vamos ahora a la segunda parte del ejercicio, tenemos que:
+    \[
+        \begin{cases}
+            R > 0 \\
+            u'' = f(u) \quad \text{en } (-R, R), \\
+            u(-R) = +\infty = u(R).
+        \end{cases}
+    \]
+
+    Ahora podemos definir la función que nos da el tiempo de explosión a partir del valor inicial $x$:
+    \[
+        T_{\max}(x) = \sqrt{\frac{x}{2}} j(x)
+    \]
+
+    Como hay un equilibrio en $u(0) = x$, entonces sabemos que si $x$ tiende a $0$, entonces $T_{\max}(x) \to \infty$ ya que la solución tiende al equilibrio nulo constante.
 }
 
 % Ejercicio 5
