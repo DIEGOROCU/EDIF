@@ -1164,7 +1164,7 @@ Bajo las condiciones generales, tiene una única solución maximal $(I^*, u^*) \
         \[
             \varlimsup_{t \nearrow T_{\text{max}}} \| u(t) \| = +\infty
         \]
-        En cuto caso se dice que la solución maximal $(I, u)$ \textbf{explota} en tiempo $T_{\text{max}}$.\\
+        En cuyo caso se dice que la solución maximal $(I, u)$ \textbf{explota} en tiempo $T_{\text{max}}$.\\
         Nótese que el limite debe ser superior, ya que si no, la afirmación es \textbf{falsa}.
     \end{enumerate}
 \end{teorema}
@@ -1186,6 +1186,12 @@ Bajo las condiciones generales, tiene una única solución maximal $(I^*, u^*) \
         \varlimsup_{t \nearrow T_{\text{max}}} \| u(t) \| = +\infty
     \]
     Por lo que debe ser un límite superior.\\
+
+    (Aquí estamos usando la norma $\|u\|_1 = |u_1| + \dots + |u_N|$.) En particular, para $N = 2$,
+    \[
+        \varlimsup_{t \nearrow T_{\text{max}}} \bigl( |u_1(t)| + |u_2(t)| \bigr) = +\infty
+    \]
+    \textbf{no} implica que ambas componentes se vayan a infinito: puede pasar que $|u_1(t)| \leq C$ para todo $t \in I = [t_0, T_{\text{max}})$ y $\varlimsup_{t \nearrow T_{\text{max}}} |u_2(t)| = +\infty$.\\
 
     Otro motivo para usar este límite, es tener una solución que alterne entre explotar y no explotar, pero donde sí exista esa sucesión de puntos dónde explota, observese en la siguiente gráfica:
 
@@ -1476,7 +1482,7 @@ Probemos ahora el teorema.
 
 \begin{proof}
     Si $I = J = [t_0, +\infty)$, entonces la solución maximal está globalmente definida en todo el intervalo $J$. En este caso no hay explosión en tiempo finito ni acercamiento a la frontera de $\Omega$.
-    Supongamos que $I \subsetneq J$, entonces $I = [t_0, T_{\text{max}})$ o $I = [t_0, T_{\text{max}}]$ para algún $T_{\text{max}} < +\infty$. Como ya probamos en el teorema anterior, el caso $I = [t_0, T_{\text{max}}]$ es imposible, por lo que necesariamente $I = [t_0, T_{\text{max}})$.
+    Supongamos que $I \subsetneq J$, entonces $I = [t_0, T_{\text{max}})$ o $I = [t_0, T_{\text{max}}]$ para algún $T_{\text{max}} < +\infty$. Como ya probamos en el teorema anterior, el caso $I = [t_0, T_{\text{max}}]$ es imposible, por lo que necesariamente $I = [t_0, T_{\text{max}})$. Aquí el argumento funciona porque $u(t) \in \Omega$ para todo $t \in I$: si fuera $I = [t_0, T_{\text{max}}]$, tendríamos $u(T_{\text{max}}) = u_1 \in \Omega$ y el Teorema de Cauchy-Lipschitz local aplicado a $w' = f(t, w)$, $w(T_{\text{max}}) = u_1$, daría una solución en $[T_{\text{max}}, T_{\text{max}} + \delta]$ y, pegándola con $u$, una prolongación estricta de $(I, u)$. Es decir, $u$ no puede ``acabar'' en un punto $u(T_{\text{max}}) \in \Omega$.
     \[
         \Gamma = \{ u(t) : t \in [t_0, T_{\text{max}}) \}
     \]
@@ -1484,9 +1490,10 @@ Probemos ahora el teorema.
     \[
         \begin{cases}
             \Gamma \text{ es no acotada} \implies \varlimsup_{t \nearrow T_{\text{max}}} \| u(t) \| = +\infty \\
-            \Gamma \text{ es acotada} \implies \overline{\Gamma} \subset \overline{\Omega}
+            \Gamma \text{ es acotada} \implies \overline{\Gamma} \text{ es compacto y } \overline{\Gamma} \subset \overline{\Omega}
         \end{cases}
     \]
+    (Nótese que $\Omega$ no tiene por qué ser acotado; lo que es compacto es $\overline{\Gamma}$.)
     \begin{itemize}
         \item O bien $\overline{\Gamma} \subset \Omega$ \item O bien $\overline{\Gamma} \cap \partial \Omega \neq \emptyset$
     \end{itemize}
@@ -1536,6 +1543,7 @@ Probemos ahora el teorema.
 
 
 \ejemplo{
+    Ejemplificamos la alternativa 2 tomando un $\Omega$ concreto (una franja). Una misma órbita puede tener una sucesión $u(s_n)$ que explota y otra $u(t_n)$ que se acerca a la frontera: las dos alternativas no son excluyentes, y el punto $u_\omega \in \partial \Omega$ \textbf{no tiene por qué ser único} (a estos puntos se les llama $\omega$-límites de $\Gamma$).
     \begin{center}
     \begin{tikzpicture}[thick, >=stealth]
 
@@ -1582,7 +1590,7 @@ Probemos ahora el teorema.
 
     % Anotaciones de las sucesiones a la derecha
     \node[anchor=west] at (4.5, 0.6) {$u(s_n), \, n \ge 1 \quad \|u(s_n)\| \xrightarrow{n \to \infty} +\infty$};
-    \node[anchor=west] at (4.5, -0.6) {$u(t_n), \, n \ge 1 \quad u(t_n) \xrightarrow{n \to \infty} u_\omega \in \Omega$};
+    \node[anchor=west] at (4.5, -0.6) {$u(t_n), \, n \ge 1 \quad u(t_n) \xrightarrow{n \to \infty} u_\omega \in \partial\Omega$};
 
     \end{tikzpicture}
     \end{center}    
@@ -1591,7 +1599,7 @@ Probemos ahora el teorema.
 \subsubsection{Cuarto teorema fundamental}
 
 \begin{teorema}[Cuarto teorema fundamental de la teoría de Cauchy-Lipschitz]
-    Sean $J = [t_0, t_0 + T]$, $\Omega = B_R(q)$, $f \in C(J \times \overline{\Omega}, \mathbb{R}^N)$ una función globalmente Lipschitziana respecto a $u \in \overline{\Omega}$, uniformemente en $t \in J$. Entonces para cada $u_0 \in \Omega$, el Problema de Valor Inicial (PVI):
+    Sean $J = [t_0, t_0 + T]$, $\Omega = B_R(q)$, $f \in C(J \times \overline{\Omega}, \mathbb{R}^N)$ una función globalmente Lipschitziana respecto a $u \in \overline{\Omega}$ (da igual poner $\Omega$ que $\overline{\Omega}$), uniformemente en $t \in J$. Entonces para cada $u_0 \in \Omega$, el Problema de Valor Inicial (PVI):
     \[
         (P) =
         \begin{cases}
@@ -1601,9 +1609,12 @@ Probemos ahora el teorema.
     \]
     tiene una única solución maximal $(I_{\text{max}}, u_{\text{max}})$. Además, el intervalo maximal de existencia cumple que o bien $I_{\text{max}} = J$, o bien $I_{\text{max}} = [t_0, T_{\text{max}}]$ con $T_{\text{max}} < t_0 + T$. En este último caso, cuando la solución no alcanza todo el intervalo $J$, se cumple necesariamente que:
     \[
-        u_{\text{max}}(T_{\text{max}}) \in \partial \Omega
+        u_{\text{max}}(T_{\text{max}}) \in \partial \Omega = \partial B_R(q)
     \]
+    (si no, por Cauchy-Lipschitz local se podría prolongar).
 \end{teorema}
+
+Los cambios respecto de los teoremas anteriores vienen de que ahora $f$ está definida en un \textbf{cerrado} ($J \times \overline{\Omega}$), no en un abierto: a diferencia de los otros teoremas, aquí $f$ está definida en toda la adherencia, y por eso el intervalo maximal puede ser cerrado.
 
 \begin{proof}
     Sea $\Sigma$ el conjunto de todas las soluciones locales del PVI $(P)$. Es decir, $\Sigma$ está formado por los pares $(I, u_I)$ tales que $I \subset J$ es un intervalo con $t_0 \in I$, $u_I(t_0) = u_0$, $u_I(t) \in \overline{\Omega}$ para todo $t \in I$, y cumplen la ecuación diferencial:
@@ -1612,7 +1623,7 @@ Probemos ahora el teorema.
     \]
     Por el teorema de Cauchy-Lipschitz (o Picard-Lindelöf) local, dado que $f$ es continua y Lipschitziana, existe al menos una solución local, por lo que $\Sigma \neq \emptyset$.
 
-    Para garantizar un buen comportamiento en la frontera, podemos considerar una función $F : J \times \mathbb{R}^N \to \mathbb{R}^N$ que extiende a $f$. Dado que $\overline{\Omega}$ es un conjunto convexo (una bola cerrada), podemos definir $F$ proyectando los puntos fuera de $\overline{\Omega}$ hacia la frontera $\partial \Omega$. De este modo, $F$ coincide con $f$ en su dominio original:
+    Para garantizar un buen comportamiento en la frontera, podemos considerar una función $F : J \times \mathbb{R}^N \to \mathbb{R}^N$ que extiende a $f$. Dado que $\overline{\Omega}$ es un conjunto convexo (una bola cerrada), podemos definir $F$ proyectando los puntos fuera de $\overline{\Omega}$ hacia la frontera $\partial \Omega$ (la extensión se hace ``por los rayos'' que salen de $q$). De este modo, $F$ coincide con $f$ en su dominio original:
     \[
         F \mid_{J \times \overline{\Omega}} = f
     \]
@@ -1632,6 +1643,8 @@ Probemos ahora el teorema.
             [t_0, T_{\text{max}}]
         \end{cases}
     \]
+    En principio, $(I_{\text{max}}, u_{\text{max}})$ ya es la solución maximal de $(P)$, pero no hemos acabado: hay que ver cómo es $I_{\text{max}}$.
+
     Supongamos por reducción al absurdo que $I_{\text{max}} = [t_0, T_{\text{max}})$. Consideremos la trayectoria de la solución:
     \[
         \Gamma = \{ u_{\text{max}}(t) : t \in I_{\text{max}} \} \subset \overline{\Omega} = \overline{B}_R(q)
@@ -1661,7 +1674,7 @@ Probemos ahora el teorema.
     \[
         I_{\text{max}} = [t_0, T_{\text{max}}], \quad \text{con } T_{\text{max}} \leq t_0 + T
     \]
-    Finalmente, supongamos que la solución no abarca todo el intervalo $J$, es decir, $T_{\text{max}} < t_0 + T$. Sabemos que $u_{\text{max}}(T_{\text{max}}) \in \overline{\Omega} = \Omega \cup \partial \Omega$. Tenemos dos posibilidades:
+    Si $T_{\text{max}} = t_0 + T$, entonces $I_{\text{max}} = J$ y ya hemos acabado. Finalmente, supongamos que la solución no abarca todo el intervalo $J$, es decir, $T_{\text{max}} < t_0 + T$. Sabemos que $u_{\text{max}}(T_{\text{max}}) \in \overline{\Omega} = \Omega \cup \partial \Omega$. Tenemos dos posibilidades:
     \[
         \begin{cases}
             u_{\text{max}}(T_{\text{max}}) \in \Omega \\
@@ -1733,7 +1746,9 @@ En el instante inicial $s = t_0$, tenemos que $v(t_0) = u(t_0) = u_0$. Por lo ta
         v(t_0) = u_0
     \end{cases}
 \]
-Como $g$ conserva las propiedades de regularidad de $f$ (continuidad y condición de Lipschitz), este nuevo problema es equivalente al PVI $(P)$ original "mirando al pasado". En consecuencia, todos los teoremas de existencia, unicidad y maximalidad que hemos probado para el futuro se cumplen de manera análoga para el pasado.
+Como $g$ conserva las propiedades de regularidad de $f$ (continuidad y condición de Lipschitz), este nuevo problema es equivalente al PVI $(P)$ original "mirando al pasado". En consecuencia, todos los teoremas de existencia, unicidad y maximalidad que hemos probado para el futuro se cumplen de manera análoga para el pasado. Lo mismo ocurre si $J = (-\infty, t_0]$.
+
+En resumen: \textbf{un intervalo definido hacia la izquierda en el problema en $u$ es equivalente a uno definido hacia la derecha en el problema en $v$}, mediante el cambio $s = 2t_0 - t$, $v(s) = u(t)$.
 
 \subsection{Ejemplos de aplicación de la teoría}
 
@@ -1791,7 +1806,7 @@ Veamos algunos ejemplos que ilustran la aplicación de los teoremas fundamentale
             \quad
             \lambda, \mu, a, b, c, d \in C([0, +\infty), \mathbb{R})
         \]
-        Teniendo por tanto $J=[0, +\infty)$, $\Omega = \mathbb{R}^2$ y $t_0 = 0$. La función vectorial $f(t, u, v)$ que define el sistema es:
+        Teniendo por tanto $J=[0, +\infty)$, $\Omega = \mathbb{R}^2$ y $t_0 = 0$. (Notación: en vez de escribir $U = (u_1, u_2)$ y $f = (f_1, f_2)$, el profesor usa $(u, v)$ para las incógnitas y $(f, g)$ para las componentes del campo.) La función vectorial $f(t, u, v)$ que define el sistema es:
         \[
             f(t, u, v) = 
             \begin{pmatrix}
@@ -1811,12 +1826,12 @@ Veamos algunos ejemplos que ilustran la aplicación de los teoremas fundamentale
 
         No es globalmente Lipschitziana ya que podemos ver que las derivadas parciales no están acotadas:
         \[
-            \| \frac{f_1}{\partial v} \| = 
+            \left| \frac{\partial f_1}{\partial v} \right| = 
             | - b(t) u | = 
             |b(t)| |u| \leq
             \| b(t) \|_\infty R
         \]
-        Pero como no podemos garantizar que $\| b(t) \|_\infty$ sea finito para todo $t \in [0, +\infty)$, la función no es globalmente Lipschitziana (aunque sí está acotada en cualquier intervalo compacto de tiempo, por continuidad). FInalmente:
+        Pero como no podemos garantizar que $\| b(t) \|_\infty$ sea finito para todo $t \in [0, +\infty)$, la función no es globalmente Lipschitziana (aunque sí está acotada en cualquier intervalo compacto de tiempo, por continuidad). Finalmente:
         
         \begin{enumerate}
             \item Por el teorema de Cauchy--Lipschitz, como $f$ es continua y localmente Lipschitziana respecto a $(u,v)$, el PVI admite una única solución local que satisface $(u(0),v(0))=(u_0,v_0)$.
