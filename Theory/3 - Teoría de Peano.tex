@@ -258,7 +258,7 @@ Es esencial subrayar que el módulo de continuidad $\delta$ depende exclusivamen
 
 \subsubsection{El Teorema de Ascoli-Arzelà}
 
-El Teorema de Ascoli-Arzelà culmina esta teoría proporcionando la caracterización completa y definitiva de los conjuntos compactos en espacios de funciones continuas.
+El Teorema de Ascoli-Arzelà culmina esta teoría proporcionando la caracterización completa y definitiva de los conjuntos compactos en espacios de funciones continuas. Se debe a G. Ascoli (1883) y C. Arzelà (1895), y es nuestro nuevo ``Teorema de la aplicación contractiva'' para esta parte del curso: hace el papel que tenía el teorema del punto fijo de Banach en la teoría de Cauchy-Lipschitz.
 
 \begin{teorema}[Teorema de Ascoli-Arzelà]
     Sea $K \subset \mathbb{R}^M$ un subconjunto compacto y $\mathcal{F} \subset \mathcal{C}(K; \, \mathbb{R}^N)$. Las siguientes afirmaciones son equivalentes:
@@ -465,7 +465,7 @@ El Teorema de Ascoli-Arzelà culmina esta teoría proporcionando la caracterizac
     \end{enumerate}
 \end{proof}
 
-\begin{teorema}[Teorema global de Peano]
+\begin{teorema}[Teorema global de Peano (1890)]
     Sean $J=[t_0, t_0 + T]$ y $f: C(J \times \mathbb{R}^N; \, \mathbb{R}^N)$ y acotada.\\
     Entonces para cada $u_0 \in \mathbb{R}^N$ existe al menos una solución globalmente definida en $J$ del PVI:
     \[
@@ -1284,6 +1284,52 @@ Con este lema queda expedito el camino hacia el teorema principal de prolongabil
 \end{proof}
 
 
+El teorema anterior puede enunciarse de una forma más precisa (y más útil), que es la que se usa en la práctica:
+
+\begin{teorema}[Existencia de solución maximal (enunciado mejorado)]
+    Sean $J \in \{ [t_0, t_0 + T], \, [t_0, +\infty) \}$, $\Omega \subset \mathbb{R}^N$ abierto, $f \in \mathcal{C}(J \times \Omega; \, \mathbb{R}^N)$ y $u_0 \in \Omega$. Entonces, cualquier solución local de
+    \[
+        \begin{cases}
+            u' = f(t, u) \\
+            u(t_0) = u_0
+        \end{cases}
+    \]
+    admite una prolongación a una solución no prolongable estrictamente a su derecha, es decir, a una solución maximal. Esta solución maximal \textbf{no tiene por qué ser única}.
+\end{teorema}
+
+\begin{proof}
+    \textit{(Esta demostración no se vio en clase; no aparece en los apuntes.)}
+
+    Sea $(\tilde{I}, \tilde{u}) \in \Sigma$ una solución local y consideremos el subconjunto de sus prolongaciones
+    \[
+        \Sigma_0 = \{ (I, u) \in \Sigma : (\tilde{I}, \tilde{u}) \leq (I, u) \} \neq \emptyset.
+    \]
+    Toda cadena de $\Sigma_0$ tiene una cota superior en $\Sigma_0$: la misma construcción del lema de inductividad (unión de los intervalos) da una solución que prolonga a todos los elementos de la cadena y, por tanto, también a $(\tilde{I}, \tilde{u})$. Por el Lema de Kuratowski-Zorn, $\Sigma_0$ tiene un elemento maximal $(I, u)$. Este es también maximal en $\Sigma$: si $(I, u) \leq (I', u')$ con $(I', u') \in \Sigma$, por transitividad $(I', u') \in \Sigma_0$, y la maximalidad en $\Sigma_0$ da $(I', u') = (I, u)$.
+\end{proof}
+
+Por ejemplo, para el problema
+\[
+    \begin{cases}
+        u' = f(u) = \begin{cases} 0 & u \leq 0 \\ u^q & 0 < u < 1 \quad (0 < q < 1) \\ u^p & u \geq 1 \quad (p > 1) \end{cases} \\
+        u(0) = 0
+    \end{cases}
+\]
+la solución local $u \equiv 0$ en $[0, c]$ se prolonga a distintas soluciones maximales, que explotan en tiempos distintos:
+
+\begin{center}
+\begin{tikzpicture}[>=stealth, x=1.3cm, y=1cm]
+    \draw[->] (-0.2,0) -- (5,0) node[right] {$t$};
+    \draw[->] (0,-0.2) -- (0,3.4) node[above] {$u(t)$};
+    \draw[very thick, gray] (0,0) -- (0.6,0);
+    \foreach \c/\T in {0/2.0, 0.6/2.6, 1.4/3.4} {
+        \draw[thick, blue!80!black, domain=\c:\T-0.12, samples=60] plot (\x, {0.35/((\T-\x)^0.8) - 0.35/((\T-\c)^0.8)});
+        \draw[dashed, gray] (\T,0) -- (\T,3.3);
+    }
+    \node[below] at (0.6,0) {$c$};
+    \node[below] at (4.6,0) {$T$};
+\end{tikzpicture}
+\end{center}
+
 \subsubsection{Aplicaciones clásicas del Lema de Kuratowski-Zorn}
 
 El principio inductivo formulado por Kuratowski y Zorn constituye una pieza angular en múltiples ramas de las matemáticas modernas. Señalamos algunas de sus aplicaciones más representativas:
@@ -1715,6 +1761,10 @@ Bajo estas condiciones (desarrolladas por Kamke), las iteraciones monótonas:
     \underline{u} \leq \mathcal{K}\underline{u} \leq \mathcal{K}^2\underline{u} \leq \dots \leq \mathcal{K}^n\underline{u} \leq \dots \leq \mathcal{K}^n\overline{u} \leq \dots \leq \mathcal{K}\overline{u} \leq \overline{u}
 \]
 convergen monótonamente hacia una solución extremal inferior $u_*$ y superior $u^*$, sentando las bases del método analítico que se estudiará en los capítulos subsiguientes.
+
+\begin{observación}
+    En clase se indicó que el primer control llegaba hasta aquí (el ejemplo de Müller y la introducción a las sub y supersoluciones).
+\end{observación}
 
 \subsection{Dependencia continua con respecto de los datos iniciales}
 

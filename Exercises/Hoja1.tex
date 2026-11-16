@@ -57,7 +57,17 @@
     con $a, b \in \mathcal{C}([0, +\infty); \R)$, $n \ge 1$ un número natural, y $u_0 \in (-1, 0)$. Analiza los posibles comportamientos de la solución maximal hacia la derecha.
 }{
     Sea $f(t,u) = a(t)u + b(t)\frac{u^n}{1+u}$, definida en $J \times \Omega$ con $J = [0, +\infty)$ y $\Omega = (-1, +\infty)$.
-    Por el teorema de existencia y unicidad, el problema tiene una única solución maximal definida en un intervalo $I = [0, T_{\max})$.
+    La función $f$ es continua en $J \times \Omega$ (pues $1 + u > 0$ en $\Omega$) y su derivada parcial
+    \[
+        \frac{\partial f}{\partial u}(t,u) = a(t) + b(t) \frac{n u^{n-1}(1+u) - u^n}{(1+u)^2} = a(t) + b(t) \frac{n u^{n-1} + (n-1) u^n}{(1+u)^2}
+    \]
+    también es continua en $J \times \Omega$. Por el corolario del criterio de Lipschitz, $f$ es localmente Lipschitziana respecto de $u \in \Omega$, uniformemente en subintervalos compactos de $J$. Como $u_0 \in (-1, 0) \subset \Omega$, aplicamos los tres pasos de la teoría:
+    \begin{enumerate}[label=\Roman*)]
+        \item Por el Teorema de Cauchy-Lipschitz Local, existe una única solución local con $u(0) = u_0$.
+        \item Por el Teorema de Unicidad Global, la solución es única en cualquier intervalo donde esté definida.
+        \item Por el Teorema de Existencia de Solución Maximal, el problema tiene una única solución maximal $(I, u)$.
+    \end{enumerate}
+    Por el Tercer Teorema Fundamental, $I = [0, T_{\max})$ con $T_{\max} \le +\infty$.
     
     Analicemos los posibles comportamientos si $T_{\max} < +\infty$. Por el tercer teorema fundamental de Cauchy-Lipschitz, debe darse una de estas situaciones:
     \begin{enumerate}
@@ -85,7 +95,17 @@
     Veamos dos casos concretos asumiendo $a=0$ y $b=1$, con lo que $u' = \frac{u^n}{1+u}$:
     \begin{itemize}
         \item Si $n=1 \implies u' = \frac{u}{1+u} < 0$ (ya que $u \in (-1,0)$). En este caso $u(t)$ decrece hacia $-1$.
-        \item Si $n=2 \implies u' = \frac{u^2}{1+u} > 0$ (ya que el numerador es siempre positivo). En este caso $u(t)$ crece asintóticamente hacia cero.
+
+        Resolviendo por separación de variables (como se pidió en clase):
+        \[
+            \frac{1+u}{u} \, u' = 1 \implies \left( \ln|u(t)| + u(t) \right)' = 1 \implies \ln|u(t)| + u(t) = \ln|u_0| + u_0 + t.
+        \]
+        Como $u$ decrece y el miembro izquierdo es continuo, $u(t)$ alcanza el valor $-1$ cuando $\ln 1 + (-1) = \ln|u_0| + u_0 + t$, es decir, en el instante
+        \[
+            T = -(1 + u_0) - \ln|u_0| > 0
+        \]
+        (es positivo porque la función $g(z) = \ln|z| + z$ cumple $g'(z) = \frac{1+z}{z} < 0$ en $(-1, 0)$, luego es estrictamente decreciente y $g(u_0) < g(-1) = -1$). Por tanto $T_{\max} = T < +\infty$ y la solución \textbf{choca con la frontera} $\partial \Omega = \{-1\}$ en tiempo finito: $\lim_{t \nearrow T_{\max}} u(t) = -1$.
+        \item Si $n=2 \implies u' = \frac{u^2}{1+u} > 0$ (ya que el numerador es siempre positivo). En este caso $u(t)$ crece asintóticamente hacia cero. Como $u_0 \le u(t) < 0$, la solución se mantiene alejada de $-1$ y está acotada, luego no puede explotar ni acercarse a $\partial \Omega$: $I = [0, +\infty)$.
     \end{itemize}
 }
 
@@ -565,6 +585,33 @@
         \filldraw[cyan] (1,1.8) circle (1.5pt) node[above=2pt, text=cyan] {$(\frac{\lambda-b\mu}{1+bc},\frac{\mu+c\lambda}{1+bc})$};
     \end{tikzpicture}
     \end{center}
+
+    \textbf{Caso extra (visto en clase): $\mu < 0$.} Escribimos $m = -\mu > 0$, de modo que $v' = -m v - v^2 + c u v$.
+    \begin{itemize}
+        \item \textbf{(a) y (c):} igual que antes; el signo de $\mu$ no influye.
+        \item \textbf{(b) Si $u_0 = 0$:} $u \equiv 0$ y $v' = -m v - v^2$, $v(0) = v_0 > 0$. Con el cambio de Bernoulli $v = z^{-1}$:
+        \[
+            -\frac{z'}{z^2} = -\frac{m}{z} - \frac{1}{z^2} \implies z' - m z = 1 \implies z(t) = -\frac{1}{m} + C e^{mt}, \quad C = \frac{1}{v_0} + \frac{1}{m},
+        \]
+        y deshaciendo el cambio
+        \[
+            v(t) = \frac{m v_0 e^{-mt}}{m + v_0 \left( 1 - e^{-mt} \right)} \xrightarrow[t \to +\infty]{} 0, \qquad v'(t) < 0.
+        \]
+        Sin presas, el depredador disminuye y se extingue. Si $v_0 = 0$, $v \equiv 0$ y $u(t) = \dfrac{\lambda u_0 e^{\lambda t}}{\lambda + u_0 \left( e^{\lambda t} - 1 \right)} \to \lambda$, igual que antes.
+        \item \textbf{(d)} $A(t) \le \lambda$ da $0 < u(t) \le u_0 e^{\lambda t}$. Como $\mu < 0$,
+        \[
+            B(t) = \mu - v(t) + c u(t) \le c u(t) \le c u_0 e^{\lambda t}
+        \]
+        \[
+            \implies 0 < v(t) \le v_0 \exp\left( \int_0^t c u_0 e^{\lambda s} \, ds \right) = v_0 \, e^{\frac{c u_0}{\lambda}\left( e^{\lambda t} - 1 \right)}.
+        \]
+        Si fuera $T_{\max} < +\infty$, ambas componentes estarían acotadas en $[0, T_{\max})$, lo que contradice el Segundo Teorema Fundamental. Luego $T_{\max} = +\infty$ e $I = [0, +\infty)$.
+    \end{itemize}
+    Aunque $\mu < 0$, el depredador puede crecer cuando hay suficientes presas: para $v > 0$, $v' = v(-m - v + cu)$, así que
+    \[
+        v' > 0 \iff c u > m + v, \qquad v' < 0 \iff c u < m + v.
+    \]
+    Es decir, $\mu < 0$ no implica que $v(t)$ sea siempre decreciente cuando ambas especies están presentes.
 }
 % Ejercicio 9
 \ejercicio{resuelto}{}{
@@ -759,6 +806,22 @@
         \filldraw[black] (0,0) circle (1.5pt);
     \end{tikzpicture}
     \end{center}
+
+    \textbf{Aviso de clase.} La fórmula $\theta = \arctan\left( \frac{v}{u} \right)$ no tiene sentido cuando $u = 0$. El profesor permitió hacerlo así teniendo en cuenta que lo que realmente usamos es $\theta' = \frac{u v' - v u'}{\rho^2}$, que es válida siempre que $\rho \neq 0$.
+
+    \textbf{Integración explícita del sistema (propuesto como ejercicio en clase).} La ecuación del ángulo da directamente $\theta(t) = \theta_0 - t$. Para la radial, $\rho' = \rho - \rho^3$ es de Bernoulli; con $z = \rho^{-2}$ (para $\rho_0 > 0$):
+    \[
+        z' = -2 \rho^{-3} \rho' = -2 \rho^{-3} (\rho - \rho^3) = -2 \rho^{-2} + 2 = -2z + 2 \implies z(t) = 1 + \left( z_0 - 1 \right) e^{-2t}, \quad z_0 = \frac{1}{\rho_0^2}.
+    \]
+    Deshaciendo el cambio:
+    \[
+        \rho(t) = \frac{1}{\sqrt{1 + \left( \frac{1}{\rho_0^2} - 1 \right) e^{-2t}}}, \qquad
+        \begin{cases}
+            u(t) = \rho(t) \cos(\theta_0 - t), \\
+            v(t) = \rho(t) \sin(\theta_0 - t),
+        \end{cases}
+    \]
+    definida para todo $t \ge 0$ (el radicando es positivo) y con $\lim_{t \to +\infty} \rho(t) = 1$. Si $\rho_0 = 1$ obtenemos la \textbf{solución periódica} $(u, v) = (\cos(\theta_0 - t), \sin(\theta_0 - t))$, de periodo $2\pi$, que recorre el ciclo $\rho = 1$. (Hacia el pasado, si $\rho_0 > 1$ el radicando se anula en $t = \frac{1}{2} \ln\left( 1 - \frac{1}{\rho_0^2} \right) < 0$ y la solución explota.)
 }
 
 % Ejercicio 11
@@ -848,6 +911,16 @@
         v(t) \le \Big( 1 + C (1-\rho) t \Big)^{\frac{1}{1-\rho}} \quad \forall t \in I
     \]
     Por tanto, la función $v(t)$ (y consecuentemente $u(t)$ por la relación de igualdad) está acotada superiormente en todo subintervalo de tiempo finito $[0, T_{\max})$. Como la órbita no puede divergir, se contradice la explosión. Concluimos finalmente que $T_{\max} = +\infty$ y $I = [0, +\infty)$.
+
+    \textbf{Otra manera (vista en clase).} De la relación entre $u$ y $v$, la segunda ecuación es $v' = f(v)$ con
+    \[
+        f(x) = \left( \frac{q+1}{p+1} x^{p+1} + \frac{p-q}{p+1} \right)^{\frac{q}{q+1}}, \qquad v(0) = 1.
+    \]
+    Separando variables, $\frac{v'(t)}{f(v(t))} = 1$, y con el cambio $x = v(s)$:
+    \[
+        t = \int_0^t \frac{v'(s)}{f(v(s))} \, ds = \int_1^{v(t)} \frac{dx}{f(x)} \implies T_{\max} = \int_1^{+\infty} \frac{dx}{f(x)}.
+    \]
+    Si $T_{\max} < +\infty$, esta integral sería convergente. Pero $f(x) \sim C x^{\rho}$ cuando $x \to +\infty$ con $\rho < 1$, así que $\int_1^{+\infty} \frac{dx}{f(x)} = +\infty$. Por tanto $T_{\max} = +\infty$ e $I = [0, +\infty)$.
 }
 
 % Ejercicio 12
@@ -1066,7 +1139,7 @@
 }
 
 % Ejercicio 15
-\ejercicio{medio}{}{
+\ejercicio{resuelto}{}{
     Demuestra que, para todo $\varepsilon \ge 0$, el problema
     \[
         \begin{cases}

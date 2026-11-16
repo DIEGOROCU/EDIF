@@ -5,6 +5,8 @@ En el estudio introductorio de las ecuaciones diferenciales, el enfoque principa
 
 En este contexto, el concepto de \textbf{función Lipschitziana} desempeña un papel central. Como se demostrará mediante el Teorema de Cauchy-Lipschitz, la mera continuidad de una función no es suficiente para garantizar la \textbf{unicidad de la solución} de un problema de valor inicial. La condición de Lipschitz proporciona la regularidad necesaria para asegurar dicha unicidad. Asimismo, la distinción entre funciones global y localmente Lipschitzianas es determinante para establecer si una solución está definida globalmente en el tiempo o si, por el contrario, deja de existir en un tiempo finito (fenómeno comúnmente denominado ``explosión'' o \textit{blow-up}), aspecto que se detallará al abordar el estudio de las soluciones maximales.
 
+Este concepto se debe a Rudolf Lipschitz, que lo introdujo en 1876.
+
 \begin{definición}[Función Globalmente Lipschitziana]
     Sea $\Omega \subset \mathbb{R}^n$ un conjunto abierto y sea $F : \Omega \to \mathbb{R}^n$ una función continua. Se dice que $F$ es \textbf{globalmente Lipschitziana en $\Omega$} si existe una constante $L > 0$ tal que
     \[
@@ -199,6 +201,12 @@ A continuación, se presentan diversos ejemplos prácticos que ilustran la aplic
         La derivada no está acotada en el dominio $(0,\infty)$. En particular, tampoco lo está en ningún intervalo abierto de la forma $(0, \varepsilon)$ con $\varepsilon > 0$. En consecuencia, $F$ no es globalmente Lipschitziana en $(0, \varepsilon)$. 
         No obstante, la función sigue siendo localmente Lipschitziana en $(0, \varepsilon)$. Esto se debe a que, para cualquier subconjunto abierto, convexo y acotado $D$ cuya clausura cumpla $\overline{D} \subset (0, \varepsilon)$, se tiene que $0 \notin \overline{D}$. Al ser $\overline{D}$ un conjunto cerrado, existe una distancia estrictamente positiva al origen, lo que garantiza que la derivada se mantenga acotada en todo $\overline{D}$.
 
+        En cambio, si nos alejamos del origen la situación mejora: para cada $\eta > 0$,
+        \[
+            \sup_{u \in (\eta, +\infty)} \left| \frac{dF}{du}(u) \right| = \sup_{u > \eta} \frac{q}{u^{1-q}} = \frac{q}{\eta^{1-q}} < +\infty,
+        \]
+        y como $(\eta, +\infty)$ es abierto y convexo, por el teorema $F$ es \textbf{globalmente} Lipschitziana en $(\eta, +\infty)$ (y, por continuidad, también en $[\eta, +\infty)$), para cualquier $\eta > 0$.
+
         \item \textbf{Función vectorial con derivadas acotadas:}
         Sea $A = (a_{ij})_{1 \leq i,j \leq n}$ una matriz real. Definimos:
         \[
@@ -336,6 +344,20 @@ Al igual que en el caso autónomo, verificar esta condición mediante la definic
         \[
             D_u f(t,u) y = \lim_{h \to 0} \frac{f(t, u+hy) - f(t,u)}{h}
         \]
+        Esta igualdad se justifica por la diferenciabilidad de $f$ respecto de $u$: por definición de la diferencial $D_u f(t,u)$,
+        \[
+            \lim_{w \to 0} \frac{f(t, u+w) - f(t,u) - D_u f(t,u) w}{\|w\|} = 0,
+        \]
+        es decir,
+        \[
+            f(t, u+w) = f(t,u) + D_u f(t,u) w + o(\|w\|) \quad (w \to 0).
+        \]
+        Tomando $w = hy$, con $\|w\| = |h| \to 0$ cuando $h \to 0$:
+        \[
+            \frac{f(t, u+hy) - f(t,u)}{h} - D_u f(t,u) y = \frac{|h|}{h} \cdot \frac{f(t, u+hy) - f(t,u) - D_u f(t,u)(hy)}{|h|} \xrightarrow[h \to 0]{} 0,
+        \]
+        lo que prueba la fórmula de la derivada direccional.
+
         Utilizando la hipótesis de Lipschitzianidad, acotamos la norma del cociente incremental:
         \[
             \left\| \frac{f(t, u+hy) - f(t,u)}{h} \right\| = \frac{\|f(t, u+hy) - f(t,u)\|}{|h|} \leq \frac{L \|hy\|}{|h|} = \frac{L |h| \|y\|}{|h|} = L
@@ -395,6 +417,16 @@ Al igual que en el caso autónomo, verificar esta condición mediante la definic
             \sup_{u \in \mathbb{R}} \left| \frac{\partial f}{\partial u} (t,u) \right| = \frac{1}{t}
         \]
         Al tomar el límite cuando $t \to 0^+$, este supremo diverge a $+\infty$. Dado que la derivada parcial no está acotada uniformemente en el intervalo $J$, la función $f$ no es globalmente Lipschitziana respecto a $u$ uniformemente en $J$. 
+
+        Sin embargo, sí podemos decir más:
+        \begin{itemize}
+            \item Gracias al corolario, $f$ es \textbf{localmente} Lipschitziana respecto de $u \in \mathbb{R}$, uniformemente en $t \in [\alpha, \beta]$, para todo $[\alpha, \beta] \subset (0, +\infty)$.
+            \item Si el intervalo es $J_\eta = [\eta, +\infty)$ con $\eta > 0$, entonces para $t \geq \eta$ se tiene $\frac{1}{t} \leq \frac{1}{\eta}$, luego
+            \[
+                \sup_{t \geq \eta} \sup_{u \in \mathbb{R}} \left| \frac{\partial f}{\partial u}(t,u) \right| \leq \frac{1}{\eta} < +\infty,
+            \]
+            y $f$ es \textbf{globalmente} Lipschitziana respecto de $u \in \mathbb{R}$, uniformemente en $t \geq \eta$, para todo $\eta > 0$.
+        \end{itemize}
 
         \item Sea la función con crecimiento polinomial:
         \[
@@ -512,6 +544,7 @@ Al igual que en el caso autónomo, verificar esta condición mediante la definic
     \[
         u(t) = u_0 + \int_{t_0}^t f(s, u(s)) ds, \quad \forall t \in [\alpha, \beta]
     \]
+    Recíprocamente, si $u \in C([\alpha, \beta]; \mathbb{R}^N)$ satisface esta ecuación integral, el integrando $s \mapsto f(s, u(s))$ es continuo, así que por el Teorema Fundamental del Cálculo $u$ es derivable con $u'(t) = f(t, u(t))$, que es continua. Por tanto $u \in C^1([\alpha, \beta]; \mathbb{R}^N)$, y además $u(t_0) = u_0$, es decir, $u$ resuelve $(P)$.
     A partir de esta formulación, definimos el operador integral de Picard $K : C([\alpha, \beta]; \mathbb{R}^N) \to C([\alpha, \beta]; \mathbb{R}^N)$ dado por:
     \[
         (Ku)(t) = u_0 + \int_{t_0}^t f(s, u(s)) ds
@@ -521,6 +554,10 @@ Al igual que en el caso autónomo, verificar esta condición mediante la definic
     El espacio vectorial $X = C([\alpha, \beta]; \mathbb{R}^N)$ equipado con la norma del supremo es un espacio de Banach. Para facilitar las estimaciones y garantizar que $K$ sea una contracción, introducimos una norma equivalente conocida como la norma de Bielecki. Tomando un parámetro $\gamma > L$, definimos:
     \[
         \| u \|_B = \max_{t \in [\alpha, \beta]} e^{-\gamma |t - t_0|} \| u(t) \|
+    \]
+    Es equivalente a la norma del supremo, ya que $e^{-\gamma(\beta - \alpha)} \leq e^{-\gamma|t - t_0|} \leq 1$ para todo $t \in [\alpha, \beta]$, de donde
+    \[
+        e^{-\gamma(\beta - \alpha)} \| u \|_\infty \leq \| u \|_B \leq \| u \|_\infty.
     \]
     Al ser equivalente a la norma del supremo, el espacio $(X, \| \cdot \|_B)$ sigue siendo un espacio de Banach. Evaluemos la distancia entre las imágenes de dos funciones $u, v \in X$ bajo el operador $K$. Asumiendo $t \geq t_0$, tenemos:
     \[
@@ -622,6 +659,30 @@ A continuación, presentamos dos ejemplos de sistemas de ecuaciones diferenciale
 \textbf{Observación sobre el relajamiento de hipótesis.} Del proceso de construcción mediante compactos exhaustivos (sucesión $J_n$) empleado en la demostración anterior, se extrae un hecho de gran utilidad práctica. Como el Teorema fundamental global solo se aplica localmente sobre cada compacto $J_n$, no es necesario que la constante de Lipschitz de la función $f$ sea la misma en todo $J$. 
 
 Basta exigir que $f$ sea globalmente Lipschitziana respecto a $u$ en $\mathbb{R}^N$ \textit{uniformemente sobre cada subintervalo compacto} $[\alpha, \beta] \subset J$. Esta condición relajada es suficiente para asegurar la existencia y unicidad en cada $J_n$, permitiendo extender la solución a todo $J$ y ampliando la clase de problemas que admiten solución global.
+
+\begin{observación}
+    El corolario puede enunciarse para \textbf{cualquier} intervalo $J$, no solo abierto, ya que todos pueden escribirse como unión creciente de intervalos compactos:
+    \[
+        (-\infty, \alpha) = \bigcup_{n \geq 1} \left[ -n, \alpha - \tfrac{1}{n} \right], \qquad
+        (\beta, +\infty) = \bigcup_{n \geq 1} \left[ \beta + \tfrac{1}{n}, n \right],
+    \]
+    \[
+        [\alpha, \beta) = \bigcup_{n \geq 1} \left[ \alpha, \beta - \tfrac{1}{n} \right], \qquad
+        \mathbb{R} = \bigcup_{n \geq 1} [-n, n].
+    \]
+\end{observación}
+
+\ejemplo{
+    Sea $f(t,u) = a(t) \sin u$ con $a : \mathbb{R} \to \mathbb{R}$ continua. Entonces
+    \[
+        \frac{\partial f}{\partial u}(t,u) = a(t) \cos u, \qquad \left| \frac{\partial f}{\partial u}(t,u) \right| \leq |a(t)|,
+    \]
+    que en general \textbf{no} está acotado en $t \in \mathbb{R}$ (por ejemplo, si $a(t) = t$). Por tanto, $f$ no tiene por qué ser globalmente Lipschitziana uniformemente en $t \in \mathbb{R}$. Sin embargo, en cada compacto $J_n = [-n, n]$:
+    \[
+        \left| \frac{\partial f}{\partial u}(t,u) \right| \leq \| a \|_{\infty, J_n} < +\infty,
+    \]
+    así que $f$ es globalmente Lipschitziana respecto de $u$ uniformemente en subintervalos compactos de $\mathbb{R}$. Por la versión relajada del corolario, el problema $u' = a(t) \sin u$, $u(t_0) = u_0$ tiene una única solución definida en todo $\mathbb{R}$.
+}
 
 \ejemplo{
     Consideremos el siguiente problema de valor inicial autónomo:
@@ -766,6 +827,8 @@ Basta exigir que $f$ sea globalmente Lipschitziana respecto a $u$ en $\mathbb{R}
     \]
     posee una única solución global $U \in C^1(J, \mathbb{R}^N)$.
     
+    \textbf{Apartado a) (existencia de una solución local).} Como $U$ es continua y $U(t_0) = u_0$ es el centro de la bola, existe $\delta > 0$ tal que $\| U(t) - u_0 \|_2 < R$ para todo $t \in [t_0, t_0 + \delta]$. En ese intervalo $F(t, U(t)) = f(t, U(t))$, luego $U|_{[t_0, t_0 + \delta]}$ es una solución local de $(P)$. Los pasos siguientes dan una cota explícita, $\delta_0$, para ese $\delta$.
+
     A continuación, evaluaremos hasta qué instante temporal $t$ esta solución $U(t)$ permanece dentro de la bola $\overline{B}_R(u_0)$. Mientras $U(t) \in \overline{B}_R(u_0)$, la función $F$ coincide idénticamente con $f$, por lo que $U(t)$ será también solución del problema original $(P)$.
     
     Tomemos un $t > t_0$ asumiendo que la solución se mantiene en la bola en el intervalo $[t_0, t]$. Aplicando la ecuación integral equivalente al PVI y tomando normas:
@@ -787,6 +850,9 @@ Basta exigir que $f$ sea globalmente Lipschitziana respecto a $u$ en $\mathbb{R}
     Para concluir la unicidad, sea $u(t)$ cualquier otra solución de $(P)$ definida en $[t_0, t_0 + \delta_0]$. Por continuidad, existe un intervalo maximal donde $u(t) \in \overline{B}_R(u_0)$. Mediante el mismo razonamiento integral previo, el tiempo requerido para que la solución abandone la bola es estrictamente mayor que $\delta_0$. Así, $u(t)$ nunca abandona la bola en $[t_0, t_0 + \delta_0]$. Como consecuencia, $u(t)$ también es solución de $(P_F)$ en ese intervalo. Dada la unicidad global de las soluciones de $(P_F)$, deducimos que $u(t) \equiv U(t)$ en $[t_0, t_0 + \delta_0]$.
 
     \subsection*{Etapa 2}
+
+    \textit{Idea:} si $(P)$ tuviera dos soluciones distintas en $[t_0, t_0 + \delta]$ con $\delta \leq \delta_0$, veremos que ambas permanecen en la bola, luego serían dos soluciones distintas de $(P_F)$, lo que contradice la unicidad de $(P_F)$.
+
 
     Siempre que $u(t)$ sea una solución de $(P)$ en un intervalo $[t_0, t_0 + \delta]$ con $\delta \leq \delta_0$, se cumple que $u(t) \in \overline{B}_R(u_0)$, $\forall t \in [t_0, t_0 + \delta]$.\\
 
@@ -1270,6 +1336,7 @@ Probemos ahora el teorema.
         \[
             \boxed{\lim_{t \nearrow T_{\text{max}}} u(t) = u^* \in \mathbb{R}^N}
         \]
+        (Este argumento, que garantiza la existencia del límite a partir de la acotación de $f$ sobre la órbita, se conoce como \textbf{argumento de Wintner}.)
         Pero esto contradice que la solución maximal $(I, u)$ no es prolongable estrictamente a su derecha, ya que habríamos prolongado la solución un punto.\\
 
         Nótese además que la derivada está bien definida en $T_{\text{max}}$, ya que:
@@ -1402,6 +1469,8 @@ Probemos ahora el teorema.
             \lim_{n \to \infty} u(t_n) = u_\omega \in \partial \Omega
         \]
         (la solución se acerca a la frontera del conjunto abierto $\Omega$)
+
+        Los puntos $u_\omega$ obtenidos de esta forma se llaman \textbf{$\omega$-límites} de la órbita $\Gamma$.
     \end{enumerate}
 \end{teorema}
 
@@ -1678,11 +1747,39 @@ Veamos algunos ejemplos que ilustran la aplicación de los teoremas fundamentale
             u(0) = u_0 \in \mathbb{R}
         \end{cases}   
     \]
-    con parámetros $\lambda > 0$ (tasa de crecimiento intrínseco) y $a > 0$ (tasa de competencia interespecífica). Este es un problema donde la función $f(t, u) = \lambda u - a u^2$ es localmente Lipschitziana respecto a $u$, lo que nos permite aplicar la teoría desarrollada para estudiar tanto el comportamiento futuro de la población como su historia pasada.
+    con parámetros $\lambda > 0$ (tasa de crecimiento intrínseco) y $a > 0$ (tasa de competencia intraespecífica). Este es un problema donde la función $f(t, u) = \lambda u - a u^2$ es localmente Lipschitziana respecto a $u$, lo que nos permite aplicar la teoría desarrollada para estudiar tanto el comportamiento futuro de la población como su historia pasada.
+
+    Los equilibrios son $u = 0$ y $u = \frac{\lambda}{a}$, y la solución maximal (hacia el futuro y hacia el pasado) depende del dato inicial:
+    \begin{itemize}
+        \item \textbf{Si $u_0 \in \left[0, \frac{\lambda}{a}\right]$:} la solución está globalmente definida en $(-\infty, +\infty)$ (queda atrapada entre los dos equilibrios).
+        \item \textbf{Si $u_0 > \frac{\lambda}{a}$:} hacia el futuro decrece a $\frac{\lambda}{a}$, pero hacia el pasado explota: $I = (T_{\min}(u_0), +\infty)$.
+        \item \textbf{Si $u_0 < 0$:} hacia el pasado tiende a $0$, pero hacia el futuro explota a $-\infty$: $I = (-\infty, T_{\max}(u_0))$.
+    \end{itemize}
+
+    \begin{center}
+    \begin{tikzpicture}[x=1cm, y=1.1cm, >=stealth]
+        \draw[->] (-3.2,0) -- (3.4,0) node[right] {$t$};
+        \draw[->] (0,-2.2) -- (0,2.8) node[above] {$u(t)$};
+        \draw[dashed, gray] (-3.2,1) -- (3.2,1) node[right, black] {$\frac{\lambda}{a}$};
+        % u0 = 0.3 (lambda = a = 1)
+        \draw[thick, blue!80!black, domain=-3.2:3.2, samples=80] plot (\x, {0.3*exp(\x)/(1+0.3*(exp(\x)-1))});
+        % u0 = 2: T_min = ln(1/2)
+        \draw[thick, red!70!black, domain=-0.55:3.2, samples=80] plot (\x, {2*exp(\x)/(1+2*(exp(\x)-1))});
+        \draw[dashed, red!70!black] (-0.693,0) -- (-0.693,2.8);
+        \node[below, red!70!black, font=\footnotesize] at (-0.9,0) {$T_{\min}$};
+        % u0 = -0.2: T_max = ln 6
+        \draw[thick, green!50!black, domain=-3.2:1.55, samples=80] plot (\x, {-0.2*exp(\x)/(1-0.2*(exp(\x)-1))});
+        \draw[dashed, green!50!black] (1.792,0) -- (1.792,-2.2);
+        \node[above, green!50!black, font=\footnotesize] at (1.95,0) {$T_{\max}$};
+        \fill (0,0.3) circle (1.3pt);
+        \fill (0,2) circle (1.3pt);
+        \fill (0,-0.2) circle (1.3pt);
+    \end{tikzpicture}
+    \end{center}
 }
 
 \ejemplo{
-        Veamos ahora un ejemplo del problema generalizado Volterra-Lotka, que describe la interacción entre dos especies: una presa y un depredador. El sistema de ecuaciones diferenciales está dado por:
+        Veamos ahora un ejemplo del problema generalizado de Volterra-Lotka (1926), que describe la interacción entre dos especies: una presa y un depredador. El sistema de ecuaciones diferenciales está dado por:
         \[
             P =
             \begin{cases}
@@ -1795,7 +1892,26 @@ Veamos algunos ejemplos que ilustran la aplicación de los teoremas fundamentale
 }
 
 \ejemplo{
-    Podemos estudiar ahora un caso particular del sistema de Kolmogorov en el que $v_0=0$, de modo que $v(t)=0$, y además $\lambda=0$ y $a=1$. El sistema se reduce a
+    \textbf{Caso visto en clase ($v_0 = 0$, $\lambda = 0$, $a = -1$).} Si $v_0 = 0$, entonces $v \equiv 0$, y tomando $\lambda = 0$ y $a = -1$ el sistema se reduce a
+    \[
+        \begin{cases}
+            u'(t) = u^2(t), \\
+            u(0) = u_0 > 0,
+        \end{cases}
+    \]
+    que podemos resolver separando variables:
+    \[
+        u^{-2}(t) u'(t) = 1 \implies \left( \frac{1}{u(t)} \right)' = -1 \implies \frac{1}{u(t)} = \frac{1}{u_0} - t = \frac{1 - u_0 t}{u_0} \implies u(t) = \frac{u_0}{1 - u_0 t}.
+    \]
+    Por tanto,
+    \[
+        (u(t), v(t)) = \left( \frac{u_0}{1 - u_0 t}, \, 0 \right), \quad t \in \left[0, \frac{1}{u_0}\right), \qquad T_{\max} = \frac{1}{u_0},
+    \]
+    y la solución \textbf{explota} en tiempo finito (este caso lo puso en un control).
+}
+
+\ejemplo{
+    \textbf{Caso adicional ($a = 1$).} Podemos estudiar ahora un caso particular del sistema de Kolmogorov en el que $v_0=0$, de modo que $v(t)=0$, y además $\lambda=0$ y $a=1$. El sistema se reduce a
     \[
         P=
         \begin{cases}
@@ -2002,6 +2118,63 @@ Veamos algunos ejemplos que ilustran la aplicación de los teoremas fundamentale
         \limsup_{t\to T_{\max}^{-}}\bigl(|u(t)|+|v(t)|\bigr)=+\infty.
     \]
 
+    \textbf{Las soluciones son crecientes y mayores o iguales que $1$.} Para $t \in I$,
+    \[
+        u'(t) = |v(t)|^p \geq 0, \qquad v'(t) = |u(t)|^q \geq 0,
+    \]
+    luego, integrando,
+    \[
+        u(t) = 1 + \int_0^t |v(s)|^p \, ds \geq 1, \qquad v(t) = 1 + \int_0^t |u(s)|^q \, ds \geq 1 \qquad \forall t \in I.
+    \]
+    En particular, $u, v > 0$ y el sistema es $u' = v^p$, $v' = u^q$ en $I = [0, T_{\max})$.
+
+    \textbf{Una cantidad conservada.} Haciendo el producto cruzado, $u'(t) u^q(t) = v'(t) v^p(t)$ para todo $t \in I$, es decir,
+    \[
+        \left( \frac{u^{q+1}(t)}{q+1} - \frac{v^{p+1}(t)}{p+1} \right)' = 0
+    \]
+    \[
+        \implies \frac{u^{q+1}(t)}{q+1} - \frac{v^{p+1}(t)}{p+1} = \frac{1}{q+1} - \frac{1}{p+1} = \frac{p-q}{(q+1)(p+1)} \geq 0,
+    \]
+    donde hemos usado que en $t = 0$ ambas valen $1$ y que $p \geq q$. Despejando,
+    \[
+        \boxed{u(t) = \left( \frac{q+1}{p+1} v^{p+1}(t) + \frac{p-q}{p+1} \right)^{\frac{1}{q+1}} \quad \forall t \in I.}
+    \]
+
+    \textbf{Explosión en tiempo finito.} Sustituyendo en la segunda ecuación,
+    \[
+        v'(t) = u^q(t) = \left( \frac{q+1}{p+1} v^{p+1}(t) + \frac{p-q}{p+1} \right)^{\frac{q}{q+1}} \geq \left( \frac{q+1}{p+1} \right)^{\frac{q}{q+1}} v^{\frac{q(p+1)}{q+1}}(t) = C \, v^{\rho}(t),
+    \]
+    con
+    \[
+        C = \left( \frac{q+1}{p+1} \right)^{\frac{q}{q+1}} > 0, \qquad \rho = \frac{q(p+1)}{q+1} = \frac{qp + q}{q+1} > \frac{1 + q}{q+1} = 1,
+    \]
+    pues $pq > 1$. Así $v^{-\rho}(t) v'(t) \geq C$, y como $\left( v^{1-\rho} \right)' = (1 - \rho) v^{-\rho} v'$ con $1 - \rho < 0$:
+    \[
+        \left( v^{1-\rho}(t) \right)' \leq -(\rho - 1) C \implies v^{1-\rho}(t) - 1 \leq -(\rho - 1) C t
+    \]
+    \[
+        \implies v(t) \geq \left( \frac{1}{1 - (\rho - 1) C t} \right)^{\frac{1}{\rho - 1}} \quad \forall t \in I.
+    \]
+    La cota inferior explota en $T = \frac{1}{(\rho - 1) C}$, luego necesariamente
+    \[
+        T_{\max} \leq T = \frac{1}{(\rho - 1) C} < +\infty.
+    \]
+    Por el segundo teorema fundamental, $\limsup_{t \nearrow T_{\max}} (u(t) + v(t)) = +\infty$, y como $u$ y $v$ son crecientes y están ligadas por la relación anterior,
+    \[
+        \lim_{t \nearrow T_{\max}} u(t) = \lim_{t \nearrow T_{\max}} v(t) = +\infty.
+    \]
+
+    \textbf{Fórmula del tiempo de explosión.} Llamando $f(x) = \left( \frac{q+1}{p+1} x^{p+1} + \frac{p-q}{p+1} \right)^{\frac{q}{q+1}}$, tenemos $v' = f(v)$, $v(0) = 1$, luego $\frac{v'(t)}{f(v(t))} = 1$ y, con el cambio $x = v(s)$,
+    \[
+        t = \int_0^t \frac{v'(s)}{f(v(s))} \, ds = \int_1^{v(t)} \frac{dx}{f(x)} \implies
+    \]
+    \[
+        T_{\max} = \int_1^{+\infty} \frac{dx}{f(x)} \leq \int_1^{+\infty} \frac{dx}{C x^{\rho}} = \frac{1}{C} \left[ \frac{x^{1-\rho}}{1-\rho} \right]_1^{+\infty} = \frac{1}{C(\rho - 1)} = T,
+    \]
+    y la integral impropia es convergente (lo que confirma de nuevo que $T_{\max} < +\infty$).
+
+    \textbf{Caso $p = q$.} Entonces la cantidad conservada vale $0$, luego $u = v$ y $u' = u^p$, $u(0) = 1$, cuya solución es $u(t) = \bigl(1 - (p-1)t\bigr)^{-\frac{1}{p-1}}$, con $T_{\max} = \frac{1}{p-1}$ (que coincide con la cota $T$, pues en este caso $C = 1$ y $\rho = p$).
+
     \begin{observación}
         Si los segundos miembros llevaran además factores temporales continuos, por ejemplo
         \[
@@ -2013,10 +2186,27 @@ Veamos algunos ejemplos que ilustran la aplicación de los teoremas fundamentale
 
 \subsection{Dependencia Lipschitziana de las soluciones}
 
+Pensemos en la ecuación logística
+\[
+    \begin{cases}
+        u' = \lambda u - a u^2, \\
+        u(0) = x,
+    \end{cases}
+\]
+cuya solución depende del dato inicial y de los parámetros: $u = u(t; x, \lambda, a)$. Interesa estudiar cómo varía la solución en las aplicaciones
+\[
+    x \longmapsto u(\cdot; x, \lambda, a), \qquad \lambda \longmapsto u(\cdot; x, \lambda, a), \qquad a \longmapsto u(\cdot; x, \lambda, a).
+\]
+En general, para $u' = f(t,u)$, $u(t_0) = u_0 \in \mathbb{R}^N$, con solución $u(\cdot; t_0, u_0, f)$, el \textbf{objetivo} es estudiar la regularidad de las aplicaciones
+\[
+    u_0 \longmapsto u(\cdot; t_0, u_0, f), \qquad f \longmapsto u(\cdot; t_0, u_0, f).
+\]
+
+
 Para estudiar cómo cambia una solución al perturbar los datos iniciales o el propio campo vectorial, necesitaremos primero una forma integral del lema de Grönwall--Bellman. Esta herramienta permite transformar una desigualdad integral en una cota explícita.
 
 \begin{lema}[Grönwall--Bellman]
-    Sea $J=[t_0,t_0+T]$ y sean $x,y,p\in C(J,\R)$ funciones no negativas. Supongamos que
+    Sea $J=[t_0,t_0+T]$ y sean $x,y,p\in C(J,\R)$ tales que $p\geq0$ en $J$. Supongamos que
     \[
         x(t)\leq y(t)+\int_{t_0}^t p(s)x(s)\,ds
         \qquad \forall t\in J.
@@ -2065,6 +2255,16 @@ Para estudiar cómo cambia una solución al perturbar los datos iniciales o el p
     \]
     Finalmente, como $x(t)\leq y(t)+z(t)$, obtenemos la desigualdad anunciada.
 \end{proof}
+
+\begin{observación}
+    En la demostración solo se usa que $p \geq 0$ (para poder multiplicar $x(t) \leq y(t) + z(t)$ por $p(t)$ sin cambiar el sentido), por eso no hace falta pedir que $x$ e $y$ sean no negativas.
+
+    En clase se resolvió la desigualdad $z' \leq p z + p y$ por \textbf{variación de coeficientes}: la solución de $h' = p h$ es $h(t) = e^{P(t)}$, así que se escribe $z(t) = e^{P(t)} \psi(t)$. Entonces
+    \[
+        z' = p e^{P} \psi + e^{P} \psi' \leq p e^{P} \psi + p y \implies \psi'(t) \leq p(t) y(t) e^{-P(t)},
+    \]
+    e integrando entre $t_0$ y $t$ (con $\psi(t_0) = 0$) se llega a la misma cota. Es exactamente el mismo cálculo que con el factor integrante.
+\end{observación}
 
 \subsubsection{Estimación abstracta de dependencia Lipschitziana}
 
@@ -2132,7 +2332,15 @@ Para estudiar cómo cambia una solución al perturbar los datos iniciales o el p
         \qquad
         p(t)=L.
     \]
-    La fórmula del lema se simplifica a
+    El lema da
+    \[
+        x(t) \leq \delta_0 + (\delta_1 + \delta_2)(t - t_0) + \int_{t_0}^t \bigl[ \delta_0 + (\delta_1 + \delta_2)(s - t_0) \bigr] L e^{L(t-s)} \, ds.
+    \]
+    Como $L e^{L(t-s)} = -\frac{d}{ds} e^{L(t-s)}$, integramos por partes con $g(s) = \delta_0 + (\delta_1 + \delta_2)(s - t_0)$ (luego $g' = \delta_1 + \delta_2$):
+    \[
+        \int_{t_0}^t g(s) L e^{L(t-s)} \, ds = -\Bigl[ g(s) e^{L(t-s)} \Bigr]_{s=t_0}^{s=t} + (\delta_1 + \delta_2) \int_{t_0}^t e^{L(t-s)} \, ds = -g(t) + \delta_0 e^{L(t-t_0)} + (\delta_1 + \delta_2) \frac{e^{L(t-t_0)} - 1}{L}.
+    \]
+    Como $g(t) = \delta_0 + (\delta_1 + \delta_2)(t - t_0)$, este término se cancela con los dos primeros sumandos, y la fórmula del lema se simplifica a
     \[
         x(t)
         \leq
@@ -2209,6 +2417,10 @@ Para estudiar cómo cambia una solución al perturbar los datos iniciales o el p
     \]
 \end{teorema}
 
+\begin{observación}
+    Las hipótesis del teorema se cumplen, por ejemplo, si $f \in C(J \times \R^N, \R^N)$ y $\frac{\partial f_i}{\partial u_j} \in C(J \times \R^N, \R)$ para todo $i, j \in \{1, \ldots, N\}$ (por el corolario del criterio de Lipschitzianidad).
+\end{observación}
+
 \begin{proof}
     Como $\Gamma_x$ es compacta y está contenida en el abierto $B_R(x)$, su distancia a la frontera de la bola es positiva. Escribimos
     \[
@@ -2254,7 +2466,7 @@ Para estudiar cómo cambia una solución al perturbar los datos iniciales o el p
     \[
         \varepsilon=e^{-L\tau}\eta.
     \]
-    Sea $y$ tal que $\|x-y\|<\varepsilon$. Supongamos, por reducción al absurdo, que la solución maximal $u(t;y)$ no estuviera definida en todo $[t_0,t_0+\tau]$. Entonces, antes de su extremo maximal, la trayectoria tendría que abandonar la bola $B_R(x)$. Por continuidad existiría un primer instante $t_1<t_0+\tau$ tal que
+    Sea $y$ tal que $\|x-y\|<\varepsilon$. Supongamos, por reducción al absurdo, que la solución maximal $u(t;y)$ no estuviera definida en todo $[t_0,t_0+\tau]$. Entonces su intervalo maximal sería $[t_0, T_{\max}(y))$ con $T_{\max}(y) \leq t_0 + \tau$ y, por el Primer Teorema Fundamental, la solución explotaría en $T_{\max}(y)$. Por tanto, antes de su extremo maximal, la trayectoria tendría que abandonar la bola $B_R(x)$. Por continuidad existiría un primer instante $t_1<t_0+\tau$ tal que
     \[
         u(t_1;y)\in\partial B_R(x)
     \]
@@ -2443,6 +2655,38 @@ Para estudiar cómo cambia una solución al perturbar los datos iniciales o el p
 
         % Origen
         \node[below left] at (0,0) {$0$};
+    \end{tikzpicture}
+    \end{center}
+
+    \textbf{Dependencia del tiempo de explosión respecto de $x$.} La solución explícita es
+    \[
+        u(t; x) = \frac{\lambda x e^{\lambda t}}{\lambda + a x \left( e^{\lambda t} - 1 \right)},
+    \]
+    y el denominador se anula cuando $e^{\lambda t} = 1 - \frac{\lambda}{a x}$:
+    \begin{itemize}
+        \item \textbf{Si $x < 0$:} $1 - \frac{\lambda}{ax} > 1$, así que la solución explota hacia el futuro en
+        \[
+            T_{\max}(x) = \frac{1}{\lambda} \ln\left( 1 - \frac{\lambda}{a x} \right), \qquad \lim_{x \uparrow 0} T_{\max}(x) = +\infty, \qquad \lim_{x \to -\infty} T_{\max}(x) = 0.
+        \]
+        \item \textbf{Si $x > \frac{\lambda}{a}$:} $1 - \frac{\lambda}{ax} \in (0, 1)$, así que la solución explota hacia el pasado en
+        \[
+            T_{\min}(x) = \frac{1}{\lambda} \ln\left( 1 - \frac{\lambda}{a x} \right) < 0, \qquad \lim_{x \downarrow \frac{\lambda}{a}} T_{\min}(x) = -\infty, \qquad \lim_{x \to +\infty} T_{\min}(x) = 0.
+        \]
+    \end{itemize}
+    Es decir, cuanto más cerca está el dato inicial de un equilibrio, más tarda la solución en explotar, como cabe esperar de la dependencia continua respecto del dato inicial.
+
+    \begin{center}
+    \begin{tikzpicture}[x=1cm, y=1cm, >=stealth]
+        \draw[->] (-3.2,0) -- (4.2,0) node[right] {$x$};
+        \draw[->] (0,-2.6) -- (0,2.6);
+        \draw[dashed, gray] (1,-2.6) -- (1,2.6);
+        \node[below right] at (1,0) {$\frac{\lambda}{a}$};
+        % T_max(x) para x<0 (lambda=a=1): ln(1-1/x)
+        \draw[thick, green!50!black, domain=-3.1:-0.08, samples=80] plot (\x, {ln(1-1/\x)});
+        \node[green!50!black, font=\footnotesize] at (-1.9,1.3) {$T_{\max}(x)$};
+        % T_min(x) para x>1
+        \draw[thick, red!70!black, domain=1.08:4, samples=80] plot (\x, {ln(1-1/\x)});
+        \node[red!70!black, font=\footnotesize] at (2.9,-1.2) {$T_{\min}(x)$};
     \end{tikzpicture}
     \end{center}
 }
