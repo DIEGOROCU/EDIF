@@ -1715,3 +1715,227 @@ Bajo estas condiciones (desarrolladas por Kamke), las iteraciones monótonas:
     \underline{u} \leq \mathcal{K}\underline{u} \leq \mathcal{K}^2\underline{u} \leq \dots \leq \mathcal{K}^n\underline{u} \leq \dots \leq \mathcal{K}^n\overline{u} \leq \dots \leq \mathcal{K}\overline{u} \leq \overline{u}
 \]
 convergen monótonamente hacia una solución extremal inferior $u_*$ y superior $u^*$, sentando las bases del método analítico que se estudiará en los capítulos subsiguientes.
+
+\subsection{Dependencia continua con respecto de los datos iniciales}
+
+En la teoría de Cauchy-Lipschitz vimos que la solución depende de forma Lipschitziana del dato inicial. En el marco de Peano, donde solo suponemos que $f$ es continua, la primera observación es inmediata: \textbf{sin unicidad no puede haber dependencia continua}. En efecto, si para un mismo dato inicial hay varias soluciones, el operador que asocia a cada dato ``su'' solución ni siquiera está bien definido.
+
+\ejemplo{
+    Consideremos el problema
+    \[
+        \begin{cases}
+            u' = u^p, \qquad 0 < p < 1, \\
+            u(0) = x \geq 0.
+        \end{cases}
+    \]
+    \begin{itemize}
+        \item \textbf{Si $x > 0$:} la función $u \mapsto u^p$ es de clase $\mathcal{C}^1$ en un entorno de $x$, así que hay una única solución. Separando variables,
+        \[
+            u^{-p} u' = 1 \implies \frac{u^{1-p}(t)}{1-p} - \frac{x^{1-p}}{1-p} = t \implies u(t; x) = \Bigl( x^{1-p} + (1-p)t \Bigr)^{\frac{1}{1-p}}, \quad t \geq 0.
+        \]
+        \item \textbf{Si $x = 0$:} el problema
+        \[
+            \begin{cases}
+                \varphi' = \varphi^p \\
+                \varphi(0) = 0
+            \end{cases}
+        \]
+        tiene al menos dos soluciones: la nula, $\varphi \equiv 0$, y
+        \[
+            \varphi(t) = \bigl( (1-p)t \bigr)^{\frac{1}{1-p}}, \quad t \geq 0,
+        \]
+        además de todas sus trasladadas $\varphi(t - c)$ para $t \geq c$ (y $0$ para $t \leq c$), con $c > 0$.
+    \end{itemize}
+    Cuando $x \downarrow 0$, las soluciones $u(\cdot; x)$ convergen a $\varphi$, que es solo \textit{una} de las soluciones del problema con $x = 0$. Por tanto, no hay una única ``solución en $x = 0$'' a la que puedan converger, y no tiene sentido hablar de dependencia continua en $x = 0$.
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.2]
+        \draw[->] (-0.3,0) -- (4.2,0) node[right] {$t$};
+        \draw[->] (0,-0.3) -- (0,3.2) node[above] {$u$};
+        % solucion nula
+        \draw[very thick, gray] (0,0) -- (4,0);
+        % varphi(t) = (t/2)^2 (p = 1/2)
+        \draw[thick, blue!80!black, domain=0:3.4, samples=60] plot (\x, {(\x/2)^2}) node[above left] {$\varphi(t)$};
+        % trasladada
+        \draw[thick, blue!50, domain=0.8:4, samples=60] plot (\x, {((\x-0.8)/2)^2});
+        % soluciones con x > 0
+        \draw[thick, red!70!black, domain=0:2.35, samples=60] plot (\x, {(sqrt(0.3)+\x/2)^2});
+        \draw[thick, red!50, domain=0:2.85, samples=60] plot (\x, {(sqrt(0.08)+\x/2)^2});
+        \fill (0,0.3) circle (1.2pt) node[left] {$x$};
+    \end{tikzpicture}
+    \end{center}
+}
+
+El siguiente resultado establece que, recíprocamente, la unicidad es el requisito mínimo para tener dependencia continua respecto del dato inicial.
+
+\subsubsection{Teorema de dependencia continua}
+
+\begin{teorema}[Dependencia continua respecto del dato inicial]
+    Sean $J = [t_0, t_0 + T]$, $u_0 \in \R^N$, $R > 0$ y $f \in \mathcal{C}(J \times \overline{B_R(u_0)}; \, \R^N)$. Supongamos que existen $h \in (0, T]$ y $\eta \in (0, R)$ tales que, para cada $x \in \overline{B_\eta(u_0)}$, el problema
+    \[
+        \begin{cases}
+            u' = f(t, u) \\
+            u(t_0) = x
+        \end{cases}
+    \]
+    tiene una única solución $u(t; x)$ definida en $J_h = [t_0, t_0 + h] \subset J$ (en particular, $u(t; x) \in \overline{B_R(u_0)}$ para todo $t \in J_h$). Entonces, el \textbf{operador solución}
+    \[
+        \begin{array}{rcl}
+            \mathcal{S} : \overline{B_\eta(u_0)} & \longrightarrow & \mathcal{C}(J_h; \, \overline{B_R(u_0)}) \\
+            x & \longmapsto & \mathcal{S}(x) = u(\cdot; x)
+        \end{array}
+    \]
+    es continuo. Es decir, $u(\cdot; x)$ varía continuamente con respecto de $x \in \overline{B_\eta(u_0)}$.
+\end{teorema}
+
+\begin{proof}
+    Consideramos $\mathcal{C}(J_h; \, \overline{B_R(u_0)})$ con la norma del máximo, $\|u\|_{\infty} = \max_{t \in J_h} \|u(t)\|$. Sea $\{x_n\}_{n \geq 1} \subset \overline{B_\eta(u_0)}$ con
+    \[
+        x_n \xrightarrow[n \to \infty]{} x.
+    \]
+    Como $\overline{B_\eta(u_0)}$ es cerrado, $x \in \overline{B_\eta(u_0)}$. Hemos de probar que
+    \[
+        \mathcal{S}(x_n) \xrightarrow[n \to \infty]{} \mathcal{S}(x) \quad \text{en } \mathcal{C}(J_h; \, \overline{B_R(u_0)}).
+    \]
+    La estrategia es ver que \textbf{de cualquier subsucesión} $\{\mathcal{S}(x_{n_m})\}_{m \geq 1}$ podemos extraer una subsucesión convergente a $\mathcal{S}(x)$.
+
+    Razonamos por reducción al absurdo. Supongamos que $\mathcal{S}(x_n) \not\to \mathcal{S}(x)$. Entonces existe $\varepsilon > 0$ tal que para todo $m \geq 1$ existe $n_m \geq m$ con
+    \[
+        \| \mathcal{S}(x_{n_m}) - \mathcal{S}(x) \|_\infty \geq \varepsilon \quad \forall m \geq 1.
+    \]
+    Denotamos $\mathcal{S}(x_{n_m}) = u(\cdot; x_{n_m}) \equiv u_{n_m}$ y consideramos la familia
+    \[
+        \mathcal{F} = \{ u_{n_m} : m \geq 1 \} \subset \mathcal{C}(J_h; \, \overline{B_R(u_0)}).
+    \]
+    Veamos que $\mathcal{F}$ es acotada y equicontinua.
+    \begin{itemize}
+        \item \textbf{Acotación:} como $u_{n_m}(t) \in \overline{B_R(u_0)}$, para todo $t \in J_h$ y $m \geq 1$,
+        \[
+            \| u_{n_m}(t) \| \leq \| u_{n_m}(t) - u_0 \| + \| u_0 \| \leq R + \| u_0 \|,
+        \]
+        luego
+        \[
+            \| u_{n_m} \|_{\infty, J_h} \leq R + \| u_0 \| \quad \forall m \geq 1,
+        \]
+        y $\mathcal{F}$ es acotada.
+        \item \textbf{Equicontinuidad:} como $u_{n_m}$ es solución, para $t, s \in J_h$ y $m \geq 1$,
+        \[
+            u_{n_m}(t) = x_{n_m} + \int_{t_0}^{t} f(\tau, u_{n_m}(\tau)) \, d\tau, \qquad
+            u_{n_m}(s) = x_{n_m} + \int_{t_0}^{s} f(\tau, u_{n_m}(\tau)) \, d\tau.
+        \]
+        Restando, y llamando $\|f\|_\infty = \max_{(t,u) \in J \times \overline{B_R(u_0)}} \|f(t,u)\|$, que es finito por ser $f$ continua en un compacto:
+        \[
+            \| u_{n_m}(t) - u_{n_m}(s) \| \leq \int_{\min\{s,t\}}^{\max\{s,t\}} \| f(\tau, u_{n_m}(\tau)) \| \, d\tau \leq \|f\|_\infty |t - s| \quad \forall m \geq 1.
+        \]
+        Las funciones de $\mathcal{F}$ son Lipschitzianas con la misma constante $\|f\|_\infty$, luego $\mathcal{F}$ es equicontinua.
+    \end{itemize}
+    Podemos aplicar el Teorema de Ascoli-Arzelà: existe una subsucesión $\{u_{n_{m_k}}\}_{k \geq 1}$ tal que
+    \[
+        \lim_{k \to \infty} u_{n_{m_k}} = u \in \mathcal{C}(J_h; \, \overline{B_R(u_0)}) \quad \text{uniformemente en } J_h.
+    \]
+    (El límite toma valores en $\overline{B_R(u_0)}$ porque esta bola es cerrada.) Por otro lado, para todo $t \in J_h$ y $k \geq 1$,
+    \[
+        u_{n_{m_k}}(t) = x_{n_{m_k}} + \int_{t_0}^{t} f(s, u_{n_{m_k}}(s)) \, ds.
+    \]
+    Para pasar al límite dentro de la integral usamos que $f$ es uniformemente continua en el compacto $J_h \times \overline{B_R(u_0)}$: como $u_{n_{m_k}} \to u$ uniformemente, también $f(s, u_{n_{m_k}}(s)) \to f(s, u(s))$ uniformemente en $s \in J_h$, y por tanto
+    \[
+        \left\| \int_{t_0}^{t} f(s, u_{n_{m_k}}(s)) \, ds - \int_{t_0}^{t} f(s, u(s)) \, ds \right\| \leq h \max_{s \in J_h} \| f(s, u_{n_{m_k}}(s)) - f(s, u(s)) \| \xrightarrow[k \to \infty]{} 0.
+    \]
+    Tomando el límite cuando $k \to \infty$ (y usando $x_{n_{m_k}} \to x$):
+    \[
+        u(t) = x + \int_{t_0}^{t} f(s, u(s)) \, ds \quad \forall t \in J_h.
+    \]
+    Así,
+    \[
+        \begin{cases}
+            u'(t) = f(t, u(t)) \quad \forall t \in J_h \\
+            u(t_0) = x
+        \end{cases}
+        \implies u = u(\cdot; x) = \mathcal{S}(x),
+    \]
+    por la unicidad de solución que hemos supuesto para el dato $x$. Por tanto,
+    \[
+        \mathcal{S}(x_{n_{m_k}}) \xrightarrow[k \to \infty]{} \mathcal{S}(x),
+    \]
+    lo cual contradice que $\| \mathcal{S}(x_{n_m}) - \mathcal{S}(x) \|_\infty \geq \varepsilon$ para todo $m \geq 1$. Luego $\mathcal{S}(x_n) \to \mathcal{S}(x)$ y $\mathcal{S}$ es continuo.
+\end{proof}
+
+\subsection{Complejidad topológica del conjunto de soluciones}
+
+Cuando falla la unicidad, el conjunto de soluciones del problema de Cauchy puede ser extraordinariamente complicado. Los primeros ejemplos ``sofisticados'' en esta dirección se deben a M. Lavrentiev (1925) y a P. Hartman (1964).
+
+\ejemplo{
+    \textbf{Ejemplo de Hartman (1964):} existe una función continua $f : \R \times \R \to \R$ tal que, para cada $(t_0, u_0) \in \R^2$ y para cada $\varepsilon > 0$, el problema
+    \[
+        \begin{cases}
+            u' = f(t, u) \\
+            u(t_0) = u_0
+        \end{cases}
+    \]
+    tiene una ``infinidad'' de soluciones en $[t_0, t_0 + \varepsilon]$ y en $[t_0 - \varepsilon, t_0]$. Es decir, la unicidad falla en \textbf{todo} punto del plano, tanto hacia el futuro como hacia el pasado.
+}
+
+Ante esta situación, interesa obtener toda la información posible sobre la estructura del conjunto de puntos que alcanzan las soluciones en un instante dado. El resultado central es el siguiente.
+
+\subsubsection{Teorema de Kneser}
+
+\begin{teorema}[Teorema de Kneser (1927) {[Fukuhara]}]
+    Supongamos que $J = [t_0, t_0 + T]$, $R > 0$, $u_0 \in \R^N$, $f \in \mathcal{C}(J \times \overline{B_R(u_0)}; \, \R^N)$, y sea $\Sigma$ el conjunto de soluciones maximales $(I, u)$ de
+    \[
+        (P) \quad
+        \begin{cases}
+            u' = f(t, u) \\
+            u(t_0) = u_0
+        \end{cases}
+    \]
+    Sabemos (por la cota inferior del intervalo de existencia maximal) que el intervalo $\tilde{J} = [t_0, t_0 + \delta_0]$, con
+    \[
+        \delta_0 = \min \left\{ T, \, \frac{R}{\|f\|_\infty} \right\},
+    \]
+    está contenido en $I$ para toda $(I, u) \in \Sigma$, es decir, $\tilde{J} \subset I$. Entonces, para cada $t_1 \in (t_0, t_0 + \delta_0)$, el conjunto de puntos alcanzados por las soluciones del problema $(P)$ al cabo del tiempo $t_1$,
+    \[
+        \mathcal{A}(t_1) = \{ u(t_1) : (I, u) \in \Sigma \} \subset \overline{B_R(u_0)},
+    \]
+    es un \textbf{continuo topológico}: un conjunto cerrado y conexo (de hecho, compacto y conexo).
+\end{teorema}
+
+\begin{observación}
+    Algunos comentarios sobre el enunciado:
+    \begin{itemize}
+        \item Si hay unicidad, $\mathcal{A}(t_1)$ se reduce a un punto, que es trivialmente un continuo.
+        \item En el caso $N = 1$, los subconjuntos compactos y conexos de $\R$ son los intervalos cerrados y acotados, así que $\mathcal{A}(t_1) = [a, b]$. Esto es lo que habíamos observado en todos los ejemplos de no unicidad vistos (por ejemplo, el de $u' = u^p$ con $u(0) = 0$).
+        \item Para $N \geq 2$, $\mathcal{A}(t_1)$ no tiene por qué ser convexo: puede ser, por ejemplo, una circunferencia.
+    \end{itemize}
+\end{observación}
+
+\begin{proof}
+    \textbf{$\mathcal{A}(t_1)$ es cerrado.} Sea $\{x_n\}_{n \geq 1} \subset \mathcal{A}(t_1)$ con $x_n \xrightarrow[n \to \infty]{} x$. Hay que demostrar que $x \in \mathcal{A}(t_1)$.
+
+    Por definición de $\mathcal{A}(t_1)$, existen $(I_n, u_n) \in \Sigma$ tales que $u_n(t_1) = x_n$, $n \geq 1$. Consideramos
+    \[
+        \mathcal{F} = \{ u_n : n \geq 1 \}, \qquad u_n \in \mathcal{C}([t_0, t_1]; \, \overline{B_R(u_0)}),
+    \]
+    que es acotada (pues $\|u_n(t)\| \leq R + \|u_0\|$) y equicontinua (pues $\|u_n(t) - u_n(s)\| \leq \|f\|_\infty |t - s|$). Por el Teorema de Ascoli-Arzelà,
+    \[
+        u_{n_m} \xrightarrow[m \to \infty]{} u \in \mathcal{C}([t_0, t_1]; \, \overline{B_R(u_0)}).
+    \]
+    Hay que demostrar que $x \in \mathcal{A}(t_1)$. Como
+    \[
+        u_{n_m}(t) = \underbrace{u_{n_m}(t_0)}_{= u_0} + \int_{t_0}^t f(s, u_{n_m}(s)) \, ds,
+    \]
+    pasando al límite se obtiene
+    \[
+        u(t) = u_0 + \int_{t_0}^t f(s, u(s)) \, ds,
+    \]
+    luego $u$ resuelve $(P)$ en $[t_0, t_1]$. Además,
+    \[
+        u_{n_m}(t_1) = x_{n_m} \xrightarrow[m \to \infty]{} x \implies u(t_1) = x.
+    \]
+
+    \begin{center}
+        \fcolorbox{orange!85!black}{orange!10}{\parbox{0.92\linewidth}{\centering
+            \textbf{Hasta aquí llegamos en clase (16/11).}\\[0.2em]
+            La demostración no está terminada. Se continúa en la próxima clase.
+        }}
+    \end{center}
+\end{proof}
