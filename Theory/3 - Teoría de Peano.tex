@@ -1715,3 +1715,380 @@ Bajo estas condiciones (desarrolladas por Kamke), las iteraciones monótonas:
     \underline{u} \leq \mathcal{K}\underline{u} \leq \mathcal{K}^2\underline{u} \leq \dots \leq \mathcal{K}^n\underline{u} \leq \dots \leq \mathcal{K}^n\overline{u} \leq \dots \leq \mathcal{K}\overline{u} \leq \overline{u}
 \]
 convergen monótonamente hacia una solución extremal inferior $u_*$ y superior $u^*$, sentando las bases del método analítico que se estudiará en los capítulos subsiguientes.
+
+\subsection{El Teorema de Kneser}\label{subsec:teorema_kneser}
+
+El Teorema de Peano garantiza la existencia de al menos una solución local para un problema de Cauchy bajo la sola hipótesis de continuidad del campo vectorial. No obstante, al perderse la unicidad lipschitziana, emerge de forma natural el fenómeno de bifurcación y multiplicidad de soluciones.
+
+Consideremos el problema de Cauchy:
+\[
+    (P) \quad
+    \begin{cases}
+        u' = f(t, u) \\
+        u(t_0) = u_0
+    \end{cases}
+\]
+donde $J \subset \mathbb{R}$ es un intervalo con $t_0 \in J$, $\Omega \subseteq \mathbb{R}^N$ es un abierto, $u_0 \in \Omega$ y $f \in \mathcal{C}(J \times \Omega; \, \mathbb{R}^N)$. Denotamos por $\Sigma$ al conjunto de todas las soluciones $(I, u)$ de $(P)$.
+
+Para cada instante temporal $t_1 \in J$ ($t_1 > t_0$) tal que las soluciones maximales permanecen definidas al menos hasta $t_1$, definimos la \textbf{sección transversal del conjunto de soluciones} (o sección del embudo de Peano) en $t_1$ mediante:
+\[
+    A(t_1) = \left\{ u(t_1) \in \mathbb{R}^N : (I, u) \in \Sigma, \, t_1 \in I \right\}
+\]
+
+\ejemplo{
+    \textbf{Estructura de la sección en un campo no lipschitziano:}
+
+    Consideremos el problema escalar:
+    \[
+        (P) \quad
+        \begin{cases}
+            u' = u^p, & 0 < p < 1 \\
+            u(0) = 0
+        \end{cases}
+    \]
+    Puesto que $p \in (0, 1)$, el campo $f(u) = u^p$ es continuo en $[0, +\infty)$ pero no es lipschitziano en el origen. Como se vio anteriormente, además de la solución trivial $u \equiv 0$, para cada constante $c \geq 0$ existe una solución que bifurca en $t = c$:
+    \[
+        u_c(t) = \begin{cases}
+            0 & \text{si } 0 \leq t \leq c \\
+            \bigl((1-p)(t-c)\bigr)^{\frac{1}{1-p}} & \text{si } t > c
+        \end{cases}
+    \]
+    Fijado cualquier instante $t_1 > 0$, al hacer variar el parámetro de bifurcación $c$ en el intervalo $[0, t_1]$, los valores terminales $u_c(t_1)$ barren de forma continua todo el intervalo:
+    \[
+        A(t_1) = \left[ 0, \, \varphi(t_1) \right] \subset \mathbb{R}
+    \]
+    donde $\varphi(t_1) = \bigl((1-p)t_1\bigr)^{\frac{1}{1-p}}$ denota la solución maximal que bifurca inmediatamente en $c = 0$. Observamos que $A(t_1)$ es un conjunto cerrado, acotado y conexo de la recta real.
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.2]
+        % Ejes coordenados
+        \draw[->] (-0.5, 0) -- (4.5, 0) node[right] {$t$};
+        \draw[->] (0, -0.3) -- (0, 3.2) node[above] {$u(t)$};
+        \fill (0, 0) circle (1.5pt) node[below left, font=\footnotesize] {$0$};
+        
+        % Solución trivial u = 0
+        \draw[ultra thick, blue!80!black] (0, 0) -- (3.2, 0);
+        
+        % Curva envolvente superior \varphi(t) (bifurcación en c = 0)
+        \draw[thick, red!70!black, domain=0:3.2, samples=60] 
+            plot (\x, {0.35*\x*\x});
+        \node[above left, red!70!black, font=\footnotesize] at (3.2, 3.58) {$\varphi(t)$};
+        
+        % Soluciones intermedias que bifurcan
+        \draw[thick, green!60!black, domain=1.0:3.2, samples=60] 
+            plot (\x, {0.35*(\x - 1.0)*(\x - 1.0)});
+        \draw[thick, orange!80!black, domain=1.8:3.2, samples=60] 
+            plot (\x, {0.35*(\x - 1.8)*(\x - 1.8)});
+        \draw[thick, purple!70!black, domain=2.4:3.2, samples=60] 
+            plot (\x, {0.35*(\x - 2.4)*(\x - 2.4)});
+        
+        % Instante t_1
+        \draw[dashed, gray] (3.0, 0) node[below, black, font=\footnotesize] {$t_1$} -- (3.0, 3.15);
+        
+        % Sección A(t_1)
+        \draw[ultra thick, blue!60!black] (3.0, 0) -- (3.0, 3.15);
+        \fill[blue!60!black] (3.0, 0) circle (2pt);
+        \fill[blue!60!black] (3.0, 3.15) circle (2pt);
+        \node[right, blue!60!black, font=\footnotesize] at (3.0, 1.6) {$A(t_1) = [0, \, \varphi(t_1)]$};
+    \end{tikzpicture}
+    \end{center}
+}
+
+El matemático alemán Adolf Kneser demostró en 1923 que esta propiedad topológica se verifica en general en cualquier dimensión finita.
+
+\begin{teorema}[Teorema de Kneser]\label{teo:kneser}
+    Sea $J = [t_0, t_0 + T]$, $\Omega \subseteq \mathbb{R}^N$ un abierto, $u_0 \in \Omega$ y $f \in \mathcal{C}(J \times \Omega; \, \mathbb{R}^N)$.
+    Supongamos que para un instante $t_1 \in (t_0, t_0 + T]$ todas las soluciones de $(P)$ existen al menos hasta $t_1$ y permanecen dentro de un compacto común $K \subset \Omega$.
+    
+    Entonces, la sección transversal $A(t_1)$ es un conjunto \textbf{compacto y conexo} en $\mathbb{R}^N$.
+\end{teorema}
+
+\begin{proof}
+    La compacidad de $A(t_1)$ se deduce del Teorema de Ascoli-Arzelà: si $\{x_n\}_{n \geq 1} \subset A(t_1)$, existe una sucesión de soluciones $\{u_n\}_{n \geq 1} \subset \Sigma$ tales que $u_n(t_1) = x_n$. Al ser $f$ acotada en el compacto, la familia $\{u_n\}$ es equicontinua y acotada en $\mathcal{C}([t_0, t_1]; \, \mathbb{R}^N)$. Por Ascoli-Arzelà, existe una subsucesión que converge uniformemente a una solución $u \in \Sigma$, de modo que $x_{n_k} = u_{n_k}(t_1) \to u(t_1) \in A(t_1)$. Por tanto, $A(t_1)$ es cerrado y acotado, luego compacto.
+
+    Demostremos que $A(t_1)$ es \textbf{conexo}. Razonamos por reducción al absurdo. Supongamos que $A(t_1)$ no es conexo.
+    
+    Entonces existen dos subconjuntos $A_0, A_1 \subset \mathbb{R}^N$ compactos, disjuntos y no vacíos que forman una partición de $A(t_1)$:
+    \[
+        A(t_1) = A_0 \cup A_1, \qquad A_0 \cap A_1 = \emptyset, \quad A_0 \neq \emptyset, \; A_1 \neq \emptyset
+    \]
+    Al ser $A_0$ y $A_1$ compactos disjuntos en $\mathbb{R}^N$, la distancia euclídea entre ellos es estrictamente positiva:
+    \[
+        \delta := \operatorname{dist}(A_0, A_1) = \min_{\substack{x_0 \in A_0 \\ x_1 \in A_1}} \|x_0 - x_1\| > 0
+    \]
+    Consideramos la función de separación continua $D: \mathbb{R}^N \to \mathbb{R}$ definida mediante:
+    \[
+        D(x) = \operatorname{dist}(x, A_0) - \operatorname{dist}(x, A_1)
+    \]
+    Analicemos los valores de $D$ sobre cada componente:
+    \begin{itemize}
+        \item Para todo $x_0 \in A_0$, como $\operatorname{dist}(x_0, A_0) = 0$ y $\operatorname{dist}(x_0, A_1) \geq \delta$, se cumple:
+        \[
+            D(x_0) = -\operatorname{dist}(x_0, A_1) \leq -\delta < 0 \qquad \implies \quad D\big|_{A_0} \leq -\delta
+        \]
+        \item Para todo $x_1 \in A_1$, como $\operatorname{dist}(x_1, A_1) = 0$ y $\operatorname{dist}(x_1, A_0) \geq \delta$, se cumple:
+        \[
+            D(x_1) = \operatorname{dist}(x_1, A_0) \geq \delta > 0 \qquad \implies \quad D\big|_{A_1} \geq \delta
+        \]
+    \end{itemize}
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.2]
+        % Punto inicial u_0
+        \fill (0, 1.5) circle (2pt) node[left] {$u_0$};
+        
+        % Conjunto A_0
+        \draw[thick, fill=blue!10] (4.5, 2.5) circle (0.9cm);
+        \node[above, font=\bfseries] at (4.5, 3.4) {$A_0$};
+        \fill (4.3, 2.4) circle (1.5pt) node[right, font=\footnotesize] {$x_0$};
+        
+        % Conjunto A_1
+        \draw[thick, fill=red!10] (4.5, 0.5) circle (0.9cm);
+        \node[below, font=\bfseries] at (4.5, -0.4) {$A_1$};
+        \fill (4.3, 0.6) circle (1.5pt) node[right, font=\footnotesize] {$x_1$};
+        
+        % Distancia delta
+        \draw[<->, dashed, gray!80!black] (4.5, 1.6) -- (4.5, 1.4) node[midway, right, font=\footnotesize, black] {$\delta > 0$};
+        
+        % Trayectorias u^0 y u^1
+        \draw[thick, blue!80!black] (0, 1.5) .. controls (1.5, 2.2) and (3.0, 2.3) .. (4.3, 2.4) node[midway, above, font=\footnotesize] {$u^0(t)$};
+        \draw[thick, red!80!black] (0, 1.5) .. controls (1.5, 0.8) and (3.0, 0.7) .. (4.3, 0.6) node[midway, below, font=\footnotesize] {$u^1(t)$};
+        
+        % Trayectoria intermedia u(t) con D(u(t_1)) = 0
+        \draw[thick, dashed, purple!80!black] (0, 1.5) .. controls (1.8, 1.6) and (3.2, 1.5) .. (4.5, 1.5);
+        \fill[purple!80!black] (4.5, 1.5) circle (2pt);
+        \node[right, purple!80!black, font=\footnotesize] at (4.6, 1.5) {$u(t_1) \notin A_0 \cup A_1$};
+    \end{tikzpicture}
+    \end{center}
+
+    La estrategia consiste en encontrar una solución $u \in \Sigma$ de $(P)$ tal que:
+    \[
+        D\bigl(u(t_1)\bigr) = 0
+    \]
+    Si dicha solución existe, su valor terminal $u(t_1)$ resulta ser equidistante de $A_0$ y de $A_1$. Puesto que $D\big|_{A_0} \leq -\delta$ y $D\big|_{A_1} \geq \delta$, el punto $u(t_1)$ no puede pertenecer ni a $A_0$ ni a $A_1$, de donde:
+    \[
+        u(t_1) \notin A_0 \cup A_1 = A(t_1)
+    \]
+    lo cual entra en flagrante contradicción con la definición de $A(t_1)$, puesto que $u \in \Sigma$ implica por construcción $u(t_1) \in A(t_1)$.
+
+    Para construir analíticamente tal solución, aproximamos el campo continuo $f$ mediante funciones localmente lipschitzianas. Tomamos puntos fijos $x_0 \in A_0$ y $x_1 \in A_1$, correspondientes a sendas soluciones $u^0, u^1 \in \Sigma$ con $u^0(t_1) = x_0$ y $u^1(t_1) = x_1$. Para cada $\varepsilon > 0$, existen campos lipschitzianos $g_{\varepsilon, 0}$ y $g_{\varepsilon, 1}$ que aproximan a $f$ a distancia menor que $\varepsilon$ en el compacto considerado.
+    
+    Construimos la homotopía lineal entre ambas aproximaciones:
+    \[
+        G_{\lambda, \varepsilon}(t, x) = \lambda g_{\varepsilon, 1}(t, x) + (1 - \lambda) g_{\varepsilon, 0}(t, x), \qquad \lambda \in [0, 1]
+    \]
+    Para cada $\lambda \in [0, 1]$, el campo $G_{\lambda, \varepsilon}$ es lipschitziano en $x$, por lo que el problema de Cauchy correspondiente admite una única solución $u_{\lambda, \varepsilon}$. Por el Teorema de diferenciabilidad y dependencia continua respecto de parámetros, la aplicación:
+    \[
+        \lambda \in [0, 1] \longmapsto u_{\lambda, \varepsilon}(t_1) \in \mathbb{R}^N
+    \]
+    es continua. En consecuencia, la función escalar:
+    \[
+        \Phi(\lambda) = D\bigl(u_{\lambda, \varepsilon}(t_1)\bigr)
+    \]
+    es continua en $[0, 1]$, con $\Phi(0) < 0$ y $\Phi(1) > 0$. Por el Teorema de Bolzano, existe al menos un valor intermedio $\lambda_\varepsilon \in (0, 1)$ tal que:
+    \[
+        D\bigl(u_{\lambda_\varepsilon, \varepsilon}(t_1)\bigr) = 0
+    \]
+    Haciendo tender $\varepsilon \to 0$, por el Teorema de Ascoli-Arzelà se extrae una subsucesión uniformemente convergente hacia una solución $u \in \Sigma$ de $(P)$ que satisface $D(u(t_1)) = 0$. Esta contradicción demuestra que la partición disjunta es imposible y, por tanto, $A(t_1)$ es forzosamente conexo.
+\end{proof}
+
+\subsection{El método de sub y supersoluciones: el Teorema de Kamke}\label{subsec:metodo_sub_supersoluciones_kamke}
+
+A continuación formalizamos el marco analítico del método de sub y supersoluciones introducido en la perspectiva anterior, fijando las relaciones de orden, la caracterización diferencial y el Teorema fundamental de Kamke.
+
+\paragraph{Notaciones y relaciones de orden.}
+Introducimos las estructuras de orden en dimensión finita y en los correspondientes espacios funcionales:
+\begin{itemize}
+    \item \textbf{Orden parcial en $\mathbb{R}^N$:} Dados $x = (x_1, \dots, x_N), \, y = (y_1, \dots, y_N) \in \mathbb{R}^N$, definimos:
+    \[
+        x \leq y \iff x_j \leq y_j \qquad \forall j \in \{1, \dots, N\}
+    \]
+    \item \textbf{Campos monótonos crecientes:} Sea $\Omega \subset \mathbb{R}^N$ un conjunto abierto. Una función $f: \Omega \to \mathbb{R}^M$ se dice \textbf{creciente} si:
+    \[
+        \forall x, y \in \Omega, \quad x \leq y \implies f(x) \leq f(y)
+    \]
+    \item \textbf{Campos no autónomos crecientes en el estado:} Sean $J \subset \mathbb{R}$ un intervalo y $\Omega \subset \mathbb{R}^N$ un abierto. Un campo vectorial $f: J \times \Omega \to \mathbb{R}^M$ se dice \textbf{creciente con respecto de $u \in \Omega$ en $t \in J$} si:
+    \[
+        \forall x, y \in \Omega, \quad x \leq y \implies f(t, x) \leq f(t, y) \qquad \forall t \in J
+    \]
+    \item \textbf{Orden funcional en $\mathcal{C}(J; \, \mathbb{R}^N)$:} Para $J = [t_0, t_0 + T]$ y funciones $h_1, h_2 \in \mathcal{C}(J; \, \mathbb{R}^N)$, definimos:
+    \[
+        h_1 \leq h_2 \iff h_1(t) \leq h_2(t) \qquad \forall t \in J
+    \]
+\end{itemize}
+
+\paragraph{Subsoluciones y supersoluciones.}
+Consideremos el problema de Cauchy:
+\[
+    (P) \quad
+    \begin{cases}
+        u' = f(t, u) \\
+        u(t_0) = u_0
+    \end{cases}
+\]
+donde $J = [t_0, t_0 + T]$, $u_0 \in \mathbb{R}^N$ y $f \in \mathcal{C}(J \times \mathbb{R}^N; \, \mathbb{R}^N)$ es un campo continuo.
+Recordemos que el operador integral de Volterra $\mathcal{K}: \mathcal{C}(J; \, \mathbb{R}^N) \to \mathcal{C}(J; \, \mathbb{R}^N)$ viene dado por:
+\[
+    (\mathcal{K}h)(t) = u_0 + \int_{t_0}^t f(s, h(s)) \, ds \qquad \forall t \in J
+\]
+
+\begin{definición}[Subsolución y supersolución]\label{def:sub_supersolucion}
+    Sea $J = [t_0, t_0 + T]$.
+    \begin{itemize}
+        \item Una función $\underline{u} \in \mathcal{C}(J; \, \mathbb{R}^N)$ se denomina \textbf{subsolución} de $(P)$ en el intervalo $J$ si:
+        \[
+            \underline{u} \leq \mathcal{K}\underline{u} \quad \text{en } J
+        \]
+        es decir, si $\underline{u}(t) \leq u_0 + \displaystyle\int_{t_0}^t f(s, \underline{u}(s)) \, ds$ para todo $t \in J$.
+        \item Una función $\overline{u} \in \mathcal{C}(J; \, \mathbb{R}^N)$ se denomina \textbf{supersolución} de $(P)$ en el intervalo $J$ si:
+        \[
+            \overline{u} \geq \mathcal{K}\overline{u} \quad \text{en } J
+        \]
+        es decir, si $\overline{u}(t) \geq u_0 + \displaystyle\int_{t_0}^t f(s, \overline{u}(s)) \, ds$ para todo $t \in J$.
+    \end{itemize}
+\end{definición}
+
+En la práctica, la verificación de estas condiciones integrales se realiza habitualmente mediante desigualdades diferenciales sobre funciones de clase $\mathcal{C}^1$:
+
+\begin{lema}[Caracterización diferencial de sub y supersoluciones]\label{lem:caracterizacion_sub_supersoluciones}
+    \begin{itemize}
+        \item Toda función $\underline{u} \in \mathcal{C}^1(J; \, \mathbb{R}^N)$ que satisface:
+        \[
+            \begin{cases}
+                \underline{u}'(t) \leq f(t, \underline{u}(t)) & \forall t \in J \\
+                \underline{u}(t_0) \leq u_0
+            \end{cases}
+        \]
+        es una subsolución de $(P)$ en el intervalo $J$.
+        \item Toda función $\overline{u} \in \mathcal{C}^1(J; \, \mathbb{R}^N)$ que satisface:
+        \[
+            \begin{cases}
+                \overline{u}'(t) \geq f(t, \overline{u}(t)) & \forall t \in J \\
+                \overline{u}(t_0) \geq u_0
+            \end{cases}
+        \]
+        es una supersolución de $(P)$ en el intervalo $J$.
+    \end{itemize}
+\end{lema}
+
+\begin{proof}
+    Demostremos la primera afirmación. Sea $\underline{u} \in \mathcal{C}^1(J; \, \mathbb{R}^N)$ verificando las condiciones anteriores. Para cada $t \in J$, integrando la desigualdad diferencial $\underline{u}'(s) \leq f(s, \underline{u}(s))$ entre $t_0$ y $t$:
+    \[
+        \int_{t_0}^t \underline{u}'(s) \, ds \leq \int_{t_0}^t f(s, \underline{u}(s)) \, ds \qquad \forall t \in J
+    \]
+    Por el Teorema Fundamental del Cálculo aplicado a cada componente:
+    \[
+        \underline{u}(t) - \underline{u}(t_0) \leq \int_{t_0}^t f(s, \underline{u}(s)) \, ds \qquad \forall t \in J
+    \]
+    Sumando $\underline{u}(t_0)$ en ambos miembros y haciendo uso de la condición inicial $\underline{u}(t_0) \leq u_0$:
+    \[
+        \underline{u}(t) \leq \underline{u}(t_0) + \int_{t_0}^t f(s, \underline{u}(s)) \, ds \leq u_0 + \int_{t_0}^t f(s, \underline{u}(s)) \, ds = (\mathcal{K}\underline{u})(t)
+    \]
+    En consecuencia, $\underline{u}(t) \leq (\mathcal{K}\underline{u})(t)$ para todo $t \in J$, lo que concluye que $\underline{u} \leq \mathcal{K}\underline{u}$ en $J$, y por ende $\underline{u}$ es una subsolución de $(P)$.
+
+    El caso de la supersolución $\overline{u}$ se demuestra de manera análoga invirtiendo el sentido de las desigualdades en cada paso de la integración.
+\end{proof}
+
+\begin{teorema}[Teorema de Kamke de convergencia monótona]\label{teo:kamke}
+    Sean $J = [t_0, t_0 + T]$ y $f \in \mathcal{C}(J \times \mathbb{R}^N; \, \mathbb{R}^N)$ un campo vectorial creciente con respecto de $u \in \mathbb{R}^N$ para todo $t \in J$.
+    Supongamos que el problema de Cauchy:
+    \[
+        (P) \quad
+        \begin{cases}
+            u' = f(t, u) \\
+            u(t_0) = u_0 \in \mathbb{R}^N
+        \end{cases}
+    \]
+    admite una subsolución $\underline{u} \in \mathcal{C}(J; \, \mathbb{R}^N)$ y una supersolución $\overline{u} \in \mathcal{C}(J; \, \mathbb{R}^N)$ en $J$ ordenadas:
+    \[
+        \underline{u} \leq \overline{u} \quad \text{en } J
+    \]
+    Consideremos las sucesiones de iteraciones inducidas por el operador de Volterra $\mathcal{K}$:
+    \[
+        \underline{u}_n = \mathcal{K}^n \underline{u} \quad (\forall n \geq 0), \qquad \text{con } \underline{u}_0 = \underline{u}, \; \underline{u}_1 = \mathcal{K}\underline{u}, \; \underline{u}_2 = \mathcal{K}^2\underline{u} = \mathcal{K}\underline{u}_1, \, \dots
+    \]
+    \[
+        \overline{u}_n = \mathcal{K}^n \overline{u} \quad (\forall n \geq 0), \qquad \text{con } \overline{u}_0 = \overline{u}, \; \overline{u}_1 = \mathcal{K}\overline{u}, \; \overline{u}_2 = \mathcal{K}^2\overline{u} = \mathcal{K}\overline{u}_1, \, \dots
+    \]
+    Entonces se verifican las siguientes propiedades:
+    \begin{enumerate}
+        \item \textbf{Encaje monótono de las aproximaciones:} Para todo $n \geq 1$, se cumple la cadena de desigualdades:
+        \[
+            \underline{u} = \underline{u}_0 \leq \underline{u}_1 \leq \dots \leq \underline{u}_n \leq \overline{u}_n \leq \overline{u}_{n-1} \leq \dots \leq \overline{u}_1 \leq \overline{u}_0 = \overline{u} \qquad \text{en } J
+        \]
+        \item \textbf{Convergencia uniforme hacia soluciones:} Los límites puntuales:
+        \[
+            u_*(t) := \lim_{n \to \infty} \underline{u}_n(t) \qquad \text{y} \qquad u^*(t) := \lim_{n \to \infty} \overline{u}_n(t)
+        \]
+        están bien definidos para todo $t \in J$, proporcionan sendas soluciones $u_*, u^* \in \mathcal{C}^1(J; \, \mathbb{R}^N)$ del problema $(P)$ tales que:
+        \[
+            \underline{u} \leq u_* \leq u^* \leq \overline{u} \qquad \text{en } J
+        \]
+        y ambas convergencias son \textbf{uniformes} en el intervalo $J$.
+        \item \textbf{Carácter extremal minimal y maximal:} Las funciones $u_*$ y $u^*$ son, respectivamente, la \textbf{solución minimal} y la \textbf{solución maximal} de $(P)$ en el intervalo $[\underline{u}, \overline{u}]$. Esto es, cualquier solución $u$ de $(P)$ en $J$ que verifique $\underline{u} \leq u \leq \overline{u}$ cumple necesariamente:
+        \[
+            u_* \leq u \leq u^* \qquad \text{en } J
+        \]
+    \end{enumerate}
+\end{teorema}
+
+\begin{proof}
+    Desglosamos la demostración en tres etapas:
+
+    \textbf{1. Demostración de la monotonía:}
+    Como el campo $f(t, \cdot)$ es monótono creciente, para cualesquiera $h_1, h_2 \in \mathcal{C}(J; \, \mathbb{R}^N)$ con $h_1 \leq h_2$, se tiene $f(s, h_1(s)) \leq f(s, h_2(s))$ para todo $s \in J$. Al integrar entre $t_0$ y $t \geq t_0$:
+    \[
+        (\mathcal{K}h_1)(t) = u_0 + \int_{t_0}^t f(s, h_1(s)) \, ds \leq u_0 + \int_{t_0}^t f(s, h_2(s)) \, ds = (\mathcal{K}h_2)(t)
+    \]
+    Por tanto, el operador $\mathcal{K}$ es monótono creciente: $h_1 \leq h_2 \implies \mathcal{K}h_1 \leq \mathcal{K}h_2$.
+    
+    Por hipótesis, $\underline{u}_0 = \underline{u} \leq \mathcal{K}\underline{u} = \underline{u}_1$. Aplicando inductivamente el operador monótono $\mathcal{K}$, obtenemos:
+    \[
+        \underline{u}_0 \leq \underline{u}_1 \leq \underline{u}_2 \leq \dots \leq \underline{u}_n \leq \dots
+    \]
+    De forma enteramente simétrica, como $\overline{u}_0 = \overline{u} \geq \mathcal{K}\overline{u} = \overline{u}_1$, se deduce:
+    \[
+        \dots \leq \overline{u}_n \leq \dots \leq \overline{u}_2 \leq \overline{u}_1 \leq \overline{u}_0
+    \]
+    Finalmente, puesto que $\underline{u}_0 \leq \overline{u}_0$, la aplicación reiterada de $\mathcal{K}$ conserva el orden entre ambas ramas: $\underline{u}_n = \mathcal{K}^n\underline{u}_0 \leq \mathcal{K}^n\overline{u}_0 = \overline{u}_n$ para todo $n \geq 0$, confirmando la cadena completa de desigualdades de (1).
+
+    \medskip
+
+    \textbf{2. Convergencia uniforme y resolución del problema de Cauchy:}
+    Para cada $t \in J$ fijo, la sucesión real de componentes $\{\underline{u}_n(t)\}_{n \geq 0}$ es monótona no decreciente y está acotada superiormente por $\overline{u}(t)$. Por el Teorema de convergencia monótona de números reales, existe el límite puntual $u_*(t) = \lim_{n \to \infty} \underline{u}_n(t)$. De igual modo, $\{\overline{u}_n(t)\}_{n \geq 0}$ es monótona no creciente y acotada inferiormente por $\underline{u}(t)$, luego existe el límite puntual $u^*(t) = \lim_{n \to \infty} \overline{u}_n(t)$.
+
+    Demostremos que la convergencia es uniforme. Las trayectorias de todas las iteradas $\{\underline{u}_n\}_{n \geq 0}$ quedan confinadas en el intervalo de funciones $[\underline{u}, \overline{u}]$, cuya imagen:
+    \[
+        \mathcal{K}_0 = \left\{ (t, x) \in J \times \mathbb{R}^N : \underline{u}(t) \leq x \leq \overline{u}(t) \right\}
+    \]
+    es un conjunto cerrado y acotado, luego compacto en $J \times \mathbb{R}^N$. Al ser $f$ continua en $\mathcal{K}_0$, está acotada por una constante $M < +\infty$:
+    \[
+        M = \max_{(t, x) \in \mathcal{K}_0} \|f(t, x)\| < +\infty
+    \]
+    Para cada $n \geq 1$ y cualesquiera $t_1, t_2 \in J$:
+    \[
+        \|\underline{u}_n(t_2) - \underline{u}_n(t_1)\| = \left\| \int_{t_1}^{t_2} f(s, \underline{u}_{n-1}(s)) \, ds \right\| \leq M |t_2 - t_1|
+    \]
+    Esta estimación Lipschitziana uniforme demuestra que la familia $\{\underline{u}_n\}_{n \geq 0}$ es equicontinua y uniformemente acotada en $\mathcal{C}(J; \, \mathbb{R}^N)$. Por el Teorema de Ascoli-Arzelà (o alternativamente por el Teorema de Dini aplicado a sucesiones monótonas de funciones continuas), la convergencia $\underline{u}_n \to u_*$ es \textbf{uniforme} en $J$. En particular, la función límite $u_*$ es continua en $J$.
+
+    Gracias a la convergencia uniforme y la continuidad uniforme de $f$ en $\mathcal{K}_0$, es legítimo pasar al límite bajo la integral:
+    \[
+        u_*(t) = \lim_{n \to \infty} \underline{u}_{n+1}(t) = u_0 + \lim_{n \to \infty} \int_{t_0}^t f(s, \underline{u}_n(s)) \, ds = u_0 + \int_{t_0}^t f(s, u_*(s)) \, ds
+    \]
+    Por el Teorema Fundamental del Cálculo, $u_* \in \mathcal{C}^1(J; \, \mathbb{R}^N)$ y satisface $u_*' = f(t, u_*)$ junto con $u_*(t_0) = u_0$. El razonamiento para $u^*$ es enteramente análogo, concluyendo que $u^*$ también es solución de $(P)$.
+
+    \medskip
+
+    \textbf{3. Carácter extremal:}
+    Sea $u$ cualquier solución del problema $(P)$ en $J$ tal que $\underline{u} \leq u \leq \overline{u}$. Al ser $u$ solución, satisface la ecuación de punto fijo $u = \mathcal{K}u$.
+    
+    Dado que $\underline{u} \leq u \leq \overline{u}$, aplicando $n$ veces el operador monótono $\mathcal{K}$ a esta cadena de desigualdades, obtenemos:
+    \[
+        \underline{u}_n = \mathcal{K}^n\underline{u} \leq \mathcal{K}^n u = u \leq \mathcal{K}^n\overline{u} = \overline{u}_n \qquad \forall n \geq 0
+    \]
+    Tomando el límite cuando $n \to \infty$ en ambos extremos:
+    \[
+        u_* = \lim_{n \to \infty} \underline{u}_n \leq u \leq \lim_{n \to \infty} \overline{u}_n = u^*
+    \]
+    lo que prueba que $u_*$ es la menor de todas las soluciones en dicho rango (solución minimal) y $u^*$ es la mayor de todas ellas (solución maximal).
+\end{proof}
