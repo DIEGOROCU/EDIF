@@ -258,7 +258,7 @@ Es esencial subrayar que el módulo de continuidad $\delta$ depende exclusivamen
 
 \subsubsection{El Teorema de Ascoli-Arzelà}
 
-El Teorema de Ascoli-Arzelà culmina esta teoría proporcionando la caracterización completa y definitiva de los conjuntos compactos en espacios de funciones continuas.
+El Teorema de Ascoli-Arzelà culmina esta teoría proporcionando la caracterización completa y definitiva de los conjuntos compactos en espacios de funciones continuas. Se debe a G. Ascoli (1883) y C. Arzelà (1895), y es nuestro nuevo ``Teorema de la aplicación contractiva'' para esta parte del curso: hace el papel que tenía el teorema del punto fijo de Banach en la teoría de Cauchy-Lipschitz.
 
 \begin{teorema}[Teorema de Ascoli-Arzelà]
     Sea $K \subset \mathbb{R}^M$ un subconjunto compacto y $\mathcal{F} \subset \mathcal{C}(K; \, \mathbb{R}^N)$. Las siguientes afirmaciones son equivalentes:
@@ -465,7 +465,7 @@ El Teorema de Ascoli-Arzelà culmina esta teoría proporcionando la caracterizac
     \end{enumerate}
 \end{proof}
 
-\begin{teorema}[Teorema global de Peano]
+\begin{teorema}[Teorema global de Peano (1890)]
     Sean $J=[t_0, t_0 + T]$ y $f: C(J \times \mathbb{R}^N; \, \mathbb{R}^N)$ y acotada.\\
     Entonces para cada $u_0 \in \mathbb{R}^N$ existe al menos una solución globalmente definida en $J$ del PVI:
     \[
@@ -1284,6 +1284,52 @@ Con este lema queda expedito el camino hacia el teorema principal de prolongabil
 \end{proof}
 
 
+El teorema anterior puede enunciarse de una forma más precisa (y más útil), que es la que se usa en la práctica:
+
+\begin{teorema}[Existencia de solución maximal (enunciado mejorado)]
+    Sean $J \in \{ [t_0, t_0 + T], \, [t_0, +\infty) \}$, $\Omega \subset \mathbb{R}^N$ abierto, $f \in \mathcal{C}(J \times \Omega; \, \mathbb{R}^N)$ y $u_0 \in \Omega$. Entonces, cualquier solución local de
+    \[
+        \begin{cases}
+            u' = f(t, u) \\
+            u(t_0) = u_0
+        \end{cases}
+    \]
+    admite una prolongación a una solución no prolongable estrictamente a su derecha, es decir, a una solución maximal. Esta solución maximal \textbf{no tiene por qué ser única}.
+\end{teorema}
+
+\begin{proof}
+    \textit{(Esta demostración no se vio en clase; no aparece en los apuntes.)}
+
+    Sea $(\tilde{I}, \tilde{u}) \in \Sigma$ una solución local y consideremos el subconjunto de sus prolongaciones
+    \[
+        \Sigma_0 = \{ (I, u) \in \Sigma : (\tilde{I}, \tilde{u}) \leq (I, u) \} \neq \emptyset.
+    \]
+    Toda cadena de $\Sigma_0$ tiene una cota superior en $\Sigma_0$: la misma construcción del lema de inductividad (unión de los intervalos) da una solución que prolonga a todos los elementos de la cadena y, por tanto, también a $(\tilde{I}, \tilde{u})$. Por el Lema de Kuratowski-Zorn, $\Sigma_0$ tiene un elemento maximal $(I, u)$. Este es también maximal en $\Sigma$: si $(I, u) \leq (I', u')$ con $(I', u') \in \Sigma$, por transitividad $(I', u') \in \Sigma_0$, y la maximalidad en $\Sigma_0$ da $(I', u') = (I, u)$.
+\end{proof}
+
+Por ejemplo, para el problema
+\[
+    \begin{cases}
+        u' = f(u) = \begin{cases} 0 & u \leq 0 \\ u^q & 0 < u < 1 \quad (0 < q < 1) \\ u^p & u \geq 1 \quad (p > 1) \end{cases} \\
+        u(0) = 0
+    \end{cases}
+\]
+la solución local $u \equiv 0$ en $[0, c]$ se prolonga a distintas soluciones maximales, que explotan en tiempos distintos:
+
+\begin{center}
+\begin{tikzpicture}[>=stealth, x=1.3cm, y=1cm]
+    \draw[->] (-0.2,0) -- (5,0) node[right] {$t$};
+    \draw[->] (0,-0.2) -- (0,3.4) node[above] {$u(t)$};
+    \draw[very thick, gray] (0,0) -- (0.6,0);
+    \foreach \c/\T in {0/2.0, 0.6/2.6, 1.4/3.4} {
+        \draw[thick, blue!80!black, domain=\c:\T-0.12, samples=60] plot (\x, {0.35/((\T-\x)^0.8) - 0.35/((\T-\c)^0.8)});
+        \draw[dashed, gray] (\T,0) -- (\T,3.3);
+    }
+    \node[below] at (0.6,0) {$c$};
+    \node[below] at (4.6,0) {$T$};
+\end{tikzpicture}
+\end{center}
+
 \subsubsection{Aplicaciones clásicas del Lema de Kuratowski-Zorn}
 
 El principio inductivo formulado por Kuratowski y Zorn constituye una pieza angular en múltiples ramas de las matemáticas modernas. Señalamos algunas de sus aplicaciones más representativas:
@@ -1716,24 +1762,201 @@ Bajo estas condiciones (desarrolladas por Kamke), las iteraciones monótonas:
 \]
 convergen monótonamente hacia una solución extremal inferior $u_*$ y superior $u^*$, sentando las bases del método analítico que se estudiará en los capítulos subsiguientes.
 
-\subsection{El Teorema de Kneser}\label{subsec:teorema_kneser}
+\begin{observación}
+    En clase se indicó que el primer control llegaba hasta aquí (el ejemplo de Müller y la introducción a las sub y supersoluciones).
+\end{observación}
 
-El Teorema de Peano garantiza la existencia de al menos una solución local para un problema de Cauchy bajo la sola hipótesis de continuidad del campo vectorial. No obstante, al perderse la unicidad lipschitziana, emerge de forma natural el fenómeno de bifurcación y multiplicidad de soluciones.
+\subsection{Dependencia continua con respecto de los datos iniciales}
 
-Consideremos el problema de Cauchy:
-\[
-    (P) \quad
-    \begin{cases}
-        u' = f(t, u) \\
-        u(t_0) = u_0
-    \end{cases}
-\]
-donde $J \subset \mathbb{R}$ es un intervalo con $t_0 \in J$, $\Omega \subseteq \mathbb{R}^N$ es un abierto, $u_0 \in \Omega$ y $f \in \mathcal{C}(J \times \Omega; \, \mathbb{R}^N)$. Denotamos por $\Sigma$ al conjunto de todas las soluciones $(I, u)$ de $(P)$.
+En la teoría de Cauchy-Lipschitz vimos que la solución depende de forma Lipschitziana del dato inicial. En el marco de Peano, donde solo suponemos que $f$ es continua, la primera observación es inmediata: \textbf{sin unicidad no puede haber dependencia continua}. En efecto, si para un mismo dato inicial hay varias soluciones, el operador que asocia a cada dato ``su'' solución ni siquiera está bien definido.
 
-Para cada instante temporal $t_1 \in J$ ($t_1 > t_0$) tal que las soluciones maximales permanecen definidas al menos hasta $t_1$, definimos la \textbf{sección transversal del conjunto de soluciones} (o sección del embudo de Peano) en $t_1$ mediante:
-\[
-    A(t_1) = \left\{ u(t_1) \in \mathbb{R}^N : (I, u) \in \Sigma, \, t_1 \in I \right\}
-\]
+\ejemplo{
+    Consideremos el problema
+    \[
+        \begin{cases}
+            u' = u^p, \qquad 0 < p < 1, \\
+            u(0) = x \geq 0.
+        \end{cases}
+    \]
+    \begin{itemize}
+        \item \textbf{Si $x > 0$:} la función $u \mapsto u^p$ es de clase $\mathcal{C}^1$ en un entorno de $x$, así que hay una única solución. Separando variables,
+        \[
+            u^{-p} u' = 1 \implies \frac{u^{1-p}(t)}{1-p} - \frac{x^{1-p}}{1-p} = t \implies u(t; x) = \Bigl( x^{1-p} + (1-p)t \Bigr)^{\frac{1}{1-p}}, \quad t \geq 0.
+        \]
+        \item \textbf{Si $x = 0$:} el problema
+        \[
+            \begin{cases}
+                \varphi' = \varphi^p \\
+                \varphi(0) = 0
+            \end{cases}
+        \]
+        tiene al menos dos soluciones: la nula, $\varphi \equiv 0$, y
+        \[
+            \varphi(t) = \bigl( (1-p)t \bigr)^{\frac{1}{1-p}}, \quad t \geq 0,
+        \]
+        además de todas sus trasladadas $\varphi(t - c)$ para $t \geq c$ (y $0$ para $t \leq c$), con $c > 0$.
+    \end{itemize}
+    Cuando $x \downarrow 0$, las soluciones $u(\cdot; x)$ convergen a $\varphi$, que es solo \textit{una} de las soluciones del problema con $x = 0$. Por tanto, no hay una única ``solución en $x = 0$'' a la que puedan converger, y no tiene sentido hablar de dependencia continua en $x = 0$.
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.2]
+        \draw[->] (-0.3,0) -- (4.2,0) node[right] {$t$};
+        \draw[->] (0,-0.3) -- (0,3.2) node[above] {$u$};
+        % solucion nula
+        \draw[very thick, gray] (0,0) -- (4,0);
+        % varphi(t) = (t/2)^2 (p = 1/2)
+        \draw[thick, blue!80!black, domain=0:3.4, samples=60] plot (\x, {(\x/2)^2}) node[above left] {$\varphi(t)$};
+        % trasladada
+        \draw[thick, blue!50, domain=0.8:4, samples=60] plot (\x, {((\x-0.8)/2)^2});
+        % soluciones con x > 0
+        \draw[thick, red!70!black, domain=0:2.35, samples=60] plot (\x, {(sqrt(0.3)+\x/2)^2});
+        \draw[thick, red!50, domain=0:2.85, samples=60] plot (\x, {(sqrt(0.08)+\x/2)^2});
+        \fill (0,0.3) circle (1.2pt) node[left] {$x$};
+    \end{tikzpicture}
+    \end{center}
+}
+
+El siguiente resultado establece que, recíprocamente, la unicidad es el requisito mínimo para tener dependencia continua respecto del dato inicial.
+
+\subsubsection{Teorema de dependencia continua}
+
+\begin{teorema}[Dependencia continua respecto del dato inicial]
+    Sean $J = [t_0, t_0 + T]$, $u_0 \in \R^N$, $R > 0$ y $f \in \mathcal{C}(J \times \overline{B_R(u_0)}; \, \R^N)$. Supongamos que existen $h \in (0, T]$ y $\eta \in (0, R)$ tales que, para cada $x \in \overline{B_\eta(u_0)}$, el problema
+    \[
+        \begin{cases}
+            u' = f(t, u) \\
+            u(t_0) = x
+        \end{cases}
+    \]
+    tiene una única solución $u(t; x)$ definida en $J_h = [t_0, t_0 + h] \subset J$ (en particular, $u(t; x) \in \overline{B_R(u_0)}$ para todo $t \in J_h$). Entonces, el \textbf{operador solución}
+    \[
+        \begin{array}{rcl}
+            \mathcal{S} : \overline{B_\eta(u_0)} & \longrightarrow & \mathcal{C}(J_h; \, \overline{B_R(u_0)}) \\
+            x & \longmapsto & \mathcal{S}(x) = u(\cdot; x)
+        \end{array}
+    \]
+    es continuo. Es decir, $u(\cdot; x)$ varía continuamente con respecto de $x \in \overline{B_\eta(u_0)}$.
+\end{teorema}
+
+\begin{proof}
+    Consideramos $\mathcal{C}(J_h; \, \overline{B_R(u_0)})$ con la norma del máximo, $\|u\|_{\infty} = \max_{t \in J_h} \|u(t)\|$. Sea $\{x_n\}_{n \geq 1} \subset \overline{B_\eta(u_0)}$ con
+    \[
+        x_n \xrightarrow[n \to \infty]{} x.
+    \]
+    Como $\overline{B_\eta(u_0)}$ es cerrado, $x \in \overline{B_\eta(u_0)}$. Hemos de probar que
+    \[
+        \mathcal{S}(x_n) \xrightarrow[n \to \infty]{} \mathcal{S}(x) \quad \text{en } \mathcal{C}(J_h; \, \overline{B_R(u_0)}).
+    \]
+    La estrategia es ver que \textbf{de cualquier subsucesión} $\{\mathcal{S}(x_{n_m})\}_{m \geq 1}$ podemos extraer una subsucesión convergente a $\mathcal{S}(x)$.
+
+    Razonamos por reducción al absurdo. Supongamos que $\mathcal{S}(x_n) \not\to \mathcal{S}(x)$. Entonces existe $\varepsilon > 0$ tal que para todo $m \geq 1$ existe $n_m \geq m$ con
+    \[
+        \| \mathcal{S}(x_{n_m}) - \mathcal{S}(x) \|_\infty \geq \varepsilon \quad \forall m \geq 1.
+    \]
+    Denotamos $\mathcal{S}(x_{n_m}) = u(\cdot; x_{n_m}) \equiv u_{n_m}$ y consideramos la familia
+    \[
+        \mathcal{F} = \{ u_{n_m} : m \geq 1 \} \subset \mathcal{C}(J_h; \, \overline{B_R(u_0)}).
+    \]
+    Veamos que $\mathcal{F}$ es acotada y equicontinua.
+    \begin{itemize}
+        \item \textbf{Acotación:} como $u_{n_m}(t) \in \overline{B_R(u_0)}$, para todo $t \in J_h$ y $m \geq 1$,
+        \[
+            \| u_{n_m}(t) \| \leq \| u_{n_m}(t) - u_0 \| + \| u_0 \| \leq R + \| u_0 \|,
+        \]
+        luego
+        \[
+            \| u_{n_m} \|_{\infty, J_h} \leq R + \| u_0 \| \quad \forall m \geq 1,
+        \]
+        y $\mathcal{F}$ es acotada.
+        \item \textbf{Equicontinuidad:} como $u_{n_m}$ es solución, para $t, s \in J_h$ y $m \geq 1$,
+        \[
+            u_{n_m}(t) = x_{n_m} + \int_{t_0}^{t} f(\tau, u_{n_m}(\tau)) \, d\tau, \qquad
+            u_{n_m}(s) = x_{n_m} + \int_{t_0}^{s} f(\tau, u_{n_m}(\tau)) \, d\tau.
+        \]
+        Restando, y llamando $\|f\|_\infty = \max_{(t,u) \in J \times \overline{B_R(u_0)}} \|f(t,u)\|$, que es finito por ser $f$ continua en un compacto:
+        \[
+            \| u_{n_m}(t) - u_{n_m}(s) \| \leq \int_{\min\{s,t\}}^{\max\{s,t\}} \| f(\tau, u_{n_m}(\tau)) \| \, d\tau \leq \|f\|_\infty |t - s| \quad \forall m \geq 1.
+        \]
+        Las funciones de $\mathcal{F}$ son Lipschitzianas con la misma constante $\|f\|_\infty$, luego $\mathcal{F}$ es equicontinua.
+    \end{itemize}
+    Podemos aplicar el Teorema de Ascoli-Arzelà: existe una subsucesión $\{u_{n_{m_k}}\}_{k \geq 1}$ tal que
+    \[
+        \lim_{k \to \infty} u_{n_{m_k}} = u \in \mathcal{C}(J_h; \, \overline{B_R(u_0)}) \quad \text{uniformemente en } J_h.
+    \]
+    (El límite toma valores en $\overline{B_R(u_0)}$ porque esta bola es cerrada.) Por otro lado, para todo $t \in J_h$ y $k \geq 1$,
+    \[
+        u_{n_{m_k}}(t) = x_{n_{m_k}} + \int_{t_0}^{t} f(s, u_{n_{m_k}}(s)) \, ds.
+    \]
+    Para pasar al límite dentro de la integral usamos que $f$ es uniformemente continua en el compacto $J_h \times \overline{B_R(u_0)}$: como $u_{n_{m_k}} \to u$ uniformemente, también $f(s, u_{n_{m_k}}(s)) \to f(s, u(s))$ uniformemente en $s \in J_h$, y por tanto
+    \[
+        \left\| \int_{t_0}^{t} f(s, u_{n_{m_k}}(s)) \, ds - \int_{t_0}^{t} f(s, u(s)) \, ds \right\| \leq h \max_{s \in J_h} \| f(s, u_{n_{m_k}}(s)) - f(s, u(s)) \| \xrightarrow[k \to \infty]{} 0.
+    \]
+    Tomando el límite cuando $k \to \infty$ (y usando $x_{n_{m_k}} \to x$):
+    \[
+        u(t) = x + \int_{t_0}^{t} f(s, u(s)) \, ds \quad \forall t \in J_h.
+    \]
+    Así,
+    \[
+        \begin{cases}
+            u'(t) = f(t, u(t)) \quad \forall t \in J_h \\
+            u(t_0) = x
+        \end{cases}
+        \implies u = u(\cdot; x) = \mathcal{S}(x),
+    \]
+    por la unicidad de solución que hemos supuesto para el dato $x$. Por tanto,
+    \[
+        \mathcal{S}(x_{n_{m_k}}) \xrightarrow[k \to \infty]{} \mathcal{S}(x),
+    \]
+    lo cual contradice que $\| \mathcal{S}(x_{n_m}) - \mathcal{S}(x) \|_\infty \geq \varepsilon$ para todo $m \geq 1$. Luego $\mathcal{S}(x_n) \to \mathcal{S}(x)$ y $\mathcal{S}$ es continuo.
+\end{proof}
+
+\subsection{Complejidad topológica del conjunto de soluciones}
+
+Cuando falla la unicidad, el conjunto de soluciones del problema de Cauchy puede ser extraordinariamente complicado. Los primeros ejemplos ``sofisticados'' en esta dirección se deben a M. Lavrentiev (1925) y a P. Hartman (1964).
+
+\ejemplo{
+    \textbf{Ejemplo de Hartman (1964):} existe una función continua $f : \R \times \R \to \R$ tal que, para cada $(t_0, u_0) \in \R^2$ y para cada $\varepsilon > 0$, el problema
+    \[
+        \begin{cases}
+            u' = f(t, u) \\
+            u(t_0) = u_0
+        \end{cases}
+    \]
+    tiene una ``infinidad'' de soluciones en $[t_0, t_0 + \varepsilon]$ y en $[t_0 - \varepsilon, t_0]$. Es decir, la unicidad falla en \textbf{todo} punto del plano, tanto hacia el futuro como hacia el pasado.
+}
+
+Ante esta situación, interesa obtener toda la información posible sobre la estructura del conjunto de puntos que alcanzan las soluciones en un instante dado. El resultado central es el siguiente.
+
+\subsubsection{Teorema de Kneser}
+
+\begin{teorema}[Teorema de Kneser (1927) {[Fukuhara]}]
+    Supongamos que $J = [t_0, t_0 + T]$, $R > 0$, $u_0 \in \R^N$, $f \in \mathcal{C}(J \times \overline{B_R(u_0)}; \, \R^N)$, y sea $\Sigma$ el conjunto de soluciones maximales $(I, u)$ de
+    \[
+        (P) \quad
+        \begin{cases}
+            u' = f(t, u) \\
+            u(t_0) = u_0
+        \end{cases}
+    \]
+    Sabemos (por la cota inferior del intervalo de existencia maximal) que el intervalo $\tilde{J} = [t_0, t_0 + \delta_0]$, con
+    \[
+        \delta_0 = \min \left\{ T, \, \frac{R}{\|f\|_\infty} \right\},
+    \]
+    está contenido en $I$ para toda $(I, u) \in \Sigma$, es decir, $\tilde{J} \subset I$. Entonces, para cada $t_1 \in (t_0, t_0 + \delta_0)$, el conjunto de puntos alcanzados por las soluciones del problema $(P)$ al cabo del tiempo $t_1$,
+    \[
+        \mathcal{A}(t_1) = \{ u(t_1) : (I, u) \in \Sigma \} \subset \overline{B_R(u_0)},
+    \]
+    es un \textbf{continuo topológico}: un conjunto cerrado y conexo (de hecho, compacto y conexo).
+\end{teorema}
+
+\begin{observación}
+    Algunos comentarios sobre el enunciado:
+    \begin{itemize}
+        \item Si hay unicidad, $\mathcal{A}(t_1)$ se reduce a un punto, que es trivialmente un continuo.
+        \item En el caso $N = 1$, los subconjuntos compactos y conexos de $\R$ son los intervalos cerrados y acotados, así que $\mathcal{A}(t_1) = [a, b]$. Esto es lo que habíamos observado en todos los ejemplos de no unicidad vistos (por ejemplo, el de $u' = u^p$ con $u(0) = 0$).
+        \item Para $N \geq 2$, $\mathcal{A}(t_1)$ no tiene por qué ser convexo: puede ser, por ejemplo, una circunferencia.
+    \end{itemize}
+\end{observación}
 
 \ejemplo{
     \textbf{Estructura de la sección en un campo no lipschitziano:}
@@ -1755,9 +1978,9 @@ Para cada instante temporal $t_1 \in J$ ($t_1 > t_0$) tal que las soluciones max
     \]
     Fijado cualquier instante $t_1 > 0$, al hacer variar el parámetro de bifurcación $c$ en el intervalo $[0, t_1]$, los valores terminales $u_c(t_1)$ barren de forma continua todo el intervalo:
     \[
-        A(t_1) = \left[ 0, \, \varphi(t_1) \right] \subset \mathbb{R}
+        \mathcal{A}(t_1) = \left[ 0, \, \varphi(t_1) \right] \subset \mathbb{R}
     \]
-    donde $\varphi(t_1) = \bigl((1-p)t_1\bigr)^{\frac{1}{1-p}}$ denota la solución maximal que bifurca inmediatamente en $c = 0$. Observamos que $A(t_1)$ es un conjunto cerrado, acotado y conexo de la recta real.
+    donde $\varphi(t_1) = \bigl((1-p)t_1\bigr)^{\frac{1}{1-p}}$ denota la solución maximal que bifurca inmediatamente en $c = 0$. Observamos que $\mathcal{A}(t_1)$ es un conjunto cerrado, acotado y conexo de la recta real.
 
     \begin{center}
     \begin{tikzpicture}[>=stealth, scale=1.2]
@@ -1785,32 +2008,46 @@ Para cada instante temporal $t_1 \in J$ ($t_1 > t_0$) tal que las soluciones max
         % Instante t_1
         \draw[dashed, gray] (3.0, 0) node[below, black, font=\footnotesize] {$t_1$} -- (3.0, 3.15);
         
-        % Sección A(t_1)
+        % Sección \mathcal{A}(t_1)
         \draw[ultra thick, blue!60!black] (3.0, 0) -- (3.0, 3.15);
         \fill[blue!60!black] (3.0, 0) circle (2pt);
         \fill[blue!60!black] (3.0, 3.15) circle (2pt);
-        \node[right, blue!60!black, font=\footnotesize] at (3.0, 1.6) {$A(t_1) = [0, \, \varphi(t_1)]$};
+        \node[right, blue!60!black, font=\footnotesize] at (3.0, 1.6) {$\mathcal{A}(t_1) = [0, \, \varphi(t_1)]$};
     \end{tikzpicture}
     \end{center}
 }
 
-El matemático alemán Adolf Kneser demostró en 1923 que esta propiedad topológica se verifica en general en cualquier dimensión finita.
-
-\begin{teorema}[Teorema de Kneser]\label{teo:kneser}
-    Sea $J = [t_0, t_0 + T]$, $\Omega \subseteq \mathbb{R}^N$ un abierto, $u_0 \in \Omega$ y $f \in \mathcal{C}(J \times \Omega; \, \mathbb{R}^N)$.
-    Supongamos que para un instante $t_1 \in (t_0, t_0 + T]$ todas las soluciones de $(P)$ existen al menos hasta $t_1$ y permanecen dentro de un compacto común $K \subset \Omega$.
-    
-    Entonces, la sección transversal $A(t_1)$ es un conjunto \textbf{compacto y conexo} en $\mathbb{R}^N$.
-\end{teorema}
-
 \begin{proof}
-    La compacidad de $A(t_1)$ se deduce del Teorema de Ascoli-Arzelà: si $\{x_n\}_{n \geq 1} \subset A(t_1)$, existe una sucesión de soluciones $\{u_n\}_{n \geq 1} \subset \Sigma$ tales que $u_n(t_1) = x_n$. Al ser $f$ acotada en el compacto, la familia $\{u_n\}$ es equicontinua y acotada en $\mathcal{C}([t_0, t_1]; \, \mathbb{R}^N)$. Por Ascoli-Arzelà, existe una subsucesión que converge uniformemente a una solución $u \in \Sigma$, de modo que $x_{n_k} = u_{n_k}(t_1) \to u(t_1) \in A(t_1)$. Por tanto, $A(t_1)$ es cerrado y acotado, luego compacto.
+    \textbf{$\mathcal{A}(t_1)$ es cerrado.} Sea $\{x_n\}_{n \geq 1} \subset \mathcal{A}(t_1)$ con $x_n \xrightarrow[n \to \infty]{} x$. Hay que demostrar que $x \in \mathcal{A}(t_1)$.
 
-    Demostremos que $A(t_1)$ es \textbf{conexo}. Razonamos por reducción al absurdo. Supongamos que $A(t_1)$ no es conexo.
-    
-    Entonces existen dos subconjuntos $A_0, A_1 \subset \mathbb{R}^N$ compactos, disjuntos y no vacíos que forman una partición de $A(t_1)$:
+    Por definición de $\mathcal{A}(t_1)$, existen $(I_n, u_n) \in \Sigma$ tales que $u_n(t_1) = x_n$, $n \geq 1$. Consideramos
     \[
-        A(t_1) = A_0 \cup A_1, \qquad A_0 \cap A_1 = \emptyset, \quad A_0 \neq \emptyset, \; A_1 \neq \emptyset
+        \mathcal{F} = \{ u_n : n \geq 1 \}, \qquad u_n \in \mathcal{C}([t_0, t_1]; \, \overline{B_R(u_0)}),
+    \]
+    que es acotada (pues $\|u_n(t)\| \leq R + \|u_0\|$) y equicontinua (pues $\|u_n(t) - u_n(s)\| \leq \|f\|_\infty |t - s|$). Por el Teorema de Ascoli-Arzelà,
+    \[
+        u_{n_m} \xrightarrow[m \to \infty]{} u \in \mathcal{C}([t_0, t_1]; \, \overline{B_R(u_0)}).
+    \]
+    Hay que demostrar que $x \in \mathcal{A}(t_1)$. Como
+    \[
+        u_{n_m}(t) = \underbrace{u_{n_m}(t_0)}_{= u_0} + \int_{t_0}^t f(s, u_{n_m}(s)) \, ds,
+    \]
+    pasando al límite se obtiene
+    \[
+        u(t) = u_0 + \int_{t_0}^t f(s, u(s)) \, ds,
+    \]
+    luego $u$ resuelve $(P)$ en $[t_0, t_1]$. Además,
+    \[
+        u_{n_m}(t_1) = x_{n_m} \xrightarrow[m \to \infty]{} x \implies u(t_1) = x.
+    \]
+
+    \medskip
+
+    \textbf{$\mathcal{A}(t_1)$ es conexo.} Razonamos por reducción al absurdo. Supongamos que $\mathcal{A}(t_1)$ no es conexo.
+    
+    Entonces existen dos subconjuntos $A_0, A_1 \subset \mathbb{R}^N$ compactos, disjuntos y no vacíos que forman una partición de $\mathcal{A}(t_1)$:
+    \[
+        \mathcal{A}(t_1) = A_0 \cup A_1, \qquad A_0 \cap A_1 = \emptyset, \quad A_0 \neq \emptyset, \; A_1 \neq \emptyset
     \]
     Al ser $A_0$ y $A_1$ compactos disjuntos en $\mathbb{R}^N$, la distancia euclídea entre ellos es estrictamente positiva:
     \[
@@ -1867,9 +2104,9 @@ El matemático alemán Adolf Kneser demostró en 1923 que esta propiedad topoló
     \]
     Si dicha solución existe, su valor terminal $u(t_1)$ resulta ser equidistante de $A_0$ y de $A_1$. Puesto que $D\big|_{A_0} \leq -\delta$ y $D\big|_{A_1} \geq \delta$, el punto $u(t_1)$ no puede pertenecer ni a $A_0$ ni a $A_1$, de donde:
     \[
-        u(t_1) \notin A_0 \cup A_1 = A(t_1)
+        u(t_1) \notin A_0 \cup A_1 = \mathcal{A}(t_1)
     \]
-    lo cual entra en flagrante contradicción con la definición de $A(t_1)$, puesto que $u \in \Sigma$ implica por construcción $u(t_1) \in A(t_1)$.
+    lo cual entra en flagrante contradicción con la definición de $\mathcal{A}(t_1)$, puesto que $u \in \Sigma$ implica por construcción $u(t_1) \in \mathcal{A}(t_1)$.
 
     Para construir analíticamente tal solución, aproximamos el campo continuo $f$ mediante funciones localmente lipschitzianas. Tomamos puntos fijos $x_0 \in A_0$ y $x_1 \in A_1$, correspondientes a sendas soluciones $u^0, u^1 \in \Sigma$ con $u^0(t_1) = x_0$ y $u^1(t_1) = x_1$. Para cada $\varepsilon > 0$, existen campos lipschitzianos $g_{\varepsilon, 0}$ y $g_{\varepsilon, 1}$ que aproximan a $f$ a distancia menor que $\varepsilon$ en el compacto considerado.
     
@@ -1889,7 +2126,7 @@ El matemático alemán Adolf Kneser demostró en 1923 que esta propiedad topoló
     \[
         D\bigl(u_{\lambda_\varepsilon, \varepsilon}(t_1)\bigr) = 0
     \]
-    Haciendo tender $\varepsilon \to 0$, por el Teorema de Ascoli-Arzelà se extrae una subsucesión uniformemente convergente hacia una solución $u \in \Sigma$ de $(P)$ que satisface $D(u(t_1)) = 0$. Esta contradicción demuestra que la partición disjunta es imposible y, por tanto, $A(t_1)$ es forzosamente conexo.
+    Haciendo tender $\varepsilon \to 0$, por el Teorema de Ascoli-Arzelà se extrae una subsucesión uniformemente convergente hacia una solución $u \in \Sigma$ de $(P)$ que satisface $D(u(t_1)) = 0$. Esta contradicción demuestra que la partición disjunta es imposible y, por tanto, $\mathcal{A}(t_1)$ es forzosamente conexo.
 \end{proof}
 
 \subsection{El método de sub y supersoluciones: el Teorema de Kamke}\label{subsec:metodo_sub_supersoluciones_kamke}
