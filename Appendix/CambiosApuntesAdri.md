@@ -24,6 +24,7 @@ Leyenda: `[+]` se añade · `[~]` se corrige o sustituye (se indica qué)
 ### Teorema local de Cauchy-Lipschitz
 - [+] Apartado a) por continuidad: $U(t_0)=u_0$, luego $U$ no sale de la bola en algún $[t_0,t_0+\delta]$.
 - [+] Frase clave de la unicidad: dos soluciones de $(P)$ serían dos soluciones de $(P_F)$.
+- Nota (16/11): la demostración del teorema local se reescribió después al revisar `CambiosSugeridos.md` (se mantienen las Etapas 1/2/3 de clase). Los dos puntos anteriores se conservan: el apartado a) está en la **Etapa 1** y la frase clave en la **Etapa 2**.
 
 ### Solución maximal y teoremas fundamentales
 - [+] Nombre "argumento de Wintner" para la existencia de $\lim_{t\to T_{\max}}u(t)=u^*$.
