@@ -2266,8 +2266,73 @@ En la práctica, la verificación de estas condiciones integrales se realiza hab
         \[
             u_* \leq u \leq u^* \qquad \text{en } J
         \]
+        \item \textbf{Criterio de unicidad (caso lipschitziano):} Si además el campo $f$ es localmente lipschitziano con respecto de $u \in \mathbb{R}^N$ uniformemente en $t \in J$, el problema $(P)$ admite una única solución en el intervalo funcional $[\underline{u}, \overline{u}]$, de modo que:
+        \[
+            u_* = u^*
+        \]
     \end{enumerate}
 \end{teorema}
+
+\begin{observación}[Geometría de las aproximaciones de Kamke]
+    Conviene destacar la diferencia geométrica entre las sub y supersoluciones iniciales y las aproximaciones generadas por el operador de Volterra $\mathcal{K}$. Las funciones $\underline{u}_0 = \underline{u}$ y $\overline{u}_0 = \overline{u}$ satisfacen únicamente las desigualdades diferenciales $\underline{u}' \leq f(t, \underline{u})$ y $\overline{u}' \geq f(t, \overline{u})$ con datos iniciales que pueden ser estrictamente menores o mayores que $u_0$ (es decir, $\underline{u}(t_0) \leq u_0 \leq \overline{u}(t_0)$). 
+    
+    Sin embargo, para todo $n \geq 1$, las iteradas $\underline{u}_n = \mathcal{K}\underline{u}_{n-1}$ y $\overline{u}_n = \mathcal{K}\overline{u}_{n-1}$ verifican por la propia definición del operador $\mathcal{K}$:
+    \[
+        \underline{u}_n(t_0) = u_0 + \int_{t_0}^{t_0} f(s, \underline{u}_{n-1}(s)) \, ds = u_0, \qquad \overline{u}_n(t_0) = u_0
+    \]
+    Es decir, \textbf{todas las iteraciones $\{\underline{u}_n\}_{n \geq 1}$ y $\{\overline{u}_n\}_{n \geq 1}$ parten obligatoriamente del punto $(t_0, u_0)$}, siendo $\underline{u}$ y $\overline{u}$ las únicas curvas que no necesariamente arrancan de dicho valor inicial. Este comportamiento se ilustra en el siguiente esquema:
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.3]
+        % Ejes coordenados
+        \draw[->] (-0.3, 0) -- (6.0, 0) node[right] {$t$};
+        \draw[->] (0, -0.3) -- (0, 4.3) node[above] {$u(t)$};
+        
+        % Marcas en el eje t
+        \draw (0.5, 0.08) -- (0.5, -0.08) node[below, font=\small] {$t_0$};
+        \draw (5.2, 0.08) -- (5.2, -0.08) node[below, font=\small] {$t_0 + T$};
+        \draw[dotted, gray] (5.2, 0) -- (5.2, 4.0);
+        
+        % Marca u_0 en el eje u y punto inicial
+        \draw (-0.08, 2.0) -- (0.08, 2.0) node[left=2pt, font=\small] {$u_0$};
+        \fill (0.5, 2.0) circle (1.8pt);
+        
+        % Curva \overline{u} = \overline{u}_0 (no arranca necesariamente de u_0)
+        \draw[very thick, red!80!black] (0.5, 2.7) .. controls (2.0, 3.4) and (4.0, 3.8) .. (5.2, 3.9)
+            node[right, font=\footnotesize] {$\overline{u} = \overline{u}_0$};
+        \fill[red!80!black] (0.5, 2.7) circle (1.4pt);
+        
+        % Iteradas superiores que parten de (t_0, u_0)
+        \draw[thick, red!60!black] (0.5, 2.0) .. controls (1.8, 3.1) and (3.8, 3.4) .. (5.2, 3.55)
+            node[right, font=\footnotesize] {$\overline{u}_1$};
+        \draw[thick, red!40!black] (0.5, 2.0) .. controls (1.8, 2.9) and (3.8, 3.1) .. (5.2, 3.25)
+            node[right, font=\footnotesize] {$\overline{u}_2$};
+        
+        % Solución maximal u^*
+        \draw[ultra thick, purple!80!black] (0.5, 2.0) .. controls (1.8, 2.6) and (3.8, 2.75) .. (5.2, 2.85)
+            node[right, font=\footnotesize] {$u^*$ (solución maximal)};
+            
+        % Solución minimal u_*
+        \draw[ultra thick, cyan!80!black] (0.5, 2.0) .. controls (1.8, 1.4) and (3.8, 1.25) .. (5.2, 1.15)
+            node[right, font=\footnotesize] {$u_*$ (solución minimal)};
+            
+        % Iteradas inferiores que parten de (t_0, u_0)
+        \draw[thick, blue!40!black] (0.5, 2.0) .. controls (1.8, 1.1) and (3.8, 0.9) .. (5.2, 0.75)
+            node[right, font=\footnotesize] {$\underline{u}_2$};
+        \draw[thick, blue!60!black] (0.5, 2.0) .. controls (1.8, 0.9) and (3.8, 0.6) .. (5.2, 0.45)
+            node[right, font=\footnotesize] {$\underline{u}_1$};
+            
+        % Curva \underline{u} = \underline{u}_0 (no arranca necesariamente de u_0)
+        \draw[very thick, blue!80!black] (0.5, 1.3) .. controls (2.0, 0.6) and (4.0, 0.2) .. (5.2, 0.1)
+            node[right, font=\footnotesize] {$\underline{u} = \underline{u}_0$};
+        \fill[blue!80!black] (0.5, 1.3) circle (1.4pt);
+        
+        % Flechas indicando encaje monótono
+        \draw[->, thick, gray] (4.2, 3.65) -- (4.2, 3.0);
+        \draw[->, thick, gray] (4.2, 0.35) -- (4.2, 1.0);
+    \end{tikzpicture}
+    \end{center}
+\end{observación}
 
 \begin{proof}
     Desglosamos la demostración en tres etapas:
@@ -2292,27 +2357,101 @@ En la práctica, la verificación de estas condiciones integrales se realiza hab
     \medskip
 
     \textbf{2. Convergencia uniforme y resolución del problema de Cauchy:}
-    Para cada $t \in J$ fijo, la sucesión real de componentes $\{\underline{u}_n(t)\}_{n \geq 0}$ es monótona no decreciente y está acotada superiormente por $\overline{u}(t)$. Por el Teorema de convergencia monótona de números reales, existe el límite puntual $u_*(t) = \lim_{n \to \infty} \underline{u}_n(t)$. De igual modo, $\{\overline{u}_n(t)\}_{n \geq 0}$ es monótona no creciente y acotada inferiormente por $\underline{u}(t)$, luego existe el límite puntual $u^*(t) = \lim_{n \to \infty} \overline{u}_n(t)$.
-
-    Demostremos que la convergencia es uniforme. Las trayectorias de todas las iteradas $\{\underline{u}_n\}_{n \geq 0}$ quedan confinadas en el intervalo de funciones $[\underline{u}, \overline{u}]$, cuya imagen:
+    Para cada $t \in J$ fijo, la sucesión de iteradas $\{\underline{u}_n(t)\}_{n \geq 0}$ es monótona no decreciente componente a componente y está acotada superiormente por $\overline{u}(t)$. Por el Teorema de convergencia monótona en $\mathbb{R}$, existe el límite puntual:
+    \[
+        u_*(t) := \lim_{n \to \infty} \underline{u}_n(t) \qquad \forall t \in J
+    \]
+    De forma totalmente simétrica, la sucesión $\{\overline{u}_n(t)\}_{n \geq 0}$ es monótona no creciente y acotada inferiormente por $\underline{u}(t)$, luego existe el límite puntual:
+    \[
+        u^*(t) := \lim_{n \to \infty} \overline{u}_n(t) \qquad \forall t \in J
+    \]
+    
+    Probemos ahora que la familia $\mathcal{F} = \{\underline{u}_n\}_{n \geq 0}$ es equicontinua y uniformemente acotada en $\mathcal{C}(J; \, \mathbb{R}^N)$. En efecto, las trayectorias de todas las iteradas quedan confinadas en el intervalo de funciones $[\underline{u}, \overline{u}]$, cuya imagen compacta en $J \times \mathbb{R}^N$ es:
     \[
         \mathcal{K}_0 = \left\{ (t, x) \in J \times \mathbb{R}^N : \underline{u}(t) \leq x \leq \overline{u}(t) \right\}
     \]
-    es un conjunto cerrado y acotado, luego compacto en $J \times \mathbb{R}^N$. Al ser $f$ continua en $\mathcal{K}_0$, está acotada por una constante $M < +\infty$:
+    Al ser $f$ continua en $\mathcal{K}_0$, está acotada por una constante finita:
     \[
-        M = \max_{(t, x) \in \mathcal{K}_0} \|f(t, x)\| < +\infty
+        M := \|f\|_{\infty, \, J \times [\underline{u}, \overline{u}]} = \max_{(t, x) \in \mathcal{K}_0} \|f(t, x)\| < +\infty
     \]
-    Para cada $n \geq 1$ y cualesquiera $t_1, t_2 \in J$:
+    Dado que para todo $n \geq 0$ se tiene $\underline{u}_{n+1}(t) = u_0 + \int_{t_0}^t f(\tau, \underline{u}_n(\tau)) \, d\tau$, fijados cualesquiera $t, s \in J$ deducimos:
     \[
-        \|\underline{u}_n(t_2) - \underline{u}_n(t_1)\| = \left\| \int_{t_1}^{t_2} f(s, \underline{u}_{n-1}(s)) \, ds \right\| \leq M |t_2 - t_1|
+        \|\underline{u}_{n+1}(t) - \underline{u}_{n+1}(s)\| = \left\| \int_s^t f(\tau, \underline{u}_n(\tau)) \, d\tau \right\| \leq M |t - s| \qquad \forall n \geq 0
     \]
-    Esta estimación Lipschitziana uniforme demuestra que la familia $\{\underline{u}_n\}_{n \geq 0}$ es equicontinua y uniformemente acotada en $\mathcal{C}(J; \, \mathbb{R}^N)$. Por el Teorema de Ascoli-Arzelà (o alternativamente por el Teorema de Dini aplicado a sucesiones monótonas de funciones continuas), la convergencia $\underline{u}_n \to u_*$ es \textbf{uniforme} en $J$. En particular, la función límite $u_*$ es continua en $J$.
+    Por consiguiente, dado cualquier $\varepsilon > 0$, tomando $\delta = \frac{\varepsilon}{M}$, si $|t - s| < \delta$ se cumple:
+    \[
+        \|\underline{u}_{n+1}(t) - \underline{u}_{n+1}(s)\| \leq M |t - s| < M \delta = M \cdot \frac{\varepsilon}{M} = \varepsilon \qquad \forall n \geq 0
+    \]
+    lo que demuestra que $\mathcal{F} = \{\underline{u}_n\}_{n \geq 0}$ es equicontinua en $J$ (y un razonamiento análogo prueba la equicontinuidad de $\{\overline{u}_n\}_{n \geq 0}$).
 
-    Gracias a la convergencia uniforme y la continuidad uniforme de $f$ en $\mathcal{K}_0$, es legítimo pasar al límite bajo la integral:
+    Por el \textbf{Teorema de Ascoli-Arzelà}, existe una subsucesión $\{\underline{u}_{n_m}\}_{m \geq 1}$ que converge uniformemente a una función continua en $J$. Al coincidir dicho límite uniforme con el límite puntual $u_*$, deducimos que $\underline{u}_{n_m} \to u_*$ uniformemente en $J$. En particular, $u_* \in \mathcal{C}(J; \, \mathbb{R}^N)$.
+
+    \paragraph{Convergencia uniforme de toda la sucesión.}
+    Es crucial resaltar que no solo la subsucesión $\{\underline{u}_{n_m}\}$, sino \textbf{toda la sucesión completa $\{\underline{u}_n\}_{n \geq 1}$ converge uniformemente hacia $u_*$}. 
+    
+    En efecto, por la convergencia uniforme de la subsucesión, para cada $\varepsilon > 0$ existe un índice $m_0 = m_0(\varepsilon)$ tal que:
     \[
-        u_*(t) = \lim_{n \to \infty} \underline{u}_{n+1}(t) = u_0 + \lim_{n \to \infty} \int_{t_0}^t f(s, \underline{u}_n(s)) \, ds = u_0 + \int_{t_0}^t f(s, u_*(s)) \, ds
+        \|\underline{u}_{n_{m_0}} - u_*\|_{\infty, \, J} < \varepsilon
     \]
-    Por el Teorema Fundamental del Cálculo, $u_* \in \mathcal{C}^1(J; \, \mathbb{R}^N)$ y satisface $u_*' = f(t, u_*)$ junto con $u_*(t_0) = u_0$. El razonamiento para $u^*$ es enteramente análogo, concluyendo que $u^*$ también es solución de $(P)$.
+    es decir, la gráfica de $\underline{u}_{n_{m_0}}$ queda contenida en la banda tubular de radio $\varepsilon$ alrededor de la función límite $u_*$:
+    \[
+        u_*(t) - \varepsilon < \underline{u}_{n_{m_0}}(t) \leq u_*(t) \qquad \forall t \in J
+    \]
+    Gracias a la monotonía global de la sucesión $\underline{u}_n \leq \underline{u}_{n+1} \leq u_*$, para cualquier índice $n \geq n_{m_0}$ se tiene:
+    \[
+        u_*(t) - \varepsilon < \underline{u}_{n_{m_0}}(t) \leq \underline{u}_n(t) \leq u_*(t) \qquad \forall t \in J
+    \]
+    lo que implica de forma inmediata $\|\underline{u}_n - u_*\|_{\infty, \, J} < \varepsilon$ para todo $n \geq n_{m_0}$, garantizando la convergencia uniforme global de la sucesión. El siguiente esquema clarifica este confinamiento en el tubo de radio $\varepsilon$:
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.3]
+        % Ejes coordenados
+        \draw[->] (-0.3, 0) -- (6.0, 0) node[right] {$t$};
+        \draw[->] (0, -0.3) -- (0, 3.8) node[above] {$u(t)$};
+        
+        % Marcas en el eje t
+        \draw (0.5, 0.08) -- (0.5, -0.08) node[below, font=\small] {$t_0$};
+        \draw (5.2, 0.08) -- (5.2, -0.08) node[below, font=\small] {$t_0 + T$};
+        \draw[dashed, gray] (5.2, 0) -- (5.2, 3.5);
+        
+        % Marca u_0 en el eje u y punto inicial
+        \draw (-0.08, 1.8) -- (0.08, 1.8) node[left=2pt, font=\small] {$u_0$};
+        \fill (0.5, 1.8) circle (1.8pt);
+        
+        % Curva limite u_*
+        \draw[very thick, blue!80!black] (0.5, 1.8) .. controls (2.0, 1.9) and (3.8, 2.2) .. (5.2, 2.45)
+            node[right, font=\footnotesize] {$u_*$};
+            
+        % Banda superior u_* + \varepsilon
+        \draw[dashed, gray!80!black] (0.5, 2.4) .. controls (2.0, 2.5) and (3.8, 2.8) .. (5.2, 3.05)
+            node[right, font=\footnotesize] {$u_* + \varepsilon$};
+            
+        % Banda inferior u_* - \varepsilon
+        \draw[dashed, gray!80!black] (0.5, 1.2) .. controls (2.0, 1.3) and (3.8, 1.6) .. (5.2, 1.85)
+            node[right, font=\footnotesize] {$u_* - \varepsilon$};
+            
+        % Curva \underline{u}_{n_{m_0}} dentro del tubo
+        \draw[thick, orange!90!black] (0.5, 1.8) .. controls (2.0, 1.7) and (3.8, 1.95) .. (5.2, 2.15)
+            node[right, font=\footnotesize] {$\underline{u}_{n_{m_0}}$ (atrapada en la banda)};
+            
+        % Acotacion por \varepsilon (flechas dobles)
+        \draw[<->, thick, black] (1.3, 1.81) -- (1.3, 2.41) node[midway, right, font=\footnotesize] {$\varepsilon$};
+        \draw[<->, thick, black] (1.3, 1.81) -- (1.3, 1.21) node[midway, right, font=\footnotesize] {$\varepsilon$};
+    \end{tikzpicture}
+    \end{center}
+
+    \paragraph{Paso al límite bajo la integral.}
+    Una vez establecida la convergencia uniforme $\underline{u}_n \to u_*$ en todo el intervalo $J$, y observando que el integrando $f(s, \underline{u}_n(s))$ converge puntualmente a $f(s, u_*(s))$ por continuidad de $f$, con la cota dominada uniforme:
+    \[
+        \|f(s, \underline{u}_n(s))\| \leq M < +\infty \qquad \forall s \in J, \; \forall n \geq 0
+    \]
+    es plenamente legítimo intercambiar el límite con la integral (bien sea por convergencia uniforme o por el \textbf{Teorema de la convergencia dominada de Lebesgue}):
+    \[
+        u_*(t) = \lim_{n \to \infty} \underline{u}_{n+1}(t) = u_0 + \lim_{n \to \infty} \int_{t_0}^t f(s, \underline{u}_n(s)) \, ds = u_0 + \int_{t_0}^t f(s, u_*(s)) \, ds \qquad \forall t \in J
+    \]
+    En consecuencia, $u_*$ es punto fijo del operador de Volterra $\mathcal{K}u_* = u_*$, lo que implica por el Teorema Fundamental del Cálculo que $u_* \in \mathcal{C}^1(J; \, \mathbb{R}^N)$ y resuelve el problema de Cauchy $(P)$.
+
+    El desarrollo para la sucesión de supersoluciones $\{\overline{u}_n\}_{n \geq 1}$ es completamente análogo, demostrando que $u^* \in \mathcal{C}^1(J; \, \mathbb{R}^N)$ satisface asimismo $\mathcal{K}u^* = u^*$, resolviendo $(P)$. Al ser $u_*$ y $u^*$ soluciones de $(P)$, la monotonía de las aproximaciones impone $\underline{u} \leq u_* \leq u^* \leq \overline{u}$.
 
     \medskip
 
@@ -2329,3 +2468,29 @@ En la práctica, la verificación de estas condiciones integrales se realiza hab
     \]
     lo que prueba que $u_*$ es la menor de todas las soluciones en dicho rango (solución minimal) y $u^*$ es la mayor de todas ellas (solución maximal).
 \end{proof}
+
+Algo interesante a destacar ahora es lo siguiente.
+
+\begin{observación}
+    En el contexto de este teorema, tomamos una $f: J \times \mathbb{R}^N \to \mathbb{R}^N$ que es continua y creciente en $u \in \mathbb{R}^N$. Sin embargo, nosotros solo evaluamos ciertos valores de $f$:
+    \[
+        f(t, u) : \quad
+        (t,u) \in \phi =
+        \{
+            (t, u) \in J \times \mathbb{R}^N :
+            \underline{u}(t) \leq u \leq \overline{u}(t)
+        \}
+    \]
+
+    Por lo que para obtener este mismo resultado (el Teorema de Kamke), es suficiente suponer que $f$ está definida en $J \times \overline{\Omega}$, donde $\Omega$ es un abierto de $\mathbb{R}^N$ que contiene a $u_0$ y tal que:
+    \[
+    u_0 \in
+    \bigcup_{t \in J} \{
+        u \in \mathbb{R}^N : \underline{u}(t) \leq u \leq \overline{u}(t)
+    \}
+    =
+    [ \underline{u} , \overline{u} ]
+    \subset
+    \overline{\Omega}
+    \]
+\end{observación}
