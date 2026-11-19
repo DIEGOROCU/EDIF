@@ -2329,3 +2329,360 @@ En la práctica, la verificación de estas condiciones integrales se realiza hab
     \]
     lo que prueba que $u_*$ es la menor de todas las soluciones en dicho rango (solución minimal) y $u^*$ es la mayor de todas ellas (solución maximal).
 \end{proof}
+
+\begin{observación}[Relajación del dominio y soporte del campo de Kamke]\label{obs:kamke_dominio_abierto}
+    En la formulación del Teorema \ref{teo:kamke} se ha asumido por simplicidad que el campo continuo $f$ está definido y es monótono creciente en la totalidad de $\mathbb{R}^N$. No obstante, para la validez rigurosa del resultado no se requiere un dominio tan restrictivo.
+    
+    Basta suponer que $f: J \times \Omega \to \mathbb{R}^N$ es continua, con $\Omega \subset \mathbb{R}^N$ abierto y $u_0 \in \Omega$, y que $f(t, \cdot)$ es creciente con respecto a $u$ sobre el \textbf{tubo o embudo de soluciones} delimitado por la sub y la supersolución:
+    \[
+        \Phi := \left\{ (t, u) \in J \times \mathbb{R}^N : \underline{u}(t) \leq u \leq \overline{u}(t), \; t \in J \right\}
+    \]
+    de forma que la unión de las secciones espaciales quede estrictamente confinada en $\Omega$:
+    \[
+        \bigcup_{t \in J} [\underline{u}(t), \overline{u}(t)] \subset \Omega
+    \]
+    Bajo esta hipótesis puramente local, todas las iteradas de Volterra $\{\underline{u}_n\}_{n \geq 0}$ y $\{\overline{u}_n\}_{n \geq 0}$ permanecen en el interior de $\Phi \subset J \times \Omega$, garantizando la existencia y convergencia monótona uniforme hacia las soluciones extremales minimal $u_*$ y maximal $u^*$.
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.1]
+        % Ejes
+        \draw[->] (-0.5, 0) -- (6.5, 0) node[right] {$t$};
+        \draw[->] (0, -0.5) -- (0, 4.5) node[above] {$u$};
+        
+        % Marcas temporales
+        \draw[thick] (0.8, -0.08) -- (0.8, 0.08) node[below=4pt] {$t_0$};
+        \draw[thick] (5.2, -0.08) -- (5.2, 0.08) node[below=4pt] {$t_0 + T$};
+        \draw[dashed, gray!60] (0.8, 0) -- (0.8, 4.0);
+        \draw[dashed, gray!60] (5.2, 0) -- (5.2, 4.0);
+        
+        % Punto inicial
+        \fill (0.8, 2.0) circle (2pt) node[left=2pt] {$u_0$};
+        
+        % Supersolución \overline{u} y Subsolución \underline{u}
+        \draw[very thick, red!80!black] (0.8, 2.0) .. controls (2.2, 3.8) and (3.8, 4.2) .. (5.2, 4.0) node[right] {$\overline{u}$};
+        \draw[very thick, blue!80!black] (0.8, 2.0) .. controls (2.2, 0.4) and (3.8, 0.2) .. (5.2, 0.5) node[right] {$\underline{u}$};
+        
+        % Iteradas superiores
+        \draw[thick, red!60!black, dashed] (0.8, 2.0) .. controls (2.2, 3.3) and (3.8, 3.6) .. (5.2, 3.4) node[right, font=\footnotesize] {$\overline{u}_1$};
+        \draw[thick, red!40!black, dashed] (0.8, 2.0) .. controls (2.2, 2.9) and (3.8, 3.1) .. (5.2, 2.9) node[right, font=\footnotesize] {$\overline{u}_2$};
+        
+        % Solución maximal u^*
+        \draw[very thick, purple!80!black] (0.8, 2.0) .. controls (2.2, 2.5) and (3.8, 2.6) .. (5.2, 2.5) node[right, font=\small] {$u^*$};
+        
+        % Solución minimal u_*
+        \draw[very thick, teal!80!black] (0.8, 2.0) .. controls (2.2, 1.6) and (3.8, 1.5) .. (5.2, 1.6) node[right, font=\small] {$u_*$};
+        
+        % Iteradas inferiores
+        \draw[thick, blue!40!black, dashed] (0.8, 2.0) .. controls (2.2, 1.2) and (3.8, 1.0) .. (5.2, 1.1) node[right, font=\footnotesize] {$\underline{u}_2$};
+        \draw[thick, blue!60!black, dashed] (0.8, 2.0) .. controls (2.2, 0.8) and (3.8, 0.6) .. (5.2, 0.8) node[right, font=\footnotesize] {$\underline{u}_1$};
+        
+        % Etiqueta del conjunto Phi
+        \node[gray!70!black, font=\small] at (3.1, 3.8) {$\Phi = [\underline{u}, \overline{u}]$};
+    \end{tikzpicture}
+    \end{center}
+\end{observación}
+
+\ejemplo{
+    \textbf{Resolución exacta de una ecuación de Bernoulli no autónoma y explosión en tiempo finito:}
+
+    Consideremos el problema de valor inicial escalar:
+    \[
+        \begin{cases}
+            u' = u + \gamma a(t) u^3 =: f(t, u) \\
+            u(0) = x > 0
+        \end{cases}
+    \]
+    donde el campo $f: [0, \infty) \times \mathbb{R} \to \mathbb{R}$ involucra un parámetro $\gamma > 0$ y una función de peso continua y estrictamente positiva:
+    \[
+        a \in \mathcal{C}\big([0, \infty); \, (0, \infty)\big), \qquad a(t) > 0 \quad \forall t \geq 0
+    \]
+    
+    \textbf{1. Análisis cualitativo inicial:}
+    Calculando la derivada parcial respecto a la variable de estado:
+    \[
+        \frac{\partial f}{\partial u}(t, u) = 1 + 3\gamma a(t) u^2 > 0 \qquad \forall (t, u) \in [0, \infty) \times \mathbb{R}
+    \]
+    se comprueba que el campo $f(t, \cdot)$ es estrictamente creciente en $u$ para cada $t \geq 0$.
+    
+    Sea $(I, u)$ la correspondiente solución maximal, con intervalo de definición $I = [0, T_{\max})$. Dado que el campo es diferenciable en $u$, la solución es única. Escribiendo la ecuación como $u' = \big(1 + \gamma a(t) u^2\big) u$, observamos que, como $u(0) = x > 0$, se tiene $u'(t) > 0$ para todo $t \in I$. En consecuencia, $u(t)$ es estrictamente creciente y verifica:
+    \[
+        u(t) \geq x > 0 \qquad \forall t \in I
+    \]
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.0]
+        \draw[->] (-0.3, 0) -- (4.5, 0) node[right] {$t$};
+        \draw[->] (0, -0.3) -- (0, 3.8) node[above] {$u$};
+        
+        \coordinate (x0) at (0, 0.8);
+        \fill (x0) circle (1.5pt) node[left] {$x$};
+        
+        \draw[dashed, red!70!black, thick] (3.0, 0) -- (3.0, 3.5) node[above, black] {$T_{\max}$};
+        \draw[thick] (3.0, -0.06) -- (3.0, 0.06);
+        
+        \draw[very thick, blue!80!black] (x0) .. controls (1.5, 0.9) and (2.5, 1.5) .. (2.95, 3.5);
+        \node[blue!80!black, left] at (2.5, 2.5) {$u(t)$};
+    \end{tikzpicture}
+    \end{center}
+
+    \textbf{2. Integración exacta mediante cambio de Bernoulli:}
+    Tratándose de una ecuación de Bernoulli $u' - u = \gamma a(t) u^3$, ensayamos la sustitución $u = v^\alpha$. Derivando respecto a $t$:
+    \[
+        u' = \alpha v^{\alpha - 1} v'
+    \]
+    Sustituyendo en la ecuación diferencial:
+    \[
+        \alpha v^{\alpha - 1} v' = v^\alpha + \gamma a(t) v^{3\alpha} \implies \alpha v' = v + \gamma a(t) v^{2\alpha + 1}
+    \]
+    Para linealizar la ecuación se exige anular el exponente no lineal eligiendo:
+    \[
+        2\alpha + 1 = 0 \iff \alpha = -\frac{1}{2}
+    \]
+    Por consiguiente, el cambio de variable viene dado por:
+    \[
+        u = v^{-1/2} = \frac{1}{\sqrt{v}} \iff v = \frac{1}{u^2}
+    \]
+    La ecuación diferencial para la nueva función incógnita $v$ toma la forma lineal de primer orden:
+    \[
+        -\frac{1}{2} v' = v + \gamma a(t) \iff v' + 2v = -2\gamma a(t)
+    \]
+    junto con la condición inicial:
+    \[
+        v(0) = \frac{1}{u(0)^2} = \frac{1}{x^2}
+    \]
+    
+    \textbf{3. Método del factor integrante:}
+    Multiplicando por el factor integrante $e^{2t}$:
+    \[
+        \frac{d}{dt}\left( e^{2t} v(t) \right) = -2\gamma a(t) e^{2t}
+    \]
+    Definiendo la variable auxiliar $w(t) := e^{2t} v(t)$, se tiene:
+    \[
+        w'(t) = -2\gamma a(t) e^{2t}, \qquad w(0) = v(0) = \frac{1}{x^2}
+    \]
+    Integrando entre $0$ y $t$:
+    \[
+        w(t) = w(0) - 2\gamma \int_0^t a(s) e^{2s} \, ds = \frac{1}{x^2} - 2\gamma \int_0^t a(s) e^{2s} \, ds
+    \]
+    Despejando $v(t) = e^{-2t} w(t)$:
+    \[
+        v(t) = e^{-2t} \left( \frac{1}{x^2} - 2\gamma \int_0^t a(s) e^{2s} \, ds \right) \qquad \forall t \in [0, T_{\max})
+    \]
+    Recuperando la función original $u(t) = 1/\sqrt{v(t)}$:
+    \[
+        u(t) = \frac{1}{\sqrt{e^{-2t} \left( \dfrac{1}{x^2} - 2\gamma \displaystyle\int_0^t a(s) e^{2s} \, ds \right)}} = \frac{e^t}{\sqrt{\dfrac{1}{x^2} - 2\gamma \displaystyle\int_0^t a(s) e^{2s} \, ds}}
+    \]
+
+    \textbf{4. Existencia de explosión y comportamiento respecto de $\gamma$:}
+    Analicemos la función monótona auxiliar definida por:
+    \[
+        \varphi(t) := \int_0^t a(s) e^{2s} \, ds
+    \]
+    Puesto que $\varphi(0) = 0$ y $\varphi'(t) = a(t) e^{2t} > 0$, la función $\varphi$ es estrictamente creciente.
+    
+    Asumamos que la función $a(t)$ satisface la condición de no sumabilidad:
+    \[
+        \int_0^\infty a(s) e^{2s} \, ds = +\infty
+    \]
+    Dado que $\varphi$ recorre de manera continua y estrictamente monótona el intervalo $[0, +\infty)$, por el Teorema del Valor Intermedio existe un único valor $T_\gamma \in (0, \infty)$ tal que el radicando se anula exactamente:
+    \[
+        \int_0^{T_\gamma} a(s) e^{2s} \, ds = \frac{1}{2\gamma x^2}
+    \]
+    Por consiguiente, el tiempo maximal de existencia es finito, $T_{\max} = T_\gamma$, el intervalo de definición es $I = [0, T_\gamma)$, y la solución explota en tiempo finito:
+    \[
+        \lim_{t \to T_\gamma^-} u_\gamma(t) = +\infty
+    \]
+    
+    Estudiemos la dependencia del tiempo de explosión $T_\gamma$ y del perfil $u_\gamma$ respecto del parámetro $\gamma > 0$:
+    \begin{itemize}
+        \item Como $\varphi(T_\gamma) = \dfrac{1}{2\gamma x^2}$ y la aplicación $\gamma \mapsto \dfrac{1}{2\gamma x^2}$ es estrictamente decreciente, la estricta monotonía creciente de $\varphi$ asegura que:
+        \[
+            \gamma_1 < \gamma_2 \implies T_{\gamma_1} > T_{\gamma_2}
+        \]
+        es decir, $T_\gamma$ es estrictamente decreciente con respecto a $\gamma > 0$.
+        \item Se verifican los comportamientos asintóticos extremos:
+        \[
+            \lim_{\gamma \to 0^+} T_\gamma = +\infty, \qquad \lim_{\gamma \to +\infty} T_\gamma = 0
+        \]
+        \item Para cualesquiera $\gamma_1 < \gamma_2$ y todo $t \in [0, T_{\gamma_2})$, al ser el denominador de $u_{\gamma_2}(t)$ menor que el de $u_{\gamma_1}(t)$, se tiene la ordenación espacial:
+        \[
+            u_{\gamma_1}(t) < u_{\gamma_2}(t) \qquad \forall t \in (0, T_{\gamma_2})
+        \]
+        por lo que $u_\gamma(t)$ crece puntualmente conforme se incrementa $\gamma$.
+    \end{itemize}
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=0.95]
+        % Gráfica izquierda: T_gamma vs gamma
+        \begin{scope}[xshift=0cm]
+            \draw[->] (-0.3, 0) -- (4.2, 0) node[right] {$\gamma$};
+            \draw[->] (0, -0.3) -- (0, 3.8) node[above] {$T_\gamma$};
+            
+            \draw[very thick, purple!80!black] (0.35, 3.5) .. controls (0.6, 1.3) and (1.7, 0.6) .. (3.8, 0.35);
+            
+            \coordinate (g1) at (1.1, 1.35);
+            \coordinate (g2) at (2.3, 0.65);
+            
+            \draw[dashed, gray] (1.1, 0) -- (g1) -- (0, 1.35);
+            \draw[dashed, gray] (2.3, 0) -- (g2) -- (0, 0.65);
+            
+            \fill (1.1, 0) circle (1.5pt) node[below] {$\gamma_1$};
+            \fill (2.3, 0) circle (1.5pt) node[below] {$\gamma_2$};
+            \fill (0, 1.35) circle (1.5pt) node[left] {$T_{\gamma_1}$};
+            \fill (0, 0.65) circle (1.5pt) node[left] {$T_{\gamma_2}$};
+            
+            \node[font=\footnotesize] at (2.0, -0.9) {$\gamma_1 < \gamma_2 \implies T_{\gamma_1} > T_{\gamma_2}$};
+        \end{scope}
+
+        % Gráfica derecha: trayectorias u_{gamma_1} y u_{gamma_2}
+        \begin{scope}[xshift=6.5cm]
+            \draw[->] (-0.3, 0) -- (4.5, 0) node[right] {$t$};
+            \draw[->] (0, -0.3) -- (0, 3.8) node[above] {$u(t)$};
+            
+            \coordinate (x0) at (0, 0.8);
+            \fill (x0) circle (1.5pt) node[left] {$x$};
+            
+            % Asíntotas
+            \draw[dashed, red!70!black] (1.8, 0) -- (1.8, 3.5) node[above, font=\footnotesize, black] {$T_{\gamma_2}$};
+            \draw[dashed, blue!70!black] (3.2, 0) -- (3.2, 3.5) node[above, font=\footnotesize, black] {$T_{\gamma_1}$};
+            
+            % Trayectoria gamma_2
+            \draw[very thick, red!80!black] (x0) .. controls (0.8, 1.0) and (1.5, 1.8) .. (1.75, 3.5) node[midway, left=2pt, font=\small] {$u_{\gamma_2}$};
+            
+            % Trayectoria gamma_1
+            \draw[very thick, blue!80!black] (x0) .. controls (1.4, 0.9) and (2.6, 1.4) .. (3.15, 3.5) node[midway, right=2pt, font=\small] {$u_{\gamma_1}$};
+            
+            \node[font=\footnotesize] at (2.0, -0.9) {$u_{\gamma_2}(t) > u_{\gamma_1}(t)$};
+        \end{scope}
+    \end{tikzpicture}
+    \end{center}
+}
+
+\ejemplo{
+    \textbf{Acotación de soluciones y confinamiento del tiempo de explosión mediante comparación:}
+
+    Consideremos ahora el problema no lineal general:
+    \[
+        (P) \quad
+        \begin{cases}
+            u' = u + a(t)\rho(u)u =: f(t, u) \\
+            u(0) = x > 0
+        \end{cases}
+    \]
+    donde $a \in \mathcal{C}\big([0, \infty); \, (0, \infty)\big)$ satisface $\displaystyle\int_0^\infty a(s) e^{2s} \, ds = +\infty$, y la función constitutiva no lineal $\rho: [0, \infty) \to [0, \infty)$ verifica las siguientes propiedades:
+    \begin{itemize}
+        \item $\rho(0) = 0$ y $\rho'(u) > 0$ para todo $u > 0$.
+        \item Está acotada cuadráticamente por dos constantes fijas $0 < \alpha < \beta$:
+        \[
+            \alpha u^2 \leq \rho(u) \leq \beta u^2 \qquad \forall u > 0
+        \]
+    \end{itemize}
+    Un modelo explícito que cumple rigurosamente estas hipótesis viene dado por:
+    \[
+        \rho(u) = \left( 1 + \frac{u}{1+u} \right) u^2
+    \]
+    En efecto, puesto que $0 \leq \dfrac{u}{1+u} < 1$ para todo $u \geq 0$, se cumple de forma inmediata:
+    \[
+        u^2 \leq \rho(u) \leq 2u^2 \qquad (\alpha = 1, \; \beta = 2)
+    \]
+    y su derivada satisface:
+    \[
+        \rho'(u) = \frac{1}{(1+u)^2} u^2 + 2u\left(1 + \frac{u}{1+u}\right) > 0 \qquad \forall u > 0
+    \]
+
+    \textbf{1. Propiedades del campo y escape de compactos:}
+    Definiendo $\Omega = (0, \infty)$, se tiene $x = u(0) \in \Omega$. Calculamos la derivada parcial del campo respecto a $u$:
+    \[
+        \frac{\partial f}{\partial u}(t, u) = 1 + a(t)\big(\rho'(u)u + \rho(u)\big) \geq 1 > 0 \qquad \forall (t, u) \in [0, \infty) \times [0, \infty)
+    \]
+    Por tanto, $f(t, \cdot)$ es estrictamente creciente en $u \in [0, \infty)$ para todo $t \geq 0$.
+    
+    Por el Teorema de Picard-Lindelöf, existe una única solución maximal $(I, u)$ con $I = [0, T_{\max})$. Escribiendo formalmente la ecuación en forma integral:
+    \[
+        u(t) = x \exp\left( \int_0^t \big(1 + a(s)\rho(u(s))\big) \, ds \right) > 0 \qquad \forall t \in [0, T_{\max})
+    \]
+    se deduce que $u'(t) > 0$ y $u(t)$ es estrictamente creciente con $u(t) \geq x > 0$.
+    
+    Por el Teorema de escape de compactos (Tercer Teorema Fundamental), ante la imposibilidad de que la trayectoria se aproxime a la frontera inferior $\{0\} = \partial \Omega$, la única alternativa en caso de que $T_{\max} < +\infty$ es la explosión a infinito:
+    \[
+        T_{\max} < +\infty \implies \lim_{t \to T_{\max}^-} u(t) = +\infty
+    \]
+
+    \textbf{2. Construcción de sub y supersoluciones por comparación:}
+    Gracias al encaje cuadrático $\alpha u^2 \leq \rho(u) \leq \beta u^2$, podemos flanquear la no linealidad mediante los dos problemas auxiliares de Bernoulli analizados en el ejemplo precedente:
+    \[
+        (P_\alpha) \quad
+        \begin{cases}
+            u_\alpha' = u_\alpha + \alpha a(t) u_\alpha^3 \\
+            u_\alpha(0) = x
+        \end{cases}
+        \qquad \text{con solución } (I_\alpha, u_\alpha), \; I_\alpha = [0, T_\alpha)
+    \]
+    \[
+        (P_\beta) \quad
+        \begin{cases}
+            u_\beta' = u_\beta + \beta a(t) u_\beta^3 \\
+            u_\beta(0) = x
+        \end{cases}
+        \qquad \text{con solución } (I_\beta, u_\beta), \; I_\beta = [0, T_\beta)
+    \]
+    donde, al ser $\alpha < \beta$, sabemos que $T_\beta < T_\alpha$.
+    
+    Analicemos el comportamiento en el intervalo $I_\beta = [0, T_\beta)$:
+    \begin{itemize}
+        \item \textbf{Supersolución:} Tomando $\overline{u} := u_\beta$, se tiene $\overline{u}(0) = x$ y:
+        \[
+            \overline{u}'(t) = u_\beta'(t) = u_\beta(t) + \beta a(t) u_\beta^3(t) \geq u_\beta(t) + a(t)\rho(u_\beta(t)) u_\beta(t) = f(t, \overline{u}(t))
+        \]
+        Por el Lema \ref{lem:caracterizacion_sub_supersoluciones}, $\overline{u} = u_\beta$ es una supersolución rigurosa del problema $(P)$ en $I_\beta$.
+        \item \textbf{Subsolución:} De manera trivial, la función constante $\underline{u} \equiv 0$ satisface $\underline{u}(0) = 0 \leq x$ y $\underline{u}' = 0 \leq f(t, \underline{u})$, constituyendo una primera subsolución inferior en $I_\beta$.
+        
+        De forma sustancialmente más fina, la solución $u_\alpha$ de $(P_\alpha)$ cumple $u_\alpha(0) = x$ y:
+        \[
+            u_\alpha'(t) = u_\alpha(t) + \alpha a(t) u_\alpha^3(t) \leq u_\alpha(t) + a(t)\rho(u_\alpha(t)) u_\alpha(t) = f(t, u_\alpha(t))
+        \]
+        lo que demuestra que $\underline{u} := u_\alpha$ es una subsolución ajustada de $(P)$.
+    \end{itemize}
+
+    \textbf{3. Consecuencias sobre la solución y el tiempo de explosión:}
+    Aplicando el Teorema de Kamke y el principio de comparación de ecuaciones diferenciales sobre el intervalo común $[0, T_\beta)$:
+    \[
+        u_\alpha(t) \leq u(t) \leq u_\beta(t) \qquad \forall t \in [0, T_\beta)
+    \]
+    De esta doble desigualdad se derivan dos conclusiones fundamentales:
+    \begin{enumerate}
+        \item Como $u(t) \leq u_\beta(t)$ en $[0, T_\beta)$, la solución $u$ no puede sufrir explosión antes de $T_\beta$, de donde $T_{\max} \geq T_\beta$.
+        \item Si $T_{\max}$ fuera estrictamente mayor que $T_\alpha$, la desigualdad $u(t) \geq u_\alpha(t)$ obligaría a $u$ a existir más allá del tiempo en que $u_\alpha$ ya ha explotado a $+\infty$, lo cual es absurdo. Por consiguiente, $T_{\max} \leq T_\alpha$.
+    \end{enumerate}
+    Concluimos que el tiempo maximal de existencia $T_{\max}$ del problema no lineal $(P)$ es forzosamente finito y queda estrictamente acotado entre los tiempos de explosión de los dos modelos resolubles de Bernoulli:
+    \[
+        T_\beta \leq T_{\max} \leq T_\alpha
+    \]
+
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, scale=1.05]
+        \draw[->] (-0.3, 0) -- (4.8, 0) node[right] {$t$};
+        \draw[->] (0, -0.3) -- (0, 4.0) node[above] {$u(t)$};
+        
+        \coordinate (x0) at (0, 0.8);
+        \fill (x0) circle (1.5pt) node[left] {$x$};
+        
+        % Asíntotas
+        \draw[dashed, red!70!black] (2.0, 0) -- (2.0, 3.8) node[above, font=\footnotesize, black] {$T_\beta$};
+        \draw[dashed, blue!70!black] (3.8, 0) -- (3.8, 3.8) node[above, font=\footnotesize, black] {$T_\alpha$};
+        \draw[dashed, teal!70!black] (2.8, 0) -- (2.8, 3.8) node[above, font=\footnotesize, black] {$T_{\max}$};
+        
+        % Supersolución u_beta
+        \draw[very thick, red!80!black] (x0) .. controls (0.9, 1.1) and (1.7, 2.0) .. (1.95, 3.8) node[left=1pt, font=\small] {$\overline{u} = u_\beta$};
+        
+        % Solución u
+        \draw[very thick, teal!80!black] (x0) .. controls (1.2, 1.0) and (2.3, 1.8) .. (2.75, 3.8) node[left=1pt, font=\small] {$u$};
+        
+        % Subsolución u_alpha
+        \draw[very thick, blue!80!black] (x0) .. controls (1.6, 0.9) and (3.1, 1.5) .. (3.75, 3.8) node[right=1pt, font=\small] {$\underline{u} = u_\alpha$};
+        
+        % Subsolución trivial 0
+        \draw[thick, gray!70!black, dashed] (0, 0) -- (4.5, 0) node[above, font=\footnotesize] {$\underline{u} = 0$};
+    \end{tikzpicture}
+    \end{center}
+}
