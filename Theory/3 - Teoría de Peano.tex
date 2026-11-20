@@ -2791,7 +2791,13 @@ Algo interesante a destacar ahora es lo siguiente.
         \end{cases}
         \qquad \text{con solución } (I_\beta, u_\beta), \; I_\beta = [0, T_\beta)
     \]
-    donde, al ser $\alpha < \beta$, sabemos que $T_\beta < T_\alpha$.
+    Por el ejemplo anterior (con $\gamma = \alpha$ y $\gamma = \beta$), sus soluciones son explícitas:
+    \[
+        u_\alpha(t) = \frac{e^t}{\sqrt{\dfrac{1}{x^2} - 2\alpha \displaystyle\int_0^t a(s) e^{2s} \, ds}}, \qquad
+        \int_0^{T_\alpha} a(s) e^{2s} \, ds = \frac{1}{2\alpha x^2}, \qquad
+        \int_0^{T_\beta} a(s) e^{2s} \, ds = \frac{1}{2\beta x^2},
+    \]
+    y como $\int_0^\infty a(s) e^{2s} \, ds = +\infty$, ambos tiempos son finitos. Al ser $\alpha < \beta$, sabemos que $T_\beta < T_\alpha$. Para $(P)$ llamamos $(I, u)$ a su solución maximal, con $I = [0, T_{\max})$ y $T_{\max} \leq +\infty$.
     
     Analicemos el comportamiento en el intervalo $I_\beta = [0, T_\beta)$:
     \begin{itemize}
@@ -2808,18 +2814,51 @@ Algo interesante a destacar ahora es lo siguiente.
         \]
         lo que demuestra que $\underline{u} := u_\alpha$ es una subsolución ajustada de $(P)$.
     \end{itemize}
+    \textit{(Nota de clase: se podrían haber tomado otras sub y supersoluciones; en clase se usan $\underline{u} = 0$ y $\overline{u} = u_\beta$.)}
 
-    \textbf{3. Consecuencias sobre la solución y el tiempo de explosión:}
-    Aplicando el Teorema de Kamke y el principio de comparación de ecuaciones diferenciales sobre el intervalo común $[0, T_\beta)$:
+    \textbf{3. Consecuencias sobre la solución y el tiempo de explosión (como en clase):}
+
+    \textbf{Etapa 1: $T_\beta \leq T_{\max}$.} Tomamos $\overline{u} = u_\beta$ como supersolución de $(P)$ en $[0, T_\beta)$ y $\underline{u} = 0$ como subsolución de $(P)$ en $[0, T_\beta)$; están ordenadas: $\underline{u} = 0 \leq u_\beta = \overline{u}$ en $[0, T_\beta)$. En efecto,
     \[
-        u_\alpha(t) \leq u(t) \leq u_\beta(t) \qquad \forall t \in [0, T_\beta)
+        \overline{u}' = u_\beta' = u_\beta + \beta a(t) u_\beta^3 \geq u_\beta + a(t) \rho(u_\beta) u_\beta = \overline{u} + a(t) \rho(\overline{u}) \overline{u}
+        \implies
+        \begin{cases}
+            \overline{u}' \geq \overline{u} + a(t) \rho(\overline{u}) \overline{u} & \text{en } [0, T_\beta) \\
+            \overline{u}(0) = x \geq x
+        \end{cases}
     \]
-    De esta doble desigualdad se derivan dos conclusiones fundamentales:
-    \begin{enumerate}
-        \item Como $u(t) \leq u_\beta(t)$ en $[0, T_\beta)$, la solución $u$ no puede sufrir explosión antes de $T_\beta$, de donde $T_{\max} \geq T_\beta$.
-        \item Si $T_{\max}$ fuera estrictamente mayor que $T_\alpha$, la desigualdad $u(t) \geq u_\alpha(t)$ obligaría a $u$ a existir más allá del tiempo en que $u_\alpha$ ya ha explotado a $+\infty$, lo cual es absurdo. Por consiguiente, $T_{\max} \leq T_\alpha$.
-    \end{enumerate}
-    Concluimos que el tiempo maximal de existencia $T_{\max}$ del problema no lineal $(P)$ es forzosamente finito y queda estrictamente acotado entre los tiempos de explosión de los dos modelos resolubles de Bernoulli:
+    luego $\overline{u}$ es supersolución en $[0, T_\beta)$, y
+    \[
+        \begin{cases}
+            \underline{u}' \leq \underline{u} + a(t) \rho(\underline{u}) \underline{u} & \text{en } [0, T_\beta) \quad \text{(trivial, lo cumple } \underline{u} = 0) \\
+            \underline{u}(0) = 0 \leq x
+        \end{cases}
+    \]
+    Por el Teorema de Kamke (aplicado en cada $[0, T]$ con $T < T_\beta$), el problema $(P)$ tiene al menos una solución entre $\underline{u}$ y $\overline{u}$; como la solución de $(P)$ es única, la única solución de $(P)$ debe cumplir
+    \[
+        \underline{u} = 0 \leq u \leq \overline{u} = u_\beta \qquad \text{en } [0, T_\beta).
+    \]
+    Así, $u$ está definida en $[0, T_\beta)$ y, por tanto,
+    \[
+        \boxed{T_\beta \leq T_{\max}} \qquad (u \leq u_\beta \text{ en } [0, T_\beta)).
+    \]
+
+    \textbf{Etapa 2: $T_{\max} \leq T_\alpha$.} Ahora cambiamos de papel: $\overline{u} = u$ (la solución de $(P)$) es supersolución de $(P_\alpha)$ en $I = [0, T_{\max})$, pues
+    \[
+        \begin{cases}
+            u' = u + a(t) \rho(u) u \geq u + \alpha a(t) u^3 \\
+            u(0) \geq x
+        \end{cases}
+    \]
+    y $\underline{u} = 0$ es subsolución de $(P_\alpha)$ en $I = [0, T_{\max})$ (es solución de la ecuación y $0 \leq x$). Están ordenadas: $\underline{u} = 0 \leq u = \overline{u}$ en $[0, T_{\max})$. Por Kamke (y la unicidad de $(P_\alpha)$),
+    \[
+        \underline{u} \leq u_\alpha \leq \overline{u} = u \qquad \text{en } I = [0, T_{\max}).
+    \]
+    Por tanto, $u_\alpha$ está definida en $[0, T_{\max})$ y cumple $u_\alpha \leq u$, de donde
+    \[
+        \boxed{T_{\max} \leq T_\alpha}.
+    \]
+    Concluimos que el tiempo maximal de existencia $T_{\max}$ del problema no lineal $(P)$ es forzosamente finito y queda acotado entre los tiempos de explosión de los dos modelos resolubles de Bernoulli:
     \[
         T_\beta \leq T_{\max} \leq T_\alpha
     \]
@@ -2851,3 +2890,87 @@ Algo interesante a destacar ahora es lo siguiente.
     \end{tikzpicture}
     \end{center}
 }
+
+\ejemplo{
+    \textbf{Ejemplo 2 (sistema acoplado).} Consideremos
+    \[
+        \begin{cases}
+            u' = u + a(t) v^3 \\
+            v' = v + a(t) u^3 \\
+            u(0) = x \geq y = v(0) > 0
+        \end{cases}
+        \qquad a : [0, +\infty) \to [0, +\infty) \text{ continua}, \qquad \int_0^\infty a(s) e^{2s} \, ds = +\infty.
+    \]
+    El campo es
+    \[
+        f(t, u, v) = \begin{pmatrix} u + a(t) v^3 \\ v + a(t) u^3 \end{pmatrix}, \qquad
+        D_{(u,v)} f = \begin{pmatrix} 1 & 3a(t) v^2 \\ 3a(t) u^2 & 1 \end{pmatrix},
+    \]
+    que es de clase $\mathcal{C}^1$ en $(u, v)$ (luego localmente Lipschitziano) y, como los términos fuera de la diagonal son $\geq 0$, \textbf{$f$ crece con respecto de $(u, v)$}.
+
+    \textbf{Caso $x = y$.} Entonces $u = v = w$, donde $w$ es la solución de
+    \[
+        \begin{cases}
+            w' = w + a(t) w^3 \\
+            w(0) = x
+        \end{cases}
+    \]
+    (en efecto, $(w, w)$ resuelve el sistema con los mismos datos, y la solución es única). Por el ejemplo de Bernoulli con $\gamma = 1$:
+    \[
+        w(t) = \frac{e^t}{\sqrt{\dfrac{1}{x^2} - 2 \displaystyle\int_0^t a(s) e^{2s} \, ds}}, \quad t \in [0, T), \qquad \int_0^T a(s) e^{2s} \, ds = \frac{1}{2x^2}.
+    \]
+
+    \textbf{Caso $x > y$.} Por el Teorema de Cauchy-Lipschitz local, el Teorema de unicidad global y el Teorema de existencia y unicidad de solución maximal, el problema tiene una única solución maximal $(I, u, v)$. Por el Segundo Teorema Fundamental, $I = [0, T_{\max})$ con $T_{\max} \leq +\infty$, y además, cuando $T_{\max} < +\infty$,
+    \[
+        \varlimsup_{t \nearrow T_{\max}} \bigl( |u(t)| + |v(t)| \bigr) = +\infty.
+    \]
+
+    \textbf{Lema 1.} $u'(t) > 0$ y $v'(t) > 0$ para todo $t \in I = [0, T_{\max})$. En consecuencia, $u(t) \geq x$, $v(t) \geq y$ para todo $t \in I$, y ambas son crecientes.
+
+    \textit{Demostración.} En $t = 0$:
+    \[
+        u'(0) = u(0) + a(0) v^3(0) = x + a(0) y^3 > 0, \qquad
+        v'(0) = v(0) + a(0) u^3(0) = y + a(0) x^3 > 0.
+    \]
+    Por continuidad, existe $\delta > 0$ tal que $u'(t) > 0$ y $v'(t) > 0$ para todo $t \in [0, \delta]$. Razonando por reducción al absurdo, supongamos que existe $t_1 \in I$ tal que
+    \[
+        u'(t) > 0 \quad \forall t \in [0, t_1) \qquad \text{y} \qquad u'(t_1) = 0.
+    \]
+    Como $u$ es creciente en $[0, t_1]$, $u(t_1) > x > 0$, y entonces
+    \[
+        0 = u'(t_1) = \underbrace{u(t_1)}_{> x > 0} + \underbrace{a(t_1)}_{\geq 0} v^3(t_1) \implies v(t_1) < 0.
+    \]
+    Como $v(0) = y > 0$ y $v(t_1) < 0$, $v$ tiene que dejar de crecer antes de $t_1$: existe $t_2 < t_1$ tal que
+    \[
+        v'(t) > 0 \quad \forall t \in [0, t_2) \qquad \text{y} \qquad v'(t_2) = 0,
+    \]
+    es decir, $v(t_2) + a(t_2) u^3(t_2) = 0$. Como $t_2 < t_1$, se tiene $u(t_2) > 0$, luego $v(t_2) < 0$. Pero $v$ es creciente en $[0, t_2]$, así que $v(t_2) > y > 0$, contradicción. (Si es $v'$ la que se anula primero, el argumento es el mismo intercambiando los papeles de $u$ y $v$.)
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, x=1.1cm, y=1cm]
+        \draw[->] (-0.2,0) -- (5,0) node[right] {$t$};
+        \draw[->] (0,-1.6) -- (0,2.4);
+        \draw[thick, blue!80!black] (0,1.2) .. controls (1,1.3) and (2,2.0) .. (3.3,2.0) node[above] {$u$};
+        \draw[thick, red!80!black] (0,0.6) .. controls (0.6,0.9) and (1.1,1.1) .. (1.4,1.1) .. controls (1.8,1.1) and (2.4,-0.2) .. (3.3,-1.2);
+        \node[red!80!black] at (1.5,1.4) {$v$};
+        \filldraw (3.3,-1.2) circle (1.3pt) node[below right] {$v(t_1) < 0$};
+        \draw[dashed, gray] (1.4,1.1) -- (1.4,0) node[below] {$t_2$};
+        \draw[dashed, gray] (3.3,2.0) -- (3.3,0);
+        \node[below left] at (3.3,0) {$t_1$};
+        \node[left] at (0,1.2) {$x$};
+        \node[left] at (0,0.6) {$y$};
+    \end{tikzpicture}
+    \end{center}
+
+    \textbf{Lema 2.} $u(t) > v(t)$ para todo $t \in [0, T_{\max}) = I$.
+
+    \textit{Demostración.} Como $u(0) = x > y = v(0)$, por continuidad $u(t) > v(t)$ si $t \in [0, \delta]$. Si existiera $t_1 \in I$ con $u(t_1) = v(t_1) = z$, entonces $(\tilde w, \tilde w)$, con $\tilde w$ la solución de $\tilde w' = \tilde w + a(t) \tilde w^3$, $\tilde w(t_1) = z$, sería solución del sistema con el mismo dato en $t_1$. Por unicidad (también hacia el pasado), $u(t) = v(t) = \tilde w(t)$ para todo $t \in I$, y en particular $u(0) = v(0)$, lo que contradice $x > y$.
+
+    \textbf{Lema 3.} Si $T_{\max} < \infty$, entonces
+    \[
+        \lim_{t \nearrow T_{\max}} u(t) = +\infty \qquad \text{y} \qquad \lim_{t \nearrow T_{\max}} v(t) = +\infty.
+    \]
+}
+
+\begin{center}
+\fcolorbox{orange!85!black}{orange!10}{\parbox{0.92\linewidth}{\centering \textbf{Hasta aquí llegamos en clase (20/11).}\\[0.2em] Falta la demostración del Lema 3 y el resto del Ejemplo 2.}}
+\end{center}
