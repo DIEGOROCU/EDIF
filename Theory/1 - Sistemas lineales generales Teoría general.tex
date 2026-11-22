@@ -551,65 +551,36 @@ Al igual que en el caso autónomo, verificar esta condición mediante la definic
     \]
     Las soluciones del problema $(P)$ se corresponden exactamente con los puntos fijos del operador $K$. Para demostrar que existe un único punto fijo, utilizaremos el Teorema del Punto Fijo de Banach. 
     
-    El espacio vectorial $X = C([\alpha, \beta]; \mathbb{R}^N)$ equipado con la norma del supremo es un espacio de Banach. Para facilitar las estimaciones y garantizar que $K$ sea una contracción, introducimos una norma equivalente conocida como la norma de Bielecki. Tomando un parámetro $\gamma > L$, definimos:
+    El espacio vectorial $X = C([\alpha, \beta]; \mathbb{R}^N)$ equipado con la norma del supremo es un espacio de Banach. Para facilitar las estimaciones y garantizar que $K$ sea una contracción, introducimos una norma equivalente conocida como la norma de Bielecki. Tomando un parámetro $B > 0$, definimos:
     \[
-        \| u \|_B = \max_{t \in [\alpha, \beta]} e^{-\gamma |t - t_0|} \| u(t) \|
+        \| u \|_B = \max_{t \in [\alpha, \beta]} e^{-B |t - t_0|} \| u(t) \|
     \]
-    Es equivalente a la norma del supremo, ya que $e^{-\gamma(\beta - \alpha)} \leq e^{-\gamma|t - t_0|} \leq 1$ para todo $t \in [\alpha, \beta]$, de donde
+    Es equivalente a la norma del supremo, ya que $e^{-B(\beta - \alpha)} \leq e^{-B|t - t_0|} \leq 1$ para todo $t \in [\alpha, \beta]$, de donde
     \[
-        e^{-\gamma(\beta - \alpha)} \| u \|_\infty \leq \| u \|_B \leq \| u \|_\infty.
+        e^{-B(\beta - \alpha)} \| u \|_\infty \leq \| u \|_B \leq \| u \|_\infty.
     \]
-    Al ser equivalente a la norma del supremo, el espacio $(X, \| \cdot \|_B)$ sigue siendo un espacio de Banach. Evaluemos la distancia entre las imágenes de dos funciones $u, v \in X$ bajo el operador $K$. Distinguimos dos casos según la posición de $t$ respecto de $t_0$.
-
-    \textbf{Caso 1: $t \geq t_0$.} En este caso $|s - t_0| = s - t_0$ para $s \in [t_0, t]$, y tenemos:
+    Al ser equivalente a la norma del supremo, el espacio $(X, \| \cdot \|_B)$ sigue siendo un espacio de Banach. Sean $B > 0$ y $u, v \in C([\alpha, \beta]; \mathbb{R}^N)$. Para cada $t \in [\alpha, \beta]$ (integrando entre $\min\{t_0, t\}$ y $\max\{t_0, t\}$, así vale tanto si $t \geq t_0$ como si $t \leq t_0$):
     \[
-        \| (Ku)(t) - (Kv)(t) \| = \left\| \int_{t_0}^t \left( f(s, u(s)) - f(s, v(s)) \right) ds \right\| \leq \int_{t_0}^{t} \| f(s, u(s)) - f(s, v(s)) \| \, ds
-    \]
-    Aplicando la condición de Lipschitz global:
-    \[
-        \| (Ku)(t) - (Kv)(t) \| \leq L \int_{t_0}^{t} \| u(s) - v(s) \| \, ds
-    \]
-    Multiplicamos y dividimos el integrando por el factor exponencial $e^{\gamma(s - t_0)}$ para hacer aparecer la estructura de la norma de Bielecki:
-    \[
-        \| (Ku)(t) - (Kv)(t) \| \leq L \int_{t_0}^{t} e^{\gamma(s - t_0)} \left( e^{-\gamma(s - t_0)} \| u(s) - v(s) \| \right) ds
-    \]
-    Acotando el término entre paréntesis por la norma $\| u - v \|_B$:
-    \[
-        \| (Ku)(t) - (Kv)(t) \| \leq L \| u - v \|_B \int_{t_0}^{t} e^{\gamma(s - t_0)} \, ds = L \| u - v \|_B \left[ \frac{e^{\gamma(s - t_0)}}{\gamma} \right]_{t_0}^t
+        e^{-B|t - t_0|} \| (Ku)(t) - (Kv)(t) \| = e^{-B|t - t_0|} \left\| \int_{t_0}^t \left( f(s, u(s)) - f(s, v(s)) \right) ds \right\|
     \]
     \[
-        = \frac{L}{\gamma} \left( e^{\gamma(t - t_0)} - 1 \right) \| u - v \|_B \leq \frac{L}{\gamma} e^{\gamma(t - t_0)} \| u - v \|_B
-    \]
-    Multiplicando ambos lados por $e^{-\gamma(t - t_0)} = e^{-\gamma|t - t_0|}$ se obtiene:
-    \[
-        e^{-\gamma|t - t_0|} \| (Ku)(t) - (Kv)(t) \| \leq \frac{L}{\gamma} \| u - v \|_B
-    \]
-
-    \textbf{Caso 2: $t \leq t_0$.} Ahora $|s - t_0| = t_0 - s$ para $s \in [t, t_0]$, y al acotar la integral hay que darle la vuelta a los límites:
-    \[
-        \| (Ku)(t) - (Kv)(t) \| = \left\| \int_{t_0}^t \left( f(s, u(s)) - f(s, v(s)) \right) ds \right\| = \left\| \int_{t}^{t_0} \left( f(s, u(s)) - f(s, v(s)) \right) ds \right\|
+        \leq e^{-B|t - t_0|} \int_{\min\{t_0, t\}}^{\max\{t_0, t\}} \| f(s, u(s)) - f(s, v(s)) \| \, ds
+        \leq L e^{-B|t - t_0|} \int_{\min\{t_0, t\}}^{\max\{t_0, t\}} \| u(s) - v(s) \| \, ds
     \]
     \[
-        \leq \int_{t}^{t_0} \| f(s, u(s)) - f(s, v(s)) \| \, ds
+        = L e^{-B|t - t_0|} \int_{\min\{t_0, t\}}^{\max\{t_0, t\}} e^{B|s - t_0|} e^{-B|s - t_0|} \| u(s) - v(s) \| \, ds
+        \leq L e^{-B|t - t_0|} \int_{\min\{t_0, t\}}^{\max\{t_0, t\}} e^{B|s - t_0|} \| u - v \|_B \, ds
     \]
-    Aplicando la condición de Lipschitz global y multiplicando y dividiendo por $e^{\gamma(t_0 - s)}$:
     \[
-        \| (Ku)(t) - (Kv)(t) \| \leq L \int_{t}^{t_0} e^{\gamma(t_0 - s)} \left( e^{-\gamma(t_0 - s)} \| u(s) - v(s) \| \right) ds \leq L \| u - v \|_B \int_{t}^{t_0} e^{\gamma(t_0 - s)} \, ds
+        = L e^{-B|t - t_0|} \, \frac{e^{B|t - t_0|} - 1}{B} \, \| u - v \|_B
+        = \frac{L}{B} \left( 1 - e^{-B|t - t_0|} \right) \| u - v \|_B
+        \leq \frac{L}{B} \| u - v \|_B
     \]
-    La integral vale
+    (En la segunda línea se usa la condición de Lipschitz global; en la tercera, que $e^{-B|s - t_0|} \| u(s) - v(s) \| \leq \| u - v \|_B$; y en la cuarta, que $\int_{\min\{t_0, t\}}^{\max\{t_0, t\}} e^{B|s - t_0|} \, ds = \int_0^{|t - t_0|} e^{Br} \, dr = \frac{e^{B|t - t_0|} - 1}{B}$.) Tomando el máximo en $t \in [\alpha, \beta]$:
     \[
-        \int_{t}^{t_0} e^{\gamma(t_0 - s)} \, ds = \left[ -\frac{e^{\gamma(t_0 - s)}}{\gamma} \right]_{t}^{t_0} = \frac{1}{\gamma} \left( e^{\gamma(t_0 - t)} - 1 \right) \leq \frac{1}{\gamma} e^{\gamma(t_0 - t)},
+        \implies \| Ku - Kv \|_B \leq \frac{L}{B} \| u - v \|_B \underset{B = 2L}{=} \frac{1}{2} \| u - v \|_B
     \]
-    así que $\| (Ku)(t) - (Kv)(t) \| \leq \frac{L}{\gamma} e^{\gamma(t_0 - t)} \| u - v \|_B$. Multiplicando ambos lados por $e^{-\gamma(t_0 - t)} = e^{-\gamma|t - t_0|}$ se obtiene la misma cota que en el caso 1:
-    \[
-        e^{-\gamma|t - t_0|} \| (Ku)(t) - (Kv)(t) \| \leq \frac{L}{\gamma} \| u - v \|_B
-    \]
-
-    En ambos casos tenemos la misma desigualdad. Tomando el máximo sobre todo $t \in [\alpha, \beta]$, concluimos que:
-    \[
-        \| Ku - Kv \|_B \leq \frac{L}{\gamma} \| u - v \|_B
-    \]
-    Como hemos elegido $\gamma > L$, se cumple que $\frac{L}{\gamma} < 1$. Por lo tanto, el operador $K$ es una contracción estricta en el espacio de Banach $(X, \| \cdot \|_B)$. (En clase se toma $\gamma = B = 2L$, con lo que $\| Ku - Kv \|_B \leq \frac{1}{2} \| u - v \|_B$.)
+    Tomando $B = 2L$, el operador $K$ es una contracción en el espacio de Banach $(X, \| \cdot \|_B)$. (Si $L = 0$, basta tomar cualquier $B > 0$.)
     
     Por el Teorema del Punto Fijo de Banach, el operador $K$ posee un único punto fijo $u \in X$. Esta función es la única solución global del problema de valor inicial en el intervalo $[\alpha, \beta]$.
 \end{proof}
