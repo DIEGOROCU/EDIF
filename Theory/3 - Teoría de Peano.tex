@@ -2969,8 +2969,153 @@ Algo interesante a destacar ahora es lo siguiente.
     \[
         \lim_{t \nearrow T_{\max}} u(t) = +\infty \qquad \text{y} \qquad \lim_{t \nearrow T_{\max}} v(t) = +\infty.
     \]
+    \textit{Demostración.} Por el Segundo Teorema Fundamental, $\varlimsup_{t \nearrow T_{\max}} \bigl( |u(t)| + |v(t)| \bigr) = +\infty$. Como $|u(t)| + |v(t)| = u(t) + v(t)$ es creciente (Lema 1), si $t_n \nearrow T_{\max}$ entonces $u(t_n) + v(t_n) \to +\infty$, luego
+    \[
+        \lim_{t \nearrow T_{\max}} \bigl( u(t) + v(t) \bigr) = +\infty.
+    \]
+    Por tanto, como $u(t) > v(t)$ para todo $t \in I$ (Lema 2), $\lim_{t \nearrow T_{\max}} u(t) = +\infty$.
+
+    Para $v$, razonamos por reducción al absurdo: supongamos que $v(t) \leq C$ para todo $t \in I = [0, T_{\max})$. Entonces, para cada $t \in I$,
+    \[
+        u'(t) = u(t) + a(t) v^3(t) \leq u(t) + \underbrace{\| a \|_{\infty, [0, T_{\max}]} \, C^3}_{M}.
+    \]
+    Con el cambio $u(t) = e^t z(t)$: $e^t z + e^t z' \leq e^t z + M$, es decir, $z'(t) \leq M e^{-t}$, y integrando
+    \[
+        z(t) \leq x + M (1 - e^{-t}) \implies u(t) \leq e^t x + M (e^t - 1) \quad \forall t \in I = [0, T_{\max}),
+    \]
+    luego $u$ estaría acotada en $I$, lo que contradice $u \to +\infty$ !! Como $v$ es creciente y no acotada, $\lim_{t \nearrow T_{\max}} v(t) = +\infty$.
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, x=1cm, y=0.8cm]
+        \draw[->] (0,0) -- (4.6,0) node[right] {$t$};
+        \draw[->] (0,0) -- (0,3.6);
+        \draw[thick, blue!80!black, domain=0:2.85, samples=60] plot (\x, {1.6 + 0.12/(3.05-\x) - 0.04}) node[above left] {$u(t)$};
+        \draw[thick, red!80!black, domain=0:2.85, samples=60] plot (\x, {0.8 + 0.25/(3.05-\x) - 0.08}) node[below right] {$v(t)$};
+        \draw[dashed, gray] (3.05,0) -- (3.05,3.5);
+        \node[below] at (3.05,0) {$T_{\max}$};
+        \node[left] at (0,1.6) {$x$};
+        \node[left] at (0,0.8) {$y$};
+    \end{tikzpicture}
+    \end{center}
+
+    \textbf{Estimación de $T_{\max}$ por comparación.} $D_{(u,v)} f$ tiene todas sus entradas $\geq 0$, luego $f$ es creciente y podemos aplicar el Teorema de Kamke. Comparamos $(P)$ con los problemas de datos iguales
+    \[
+        (P_y) \begin{cases} u' = u + a v^3 \\ v' = v + a u^3 \\ u(0) = y = v(0) \end{cases}
+        \qquad
+        (P_x) \begin{cases} u' = u + a v^3 \\ v' = v + a u^3 \\ u(0) = x = v(0) \end{cases}
+    \]
+    cuyas soluciones son $(w_y, w_y)$ en $[0, T_y)$ y $(w_x, w_x)$ en $[0, T_x)$, con
+    \[
+        w_z(t) = \frac{e^t}{\sqrt{\dfrac{1}{z^2} - 2 \displaystyle\int_0^t a(s) e^{2s} \, ds}}, \qquad \int_0^{T_z} a(s) e^{2s} \, ds = \frac{1}{2 z^2} \quad (z = x, y).
+    \]
+
+    \textbf{Etapa 1.} $(\overline{u}, \overline{v}) = (u, v)$ es supersolución de $(P_y)$ en $[0, T_{\max})$: es obvio, porque es solución del mismo sistema y $\overline{u}(0) = x > y$, $\overline{v}(0) = y = y$. Además, $(\underline{u}, \underline{v}) = (0, 0)$ es subsolución de $(P_y)$ en $[0, \infty)$ y $(0, 0) \leq (u, v)$ en $[0, T_{\max})$. Por Kamke, entre la sub y la supersolución hay una solución, y como es única,
+    \[
+        (0, 0) \leq (w_y, w_y) \leq (u, v) \quad \text{en } [0, T_{\max}) = I
+        \implies [0, T_{\max}) \subset [0, T_y),
+    \]
+    \[
+        \boxed{T_{\max} \leq T_y}, \qquad \boxed{w_y \leq v \leq u \text{ en } I}.
+    \]
+
+    \textbf{Etapa 2.} Cualquier solución de $(P_x)$ es supersolución de $(P)$: $(\overline{u}, \overline{v}) = (w_x, w_x)$ lo es en $[0, T_x)$, pues $w_x(0) = x \geq x$ y $w_x(0) = x \geq y$. Y $(0, 0)$ es subsolución de $(P)$ en $[0, \infty)$, con $(0, 0) \leq (w_x, w_x)$ en $[0, T_x)$. Por Kamke,
+    \[
+        (0, 0) \leq (u, v) \leq (w_x, w_x) \quad \text{en } [0, T_x),
+    \]
+    así que $(u, v)$ está definida en $[0, T_x)$, de donde $\boxed{T_x \leq T_{\max}}$ y $u \leq w_x$ en $[0, T_x)$.
+
+    En resumen, $T_x \leq T_{\max} \leq T_y$:
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, x=1cm, y=0.8cm]
+        \draw[->] (0,0) -- (6.4,0) node[right] {$t$};
+        \draw[->] (0,0) -- (0,4);
+        \draw[thick, black, domain=0:1.8, samples=60] plot (\x, {1.6 + 0.2/(2.0-\x) - 0.1}) node[above] {$w_x$};
+        \draw[thick, blue!80!black, domain=0:3.35, samples=60] plot (\x, {1.6 + 0.2/(3.55-\x) - 0.056}) node[above] {$u$};
+        \draw[thick, red!80!black, domain=0:3.35, samples=60] plot (\x, {0.8 + 0.35/(3.55-\x) - 0.099}) node[right] {$v$};
+        \draw[thick, black!60, domain=0:4.85, samples=60] plot (\x, {0.8 + 0.2/(5.05-\x) - 0.04}) node[above] {$w_y$};
+        \foreach \T/\l in {2.0/T_x, 3.55/T_{\max}, 5.05/T_y} { \draw[dashed, gray] (\T,0) -- (\T,3.8); \node[below] at (\T,0) {$\l$}; }
+        \node[left] at (0,1.6) {$x$};
+        \node[left] at (0,0.8) {$y$};
+    \end{tikzpicture}
+    \end{center}
 }
 
-\begin{center}
-\fcolorbox{orange!85!black}{orange!10}{\parbox{0.92\linewidth}{\centering \textbf{Hasta aquí llegamos en clase (20/11).}\\[0.2em] Falta la demostración del Lema 3 y el resto del Ejemplo 2.}}
-\end{center}
+\ejemplo{
+    \textbf{Sistema simbiótico de Lotka-Volterra (1926).} Sean $b, c > 0$ y
+    \[
+        \begin{cases}
+            u' = u + b u v \\
+            v' = v + c u v \\
+            u(0) = x = v(0) > 0
+        \end{cases}
+        \qquad
+        D_{(u,v)} f(u,v) = \begin{pmatrix} 1 + b v & b u \\ c v & 1 + c u \end{pmatrix},
+    \]
+    cuyas entradas fuera de la diagonal son $\geq 0$ si $u, v \geq 0$, así que $f$ es creciente. Sea $(I, u, v)$ la solución maximal, $I = [0, T_{\max})$.
+
+    \textbf{Caso $b = c$.} Entonces $u = v = w$, con $w' = w + b w^2$, $w(0) = x$ (Bernoulli). Con $w = z^\alpha$: $\alpha z^{\alpha - 1} z' = z^\alpha + b z^{2\alpha}$, es decir, $\alpha z' = z + b z^{\alpha + 1}$; tomando $\alpha = -1$, $z' = -z - b$, luego $z(t) = \lambda e^{-t} - b$ con $\lambda = b + \frac{1}{x}$ (pues $z(0) = \frac{1}{x}$). Así
+    \[
+        w_b(t) = \frac{1}{e^{-t} \left( b + \frac{1}{x} \right) - b},
+    \]
+    que explota cuando $e^{-t}(b + \frac{1}{x}) = b$, es decir, en
+    \[
+        T_b = \log \left( 1 + \frac{1}{b x} \right),
+    \]
+    que decrece con $b$ (y $T_b \to +\infty$ si $b \to 0$).
+
+    \textbf{Caso $b > c$.} El sistema es $u' = (1 + b v) u$, $v' = (1 + c u) v$, con $u(0) = v(0) = x > 0$, así que $u, v > 0$ y $u', v' > 0$ en $[0, T_{\max})$.
+
+    \textbf{Lema.} $u(t) > v(t)$ para todo $t \in (0, T_{\max})$.
+
+    \textit{Demostración.} Sea $w = u - v$. Entonces $w(0) = 0$ y $w'(0) = (x + b x^2) - (x + c x^2) = (b - c) x^2 > 0$, luego $u > v$ en $(0, \delta]$. Si existiera un primer $t_1$ con $u > v$ en $(0, t_1)$ y $u(t_1) = v(t_1)$, sería $(u - v)'(t_1) \leq 0$, es decir,
+    \[
+        u(t_1) + b u(t_1) v(t_1) \leq v(t_1) + c u(t_1) v(t_1) \implies b \leq c \quad !!
+    \]
+
+    \textbf{Lema.} Si $T_{\max} < \infty$, entonces $\lim_{t \nearrow T_{\max}} u(t) = +\infty$ y $\lim_{t \nearrow T_{\max}} v(t) = +\infty$.
+
+    \textit{Demostración.} Como en el ejemplo anterior: por el Segundo Teorema Fundamental y la monotonía, $u + v \to +\infty$, y como $u > v$, $u \to +\infty$. Si fuera $v \leq M$, entonces $u' \leq (1 + bM) u$; con $u = e^{(1 + bM)t} w$ se obtiene $w' \leq 0$, luego $w \leq w(0) = x$ y $u(t) \leq e^{(1 + bM)t} x$ estaría acotada !! Así, $v \to +\infty$.
+
+    \textbf{Comparación.} Sean $(P_c)$ y $(P_b)$ los sistemas en los que ambos coeficientes valen $c$ (respectivamente $b$), con $u(0) = v(0) = x$, con soluciones $(w_c, w_c)$ en $I_c = [0, T_{\max}(c))$ y $(w_b, w_b)$ en $I_b = [0, T_{\max}(b))$, donde $T_{\max}(c) = \log(1 + \frac{1}{cx})$, $T_{\max}(b) = \log(1 + \frac{1}{bx})$.
+    \begin{itemize}
+        \item \textbf{Etapa 1.} $(u, v)$ es supersolución de $(P_c)$ en $[0, T_{\max})$, pues $u' = u + b u v > u + c u v$, $v' = v + c u v$ y $u(0) = v(0) = x$; y $(0, 0)$ es subsolución de $(P_c)$ en $[0, \infty)$, con $(0,0) \leq (u, v)$. Por Kamke, $(0, 0) \leq (w_c, w_c) \leq (u, v)$ en $I = [0, T_{\max})$, así que $\boxed{w_c \leq v \leq u}$ y $[0, T_{\max}) \subset [0, T_{\max}(c))$, es decir, $\boxed{T_{\max} \leq T_{\max}(c)}$.
+        \item \textbf{Etapa 2.} $(w_b, w_b)$ es supersolución de $(P)$ en $I_b$ y $(0,0)$ es subsolución de $(P)$ en $I_b$, ordenadas. Por Kamke, $(u, v)$ está definida en $[0, T_{\max}(b))$ y $\boxed{v \leq u \leq w_b}$ en $[0, T_{\max}(b)) \subset [0, T_{\max})$, luego $\boxed{T_{\max}(b) \leq T_{\max}}$.
+    \end{itemize}
+    Por tanto,
+    \[
+        \log \left( 1 + \frac{1}{b x} \right) = T_{\max}(b) \leq T_{\max} \leq T_{\max}(c) = \log \left( 1 + \frac{1}{c x} \right).
+    \]
+    \begin{center}
+    \begin{tikzpicture}[>=stealth, x=1cm, y=0.8cm]
+        \draw[->] (0,0) -- (6.4,0) node[right] {$t$};
+        \draw[->] (0,0) -- (0,4);
+        \draw[thick, black, domain=0:1.8, samples=60] plot (\x, {1 + 0.3/(2.0-\x) - 0.15}) node[above] {$w_b$};
+        \draw[thick, blue!80!black, domain=0:3.35, samples=60] plot (\x, {1 + 0.45/(3.55-\x) - 0.127}) node[above] {$u$};
+        \draw[thick, red!80!black, domain=0:3.35, samples=60] plot (\x, {1 + 0.3/(3.55-\x) - 0.085}) node[right] {$v$};
+        \draw[thick, black!60, domain=0:4.85, samples=60] plot (\x, {1 + 0.3/(5.05-\x) - 0.059}) node[above] {$w_c$};
+        \foreach \T/\l in {2.0/T_{\max}(b), 3.55/T_{\max}, 5.05/T_{\max}(c)} { \draw[dashed, gray] (\T,0) -- (\T,3.8); \node[below] at (\T,0) {$\l$}; }
+        \node[left] at (0,1) {$x$};
+    \end{tikzpicture}
+    \end{center}
+
+    \textbf{Cálculo exacto de $T_{\max}$.} Multiplicando las ecuaciones por $c$ y $b$: $c u' = c u + b c u v$ y $b v' = b v + b c u v$, luego $(c u - b v)' = c u - b v$ y
+    \[
+        c u(t) - b v(t) = e^t (c - b) x \implies b v(t) = c u(t) + e^t (b - c) x.
+    \]
+    Sustituyendo en la primera ecuación:
+    \[
+        \begin{cases}
+            u'(t) = \bigl[ 1 + (b - c) x e^t \bigr] u(t) + c u^2(t) = a(t) u(t) + c u^2(t) \\
+            u(0) = x
+        \end{cases}
+    \]
+    Con $u = \frac{1}{w}$ (Bernoulli con $\alpha = -1$): $w' = -a(t) w - c$, $w(0) = \frac{1}{x}$, y $T_{\max}$ es el primer cero de $w$. Por variación de constantes, $w(t) = e^{-\int_0^t a} k(t)$ con $k'(t) = -c \, e^{\int_0^t a}$, $k(0) = \frac{1}{x}$, y $T_{\max}$ es el primer cero de $k$. Como $\int_0^t a(s) \, ds = t + (b - c) x (e^t - 1)$,
+    \[
+        k(t) = \frac{1}{x} - c \, e^{-(b - c) x} \int_0^t e^s e^{(b - c) x e^s} ds
+        = \frac{1}{x} - \frac{c}{(b - c) x} \left[ e^{(b - c) x (e^t - 1)} - 1 \right].
+    \]
+    $k(t) = 0$ si y solo si $e^{(b - c) x (e^t - 1)} = \frac{b}{c}$, es decir, $e^t - 1 = \frac{1}{x} \frac{\log b - \log c}{b - c}$:
+    \[
+        T_{\max} = \log \left( 1 + \frac{1}{x} \frac{\log b - \log c}{b - c} \right) = \log \left( 1 + \frac{1}{\xi x} \right),
+    \]
+    donde, por el Teorema del Valor Medio, $\frac{\log b - \log c}{b - c} = \frac{1}{\xi}$ con $c < \xi < b$. Así, la estimación por Kamke era buena.
+}
