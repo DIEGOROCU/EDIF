@@ -79,6 +79,531 @@ El origen es un \textbf{punto de silla}:
 \end{tikzpicture}
 \end{center}
 
+Para interpretar la dinámica en las variables originales $\begin{pmatrix} u \\ v \end{pmatrix}$, consideremos el cambio de base $\begin{pmatrix} u \\ v \end{pmatrix} = P \begin{pmatrix} x \\ y \end{pmatrix}$, el cual transforma los ejes canónicos $e_1 = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ y $e_2 = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$ en las rectas generadas por los autovectores $\begin{pmatrix} \alpha \\ \beta \end{pmatrix}$ y $\begin{pmatrix} \gamma \\ \delta \end{pmatrix}$, respectivamente. 
+Sobre la recta del autovector $\begin{pmatrix} \alpha \\ \beta \end{pmatrix}$ (asociada al autovalor $\lambda < 0$), las soluciones satisfacen
+\[
+    \begin{pmatrix} u(t) \\ v(t) \end{pmatrix} = e^{\lambda t} x_0 \begin{pmatrix} \alpha \\ \beta \end{pmatrix} \xrightarrow{t \to +\infty} \begin{pmatrix} 0 \\ 0 \end{pmatrix},
+\]
+entrando asintóticamente al origen. En contraste, sobre la recta generada por $\begin{pmatrix} \gamma \\ \delta \end{pmatrix}$ (asociada a $\mu > 0$), las soluciones evolucionan según
+\[
+    \begin{pmatrix} u(t) \\ v(t) \end{pmatrix} = e^{\mu t} y_0 \begin{pmatrix} \gamma \\ \delta \end{pmatrix} \xrightarrow{t \to +\infty} \pm \infty,
+\]
+alejándose exponencialmente del origen. En consecuencia, en el plano original $(u, v)$ las trayectorias hiperbólicas se deforman según las direcciones de los dos autovectores:
 \begin{center}
-\fcolorbox{orange!85!black}{orange!10}{\parbox{0.92\linewidth}{\centering \textbf{Hasta aquí llegamos en clase (25/11).}\\[0.2em] Quedan el resto de subcasos de autovalores reales y los demás casos de $\sigma(A)$.}}
+\begin{tikzpicture}[>=stealth, scale=1.0]
+    \draw[thick, ->] (-3.0,-0.9) -- (3.0,0.9) node[right] {$\begin{pmatrix} \alpha \\ \beta \end{pmatrix}$};
+    \draw[thick, ->] (-1.2,2.4) -- (1.2,-2.4) node[below right] {$\begin{pmatrix} \gamma \\ \delta \end{pmatrix}$};
+    \draw[very thick, red!70!black, ->] (2.4,0.72) -- (1.2,0.36);
+    \draw[very thick, red!70!black, ->] (-2.4,-0.72) -- (-1.2,-0.36);
+    \draw[very thick, red!70!black, ->] (0.4,-0.8) -- (0.9,-1.8);
+    \draw[very thick, red!70!black, ->] (-0.4,0.8) -- (-0.9,1.8);
+    \filldraw (0,0) circle (1.5pt);
+    \foreach \k in {0.3, 0.7} {
+        \draw[thick, blue!70!black, domain=0.4:2.1, samples=40, ->] plot ({ -0.95*(\k/\x) + 0.45*\x }, { -0.3*(\k/\x) - 0.9*\x });
+        \draw[thick, blue!70!black, domain=0.4:2.1, samples=40, ->] plot ({ 0.95*(\k/\x) - 0.45*\x }, { 0.3*(\k/\x) + 0.9*\x });
+        \draw[thick, blue!70!black, domain=0.4:2.1, samples=40, ->] plot ({ -0.95*(\k/\x) - 0.45*\x }, { -0.3*(\k/\x) + 0.9*\x });
+        \draw[thick, blue!70!black, domain=0.4:2.1, samples=40, ->] plot ({ 0.95*(\k/\x) + 0.45*\x }, { 0.3*(\k/\x) - 0.9*\x });
+    }
+\end{tikzpicture}
 \end{center}
+
+\textbf{Caso 1.2: $\lambda < \mu < 0$ (ambos autovalores negativos).}
+
+Al ser ambos autovalores estrictamente negativos con $\lambda < \mu < 0$, se cumple que
+\[
+    \frac{\lambda}{\mu} > 1.
+\]
+El sistema desacoplado admite la solución explícita
+\[
+    (x(t), y(t)) = (e^{\lambda t} x_0, e^{\mu t} y_0), \qquad t \in \mathbb{R}.
+\]
+Las órbitas individuales $\Gamma_{(x_0, y_0)} = \{ (e^{\lambda t} x_0, e^{\mu t} y_0) : t \in \mathbb{R} \}$ presentan la siguiente estructura:
+\begin{itemize}
+    \item Si $(x_0, y_0) = (0,0)$, la trayectoria es el propio punto de equilibrio $\Gamma_{(0,0)} = \{ (0,0) \}$.
+    \item Si $y_0 = 0$ y $x_0 \neq 0$, la solución se mantiene sobre el eje $y = 0$: $\Gamma_{(x_0, 0)} = \{ (e^{\lambda t} x_0, 0) : t \in \mathbb{R} \}$. Dado que $\lambda < 0$, $\lim_{t \to +\infty} x(t) = 0$, por lo que son las dos semirrectas horizontales recorridas hacia el origen.
+    \item Si $x_0 = 0$ e $y_0 \neq 0$, la solución recorre el eje vertical $x = 0$: $\Gamma_{(0, y_0)} = \{ (0, e^{\mu t} y_0) : t \in \mathbb{R} \}$, convergiendo igualmente al origen cuando $t \to +\infty$.
+    \item Si $x_0 \neq 0$ e $y_0 \neq 0$, despejando el factor temporal se obtiene
+    \[
+        \frac{x(t)}{x_0} = e^{\lambda t}, \qquad \frac{y(t)}{y_0} = e^{\mu t}
+        \implies
+        \left( \frac{x(t)}{x_0} \right)^\mu = e^{\lambda \mu t} = \left( \frac{y(t)}{y_0} \right)^\lambda \quad \forall t \in \mathbb{R}.
+    \]
+    Despejando la variable $x$ en función de $y$, la curva integral asociada es
+    \[
+        C_{(x_0, y_0)} = \left\{ (x, y) \in \mathbb{R}^2 : \frac{x}{x_0} = \left( \frac{y}{y_0} \right)^{\lambda/\mu}, \ x \cdot x_0 > 0, \ y \cdot y_0 > 0 \right\}.
+    \]
+\end{itemize}
+Puesto que el exponente satisface $\frac{\lambda}{\mu} > 1$, la pendiente de estas curvas respecto al eje vertical satisface
+\[
+    \frac{dx}{dy} = \frac{x_0}{y_0^{\lambda/\mu}} \frac{\lambda}{\mu} y^{\frac{\lambda}{\mu} - 1} \xrightarrow{y \to 0} 0,
+\]
+lo que demuestra analíticamente que todas las trayectorias entran al origen $(0,0)$ de forma \textbf{tangente al eje $y$} (que es la dirección asociada al autovalor dominante o más lento $\mu$).
+
+El origen es un \textbf{nodo estable} (o \textbf{atractor global}): todo el plano está cubierto por 9 trayectorias disjuntas (el origen, los 4 semiejes coordenados y 4 familias en los cuadrantes), cuyas curvas integrales se intersecan únicamente en $(0,0)$.
+
+\begin{center}
+\begin{tikzpicture}[>=stealth, scale=1.1]
+    \draw[->] (-2.5,0) -- (2.5,0) node[right] {$x$};
+    \draw[->] (0,-2.3) -- (0,2.3) node[above] {$y$};
+    \draw[very thick, red!70!black, ->] (2.2,0) -- (1.0,0);
+    \draw[very thick, red!70!black, ->] (-2.2,0) -- (-1.0,0);
+    \draw[very thick, red!70!black, ->] (0,2.0) -- (0,0.9);
+    \draw[very thick, red!70!black, ->] (0,-2.0) -- (0,-0.9);
+    \filldraw (0,0) circle (1.5pt);
+    \foreach \c in {0.3, 0.75, 1.4} {
+        \draw[thick, blue!70!black, domain=2.0:0.08, samples=40, ->] plot ({ \c*(\x)^1.8 }, { \x });
+        \draw[thick, blue!70!black, domain=2.0:0.08, samples=40, ->] plot ({ -\c*(\x)^1.8 }, { \x });
+        \draw[thick, blue!70!black, domain=-2.0:-0.08, samples=40, ->] plot ({ \c*(-\x)^1.8 }, { \x });
+        \draw[thick, blue!70!black, domain=-2.0:-0.08, samples=40, ->] plot ({ -\c*(-\x)^1.8 }, { \x });
+    }
+    \node[above right, font=\footnotesize] at (1.5,1.8) {Nodo estable (atractor)};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Caso 1.3: $0 < \lambda < \mu$ (ambos autovalores positivos).}
+
+Si ambos autovalores son estrictamente positivos con $0 < \lambda < \mu$, se tiene
+\[
+    \frac{\mu}{\lambda} > 1.
+\]
+Despejando $y$ en función de $x$ a partir de la relación $\left(\frac{x(t)}{x_0}\right)^\mu = \left(\frac{y(t)}{y_0}\right)^\lambda$, se deduce que la curva integral satisface
+\[
+    C_{(x_0, y_0)} = \left\{ (x, y) \in \mathbb{R}^2 : \frac{y}{y_0} = \left( \frac{x}{x_0} \right)^{\mu/\lambda}, \ x \cdot x_0 > 0, \ y \cdot y_0 > 0 \right\}.
+\]
+Al ser $\frac{\mu}{\lambda} > 1$, se deduce que $\frac{dy}{dx} \to 0$ cuando $x \to 0$, por lo que las órbitas parten del origen tangentes al eje $x$ (dirección propia correspondiente al menor autovalor $\lambda$). Conforme $t \to +\infty$, las soluciones escapan a infinito.
+
+El origen es un \textbf{nodo inestable} (o \textbf{repulsor}):
+\begin{center}
+\begin{tikzpicture}[>=stealth, scale=1.1]
+    \draw[->] (-2.5,0) -- (2.5,0) node[right] {$x$};
+    \draw[->] (0,-2.3) -- (0,2.3) node[above] {$y$};
+    \draw[very thick, red!70!black, ->] (0.8,0) -- (1.9,0);
+    \draw[very thick, red!70!black, ->] (-0.8,0) -- (-1.9,0);
+    \draw[very thick, red!70!black, ->] (0,0.8) -- (0,1.9);
+    \draw[very thick, red!70!black, ->] (0,-0.8) -- (0,-1.9);
+    \filldraw (0,0) circle (1.5pt);
+    \foreach \c in {0.3, 0.75, 1.4} {
+        \draw[thick, blue!70!black, domain=0.08:2.0, samples=40, ->] plot ({ \x }, { \c*(\x)^1.8 });
+        \draw[thick, blue!70!black, domain=-0.08:-2.0, samples=40, ->] plot ({ \x }, { \c*(-\x)^1.8 });
+        \draw[thick, blue!70!black, domain=0.08:2.0, samples=40, ->] plot ({ \x }, { -\c*(\x)^1.8 });
+        \draw[thick, blue!70!black, domain=-0.08:-2.0, samples=40, ->] plot ({ \x }, { -\c*(-\x)^1.8 });
+    }
+    \node[above right, font=\footnotesize] at (1.5,1.8) {Nodo inestable (repulsor)};
+\end{tikzpicture}
+\end{center}
+
+\subsubsection{Caso 2: autovalor real único (multiplicidad algebraica dos)}
+
+Consideremos ahora el caso en que el espectro contiene un único autovalor real con multiplicidad algebraica dos:
+\[
+    \sigma(A) = \{ \lambda \}, \qquad \lambda \in \mathbb{R}, \quad m(\lambda) = 2.
+\]
+El comportamiento cualitativo del sistema depende de la dimensión del subespacio propio $N[A - \lambda I]$ en la cadena ascendente de subespacios:
+\[
+    \{ 0 \} = N[(A - \lambda I)^0] \subsetneq N[A - \lambda I] \subseteq N[(A - \lambda I)^2] = \mathbb{R}^2.
+\]
+Distingamos los dos subcasos según la multiplicidad geométrica:
+
+\textbf{Caso 2.1: Matriz diagonalizable ($\dim N[A - \lambda I] = 2$).}
+
+Si la dimensión del núcleo es máxima, entonces $N[A - \lambda I] = \mathbb{R}^2$, lo que equivale a $A - \lambda I = 0$, es decir,
+\[
+    A = \lambda I = \begin{pmatrix} \lambda & 0 \\ 0 & \lambda \end{pmatrix}.
+\]
+El sistema lineal original desacopla directamente en las variables originales:
+\[
+    \begin{cases}
+        u' = \lambda u \\
+        v' = \lambda v
+    \end{cases}
+    \implies
+    u(t) = e^{\lambda t} u_0, \quad v(t) = e^{\lambda t} v_0.
+\]
+Si $(u_0, v_0) \neq (0,0)$, la razón entre las componentes satisface
+\[
+    \frac{v(t)}{u(t)} = \frac{v_0}{u_0} = \text{cte} \qquad (\text{o } u(t) \equiv 0 \text{ si } u_0 = 0),
+\]
+por lo que las trayectorias son semirrectas radiales que pasan por el origen: constituyen un \textbf{haz de rectas}.
+\begin{itemize}
+    \item Si $\lambda < 0$, las soluciones convergen radialmente hacia el origen al crecer $t$. El origen es un \textbf{nodo propio estable} (o \textbf{nodo simétrico / estrella}).
+    \item Si $\lambda > 0$, las soluciones divergen radialmente del origen. El origen es un \textbf{nodo propio inestable}.
+    \item Si $\lambda = 0$, $A = 0$ y todo punto del plano es un equilibrio estático $(u(t) \equiv u_0, v(t) \equiv v_0)$.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[>=stealth, scale=0.95]
+    \begin{scope}[xshift=-4.0cm]
+        \draw[->] (-2.3,0) -- (2.3,0) node[right] {$u$};
+        \draw[->] (0,-2.3) -- (0,2.3) node[above] {$v$};
+        \filldraw (0,0) circle (1.5pt);
+        \foreach \ang in {0, 45, 90, 135, 180, 225, 270, 315} {
+            \draw[thick, blue!70!black, ->] ({1.9*cos(\ang)}, {1.9*sin(\ang)}) -- ({0.9*cos(\ang)}, {0.9*sin(\ang)});
+            \draw[thick, blue!70!black] ({0.9*cos(\ang)}, {0.9*sin(\ang)}) -- (0,0);
+        }
+        \node[below] at (0,-2.4) {$\lambda < 0$ (Nodo estrella estable)};
+    \end{scope}
+    \begin{scope}[xshift=4.0cm]
+        \draw[->] (-2.3,0) -- (2.3,0) node[right] {$u$};
+        \draw[->] (0,-2.3) -- (0,2.3) node[above] {$v$};
+        \filldraw (0,0) circle (1.5pt);
+        \foreach \ang in {0, 45, 90, 135, 180, 225, 270, 315} {
+            \draw[thick, blue!70!black] (0,0) -- ({0.9*cos(\ang)}, {0.9*sin(\ang)});
+            \draw[thick, blue!70!black, ->] ({0.9*cos(\ang)}, {0.9*sin(\ang)}) -- ({1.9*cos(\ang)}, {1.9*sin(\ang)});
+        }
+        \node[below] at (0,-2.4) {$\lambda > 0$ (Nodo estrella inestable)};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\textbf{Caso 2.2: Matriz no diagonalizable ($\dim N[A - \lambda I] = 1$).}
+
+En este caso, la cadena de núcleos es estrictamente creciente:
+\[
+    \{ 0 \} \subsetneq N[A - \lambda I] \subsetneq N[(A - \lambda I)^2] = \mathbb{R}^2.
+\]
+Existe un único subespacio propio de dimensión 1, por lo que la matriz no es diagonalizable y su reducción conduce a un bloque de Jordan de orden 2. 
+
+Para construir la base canónica de Jordan, seleccionamos un vector generalizado
+\[
+    \begin{pmatrix} \alpha \\ \beta \end{pmatrix} \in \mathbb{R}^2 \setminus N[A - \lambda I],
+\]
+y definimos el autovector propio asociado:
+\[
+    \begin{pmatrix} \gamma \\ \delta \end{pmatrix} = (A - \lambda I) \begin{pmatrix} \alpha \\ \beta \end{pmatrix} \in N[A - \lambda I] \setminus \{ 0 \}.
+\]
+Por definición de autovector, $A \begin{pmatrix} \gamma \\ \delta \end{pmatrix} = \lambda \begin{pmatrix} \gamma \\ \delta \end{pmatrix}$, mientras que
+\[
+    A \begin{pmatrix} \alpha \\ \beta \end{pmatrix} = \lambda \begin{pmatrix} \alpha \\ \beta \end{pmatrix} + \begin{pmatrix} \gamma \\ \delta \end{pmatrix}.
+\]
+Definiendo la matriz de cambio de base $P = \begin{pmatrix} \alpha & \gamma \\ \beta & \delta \end{pmatrix}$, se comprueba que
+\[
+    A P = \left( A \begin{pmatrix} \alpha \\ \beta \end{pmatrix} \Bigm| A \begin{pmatrix} \gamma \\ \delta \end{pmatrix} \right)
+    = \left( \lambda \begin{pmatrix} \alpha \\ \beta \end{pmatrix} + \begin{pmatrix} \gamma \\ \delta \end{pmatrix} \Bigm| \lambda \begin{pmatrix} \gamma \\ \delta \end{pmatrix} \right)
+    = P \begin{pmatrix} \lambda & 0 \\ 1 & \lambda \end{pmatrix} = P J.
+\]
+Efectuando el cambio de variables $\begin{pmatrix} u \\ v \end{pmatrix} = P \begin{pmatrix} x \\ y \end{pmatrix}$, el sistema adquiere la forma canónica de Jordan:
+\[
+    \begin{pmatrix} x \\ y \end{pmatrix}' = \begin{pmatrix} \lambda & 0 \\ 1 & \lambda \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix}
+    \iff
+    \begin{cases}
+        x' = \lambda x, & x(0) = x_0 \\
+        y' = x + \lambda y, & y(0) = y_0
+    \end{cases}
+\]
+Resolvemos este sistema escalonado:
+\begin{enumerate}
+    \item De la primera ecuación desacoplada, $x(t) = e^{\lambda t} x_0$.
+    \item Sustituyendo en la segunda ecuación: $y' - \lambda y = e^{\lambda t} x_0$. Proponiendo la solución por variación de constantes $y(t) = e^{\lambda t} z(t)$, se deduce
+    \[
+        \lambda e^{\lambda t} z(t) + e^{\lambda t} z'(t) = \lambda e^{\lambda t} z(t) + e^{\lambda t} x_0 \implies z'(t) = x_0 \implies z(t) = x_0 t + y_0.
+    \]
+\end{enumerate}
+En consecuencia, la solución general del sistema canónico es
+\[
+    \begin{cases}
+        x(t) = e^{\lambda t} x_0 \\
+        y(t) = e^{\lambda t} (x_0 t + y_0)
+    \end{cases}
+    \qquad t \in \mathbb{R}.
+\]
+Analicemos la geometría de las trayectorias en el plano $(x, y)$:
+\begin{itemize}
+    \item Si $x_0 = 0$, entonces $x(t) \equiv 0$ y $y(t) = e^{\lambda t} y_0$. La trayectoria coincide con el eje vertical $x = 0$, que es una recta invariante (el subespacio propio en estas coordenadas).
+    \item Si $x_0 \neq 0$, como $x(t)$ mantiene el signo de $x_0$, podemos despejar $t$ mediante
+    \[
+        e^{\lambda t} = \frac{x(t)}{x_0} \implies t = \frac{1}{\lambda} \log \left( \frac{x(t)}{x_0} \right).
+    \]
+    Sustituyendo esta expresión temporal en $y(t)$:
+    \[
+        y(t) = \frac{x(t)}{x_0} \left[ x_0 \frac{1}{\lambda} \log \left( \frac{x(t)}{x_0} \right) + y_0 \right]
+        = \frac{x(t)}{\lambda} \log \left( \frac{x(t)}{x_0} \right) + \frac{y_0}{x_0} x(t).
+    \]
+\end{itemize}
+Por tanto, cada órbita con $x_0 \neq 0$ está contenida en la curva integral dada por la gráfica $y = f(x)$ en el semiplano $x \cdot x_0 > 0$:
+\[
+    C_{(x_0, y_0)} = \left\{ (x, y) \in \mathbb{R}^2 : y = f(x) = \frac{x}{\lambda} \log \left( \frac{x}{x_0} \right) + \frac{y_0}{x_0} x, \ x \cdot x_0 > 0 \right\}.
+\]
+Estudiemos exhaustivamente la función paramétrica $f(x)$ para $\lambda < 0$ y $x_0 > 0$:
+\begin{itemize}
+    \item \textbf{Límite en el origen:} Como $\lim_{x \to 0^+} x \log x = 0$, se cumple
+    \[
+        \lim_{x \to 0^+} f(x) = 0.
+    \]
+    \item \textbf{Cálculo de la derivada:}
+    \[
+        f'(x) = \frac{1}{\lambda} \log \left( \frac{x}{x_0} \right) + \frac{x}{\lambda} \frac{1}{x} + \frac{y_0}{x_0}
+        = \frac{1}{\lambda} \log \left( \frac{x}{x_0} \right) + \frac{1}{\lambda} + \frac{y_0}{x_0}.
+    \]
+    \item \textbf{Comportamiento tangencial en el origen:} Al ser $\lambda < 0$, cuando $x \to 0^+$ se tiene $\log(x/x_0) \to -\infty$, por lo que
+    \[
+        \lim_{x \to 0^+} f'(x) = +\infty.
+    \]
+    Esto prueba de forma concluyente que las curvas llegan al origen \textbf{tangentes al eje $y$} (la recta del autovector propio).
+    \item \textbf{Corte con el eje horizontal ($y = 0$):}
+    \[
+        f(x) = 0 \iff \frac{1}{\lambda} \log \left( \frac{x}{x_0} \right) = -\frac{y_0}{x_0} \iff \log \left( \frac{x}{x_0} \right) = -\lambda \frac{y_0}{x_0} \iff x = x_0 e^{-\lambda y_0 / x_0}.
+    \]
+    Cada curva corta al eje horizontal en exactamente un punto.
+    \item \textbf{Comportamiento asintótico:} Para $x \to +\infty$, el término $\frac{x}{\lambda} \log(x/x_0) \to -\infty$, luego $\lim_{x \to +\infty} f(x) = -\infty$.
+    \item \textbf{Caso $x_0 < 0$ ($x < 0$):} De manera enteramente análoga, para $x \to 0^-$ la derivada satisface $\lim_{x \to 0^-} f'(x) = -\infty$, entrando también tangencialmente al semieje vertical inferior.
+\end{itemize}
+El origen se clasifica como:
+\begin{itemize}
+    \item \textbf{Nodo degenerado (o impropio) estable:} si $\lambda < 0$. Todas las soluciones convergen al origen conforme $t \to +\infty$, entrando tangentes a la dirección propia vertical.
+    \item \textbf{Nodo degenerado (o impropio) inestable:} si $\lambda > 0$. Las trayectorias se alejan del origen hacia infinito.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[>=stealth, scale=1.05]
+    % Nodo degenerado canónico (x, y)
+    \begin{scope}[xshift=-3.8cm]
+        \draw[->] (-2.3,0) -- (2.3,0) node[right] {$x$};
+        \draw[->] (0,-2.5) -- (0,2.5) node[above] {$y$};
+        \draw[very thick, red!70!black, ->] (0,2.2) -- (0,1.0);
+        \draw[very thick, red!70!black, ->] (0,-2.2) -- (0,-1.0);
+        \filldraw (0,0) circle (1.5pt);
+        \foreach \xzero in {0.8, 1.4} {
+            \foreach \yzero in {-0.6, 0.4} {
+                \draw[thick, blue!70!black, domain=-1.4:2.0, samples=50, ->] 
+                    plot ({ \xzero*exp(-\x) }, { exp(-\x)*(\xzero*\x + \yzero) });
+                \draw[thick, blue!70!black, domain=-1.4:2.0, samples=50, ->] 
+                    plot ({ -\xzero*exp(-\x) }, { -exp(-\x)*(\xzero*\x + \yzero) });
+            }
+        }
+        \node[below] at (0,-2.6) {Coordenadas canónicas $(x, y)$};
+    \end{scope}
+    % Variables originales con eje invariante
+    \begin{scope}[xshift=3.8cm]
+        \draw[thick, red!70!black, <->] (-1.3,-2.3) -- (1.3,2.3) node[above right] {$\begin{pmatrix} \gamma \\ \delta \end{pmatrix}$ (Eje invariante)};
+        \draw[dashed, gray] (-2.4,0) -- (2.4,0);
+        \draw[dashed, gray] (0,-2.4) -- (0,2.4);
+        \filldraw (0,0) circle (1.5pt);
+        \foreach \xzero in {0.8, 1.4} {
+            \foreach \yzero in {-0.5, 0.5} {
+                \draw[thick, blue!70!black, domain=-1.3:2.0, samples=50, ->] 
+                    plot ({ 0.95*(\xzero*exp(-\x)) + 0.5*(exp(-\x)*(\xzero*\x + \yzero)) }, 
+                          { 0.2*(\xzero*exp(-\x)) + 0.9*(exp(-\x)*(\xzero*\x + \yzero)) });
+                \draw[thick, blue!70!black, domain=-1.3:2.0, samples=50, ->] 
+                    plot ({ -0.95*(\xzero*exp(-\x)) - 0.5*(exp(-\x)*(\xzero*\x + \yzero)) }, 
+                          { -0.2*(\xzero*exp(-\x)) - 0.9*(exp(-\x)*(\xzero*\x + \yzero)) });
+            }
+        }
+        \node[below] at (0,-2.6) {Variables originales $(u, v)$};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+Al deshacer el cambio mediante $\begin{pmatrix} u \\ v \end{pmatrix} = P \begin{pmatrix} x \\ y \end{pmatrix}$, el eje $y$ se transforma en la recta generada por el autovector propio $\begin{pmatrix} \gamma \\ \delta \end{pmatrix}$, que constituye la única \textbf{dirección invariante} del sistema. Todas las trayectorias en el espacio original $(u, v)$ entran (o salen) tangentes a este eje invariante.
+
+\subsubsection{Caso 3: autovalores complejos conjugados}
+
+Sea $\sigma(A) = \{ \lambda \pm i \omega \}$ con $\omega > 0$ y $\lambda, \omega \in \mathbb{R}$.
+
+Consideremos un autovector complejo asociado a $\lambda + i \omega$:
+\[
+    \mathbf{v} = \begin{pmatrix} \alpha \\ \beta \end{pmatrix} + i \begin{pmatrix} \gamma \\ \delta \end{pmatrix}, \qquad \begin{pmatrix} \alpha \\ \beta \end{pmatrix}, \begin{pmatrix} \gamma \\ \delta \end{pmatrix} \in \mathbb{R}^2.
+\]
+La ecuación de autovalores $A \mathbf{v} = (\lambda + i \omega) \mathbf{v}$ se expresa como
+\[
+    A \left[ \begin{pmatrix} \alpha \\ \beta \end{pmatrix} + i \begin{pmatrix} \gamma \\ \delta \end{pmatrix} \right]
+    = (\lambda + i \omega) \left[ \begin{pmatrix} \alpha \\ \beta \end{pmatrix} + i \begin{pmatrix} \gamma \\ \delta \end{pmatrix} \right].
+\]
+Separando parte real y parte imaginaria:
+\[
+    \begin{cases}
+        A \begin{pmatrix} \alpha \\ \beta \end{pmatrix} = \lambda \begin{pmatrix} \alpha \\ \beta \end{pmatrix} - \omega \begin{pmatrix} \gamma \\ \delta \end{pmatrix} \\
+        A \begin{pmatrix} \gamma \\ \delta \end{pmatrix} = \omega \begin{pmatrix} \alpha \\ \beta \end{pmatrix} + \lambda \begin{pmatrix} \gamma \\ \delta \end{pmatrix}
+    \end{cases}
+\]
+Definiendo la matriz de cambio de base real $P = \begin{pmatrix} \alpha & \gamma \\ \beta & \delta \end{pmatrix}$, tenemos
+\[
+    A P = \left( A \begin{pmatrix} \alpha \\ \beta \end{pmatrix} \Bigm| A \begin{pmatrix} \gamma \\ \delta \end{pmatrix} \right)
+    = \begin{pmatrix} \alpha & \gamma \\ \beta & \delta \end{pmatrix} \begin{pmatrix} \lambda & \omega \\ -\omega & \lambda \end{pmatrix}
+    = P \begin{pmatrix} \lambda & \omega \\ -\omega & \lambda \end{pmatrix}.
+\]
+Mediante el cambio $\begin{pmatrix} u \\ v \end{pmatrix} = P \begin{pmatrix} x \\ y \end{pmatrix}$, el sistema lineal se transforma en su forma canónica rotacional:
+\[
+    \begin{pmatrix} x \\ y \end{pmatrix}' = \begin{pmatrix} \lambda & \omega \\ -\omega & \lambda \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix}
+    \iff
+    \begin{cases}
+        x' = \lambda x + \omega y, & x(0) = x_0 \\
+        y' = -\omega x + \lambda y, & y(0) = y_0
+    \end{cases}
+\]
+Para integrar este sistema y representar con claridad geométrica las órbitas, introducimos \textbf{coordenadas polares}:
+\[
+    x(t) = \rho(t) \cos \theta(t), \qquad y(t) = \rho(t) \operatorname{sen} \theta(t), \qquad \text{con } \rho(t) > 0.
+\]
+Determinemos rigurosamente las ecuaciones diferenciales que gobiernan el radio $\rho(t)$ y el ángulo $\theta(t)$:
+\begin{itemize}
+    \item Para la distancia radial $\rho(t) = \sqrt{x^2(t) + y^2(t)}$, derivando $\rho^2(t) = x^2(t) + y^2(t)$:
+    \[
+        \rho(t) \rho'(t) = x(t) x'(t) + y(t) y'(t).
+    \]
+    Sustituyendo las ecuaciones del sistema:
+    \[
+        \rho \rho' = x (\lambda x + \omega y) + y (-\omega x + \lambda y) = \lambda (x^2 + y^2) = \lambda \rho^2 \implies \rho'(t) = \lambda \rho(t).
+    \]
+    \item Para la velocidad angular $\theta'(t)$, evitamos derivar directamente $\operatorname{arctg}(y/x)$ en los puntos donde se anula $x(t)$. Diferenciando $y(t) = \rho(t) \operatorname{sen} \theta(t)$ y $x(t) = \rho(t) \cos \theta(t)$:
+    \[
+        y' x - x' y = (\rho' \operatorname{sen} \theta + \rho \theta' \cos \theta)(\rho \cos \theta) - (\rho' \cos \theta - \rho \theta' \operatorname{sen} \theta)(\rho \operatorname{sen} \theta) = \rho^2 \theta'.
+    \]
+    Por consiguiente:
+    \[
+        \theta'(t) = \frac{x(t) y'(t) - y(t) x'(t)}{\rho^2(t)}.
+    \]
+    Sustituyendo las derivadas del sistema lineal:
+    \[
+        \theta'(t) = \frac{x(-\omega x + \lambda y) - y(\lambda x + \omega y)}{\rho^2(t)} = \frac{-\omega (x^2 + y^2)}{\rho^2(t)} = -\omega.
+    \]
+\end{itemize}
+El sistema desacoplado en coordenadas polares resulta ser
+\[
+    \begin{cases}
+        \rho'(t) = \lambda \rho(t) \\
+        \theta'(t) = -\omega
+    \end{cases}
+    \implies
+    \begin{cases}
+        \rho(t) = \rho_0 e^{\lambda t}, & \rho_0 = \sqrt{x_0^2 + y_0^2} > 0 \\
+        \theta(t) = -\omega t + \theta_0, & \theta_0 = \operatorname{arg}(x_0, y_0)
+    \end{cases}
+\]
+Como $\omega > 0$, el ángulo decrece con velocidad constante $-\omega$, lo que impone una rotación continua en \textbf{sentido horario} (sentido de las agujas del reloj), periódica respecto al período $T = \frac{2\pi}{\omega}$.
+
+El comportamiento radial define los tres subcasos cualitativos según el signo de la parte real $\lambda = \operatorname{Re}(\lambda \pm i \omega)$:
+
+\textbf{Caso 3.1: $\operatorname{Re}(\lambda \pm i \omega) = \lambda < 0$ (Foco estable).}
+
+Como $\lambda < 0$, $\lim_{t \to +\infty} \rho(t) = 0$. El radio decae exponencialmente a cero mientras la trayectoria rota periódicamente: las soluciones describen \textbf{espirales logarítmicas} que se enrollan asintóticamente alrededor del origen. El plano está completamente fibrado por estas espirales. El origen es un \textbf{foco estable} (o \textbf{atractor en espiral}).
+
+\textbf{Caso 3.2: $\operatorname{Re}(\lambda \pm i \omega) = \lambda > 0$ (Foco inestable).}
+
+Como $\lambda > 0$, $\lim_{t \to +\infty} \rho(t) = +\infty$ y $\lim_{t \to -\infty} \rho(t) = 0$. Las trayectorias son espirales que escapan del origen hacia el infinito en sentido horario. El origen es un \textbf{foco inestable} (o \textbf{repulsor en espiral}).
+
+\begin{center}
+\begin{tikzpicture}[>=stealth, scale=1.0]
+    \begin{scope}[xshift=-3.8cm]
+        \draw[->] (-2.3,0) -- (2.3,0) node[right] {$x$};
+        \draw[->] (0,-2.3) -- (0,2.3) node[above] {$y$};
+        \filldraw (0,0) circle (1.5pt);
+        \draw[thick, blue!70!black, domain=0:13.5, samples=150, ->] 
+            plot ({ -\x r }: { 2.1*exp(-0.24*\x) });
+        \draw[thick, blue!70!black, domain=0:13.5, samples=150, ->] 
+            plot ({ (-\x + 3.14159) r }: { 2.1*exp(-0.24*\x) });
+        \node[below] at (0,-2.4) {$\lambda < 0$ (Foco estable)};
+    \end{scope}
+    \begin{scope}[xshift=3.8cm]
+        \draw[->] (-2.3,0) -- (2.3,0) node[right] {$x$};
+        \draw[->] (0,-2.3) -- (0,2.3) node[above] {$y$};
+        \filldraw (0,0) circle (1.5pt);
+        \draw[thick, blue!70!black, domain=0:13.5, samples=150, ->] 
+            plot ({ -\x r }: { 0.16*exp(0.19*\x) });
+        \draw[thick, blue!70!black, domain=0:13.5, samples=150, ->] 
+            plot ({ (-\x + 3.14159) r }: { 0.16*exp(0.19*\x) });
+        \node[below] at (0,-2.4) {$\lambda > 0$ (Foco inestable)};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\textbf{Caso 3.3: $\operatorname{Re}(\lambda \pm i \omega) = \lambda = 0$ (Centro).}
+
+Si la parte real se anula ($\lambda = 0$), los autovalores son imaginarios puros: $\sigma(A) = \{ \pm i \omega \}$. En este caso,
+\[
+    \rho'(t) = 0 \implies \rho(t) \equiv \rho_0 = \sqrt{x_0^2 + y_0^2}.
+\]
+El radio de cada solución se conserva constante a lo largo del tiempo. Las trayectorias son circunferencias concéntricas centradas en el origen, recorridas en sentido horario periódicamente con período
+\[
+    T = \frac{2\pi}{\omega}.
+\]
+El punto de equilibrio en el origen se denomina \textbf{centro}:
+\begin{center}
+\begin{tikzpicture}[>=stealth, scale=1.05]
+    \draw[->] (-2.4,0) -- (2.4,0) node[right] {$x$};
+    \draw[->] (0,-2.4) -- (0,2.4) node[above] {$y$};
+    \filldraw (0,0) circle (1.5pt);
+    \foreach \r in {0.6, 1.2, 1.8} {
+        \draw[thick, blue!70!black] (0,0) circle (\r);
+        \draw[thick, blue!70!black, ->] (0,\r) -- (0.05,\r);
+        \draw[thick, blue!70!black, ->] (0,-\r) -- (-0.05,-\r);
+    }
+    \node[below] at (0,-2.5) {$\lambda = 0$ (Centro: órbitas $\frac{2\pi}{\omega}$-periódicas)};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Dinámica general de sistemas autónomos en $\mathbb{R}^N$}
+
+Una vez analizada en detalle la clasificación topológica completa en el plano lineal, abordamos el problema general para sistemas autónomos no lineales en dimensión arbitraria $N \geq 1$.
+
+Consideremos el problema de Cauchy autónomo:
+\[
+    \begin{cases}
+        u' = f(u) \\
+        u(0) = x \in \mathbb{R}^N
+    \end{cases}
+    \qquad \text{con } f \in \mathcal{C}^1(\mathbb{R}^N; \, \mathbb{R}^N).
+\]
+Al ser $f$ de clase $\mathcal{C}^1$, el campo vectorial es localmente Lipschitziano en todo $\mathbb{R}^N$. En virtud del Teorema de Picard-Lindelöf, para cada dato inicial $x \in \mathbb{R}^N$ existe una \textbf{única solución maximal}, que denotaremos por $u(t; x)$, definida sobre su intervalo maximal abierto de existencia:
+\[
+    I_x = (T_{\min}(x), \, T_{\max}(x)), \qquad -\infty \leq T_{\min}(x) < 0 < T_{\max}(x) \leq +\infty.
+\]
+
+\begin{definición}[Órbita y espacio de fases]
+    Para cada $x \in \mathbb{R}^N$, se define la \textbf{órbita} (o trayectoria) que pasa por $x$ como el conjunto imagen de su solución maximal en $\mathbb{R}^N$:
+    \[
+        \Gamma_x = \{ u(t; x) : t \in I_x \} \subset \mathbb{R}^N.
+    \]
+    El \textbf{espacio de fases} del sistema es la descomposición del espacio de estados $\mathbb{R}^N$ como la familia de todas sus órbitas:
+    \[
+        \{ \Gamma_x : x \in \mathbb{R}^N \}.
+    \]
+\end{definición}
+
+El siguiente resultado fundamental establece que el carácter autónomo del sistema garantiza que las órbitas no se cruzan:
+
+\begin{proposición}[Partición del espacio de fases en órbitas]
+    Dos órbitas cualesquiera o bien son totalmente disjuntas o bien coinciden exactamente:
+    \[
+        \text{Si } \Gamma_x \neq \Gamma_y \implies \Gamma_x \cap \Gamma_y = \emptyset.
+    \]
+    En consecuencia, la familia de órbitas $\{ \Gamma_x \}_{x \in \mathbb{R}^N}$ constituye una partición disjunta del espacio de fases $\mathbb{R}^N$.
+\end{proposición}
+
+\begin{proof}
+    Sean $x, y \in \mathbb{R}^N$. Supongamos que sus órbitas asociadas no son disjuntas, es decir, existe algún punto común
+    \[
+        z \in \Gamma_x \cap \Gamma_y.
+    \]
+    Por definición de órbita, existen instantes $t_x \in I_x$ y $t_y \in I_y$ tales que
+    \[
+        u(t_x; x) = z \qquad \text{y} \qquad u(t_y; y) = z.
+    \]
+    Definamos la traslación temporal $\tau = t_x - t_y \in \mathbb{R}$, y consideremos la función desplazada en el tiempo:
+    \[
+        v(t) = u(t + \tau; x), \qquad \text{para todo } t \in I_x - \tau.
+    \]
+    Comprobemos que $v(t)$ satisface la misma ecuación diferencial autónoma. Derivando respecto a $t$ y utilizando la regla de la cadena:
+    \[
+        v'(t) = \frac{d}{dt}\left[ u(t + \tau; x) \right] = u'(t + \tau; x) = f(u(t + \tau; x)) = f(v(t)).
+    \]
+    Evaluando ahora la función $v$ en el instante particular $t = t_y$:
+    \[
+        v(t_y) = u(t_y + \tau; x) = u(t_y + (t_x - t_y); x) = u(t_x; x) = z.
+    \]
+    Por consiguiente, tanto $v(t)$ como $u(t; y)$ son soluciones del mismo problema de Cauchy autónomo con dato inicial en $t_y$:
+    \[
+        \begin{cases}
+            w' = f(w) \\
+            w(t_y) = z.
+        \end{cases}
+    \]
+    Dado que $f \in \mathcal{C}^1(\mathbb{R}^N; \, \mathbb{R}^N)$, el Teorema de Picard-Lindelöf garantiza la \textbf{unicidad estricta} de la solución maximal de este problema de valor inicial. Por consiguiente, ambas soluciones maximales deben coincidir en su dominio común y, por maximalidad, sus intervalos maximales de existencia deben ser idénticos:
+    \[
+        I_y = I_x - \tau \qquad \text{y} \qquad u(t; y) = v(t) = u(t + \tau; x) \quad \forall t \in I_y.
+    \]
+    Calculando la imagen de la solución $u(\cdot; y)$:
+    \[
+        \Gamma_y = \{ u(t; y) : t \in I_y \} = \{ u(t + \tau; x) : t + \tau \in I_x \} = \{ u(s; x) : s \in I_x \} = \Gamma_x.
+    \]
+    Hemos demostrado que si $\Gamma_x \cap \Gamma_y \neq \emptyset$, entonces necesariamente $\Gamma_x = \Gamma_y$. Tomando el contrarrecíproco, se concluye que si $\Gamma_x \neq \Gamma_y$, entonces $\Gamma_x \cap \Gamma_y = \emptyset$, lo que prueba que las órbitas forman una partición disjunta de $\mathbb{R}^N$.
+\end{proof}
